@@ -10,7 +10,7 @@
   "leaveLobby": "Raum verlassen",
   "editProfile": "Profil bearbeiten",
   "sourceCode": "Quellcode",
-  "homeTitle": "Willkommen auf {tbd}",
+  "homeTitle": "Willkommen auf geofind.io",
   "loading": "Warte...",
   "newLobbyName": "Neuer Raum",
   "enterPassword": "Gebe das Passwort des Raumes ein",
@@ -18,7 +18,7 @@
   "enterNewLobbyName": "Gebe einen neuen Namen für diesen Raum ein",
   "chatWelcome": "Willkommen in der Lobby. Das Spiel kann gestartet werden sobald alle Spieler bereit sind.",
   "homeDescription": "Stelle Dein geografisches Können im Online Multiplayer unter Beweis.",
-  "homeDescription2": "Auf {tbd} messen sich bis zu 32 Spieler im ultimativen Showdown.",
+  "homeDescription2": "Auf geofind.io messen sich bis zu 32 Spieler im ultimativen Showdown.",
   "homeDescription3": "Raum erstellen, Freunde einladen & gratis los duellieren.",
   "lobbyCreateForm": {
     "title": "Raum erstellen",

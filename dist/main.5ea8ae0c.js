@@ -42740,7 +42740,7 @@ module.exports = {
   "leaveLobby": "Raum verlassen",
   "editProfile": "Profil bearbeiten",
   "sourceCode": "Quellcode",
-  "homeTitle": "Willkommen auf {tbd}",
+  "homeTitle": "Willkommen auf geofind.io",
   "loading": "Warte...",
   "newLobbyName": "Neuer Raum",
   "enterPassword": "Gebe das Passwort des Raumes ein",
@@ -42748,7 +42748,7 @@ module.exports = {
   "enterNewLobbyName": "Gebe einen neuen Namen für diesen Raum ein",
   "chatWelcome": "Willkommen in der Lobby. Das Spiel kann gestartet werden sobald alle Spieler bereit sind.",
   "homeDescription": "Stelle Dein geografisches Können im Online Multiplayer unter Beweis.",
-  "homeDescription2": "Auf {tbd} messen sich bis zu 32 Spieler im ultimativen Showdown.",
+  "homeDescription2": "Auf geofind.io messen sich bis zu 32 Spieler im ultimativen Showdown.",
   "homeDescription3": "Raum erstellen, Freunde einladen & gratis los duellieren.",
   "lobbyCreateForm": {
     "title": "Raum erstellen",
@@ -42851,7 +42851,7 @@ var sharedHistory_1 = require("./sharedHistory");
 
 var types_1 = require("../actions/types");
 
-exports.webSocketConnection = io("http://localhost:3888");
+exports.webSocketConnection = io("https://gameserver.geofind.io");
 
 exports.initWebSockets = function (store) {
   // TODO: extract into config.
@@ -110279,7 +110279,10 @@ exports.Header = function (props) {
     to: "/"
   }, i18n_1.strings.homeLink)), react_1.default.createElement("li", null, react_1.default.createElement(react_router_dom_1.NavLink, {
     to: "/lobbies/new"
-  }, i18n_1.strings.createLobbyLink)))));
+  }, i18n_1.strings.createLobbyLink)), react_1.default.createElement("li", null, react_1.default.createElement("a", {
+    target: "_blank",
+    href: "//github.com/posixpascal/geofind_frontend"
+  }, i18n_1.strings.sourceCode)))));
 };
 
 var templateObject_1, templateObject_2, templateObject_3;
@@ -111476,12 +111479,13 @@ var styled_components_1 = __importDefault(require("styled-components"));
 
 var react_feather_1 = require("react-feather");
 
-var FooterWrapper = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  margin: 40px -40px -40px;\n  background: #f1f1f1;\n  min-height: 40px;\n  padding: 15px; \n  svg {\n    width: 18px;\n    height: 18px;\n    position: relative;\n    top: 4px;\n    line, polygon, path {\n      fill: red;\n      stroke: #ff414c;\n    }\n  }\n"], ["\n  margin: 40px -40px -40px;\n  background: #f1f1f1;\n  min-height: 40px;\n  padding: 15px; \n  svg {\n    width: 18px;\n    height: 18px;\n    position: relative;\n    top: 4px;\n    line, polygon, path {\n      fill: red;\n      stroke: #ff414c;\n    }\n  }\n"])));
+var FooterWrapper = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  margin: 40px -40px -40px;\n  background: #f1f1f1;\n  min-height: 40px;\n  display: flex;\n  justify-content: space-between;\n  padding: 15px; \n  svg {\n    width: 18px;\n    height: 18px;\n    position: relative;\n    top: 4px;\n    line, polygon, path {\n      fill: red;\n      stroke: #ff414c;\n    }\n  }\n"], ["\n  margin: 40px -40px -40px;\n  background: #f1f1f1;\n  min-height: 40px;\n  display: flex;\n  justify-content: space-between;\n  padding: 15px; \n  svg {\n    width: 18px;\n    height: 18px;\n    position: relative;\n    top: 4px;\n    line, polygon, path {\n      fill: red;\n      stroke: #ff414c;\n    }\n  }\n"])));
 
 exports.Footer = function (props) {
   return react_1.default.createElement(FooterWrapper, null, react_1.default.createElement("div", null, "Made with ", react_1.default.createElement(react_feather_1.Heart, null), " by ", react_1.default.createElement("a", {
     href: "https://pascalraszyk.de"
   }, "PR")), react_1.default.createElement("div", null, react_1.default.createElement("a", {
+    target: "_blank",
     href: "https://pascalraszyk.de/de/impressum/"
   }, "Imprint")));
 };
@@ -111780,7 +111784,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58590" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61377" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -9,6 +9,8 @@ const FooterWrapper = styled.div`
   margin: 40px -40px -40px;
   background: #f1f1f1;
   min-height: 40px;
+  display: flex;
+  justify-content: space-between;
   padding: 15px; 
   svg {
     width: 18px;
@@ -27,7 +29,7 @@ export const Footer = (props) => {
         <FooterWrapper>
             <div>Made with <Heart /> by <a href="https://pascalraszyk.de">PR</a></div>
             <div>
-                <a href={"https://pascalraszyk.de/de/impressum/"}>Imprint</a>
+                <a target={"_blank"} href={"https://pascalraszyk.de/de/impressum/"}>Imprint</a>
             </div>
         </FooterWrapper>
     )
