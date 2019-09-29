@@ -42834,8 +42834,7 @@ var DE = __importStar(require("./de.json"));
 
 var EN = __importStar(require("./en.json"));
 
-var language = "en";
-navigator.languages && navigator.languages[0] || // Chrome / Firefox
+var language = navigator.languages && navigator.languages[0] || // Chrome / Firefox
 navigator.language || // All browsers
 navigator.userLanguage; // IE <= 10
 
@@ -111784,7 +111783,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61377" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61688" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
