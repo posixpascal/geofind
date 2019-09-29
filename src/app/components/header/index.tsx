@@ -55,11 +55,11 @@ export const Header = (props) => {
                             {strings.editProfile}
                         </a>
                     </li>*/}
-                    {/*<li>
-                        <a href={"//github.com/posixpascal/geofinder"}>
+                    <li>
+                        <a target={"_blank"} href={"//github.com/posixpascal/geofind_frontend"}>
                             {strings.sourceCode}
                         </a>
-                    </li>*/}
+                    </li>
                 </ul>
             </Navigation>
         </HeaderContainer>
