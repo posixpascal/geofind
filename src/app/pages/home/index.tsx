@@ -61,7 +61,7 @@ export const HomePage = (props) => {
                     {strings.homeDescription3}
                 </p>
 
-            <center><NavLink to={"/lobby/new"}>
+            <center><NavLink to={"/lobbies/new"}>
                 <Button>{strings.createLobby}</Button>
             </NavLink></center>
             <br/><br/>
