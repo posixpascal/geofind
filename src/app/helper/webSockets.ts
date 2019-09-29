@@ -2,7 +2,7 @@ import {sharedHistory} from "./sharedHistory";
 import {LOBBIES_LIST, LOBBY_JOIN, LOBBY_UPDATE, LOBBY_MESSAGE, GAME_UPDATE, USER_CONNECTED, USER_LIST_LOBBY} from "../actions/types";
 
 declare const io : any;
-export const webSocketConnection = io("http://localhost:3888");
+export const webSocketConnection = io("https://gameserver.geofind.io");
 
 export const initWebSockets = (store) => {
     // TODO: extract into config.
