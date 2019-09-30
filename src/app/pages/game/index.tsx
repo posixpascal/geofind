@@ -92,7 +92,7 @@ function ColorLuminance(hex, lum) {
 
 const PushPinSVG = ({color, size}) => {
     const encodedSVG = btoa(renderToString(<PushPin color={color} size={size} pinned={true}/>));
-    return `data:image/svg+xml;charset=UTF-8;base64,{encodedSVG}`;
+    return `data:image/svg+xml;charset=UTF-8;base64,${encodedSVG}`;
 };
 
 const PushPin = ({color, size = 30, pinned = false}) => {
