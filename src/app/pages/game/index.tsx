@@ -37,7 +37,7 @@ export const GameMap = compose(
             ]
         }}
     >
-        {props.isMarkerShown && <Marker onDragEnd={props.markerMoved} icon={{ url: PushPinSVG({ color: props.player.color, size: 60 })}} position={props.lastMarkerPosition} animation={(google as any).maps.Animation.DROP} draggable={true} />}
+        {props.isMarkerShown && !props.showAllMarker && <Marker onDragEnd={props.markerMoved} icon={{ url: PushPinSVG({ color: props.player.color, size: 60 })}} position={props.lastMarkerPosition} animation={(google as any).maps.Animation.DROP} draggable={true} />}
         {props.showAllMarker && props.game && props.game.results.map((result) => {
             return <Marker key={result.user.name} icon={{ url: PushPinSVG({ color: result.user.color })}} position={{lat: result.lat, lng: result.lng}} animation={(google as any).maps.Animation.DROP} draggable={false} />
         })}
@@ -92,7 +92,7 @@ function ColorLuminance(hex, lum) {
 
 const PushPinSVG = ({color, size}) => {
     const encodedSVG = btoa(renderToString(<PushPin color={color} size={size} pinned={true}/>));
-    return `data:image/svg+xml;charset=UTF-8;base64,${encodedSVG}`;
+    return `data:image/svg+xml;charset=UTF-8;base64,{encodedSVG}`;
 };
 
 const PushPin = ({color, size = 30, pinned = false}) => {
@@ -189,7 +189,7 @@ const GamePage = (props) => {
 
     const backToLobby = () => {
       webSocketConnection.emit("backToLobby");
-      sharedHistory.push("/lobby/" + props.lobby.id);
+      sharedHistory.push("/lobby_" + props.lobby.id);
     };
 
     let overlayContent = <></>;
@@ -197,19 +197,19 @@ const GamePage = (props) => {
         case "playing":
             overlayContent = <SearchBox>
                 <p>
-                    Klicke und verschiebe Deinen Marker <PushPin size={16} pinned={true} color={props.user.color}/> an die Stelle wo Du das gesuchte Land vermutest.
+                    {strings.gamePlayInfoBefore} <PushPin size={16} pinned={true} color={props.user.color}/> {strings.gamePlayInfoAfter}
                 </p>
-                <strong>Gesucht wird: </strong>
-                <h2> <img src={`/assets/${props.game.requirement.country_code.toLowerCase()}.png`} /> {props.game.requirement.name}</h2>
+                <strong>{strings.searchFor}</strong>
+                <h2> <img src={`/assets/{props.game.requirement.country_code.toLowerCase()}.png`} /> {props.game.requirement.name}</h2>
                 <hr/>
                 <Countdown from={props.game.lobby.roundTime} />
-                <p>Sekunden bis die Runde beendet wird</p>
+                <p>{strings.secondsTillRoundEnd}</p>
             </SearchBox>;
             break;
         case "starting":
             overlayContent = <SearchBox>
                 <p>
-                    Das Spiel beginnt in...
+                    {strings.gameStartsIn}
                 </p>
                 <Countdown from={5}/>
             </SearchBox>;
@@ -217,10 +217,10 @@ const GamePage = (props) => {
         case "roundEnd":
             overlayContent = <SearchBox>
                 <p>
-                    Runde beendet. Das sind die Ergebnisse:
+                    {strings.roundEnd}
                 </p>
                 {props.game.results.map((result, index) => {
-                    return <div style={{fontWeight: result.isWinner ? "bold" : ""}}>
+                    return <div key={index} style={{fontWeight: result.isWinner ? "bold" : ""}}>
                         <PushPin size={16} pinned={true} color={result.user.color}/><br/>
                         {result.user.name} ({result.distance.toFixed(2)}km)
                     </div>;
@@ -230,20 +230,20 @@ const GamePage = (props) => {
         case "gameEnd":
             overlayContent = <SearchBox>
                 <p>
-                    Das Spiel ist beendet!
+                    {strings.gameDone}
                 </p>
-                <strong>Score:</strong>
+                <strong>{strings.scoreTable}</strong>
                 {props.game.users.sort(compare).reverse().map((user, index) => {
-                    return <div>
+                    return <div key={user.id} id={user.id}>
                         #{index + 1} {user.name} <PushPin size={16} pinned={true} color={user.color}/>
                     </div>
                 })}
-                <button onClick={backToLobby}>Zurück zur Lobby</button>
+                <button onClick={backToLobby}>{strings.backToLobby}</button>
             </SearchBox>
             break;
         default:
             overlayContent = <SearchBox>
-                <p>Spiel wird geladen...</p>
+                <p>{strings.gameLoading}</p>
             </SearchBox>;
 
     }
@@ -284,7 +284,7 @@ const GamePage = (props) => {
                         </div>
                     })}
                     <hr/>
-                    Gewonnen hat der, der zuerst {props.lobby.victoryScore} Punkte erreicht
+                    {strings.victoryScoreInfoBefore} {props.lobby.victoryScore} {strings.victoryScoreInfoAfter}
                 </UserList>
             </Overlay>
         </div>

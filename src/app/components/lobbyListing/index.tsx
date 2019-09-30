@@ -50,7 +50,7 @@ const LobbyListing = (props) => {
             localStorage.setItem("lastPassword", lobby.password);
         }
         props.joinLobby(lobby);
-        sharedHistory.push(`/lobby/${lobby.id}`);
+        sharedHistory.push(`/lobby_${lobby.id}`);
     };
 
     return (

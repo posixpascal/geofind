@@ -20,6 +20,10 @@ const UserListingRow = styled.div`
   padding: 8px;
   align-items:center;
   margin-bottom: 10px;
+  padding-right: 30px;
+  ${props => props.isUser && `
+    background: #f0e3fb;
+  `}
 `;
 const UserName = styled.div`
   margin: 0 8px;
@@ -48,6 +52,7 @@ const ReadyButton = styled(Button)`
   color: #212121;
   font-size:20px;
   }
+ 
   
   :hover {
     background: rgba(97,202,97,.9) !important;
@@ -65,6 +70,7 @@ const ReadyButton = styled(Button)`
     span { color: #fff !important; }
   ` : ""}
   }
+  ${props => !props.inactive && `
     :after {
         content: '';
         position: absolute;
@@ -98,6 +104,7 @@ const ReadyButton = styled(Button)`
         transition: all .2s ease;
         -webkit-backface-visibility: hidden;
     }
+    `}
 `;
 const UserIcon = styled.div`
   padding-right: 5px;
@@ -153,7 +160,7 @@ const UserListing = (props) => {
                 const userReady = user.isReady ? <ReadyButton inactive={true} isReady={true}><span>{strings.userReady}</span></ReadyButton> :
                     <ReadyButton inactive={true} isReady={false}><span>{strings.userNotReady}</span></ReadyButton>;
 
-                return <UserListingRow key={user.id}>
+                return <UserListingRow isUser={props.user.id === user.id} key={user.id}>
                     <HorizontalAlignment>
                         <UserIcon>{userIcon}</UserIcon>
                         <UserName onClick={() => props.user.id === user.id ? changeName() : () => {}}>{user.name}</UserName>

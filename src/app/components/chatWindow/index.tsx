@@ -66,10 +66,11 @@ export const ChatWindowWrapper = styled.div`
 
 const ChatWindow = (props) => {
     const [chatMessages, setChatMessages] = useState([{
+        id: Math.random(),
         date: +new Date(),
         user: {
             color: "#9b4dca",
-            name: "Ländergame"
+            name: "geofind.io"
         },
         bold: true,
         message: strings.chatWelcome

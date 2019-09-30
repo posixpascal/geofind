@@ -18,6 +18,16 @@ export const BrandTitle = styled.h1`
   margin: 0;
   padding: 0;
   font-size: 32px;
+  display: flex;
+  align-items: center;
+  a {
+  display: block;
+  }
+  img {
+    height: 38px;
+    position: relative;
+    top: 5px;
+  }
 `;
 
 export const Navigation = styled.nav`
@@ -36,12 +46,18 @@ export const Navigation = styled.nav`
   }
 `;
 
+const Image = styled.img`
+  display: inline;
+  height: 32px;
+`;
 export const Header = (props) => {
     const [showProfileEdit, setShowProfileEdit] = useState(false);
 
     return (
         <HeaderContainer>
-            <BrandTitle> <NavLink to={"/"}>{strings.gameName}</NavLink></BrandTitle>
+            <BrandTitle>
+                <NavLink to={"/"}><Image src={require("../../../assets/logo.svg")} /> {strings.gameName}</NavLink>
+            </BrandTitle>
             <Navigation>
                 <ul>
                     <li>

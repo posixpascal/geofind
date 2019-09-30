@@ -32,7 +32,7 @@ const Application = () => {
                 <Header/>
 
                     <Switch>
-                        <Route path="/game/:id" component={GamePage}/>
+                        <Route path="/game_:id" component={GamePage}/>
                         <Route>
                         <RelativeBox>
 
@@ -49,7 +49,7 @@ const Application = () => {
                         <OverlayContent>
                             <Route path="/" exact component={HomePage}/>
                             <Route path="/lobbies/new" exact component={LobbyCreatePage}/>
-                            <Route path="/lobby/:id" component={LobbyPage}/>
+                            <Route path="/lobby_:id" component={LobbyPage}/>
                             <Footer/>
                         </OverlayContent>
                         </RelativeBox>
@@ -61,5 +61,9 @@ const Application = () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-    ReactDOM.render(<Application/>, document.querySelector("#app"));
+    const init = () => {
+        if (typeof (window as any).io === "undefined"){ return setTimeout(init, 100);  }
+        ReactDOM.render(<Application/>, document.querySelector("#app"));
+    };
+    init();
 });

@@ -2,7 +2,7 @@ import {sharedHistory} from "./sharedHistory";
 import {LOBBIES_LIST, LOBBY_JOIN, LOBBY_UPDATE, LOBBY_MESSAGE, GAME_UPDATE, USER_CONNECTED, USER_LIST_LOBBY} from "../actions/types";
 
 declare const io : any;
-export const webSocketConnection = io("https://gameserver.geofind.io");
+export const webSocketConnection = io(process.env.ENVIRONMENT === "production" ? "https://gameserver.geofind.io" : "http://localhost:3888");
 
 export const initWebSockets = (store) => {
     // TODO: extract into config.
@@ -42,7 +42,7 @@ export const initWebSockets = (store) => {
     });*/
 
     webSocketConnection.on("lobbyCreated", (lobby) => {
-       sharedHistory.push(`/lobby/${lobby.id}`)
+       sharedHistory.push(`/lobby_${lobby.id}`)
     });
 
     webSocketConnection.on("lobbyNotFound", (lobby) => {
@@ -51,7 +51,7 @@ export const initWebSockets = (store) => {
     });
 
     webSocketConnection.on("gameCreated", (game) => {
-        sharedHistory.push(`/game/${game.id}`);
+        sharedHistory.push(`/game_${game.id}`);
     })
 
     webSocketConnection.on("lobbyJoined", (lobby) => {
