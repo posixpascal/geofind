@@ -61,9 +61,5 @@ const Application = () => {
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const init = () => {
-        if (typeof (window as any).io === "undefined"){ return setTimeout(init, 100);  }
         ReactDOM.render(<Application/>, document.querySelector("#app"));
-    };
-    init();
 });
