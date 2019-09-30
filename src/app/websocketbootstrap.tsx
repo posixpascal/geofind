@@ -20,5 +20,5 @@ import {Footer} from "./components/footer";
 
 const head = document.querySelector("head");
 const socketio = document.createElement("script");
-socketio.src = process.env.ENVIRONMENT === "production" ? "https://gameserver.geofind.io/socket.io/socket.io.js" : "http://localhost:3888/socket.io/socket.io.js";
+socketio.src = "https://gameserver.geofind.io/socket.io/socket.io.js";
 head.appendChild(socketio);
