@@ -37,7 +37,7 @@ export const GameMap = compose(
             ]
         }}
     >
-        {props.isMarkerShown && !props.showAllMarker && <Marker onDragEnd={props.markerMoved} icon={{ url: PushPinSVG({ color: props.player.color, size: 60 })}} position={props.lastMarkerPosition} animation={(google as any).maps.Animation.DROP} draggable={true} />}
+        {props.isMarkerShown && <Marker onDragEnd={props.markerMoved} icon={{ url: PushPinSVG({ color: props.player.color, size: 60 })}} position={props.lastMarkerPosition} animation={(google as any).maps.Animation.DROP} draggable={true} />}
         {props.showAllMarker && props.game && props.game.results.map((result) => {
             return <Marker key={result.user.name} icon={{ url: PushPinSVG({ color: result.user.color })}} position={{lat: result.lat, lng: result.lng}} animation={(google as any).maps.Animation.DROP} draggable={false} />
         })}
