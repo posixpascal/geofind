@@ -42744,6 +42744,18 @@ module.exports = {
   "loading": "Warte...",
   "newLobbyName": "Neuer Raum",
   "enterPassword": "Gebe das Passwort des Raumes ein",
+  "gamePlayInfoBefore": "Klicke und verschiebe Deinen Marker ",
+  "gamePlayInfoAfter": " an die Stelle wo Du das gesuchte Land vermutest.",
+  "searchFor": "Gesucht wird: ",
+  "secondsTillRoundEnd": "Sekunden bis die Runde beendet wird",
+  "gameStartsIn": "Das Spiel startet in...",
+  "roundEnd": "Runde beendet. Das sind die Ergebnisse:",
+  "gameDone": "Das Spiel ist beendet!",
+  "scoreTable": "Punktestand:",
+  "backToLobby": "Zurück zur Lobby",
+  "gameLoading": "Spiel wird geladen...",
+  "victoryScoreInfoBefore": "Gewonnen hat der, der zuerst ",
+  "victoryScoreInfoAfter": "Punkte erreicht hat.",
   "password": "Passwort",
   "enterNewLobbyName": "Gebe einen neuen Namen für diesen Raum ein",
   "chatWelcome": "Willkommen in der Lobby. Das Spiel kann gestartet werden sobald alle Spieler bereit sind.",
@@ -42783,7 +42795,19 @@ module.exports = {
   "leaveLobby": "Leave lobby",
   "homeTitle": "Lobbies",
   "editProfile": "Edit Profile",
+  "gamePlayInfoBefore": "Click and drag your marker",
+  "gamePlayInfoAfter": " to the location where you expect the country to be located",
+  "searchFor": "Where is:",
+  "secondsTillRoundEnd": "Seconds until round end",
   "sourceCode": "Source Code",
+  "gameStartsIn": "Game starts in...",
+  "roundEnd": "Round finished. Here are the results:",
+  "gameDone": "The game is finished!",
+  "scoreTable": "Score:",
+  "backToLobby": "Back to lobby",
+  "gameLoading": "Game loading...",
+  "victoryScoreInfoBefore": "The player who reaches ",
+  "victoryScoreInfoAfter": "points first wins.",
   "lobbyCreateForm": {
     "title": "Create lobby",
     "name": "Lobby name",
@@ -42850,7 +42874,7 @@ var sharedHistory_1 = require("./sharedHistory");
 
 var types_1 = require("../actions/types");
 
-exports.webSocketConnection = io("https://gameserver.geofind.io");
+exports.webSocketConnection = io("development" === "production" ? "https://gameserver.geofind.io" : "http://localhost:3888");
 
 exports.initWebSockets = function (store) {
   // TODO: extract into config.
@@ -42898,14 +42922,14 @@ exports.initWebSockets = function (store) {
   });*/
 
   exports.webSocketConnection.on("lobbyCreated", function (lobby) {
-    sharedHistory_1.sharedHistory.push("/lobby/" + lobby.id);
+    sharedHistory_1.sharedHistory.push("/lobby_" + lobby.id);
   });
   exports.webSocketConnection.on("lobbyNotFound", function (lobby) {
     console.error("Lobby not found.");
     sharedHistory_1.sharedHistory.push("/");
   });
   exports.webSocketConnection.on("gameCreated", function (game) {
-    sharedHistory_1.sharedHistory.push("/game/" + game.id);
+    sharedHistory_1.sharedHistory.push("/game_" + game.id);
   });
   exports.webSocketConnection.on("lobbyJoined", function (lobby) {
     store.dispatch({
@@ -75037,7 +75061,7 @@ var LobbyListing = function LobbyListing(props) {
     }
 
     props.joinLobby(lobby);
-    sharedHistory_1.sharedHistory.push("/lobby/" + lobby.id);
+    sharedHistory_1.sharedHistory.push("/lobby_" + lobby.id);
   };
 
   return react_1.default.createElement("div", null, props.lobbies.length ? props.lobbies.map(function (lobby) {
@@ -75107,7 +75131,7 @@ exports.OverlayContent = styled_components_1.default.div(templateObject_2 || (te
 
 exports.HomePage = function (props) {
   return react_1.default.createElement("div", null, react_1.default.createElement("h2", null, i18n_1.strings.homeTitle, " "), react_1.default.createElement("p", null, i18n_1.strings.homeDescription), react_1.default.createElement("p", null, i18n_1.strings.homeDescription2), react_1.default.createElement("p", null, i18n_1.strings.homeDescription3), react_1.default.createElement("center", null, react_1.default.createElement(react_router_dom_1.NavLink, {
-    to: "/lobby/new"
+    to: "/lobbies/new"
   }, react_1.default.createElement(Button_1.Button, null, i18n_1.strings.createLobby))), react_1.default.createElement("br", null), react_1.default.createElement("br", null), react_1.default.createElement(lobbyListing_1.default, null));
 };
 
@@ -79797,10 +79821,11 @@ exports.ChatWindowWrapper = styled_components_1.default.div(templateObject_7 || 
 
 var ChatWindow = function ChatWindow(props) {
   var _a = react_1.useState([{
+    id: Math.random(),
     date: +new Date(),
     user: {
       color: "#9b4dca",
-      name: "Ländergame"
+      name: "geofind.io"
     },
     bold: true,
     message: i18n_1.strings.chatWelcome
@@ -93052,15 +93077,19 @@ var webSockets_1 = require("../../helper/webSockets");
 var react_color_1 = require("react-color");
 
 var UserListingWrapper = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  width: 100%;\n"], ["\n  width: 100%;\n"])));
-var UserListingRow = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  padding: 8px;\n  align-items:center;\n  margin-bottom: 10px;\n"], ["\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  padding: 8px;\n  align-items:center;\n  margin-bottom: 10px;\n"])));
+var UserListingRow = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  padding: 8px;\n  align-items:center;\n  margin-bottom: 10px;\n  padding-right: 30px;\n  ", "\n"], ["\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  padding: 8px;\n  align-items:center;\n  margin-bottom: 10px;\n  padding-right: 30px;\n  ", "\n"])), function (props) {
+  return props.isUser && "\n    background: #f0e3fb;\n  ";
+});
 var UserName = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  margin: 0 8px;\n  border-bottom: 1px dotted #ccc;\n  font-size: 24px;\n"], ["\n  margin: 0 8px;\n  border-bottom: 1px dotted #ccc;\n  font-size: 24px;\n"])));
 exports.UserColor = styled_components_1.default.div(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  border: 1px solid #aaa;\n"], ["\n  width: 24px;\n  height: 24px;\n  border-radius: 50%;\n  border: 1px solid #aaa;\n"])));
-var ReadyButton = styled_components_1.default(Button_1.Button)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  position: relative;\n  float: right;\n  overflow:hidden;\n  border:none;\n  ", "\n  \n  ", "\n  span {\n  color: #212121;\n  font-size:20px;\n  }\n  \n  :hover {\n    background: rgba(97,202,97,.9) !important;\n    border-left: 10px solid rgb(70,140,70) !important;\n    span {\n    color: #fff !important;\n    }\n  }\n  :focus {\n    background: #f1f1f1;\n    span { color: #212121 !important; }\n    ", "\n  }\n    :after {\n        content: '';\n        position: absolute;\n        z-index: 40;\n        width: 1px;\n        top: 0;\n        bottom: 0;\n        left: 0;\n        opacity: 0;\n        background: rgba(97,202,97,.7);\n        box-shadow: 0 0 25px 5px rgba(97,202,97,.7);\n        -webkit-animation: readyAnim 5s infinite;\n        -moz-animation: readyAnim 5s infinite;\n        -o-animation: readyAnim 5s infinite;\n        animation: readyAnim 5s infinite;\n        position: absolute;\n        z-index: 50;\n        top: 0;\n        bottom: 0;\n        left: 0;\n        width: 0;\n        background-image: -moz-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background-image: -webkit-gradient(linear,left top,right top,color-stop(0,#60a760),color-stop(100%,#61ca61));\n        background-image: -webkit-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background-image: -o-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background: -ms-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background: linear-gradient(to right,#60a760 0,#61ca61 100%);\n        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$from', endColorstr='$to', GradientType=1);\n        -webkit-transition: all .2s ease;\n        -o-transition: all .2s ease;\n        transition: all .2s ease;\n        -webkit-backface-visibility: hidden;\n    }\n"], ["\n  position: relative;\n  float: right;\n  overflow:hidden;\n  border:none;\n  ", "\n  \n  ", "\n  span {\n  color: #212121;\n  font-size:20px;\n  }\n  \n  :hover {\n    background: rgba(97,202,97,.9) !important;\n    border-left: 10px solid rgb(70,140,70) !important;\n    span {\n    color: #fff !important;\n    }\n  }\n  :focus {\n    background: #f1f1f1;\n    span { color: #212121 !important; }\n    ", "\n  }\n    :after {\n        content: '';\n        position: absolute;\n        z-index: 40;\n        width: 1px;\n        top: 0;\n        bottom: 0;\n        left: 0;\n        opacity: 0;\n        background: rgba(97,202,97,.7);\n        box-shadow: 0 0 25px 5px rgba(97,202,97,.7);\n        -webkit-animation: readyAnim 5s infinite;\n        -moz-animation: readyAnim 5s infinite;\n        -o-animation: readyAnim 5s infinite;\n        animation: readyAnim 5s infinite;\n        position: absolute;\n        z-index: 50;\n        top: 0;\n        bottom: 0;\n        left: 0;\n        width: 0;\n        background-image: -moz-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background-image: -webkit-gradient(linear,left top,right top,color-stop(0,#60a760),color-stop(100%,#61ca61));\n        background-image: -webkit-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background-image: -o-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background: -ms-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background: linear-gradient(to right,#60a760 0,#61ca61 100%);\n        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$from', endColorstr='$to', GradientType=1);\n        -webkit-transition: all .2s ease;\n        -o-transition: all .2s ease;\n        transition: all .2s ease;\n        -webkit-backface-visibility: hidden;\n    }\n"])), function (props) {
+var ReadyButton = styled_components_1.default(Button_1.Button)(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  position: relative;\n  float: right;\n  overflow:hidden;\n  border:none;\n  ", "\n  \n  ", "\n  span {\n  color: #212121;\n  font-size:20px;\n  }\n \n  \n  :hover {\n    background: rgba(97,202,97,.9) !important;\n    border-left: 10px solid rgb(70,140,70) !important;\n    span {\n    color: #fff !important;\n    }\n  }\n  :focus {\n    background: #f1f1f1;\n    span { color: #212121 !important; }\n    ", "\n  }\n  ", "\n"], ["\n  position: relative;\n  float: right;\n  overflow:hidden;\n  border:none;\n  ", "\n  \n  ", "\n  span {\n  color: #212121;\n  font-size:20px;\n  }\n \n  \n  :hover {\n    background: rgba(97,202,97,.9) !important;\n    border-left: 10px solid rgb(70,140,70) !important;\n    span {\n    color: #fff !important;\n    }\n  }\n  :focus {\n    background: #f1f1f1;\n    span { color: #212121 !important; }\n    ", "\n  }\n  ", "\n"])), function (props) {
   return props.isReady ? "\n    background:  rgba(97,202,97,.9);\n      border-left: 10px solid rgb(70,140,70) !important;\n    span { color: #fff !important; }\n  " : "";
 }, function (props) {
   return props.inactive ? "pointer-events:none" : "";
 }, function (props) {
   return props.isReady ? "\n\n    background:  #60a760;\n    span { color: #fff !important; }\n  " : "";
+}, function (props) {
+  return !props.inactive && "\n    :after {\n        content: '';\n        position: absolute;\n        z-index: 40;\n        width: 1px;\n        top: 0;\n        bottom: 0;\n        left: 0;\n        opacity: 0;\n        background: rgba(97,202,97,.7);\n        box-shadow: 0 0 25px 5px rgba(97,202,97,.7);\n        -webkit-animation: readyAnim 5s infinite;\n        -moz-animation: readyAnim 5s infinite;\n        -o-animation: readyAnim 5s infinite;\n        animation: readyAnim 5s infinite;\n        position: absolute;\n        z-index: 50;\n        top: 0;\n        bottom: 0;\n        left: 0;\n        width: 0;\n        background-image: -moz-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background-image: -webkit-gradient(linear,left top,right top,color-stop(0,#60a760),color-stop(100%,#61ca61));\n        background-image: -webkit-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background-image: -o-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background: -ms-linear-gradient(left,#60a760 0,#61ca61 100%);\n        background: linear-gradient(to right,#60a760 0,#61ca61 100%);\n        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='$from', endColorstr='$to', GradientType=1);\n        -webkit-transition: all .2s ease;\n        -o-transition: all .2s ease;\n        transition: all .2s ease;\n        -webkit-backface-visibility: hidden;\n    }\n    ";
 });
 var UserIcon = styled_components_1.default.div(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  padding-right: 5px;\n  svg {\n  width: 32px;\n  height: 32px;\n  }\n"], ["\n  padding-right: 5px;\n  svg {\n  width: 32px;\n  height: 32px;\n  }\n"])));
 var ColorPickerWrapper = styled_components_1.default.div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["position:relative;"], ["position:relative;"])));
@@ -93117,6 +93146,7 @@ var UserListing = function UserListing(props) {
       isReady: false
     }, react_1.default.createElement("span", null, i18n_1.strings.userNotReady));
     return react_1.default.createElement(UserListingRow, {
+      isUser: props.user.id === user.id,
       key: user.id
     }, react_1.default.createElement(HorizontalAlignment_1.HorizontalAlignment, null, react_1.default.createElement(UserIcon, null, userIcon), react_1.default.createElement(UserName, {
       onClick: function onClick() {
@@ -109875,6 +109905,8 @@ var react_redux_1 = require("react-redux");
 
 var react_router_dom_1 = require("react-router-dom");
 
+var i18n_1 = require("../../i18n");
+
 var HorizontalAlignment_1 = require("../../components/uiWidgets/HorizontalAlignment");
 
 var webSockets_1 = require("../../helper/webSockets");
@@ -109917,11 +109949,12 @@ exports.GameMap = recompose_1.compose(recompose_1.withProps({
         }]
       }]
     }
-  }, props.isMarkerShown && react_1.default.createElement(react_google_maps_1.Marker, {
+  }, props.isMarkerShown && !props.showAllMarker && react_1.default.createElement(react_google_maps_1.Marker, {
     onDragEnd: props.markerMoved,
     icon: {
       url: PushPinSVG({
-        color: props.player.color
+        color: props.player.color,
+        size: 60
       })
     },
     position: props.lastMarkerPosition,
@@ -109989,7 +110022,7 @@ var PushPinSVG = function PushPinSVG(_a) {
     size: size,
     pinned: true
   })));
-  return "data:image/svg+xml;charset=UTF-8;base64," + encodedSVG;
+  return "data:image/svg+xml;charset=UTF-8;base64,{encodedSVG}";
 };
 
 var PushPin = function PushPin(_a) {
@@ -110119,32 +110152,32 @@ var GamePage = function GamePage(props) {
 
   var backToLobby = function backToLobby() {
     webSockets_1.webSocketConnection.emit("backToLobby");
-    sharedHistory_1.sharedHistory.push("/lobby/" + props.lobby.id);
+    sharedHistory_1.sharedHistory.push("/lobby_" + props.lobby.id);
   };
 
   var overlayContent = react_1.default.createElement(react_1.default.Fragment, null);
 
   switch (props.game.state) {
     case "playing":
-      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, "Klicke und verschiebe Deinen Marker ", react_1.default.createElement(PushPin, {
+      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, i18n_1.strings.gamePlayInfoBefore, " ", react_1.default.createElement(PushPin, {
         size: 16,
         pinned: true,
         color: props.user.color
-      }), " an die Stelle wo Du das gesuchte Land vermutest."), react_1.default.createElement("strong", null, "Gesucht wird: "), react_1.default.createElement("h2", null, " ", react_1.default.createElement("img", {
-        src: "/assets/" + props.game.requirement.country_code.toLowerCase() + ".png"
+      }), " ", i18n_1.strings.gamePlayInfoAfter), react_1.default.createElement("strong", null, i18n_1.strings.searchFor), react_1.default.createElement("h2", null, " ", react_1.default.createElement("img", {
+        src: "/assets/{props.game.requirement.country_code.toLowerCase()}.png"
       }), " ", props.game.requirement.name), react_1.default.createElement("hr", null), react_1.default.createElement(Countdown, {
         from: props.game.lobby.roundTime
-      }), react_1.default.createElement("p", null, "Sekunden bis die Runde beendet wird"));
+      }), react_1.default.createElement("p", null, i18n_1.strings.secondsTillRoundEnd));
       break;
 
     case "starting":
-      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, "Das Spiel beginnt in..."), react_1.default.createElement(Countdown, {
+      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, i18n_1.strings.gameStartsIn), react_1.default.createElement(Countdown, {
         from: 5
       }));
       break;
 
     case "roundEnd":
-      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, "Runde beendet. Das sind die Ergebnisse:"), props.game.results.map(function (result, index) {
+      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, i18n_1.strings.roundEnd), props.game.results.map(function (result, index) {
         return react_1.default.createElement("div", {
           style: {
             fontWeight: result.isWinner ? "bold" : ""
@@ -110158,19 +110191,21 @@ var GamePage = function GamePage(props) {
       break;
 
     case "gameEnd":
-      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, "Das Spiel ist beendet!"), react_1.default.createElement("strong", null, "Score:"), props.game.users.sort(compare).reverse().map(function (user, index) {
-        return react_1.default.createElement("div", null, "#", index + 1, " ", user.name, " ", react_1.default.createElement(PushPin, {
+      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, i18n_1.strings.gameDone), react_1.default.createElement("strong", null, i18n_1.strings.scoreTable), props.game.users.sort(compare).reverse().map(function (user, index) {
+        return react_1.default.createElement("div", {
+          id: user.id
+        }, "#", index + 1, " ", user.name, " ", react_1.default.createElement(PushPin, {
           size: 16,
           pinned: true,
           color: user.color
         }));
       }), react_1.default.createElement("button", {
         onClick: backToLobby
-      }, "Zur\xFCck zur Lobby"));
+      }, i18n_1.strings.backToLobby));
       break;
 
     default:
-      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, "Spiel wird geladen..."));
+      overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, i18n_1.strings.gameLoading));
   }
 
   var markerMoved = function markerMoved(ev) {
@@ -110208,7 +110243,7 @@ var GamePage = function GamePage(props) {
       size: 16,
       color: user.color
     }), react_1.default.createElement(UserName, null, user.name, " (", user.gamePoints, ")")));
-  }), react_1.default.createElement("hr", null), "Gewonnen hat der, der zuerst ", props.lobby.victoryScore, " Punkte erreicht")));
+  }), react_1.default.createElement("hr", null), i18n_1.strings.victoryScoreInfoBefore, " ", props.lobby.victoryScore, " ", i18n_1.strings.victoryScoreInfoAfter)));
 };
 
 function mapStateToProps(state) {
@@ -110220,7 +110255,9 @@ function mapStateToProps(state) {
 
 exports.default = react_router_dom_1.withRouter(react_redux_1.connect(mapStateToProps, actions)(GamePage));
 var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6, templateObject_7;
-},{"react":"../node_modules/react/index.js","recompose":"../node_modules/recompose/dist/Recompose.esm.js","react-google-maps":"../node_modules/react-google-maps/lib/index.js","react-feather":"../node_modules/react-feather/dist/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../actions/lobby":"app/actions/lobby.ts","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../components/uiWidgets/HorizontalAlignment":"app/components/uiWidgets/HorizontalAlignment.tsx","../../helper/webSockets":"app/helper/webSockets.ts","react-dom/server":"../node_modules/react-dom/server.browser.js","../../helper/sharedHistory":"app/helper/sharedHistory.ts"}],"app/components/header/index.tsx":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","recompose":"../node_modules/recompose/dist/Recompose.esm.js","react-google-maps":"../node_modules/react-google-maps/lib/index.js","react-feather":"../node_modules/react-feather/dist/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../actions/lobby":"app/actions/lobby.ts","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../i18n":"app/i18n/index.ts","../../components/uiWidgets/HorizontalAlignment":"app/components/uiWidgets/HorizontalAlignment.tsx","../../helper/webSockets":"app/helper/webSockets.ts","react-dom/server":"../node_modules/react-dom/server.browser.js","../../helper/sharedHistory":"app/helper/sharedHistory.ts"}],"assets/logo.svg":[function(require,module,exports) {
+module.exports = "/logo.b37d81ec.svg";
+},{}],"app/components/header/index.tsx":[function(require,module,exports) {
 "use strict";
 
 var __makeTemplateObject = this && this.__makeTemplateObject || function (cooked, raw) {
@@ -110264,17 +110301,20 @@ var styled_components_1 = __importDefault(require("styled-components"));
 var i18n_1 = require("../../i18n");
 
 exports.HeaderContainer = styled_components_1.default.header(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  background: #fff;\n  justify-content: space-between;\n  align-items: center;\n  padding: 0 20px;\n  border-bottom: 5px solid #f1f1f1;\n"], ["\n  display: flex;\n  background: #fff;\n  justify-content: space-between;\n  align-items: center;\n  padding: 0 20px;\n  border-bottom: 5px solid #f1f1f1;\n"])));
-exports.BrandTitle = styled_components_1.default.h1(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  margin: 0;\n  padding: 0;\n  font-size: 32px;\n"], ["\n  margin: 0;\n  padding: 0;\n  font-size: 32px;\n"])));
+exports.BrandTitle = styled_components_1.default.h1(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  margin: 0;\n  padding: 0;\n  font-size: 32px;\n  display: flex;\n  align-items: center;\n  a {\n  display: block;\n  }\n  img {\n    height: 38px;\n    position: relative;\n    top: 5px;\n  }\n"], ["\n  margin: 0;\n  padding: 0;\n  font-size: 32px;\n  display: flex;\n  align-items: center;\n  a {\n  display: block;\n  }\n  img {\n    height: 38px;\n    position: relative;\n    top: 5px;\n  }\n"])));
 exports.Navigation = styled_components_1.default.nav(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  ul {\n    display: flex;\n    justify-content: space-evenly;\n    list-style: none;\n    margin: 0;\n    li {\n      display: inline-block;\n      padding: 20px;\n      margin: 0;\n    }\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  ul {\n    display: flex;\n    justify-content: space-evenly;\n    list-style: none;\n    margin: 0;\n    li {\n      display: inline-block;\n      padding: 20px;\n      margin: 0;\n    }\n  }\n"])));
+var Image = styled_components_1.default.img(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  display: inline;\n  height: 32px;\n"], ["\n  display: inline;\n  height: 32px;\n"])));
 
 exports.Header = function (props) {
   var _a = react_1.useState(false),
       showProfileEdit = _a[0],
       setShowProfileEdit = _a[1];
 
-  return react_1.default.createElement(exports.HeaderContainer, null, react_1.default.createElement(exports.BrandTitle, null, " ", react_1.default.createElement(react_router_dom_1.NavLink, {
+  return react_1.default.createElement(exports.HeaderContainer, null, react_1.default.createElement(exports.BrandTitle, null, react_1.default.createElement(react_router_dom_1.NavLink, {
     to: "/"
-  }, i18n_1.strings.gameName)), react_1.default.createElement(exports.Navigation, null, react_1.default.createElement("ul", null, react_1.default.createElement("li", null, react_1.default.createElement(react_router_dom_1.NavLink, {
+  }, react_1.default.createElement(Image, {
+    src: require("../../../assets/logo.svg")
+  }), " ", i18n_1.strings.gameName)), react_1.default.createElement(exports.Navigation, null, react_1.default.createElement("ul", null, react_1.default.createElement("li", null, react_1.default.createElement(react_router_dom_1.NavLink, {
     to: "/"
   }, i18n_1.strings.homeLink)), react_1.default.createElement("li", null, react_1.default.createElement(react_router_dom_1.NavLink, {
     to: "/lobbies/new"
@@ -110284,8 +110324,8 @@ exports.Header = function (props) {
   }, i18n_1.strings.sourceCode)))));
 };
 
-var templateObject_1, templateObject_2, templateObject_3;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../i18n":"app/i18n/index.ts"}],"../node_modules/react-hook-form/dist/react-hook-form.es.js":[function(require,module,exports) {
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
+},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../i18n":"app/i18n/index.ts","../../../assets/logo.svg":"assets/logo.svg"}],"../node_modules/react-hook-form/dist/react-hook-form.es.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -111715,7 +111755,7 @@ var Application = function Application() {
   }, react_1.default.createElement(connected_react_router_1.ConnectedRouter, {
     history: sharedHistory_1.sharedHistory
   }, react_1.default.createElement(header_1.Header, null), react_1.default.createElement(react_router_dom_1.Switch, null, react_1.default.createElement(react_router_dom_1.Route, {
-    path: "/game/:id",
+    path: "/game_:id",
     component: game_1.default
   }), react_1.default.createElement(react_router_dom_1.Route, null, react_1.default.createElement(RelativeBox, null, react_1.default.createElement(home_1.Overlay, null), react_1.default.createElement(game_1.GameMap, {
     isMarkerShown: false,
@@ -111739,15 +111779,26 @@ var Application = function Application() {
     exact: true,
     component: lobbyCreate_1.LobbyCreatePage
   }), react_1.default.createElement(react_router_dom_1.Route, {
-    path: "/lobby/:id",
+    path: "/lobby_:id",
     component: lobby_1.default
   }), react_1.default.createElement(footer_1.Footer, null)))))));
 };
 
 document.addEventListener("DOMContentLoaded", function () {
   return __awaiter(void 0, void 0, void 0, function () {
+    var _init;
+
     return __generator(this, function (_a) {
-      react_dom_1.default.render(react_1.default.createElement(Application, null), document.querySelector("#app"));
+      _init = function init() {
+        if (typeof window.io === "undefined") {
+          return setTimeout(_init, 100);
+        }
+
+        react_dom_1.default.render(react_1.default.createElement(Application, null), document.querySelector("#app"));
+      };
+
+      _init();
+
       return [2
       /*return*/
       ];
@@ -111783,7 +111834,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61688" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62807" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
