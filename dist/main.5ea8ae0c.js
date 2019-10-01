@@ -39323,14 +39323,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var types_1 = require("../actions/types");
 
-var initialState;
-
-try {
-  initialState = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {};
-} catch (e) {
-  initialState = {};
-} // @ts-ignore
-
+var initialState = false; // @ts-ignore
 
 function default_1(state, action) {
   if (state === void 0) {
@@ -39345,6 +39338,7 @@ function default_1(state, action) {
       return newState;
 
     case types_1.USER_DISCONNECTED:
+      return false;
       break;
 
     case types_1.USER_PING:
@@ -42877,12 +42871,29 @@ var types_1 = require("../actions/types");
 exports.webSocketConnection = io("development" === "production" ? "https://gameserver.geofind.io" : "http://localhost:3888");
 
 exports.initWebSockets = function (store) {
-  // TODO: extract into config.
+  var timer = false;
+  exports.webSocketConnection.on("connect", function () {
+    if (timer) {
+      clearInterval(timer);
+    }
+
+    exports.webSocketConnection.emit('welcome', localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {});
+  }); // TODO: extract into config.
+
   exports.webSocketConnection.on('welcome', function (data) {
     store.dispatch({
       type: types_1.USER_CONNECTED,
       payload: data
     });
+  });
+  exports.webSocketConnection.on("disconnect", function () {
+    store.dispatch({
+      type: types_1.USER_DISCONNECTED,
+      payload: false
+    });
+    timer = setInterval(function () {
+      exports.webSocketConnection.connect();
+    }, 500);
   }); // TODO: cleanup
 
   try {
@@ -75110,6 +75121,16 @@ var __importDefault = this && this.__importDefault || function (mod) {
   };
 };
 
+var __importStar = this && this.__importStar || function (mod) {
+  if (mod && mod.__esModule) return mod;
+  var result = {};
+  if (mod != null) for (var k in mod) {
+    if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+  }
+  result["default"] = mod;
+  return result;
+};
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
@@ -75120,23 +75141,34 @@ var lobbyListing_1 = __importDefault(require("../../components/lobbyListing"));
 
 var i18n_1 = require("../../i18n");
 
-var react_router_dom_1 = require("react-router-dom");
-
 var styled_components_1 = __importDefault(require("styled-components"));
 
 var Button_1 = require("../../components/uiWidgets/Button");
 
+var react_redux_1 = require("react-redux");
+
+var react_router_dom_1 = require("react-router-dom");
+
+var actions = __importStar(require("../../actions/lobby"));
+
 exports.Overlay = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n    position: absolute;\n    left: 0;\n    top: 0px;\n    right: 0;\n    bottom: 0;\n    background: rgba(255,255,255,.6);\n    content: \"\";\n    z-index:2;\n"], ["\n    position: absolute;\n    left: 0;\n    top: 0px;\n    right: 0;\n    bottom: 0;\n    background: rgba(255,255,255,.6);\n    content: \"\";\n    z-index:2;\n"])));
 exports.OverlayContent = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: absolute;\n  top: 80px;\n  max-width: 90%;\n  width: 100%;\n  left: 50%;\n  transform: translateX(-50%);\n  background: #fff;\n  padding: 40px;\n  box-shadow: 3px 3px 15px rgba(0,0,0,.3);\n  z-index: 20;\n  color: #212121;\n  \n  h2 {\n    text-align: center;\n    font-weight: 700;\n    font-size: 48px;\n    margin: 0;\n    padding: 0;\n    margin-bottom: 40px;\n  }\n  \n  p {\n    text-align: center;\n    font-size: 24px;\n  }\n"], ["\n  position: absolute;\n  top: 80px;\n  max-width: 90%;\n  width: 100%;\n  left: 50%;\n  transform: translateX(-50%);\n  background: #fff;\n  padding: 40px;\n  box-shadow: 3px 3px 15px rgba(0,0,0,.3);\n  z-index: 20;\n  color: #212121;\n  \n  h2 {\n    text-align: center;\n    font-weight: 700;\n    font-size: 48px;\n    margin: 0;\n    padding: 0;\n    margin-bottom: 40px;\n  }\n  \n  p {\n    text-align: center;\n    font-size: 24px;\n  }\n"])));
 
-exports.HomePage = function (props) {
-  return react_1.default.createElement("div", null, react_1.default.createElement("h2", null, i18n_1.strings.homeTitle, " "), react_1.default.createElement("p", null, i18n_1.strings.homeDescription), react_1.default.createElement("p", null, i18n_1.strings.homeDescription2), react_1.default.createElement("p", null, i18n_1.strings.homeDescription3), react_1.default.createElement("center", null, react_1.default.createElement(react_router_dom_1.NavLink, {
+var HomePage = function HomePage(props) {
+  return react_1.default.createElement("div", null, react_1.default.createElement("h2", null, i18n_1.strings.homeTitle, " "), react_1.default.createElement("p", null, i18n_1.strings.homeDescription), react_1.default.createElement("p", null, i18n_1.strings.homeDescription2), react_1.default.createElement("p", null, i18n_1.strings.homeDescription3), props.lobbies.length > 0 && react_1.default.createElement("center", null, react_1.default.createElement(react_router_dom_1.NavLink, {
     to: "/lobbies/new"
   }, react_1.default.createElement(Button_1.Button, null, i18n_1.strings.createLobby))), react_1.default.createElement("br", null), react_1.default.createElement("br", null), react_1.default.createElement(lobbyListing_1.default, null));
 };
 
+function mapStateToProps(state) {
+  return {
+    lobbies: state.lobbies
+  };
+}
+
+exports.default = react_router_dom_1.withRouter(react_redux_1.connect(mapStateToProps, actions)(HomePage));
 var templateObject_1, templateObject_2;
-},{"react":"../node_modules/react/index.js","../../components/lobbyListing":"app/components/lobbyListing/index.tsx","../../i18n":"app/i18n/index.ts","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../components/uiWidgets/Button":"app/components/uiWidgets/Button.tsx"}],"../node_modules/moment/moment.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","../../components/lobbyListing":"app/components/lobbyListing/index.tsx","../../i18n":"app/i18n/index.ts","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../components/uiWidgets/Button":"app/components/uiWidgets/Button.tsx","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","../../actions/lobby":"app/actions/lobby.ts"}],"../node_modules/moment/moment.js":[function(require,module,exports) {
 var define;
 var global = arguments[3];
 //! moment.js
@@ -93094,6 +93126,20 @@ var ReadyButton = styled_components_1.default(Button_1.Button)(templateObject_5 
 var UserIcon = styled_components_1.default.div(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  padding-right: 5px;\n  svg {\n  width: 32px;\n  height: 32px;\n  }\n"], ["\n  padding-right: 5px;\n  svg {\n  width: 32px;\n  height: 32px;\n  }\n"])));
 var ColorPickerWrapper = styled_components_1.default.div(templateObject_7 || (templateObject_7 = __makeTemplateObject(["position:relative;"], ["position:relative;"])));
 
+exports.changeName = function () {
+  var newName = prompt(i18n_1.strings.enterNewName);
+
+  if (newName) {
+    exports.updateUser({
+      name: newName
+    });
+  }
+};
+
+exports.updateUser = function (data) {
+  webSockets_1.webSocketConnection.emit("updateUser", data);
+};
+
 var UserListing = function UserListing(props) {
   var users = props.users || [];
 
@@ -93105,22 +93151,8 @@ var UserListing = function UserListing(props) {
     webSockets_1.webSocketConnection.emit("toggleReadyState");
   };
 
-  var changeName = function changeName() {
-    var newName = prompt(i18n_1.strings.enterNewName);
-
-    if (newName) {
-      updateUser({
-        name: newName
-      });
-    }
-  };
-
   var kickPlayer = function kickPlayer(user) {
     webSockets_1.webSocketConnection.emit("kickUser", user);
-  };
-
-  var updateUser = function updateUser(data) {
-    webSockets_1.webSocketConnection.emit("updateUser", data);
   };
 
   var popover = {
@@ -93150,9 +93182,12 @@ var UserListing = function UserListing(props) {
       key: user.id
     }, react_1.default.createElement(HorizontalAlignment_1.HorizontalAlignment, null, react_1.default.createElement(UserIcon, null, userIcon), react_1.default.createElement(UserName, {
       onClick: function onClick() {
-        return props.user.id === user.id ? changeName() : function () {};
+        return props.user.id === user.id ? exports.changeName() : function () {};
       }
-    }, user.name), react_1.default.createElement(ColorPickerWrapper, null, react_1.default.createElement(exports.UserColor, {
+    }, react_1.default.createElement("img", {
+      src: user.image,
+      width: 28
+    }), user.name), react_1.default.createElement(ColorPickerWrapper, null, react_1.default.createElement(exports.UserColor, {
       onClick: function onClick() {
         return props.user.id === user.id ? toggleColorPicker(!colorPicker) : function () {};
       },
@@ -93168,7 +93203,7 @@ var UserListing = function UserListing(props) {
       }
     }), react_1.default.createElement(react_color_1.TwitterPicker, {
       onChangeComplete: function onChangeComplete(color) {
-        updateUser({
+        exports.updateUser({
           color: color.hex
         });
         toggleColorPicker(false);
@@ -109949,7 +109984,7 @@ exports.GameMap = recompose_1.compose(recompose_1.withProps({
         }]
       }]
     }
-  }, props.isMarkerShown && !props.showAllMarker && react_1.default.createElement(react_google_maps_1.Marker, {
+  }, props.isMarkerShown && react_1.default.createElement(react_google_maps_1.Marker, {
     onDragEnd: props.markerMoved,
     icon: {
       url: PushPinSVG({
@@ -110022,7 +110057,7 @@ var PushPinSVG = function PushPinSVG(_a) {
     size: size,
     pinned: true
   })));
-  return "data:image/svg+xml;charset=UTF-8;base64,{encodedSVG}";
+  return "data:image/svg+xml;charset=UTF-8;base64," + encodedSVG;
 };
 
 var PushPin = function PushPin(_a) {
@@ -110179,6 +110214,7 @@ var GamePage = function GamePage(props) {
     case "roundEnd":
       overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, i18n_1.strings.roundEnd), props.game.results.map(function (result, index) {
         return react_1.default.createElement("div", {
+          key: index,
           style: {
             fontWeight: result.isWinner ? "bold" : ""
           }
@@ -110193,6 +110229,7 @@ var GamePage = function GamePage(props) {
     case "gameEnd":
       overlayContent = react_1.default.createElement(SearchBox, null, react_1.default.createElement("p", null, i18n_1.strings.gameDone), react_1.default.createElement("strong", null, i18n_1.strings.scoreTable), props.game.users.sort(compare).reverse().map(function (user, index) {
         return react_1.default.createElement("div", {
+          key: user.id,
           id: user.id
         }, "#", index + 1, " ", user.name, " ", react_1.default.createElement(PushPin, {
           size: 16,
@@ -110294,18 +110331,28 @@ Object.defineProperty(exports, "__esModule", {
 
 var react_1 = __importStar(require("react"));
 
-var react_router_dom_1 = require("react-router-dom");
-
 var styled_components_1 = __importDefault(require("styled-components"));
 
 var i18n_1 = require("../../i18n");
 
+var userListing_1 = require("../userListing");
+
+var actions = __importStar(require("../../actions/lobby"));
+
+var react_redux_1 = require("react-redux");
+
+var react_router_dom_1 = require("react-router-dom");
+
+var react_feather_1 = require("react-feather");
+
 exports.HeaderContainer = styled_components_1.default.header(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  display: flex;\n  background: #fff;\n  justify-content: space-between;\n  align-items: center;\n  padding: 0 20px;\n  border-bottom: 5px solid #f1f1f1;\n"], ["\n  display: flex;\n  background: #fff;\n  justify-content: space-between;\n  align-items: center;\n  padding: 0 20px;\n  border-bottom: 5px solid #f1f1f1;\n"])));
 exports.BrandTitle = styled_components_1.default.h1(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  margin: 0;\n  padding: 0;\n  font-size: 32px;\n  display: flex;\n  align-items: center;\n  a {\n  display: block;\n  }\n  img {\n    height: 38px;\n    position: relative;\n    top: 5px;\n  }\n"], ["\n  margin: 0;\n  padding: 0;\n  font-size: 32px;\n  display: flex;\n  align-items: center;\n  a {\n  display: block;\n  }\n  img {\n    height: 38px;\n    position: relative;\n    top: 5px;\n  }\n"])));
 exports.Navigation = styled_components_1.default.nav(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  display: flex;\n  align-items: center;\n  ul {\n    display: flex;\n    justify-content: space-evenly;\n    list-style: none;\n    margin: 0;\n    li {\n      display: inline-block;\n      padding: 20px;\n      margin: 0;\n    }\n  }\n"], ["\n  display: flex;\n  align-items: center;\n  ul {\n    display: flex;\n    justify-content: space-evenly;\n    list-style: none;\n    margin: 0;\n    li {\n      display: inline-block;\n      padding: 20px;\n      margin: 0;\n    }\n  }\n"])));
-var Image = styled_components_1.default.img(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  display: inline;\n  height: 32px;\n"], ["\n  display: inline;\n  height: 32px;\n"])));
+var Divider = styled_components_1.default.li(templateObject_4 || (templateObject_4 = __makeTemplateObject(["\n  border-right: 1px solid #ddd;\n"], ["\n  border-right: 1px solid #ddd;\n"])));
+var CurrentUser = styled_components_1.default.div(templateObject_5 || (templateObject_5 = __makeTemplateObject(["\n  padding-left: 60px;\n  position: relative;\n  text-align: right;\n  font-weight: 700;\n  font-size: 18px;\n  img {\n    position: absolute;\n    width: 40px;\n    left: 0;\n    top: -12px;\n  }\n  svg {\n    animation: spin 0.3s infinite;\n    position: absolute;\n    left: 0;\n    top: 2px;\n  }\n"], ["\n  padding-left: 60px;\n  position: relative;\n  text-align: right;\n  font-weight: 700;\n  font-size: 18px;\n  img {\n    position: absolute;\n    width: 40px;\n    left: 0;\n    top: -12px;\n  }\n  svg {\n    animation: spin 0.3s infinite;\n    position: absolute;\n    left: 0;\n    top: 2px;\n  }\n"])));
+var Image = styled_components_1.default.img(templateObject_6 || (templateObject_6 = __makeTemplateObject(["\n  display: inline;\n  height: 32px;\n"], ["\n  display: inline;\n  height: 32px;\n"])));
 
-exports.Header = function (props) {
+var Header = function Header(props) {
   var _a = react_1.useState(false),
       showProfileEdit = _a[0],
       setShowProfileEdit = _a[1];
@@ -110321,11 +110368,25 @@ exports.Header = function (props) {
   }, i18n_1.strings.createLobbyLink)), react_1.default.createElement("li", null, react_1.default.createElement("a", {
     target: "_blank",
     href: "//github.com/posixpascal/geofind_frontend"
-  }, i18n_1.strings.sourceCode)))));
+  }, i18n_1.strings.sourceCode)), props.user && react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(Divider, null), react_1.default.createElement("li", null, react_1.default.createElement(CurrentUser, null, react_1.default.createElement("img", {
+    src: props.user.image,
+    width: 32
+  }), react_1.default.createElement("span", {
+    onClick: userListing_1.changeName
+  }, props.user.name)))), !props.user && react_1.default.createElement(react_1.default.Fragment, null, react_1.default.createElement(Divider, null), react_1.default.createElement("li", null, react_1.default.createElement(CurrentUser, null, react_1.default.createElement(react_feather_1.Loader, null), " Connecting..."))))));
 };
 
-var templateObject_1, templateObject_2, templateObject_3, templateObject_4;
-},{"react":"../node_modules/react/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../i18n":"app/i18n/index.ts","../../../assets/logo.svg":"assets/logo.svg"}],"../node_modules/react-hook-form/dist/react-hook-form.es.js":[function(require,module,exports) {
+function mapStateToProps(state) {
+  return {
+    user: state.user,
+    lobby: state.lobby,
+    users: state.lobby.users
+  };
+}
+
+exports.default = react_router_dom_1.withRouter(react_redux_1.connect(mapStateToProps, actions)(Header));
+var templateObject_1, templateObject_2, templateObject_3, templateObject_4, templateObject_5, templateObject_6;
+},{"react":"../node_modules/react/index.js","styled-components":"../node_modules/styled-components/dist/styled-components.browser.esm.js","../../i18n":"app/i18n/index.ts","../userListing":"app/components/userListing/index.tsx","../../actions/lobby":"app/actions/lobby.ts","react-redux":"../node_modules/react-redux/es/index.js","react-router-dom":"../node_modules/react-router-dom/esm/react-router-dom.js","react-feather":"../node_modules/react-feather/dist/index.js","../../../assets/logo.svg":"assets/logo.svg"}],"../node_modules/react-hook-form/dist/react-hook-form.es.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -111730,13 +111791,13 @@ var styled_components_1 = __importDefault(require("styled-components"));
 
 var sharedHistory_1 = require("./helper/sharedHistory");
 
-var home_1 = require("./pages/home");
+var home_1 = __importStar(require("./pages/home"));
 
 var lobby_1 = __importDefault(require("./pages/lobby"));
 
 var game_1 = __importStar(require("./pages/game"));
 
-var header_1 = require("./components/header");
+var header_1 = __importDefault(require("./components/header"));
 
 var lobbyCreate_1 = require("./pages/lobbyCreate");
 
@@ -111754,7 +111815,7 @@ var Application = function Application() {
     store: store
   }, react_1.default.createElement(connected_react_router_1.ConnectedRouter, {
     history: sharedHistory_1.sharedHistory
-  }, react_1.default.createElement(header_1.Header, null), react_1.default.createElement(react_router_dom_1.Switch, null, react_1.default.createElement(react_router_dom_1.Route, {
+  }, react_1.default.createElement(header_1.default, null), react_1.default.createElement(react_router_dom_1.Switch, null, react_1.default.createElement(react_router_dom_1.Route, {
     path: "/game_:id",
     component: game_1.default
   }), react_1.default.createElement(react_router_dom_1.Route, null, react_1.default.createElement(RelativeBox, null, react_1.default.createElement(home_1.Overlay, null), react_1.default.createElement(game_1.GameMap, {
@@ -111773,7 +111834,7 @@ var Application = function Application() {
   }), react_1.default.createElement(home_1.OverlayContent, null, react_1.default.createElement(react_router_dom_1.Route, {
     path: "/",
     exact: true,
-    component: home_1.HomePage
+    component: home_1.default
   }), react_1.default.createElement(react_router_dom_1.Route, {
     path: "/lobbies/new",
     exact: true,
@@ -111786,19 +111847,8 @@ var Application = function Application() {
 
 document.addEventListener("DOMContentLoaded", function () {
   return __awaiter(void 0, void 0, void 0, function () {
-    var _init;
-
     return __generator(this, function (_a) {
-      _init = function init() {
-        if (typeof window.io === "undefined") {
-          return setTimeout(_init, 100);
-        }
-
-        react_dom_1.default.render(react_1.default.createElement(Application, null), document.querySelector("#app"));
-      };
-
-      _init();
-
+      react_dom_1.default.render(react_1.default.createElement(Application, null), document.querySelector("#app"));
       return [2
       /*return*/
       ];
@@ -111834,7 +111884,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62807" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54302" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

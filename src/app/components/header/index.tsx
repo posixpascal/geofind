@@ -1,10 +1,11 @@
 import React, {useState} from "react";
-import {NavLink} from "react-router-dom";
-
 import styled from "styled-components";
 import {strings} from "../../i18n";
-import {UserColor} from "../userListing";
-
+import {changeName, updateUser, UserColor} from "../userListing";
+import * as actions from "../../actions/lobby";
+import {connect} from 'react-redux';
+import {NavLink, withRouter} from "react-router-dom";
+import {Loader} from "react-feather";
 export const HeaderContainer = styled.header`
   display: flex;
   background: #fff;
@@ -46,12 +47,37 @@ export const Navigation = styled.nav`
   }
 `;
 
+const Divider = styled.li`
+  border-right: 1px solid #ddd;
+`;
+
+const CurrentUser = styled.div`
+  padding-left: 60px;
+  position: relative;
+  text-align: right;
+  font-weight: 700;
+  font-size: 18px;
+  img {
+    position: absolute;
+    width: 40px;
+    left: 0;
+    top: -12px;
+  }
+  svg {
+    animation: spin 0.3s infinite;
+    position: absolute;
+    left: 0;
+    top: 2px;
+  }
+`;
+
 const Image = styled.img`
   display: inline;
   height: 32px;
 `;
-export const Header = (props) => {
+ const Header = (props) => {
     const [showProfileEdit, setShowProfileEdit] = useState(false);
+
 
     return (
         <HeaderContainer>
@@ -76,8 +102,35 @@ export const Header = (props) => {
                             {strings.sourceCode}
                         </a>
                     </li>
+                    {props.user && <>
+                    <Divider>
+
+                    </Divider>
+                        <li><CurrentUser>
+                            <img src={props.user.image} width={32} />
+                            <span onClick={changeName}>{props.user.name}</span>
+                        </CurrentUser>
+                        </li>
+                    </>}
+                    {!props.user && <>
+                        <Divider>
+                        </Divider>
+                        <li>
+                            <CurrentUser>
+                                <Loader /> Connecting...
+                            </CurrentUser>
+                        </li>
+                    </>
+                    }
                 </ul>
             </Navigation>
         </HeaderContainer>
     )
 };
+
+
+function mapStateToProps(state) {
+    return {user: state.user, lobby: state.lobby, users: state.lobby.users}
+}
+
+export default withRouter(connect(mapStateToProps, actions)(Header));

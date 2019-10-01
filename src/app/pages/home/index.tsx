@@ -3,9 +3,11 @@ import LobbyListing from "../../components/lobbyListing";
 import {strings} from "../../i18n";
 import {Content} from "../../components/uiWidgets/Content";
 import {GameMap} from "../game";
-import {NavLink, withRouter} from "react-router-dom";
 import styled from "styled-components";
 import {Button} from "../../components/uiWidgets/Button";
+import {connect} from 'react-redux';
+import {NavLink, withRouter} from "react-router-dom";
+import * as actions from "../../actions/lobby";
 export const Overlay = styled.div`
     position: absolute;
     left: 0;
@@ -46,7 +48,7 @@ export const OverlayContent = styled.div`
 
 
 
-export const HomePage = (props) => {
+const HomePage = (props) => {
     return (
         <div>
                 <h2>{strings.homeTitle} </h2>
@@ -61,12 +63,19 @@ export const HomePage = (props) => {
                     {strings.homeDescription3}
                 </p>
 
-            <center><NavLink to={"/lobbies/new"}>
+            {props.lobbies.length > 0 && <center><NavLink to={"/lobbies/new"}>
                 <Button>{strings.createLobby}</Button>
-            </NavLink></center>
+            </NavLink></center>}
             <br/><br/>
 
                 <LobbyListing/>
         </div>
     );
 };
+
+
+function mapStateToProps(state) {
+    return {lobbies: state.lobbies}
+}
+
+export default withRouter(connect(mapStateToProps, actions)(HomePage));

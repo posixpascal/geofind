@@ -117,6 +117,16 @@ const UserIcon = styled.div`
 
 const ColorPickerWrapper = styled.div`position:relative;`;
 
+
+export const changeName = () => {
+    const newName = prompt(strings.enterNewName);
+    if (newName){updateUser({ name: newName })}
+};
+
+export const updateUser = (data) => {
+    webSocketConnection.emit("updateUser", data);
+};
+
 const UserListing = (props) => {
     const users = props.users || [];
     const [colorPicker, toggleColorPicker] = useState(false);
@@ -125,18 +135,11 @@ const UserListing = (props) => {
         webSocketConnection.emit("toggleReadyState");
     };
 
-    const changeName = () => {
-        const newName = prompt(strings.enterNewName);
-        if (newName){updateUser({ name: newName })}
-    };
 
     const kickPlayer = (user) => {
         webSocketConnection.emit("kickUser", user);
     }
 
-    const updateUser = (data) => {
-        webSocketConnection.emit("updateUser", data);
-    };
 
     const popover = {
         position: 'absolute',
@@ -163,7 +166,10 @@ const UserListing = (props) => {
                 return <UserListingRow isUser={props.user.id === user.id} key={user.id}>
                     <HorizontalAlignment>
                         <UserIcon>{userIcon}</UserIcon>
-                        <UserName onClick={() => props.user.id === user.id ? changeName() : () => {}}>{user.name}</UserName>
+                        <UserName onClick={() => props.user.id === user.id ? changeName() : () => {}}>
+                            <img src={user.image} width={28} />
+                            {user.name}
+                        </UserName>
                         <ColorPickerWrapper><UserColor onClick={() => props.user.id === user.id ? toggleColorPicker(!colorPicker) : () => {}} style={{background: user.color}}/>
                         { colorPicker && props.user.id === user.id ? <div style={ popover }>
                             <div style={ cover } onClick={() => toggleColorPicker(false) }/>

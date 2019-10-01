@@ -1,5 +1,18 @@
 @import "~milligram";
 
+@-moz-keyframes spin {
+  from { -moz-transform: rotate(0deg); }
+  to { -moz-transform: rotate(359deg); }
+}
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(359deg); }
+}
+@keyframes spin {
+  from {transform:rotate(0deg);}
+  to {transform:rotate(359deg);}
+}
+
 @mixin readyAnim {
   0%   { opacity: 0; left: 0; }
   5%   { opacity: 100;  }

@@ -10,10 +10,10 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import styled from "styled-components";
 import {sharedHistory} from "./helper/sharedHistory";
 
-import {HomePage, Overlay, OverlayContent} from "./pages/home";
+import HomePage, {Overlay, OverlayContent} from "./pages/home";
 import LobbyPage from "./pages/lobby";
 import GamePage, {GameMap} from "./pages/game";
-import {Header} from "./components/header";
+import Header from "./components/header";
 import {LobbyCreatePage} from "./pages/lobbyCreate";
 import {initWebSockets} from "./helper/webSockets";
 import {Footer} from "./components/footer";

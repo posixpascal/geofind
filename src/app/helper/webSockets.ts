@@ -1,14 +1,39 @@
 import {sharedHistory} from "./sharedHistory";
-import {LOBBIES_LIST, LOBBY_JOIN, LOBBY_UPDATE, LOBBY_MESSAGE, GAME_UPDATE, USER_CONNECTED, USER_LIST_LOBBY} from "../actions/types";
+import {
+    LOBBIES_LIST,
+    LOBBY_JOIN,
+    LOBBY_UPDATE,
+    LOBBY_MESSAGE,
+    GAME_UPDATE,
+    USER_CONNECTED,
+    USER_LIST_LOBBY,
+    USER_DISCONNECTED
+} from "../actions/types";
 
 declare const io : any;
+
 export const webSocketConnection = io(process.env.ENVIRONMENT === "production" ? "https://gameserver.geofind.io" : "http://localhost:3888");
 
 export const initWebSockets = (store) => {
+    let timer = false;
+    webSocketConnection.on("connect", () => {
+        if (timer){
+            clearInterval(timer);
+        }
+        webSocketConnection.emit('welcome', localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {});
+    });
     // TODO: extract into config.
     webSocketConnection.on('welcome', (data) => {
         store.dispatch({ type: USER_CONNECTED, payload: data})
     });
+
+    webSocketConnection.on("disconnect", () => {
+        store.dispatch({ type: USER_DISCONNECTED, payload: false})
+        timer = setInterval(() => {
+            webSocketConnection.connect();
+        }, 500);
+    })
+
 
     // TODO: cleanup
     try {
