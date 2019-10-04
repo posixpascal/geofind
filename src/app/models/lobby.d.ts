@@ -1,7 +1,7 @@
 import {User} from "./user";
 
 export interface Lobby {
-    _id: string;
+    id: string;
     name:string;
     password:string;
     users:User[];
