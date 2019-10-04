@@ -1,5 +1,6 @@
 # geofind.io 
 [![Maintainability](https://api.codeclimate.com/v1/badges/e60d54a85ff19175c74a/maintainability)](https://codeclimate.com/github/posixpascal/geofind_frontend/maintainability)
+[![Build Status](https://travis-ci.org/posixpascal/geofind_frontend.svg?branch=master)](https://travis-ci.org/posixpascal/geofind_frontend)
 
 [**geofind**](https://geofind.io) is an online realtime multiplayer geographical guessing game 
 written exclusively in TypeScript.
@@ -40,10 +41,10 @@ Contribution is very much appreciated and every pull request will be considered 
 
 Our internal roadmap is still subject to change but this is our current draft:
 
-- [] App version using React Native
-- [] GamePlay mode with google streetview
-- [] Add more features to find on a map (e.g. cities, mountains, animals)
-- [] Optimize game play and optics in general
+- [ ] App version using React Native
+- [ ] GamePlay mode with google streetview
+- [ ] Add more features to find on a map (e.g. cities, mountains, animals)
+- [ ] Optimize game play and optics in general
 
 ## License
 
