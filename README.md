@@ -8,7 +8,7 @@ written exclusively in TypeScript.
 ## Installation
 
 To install geofind on your local machine, follow the instructions listed below. Note that 
-you'll also need the [GameServer][https://github.com/posixpascal/geofind_gameserver] to run geofind locally exclusive.
+you'll also need the [GameServer](https://github.com/posixpascal/geofind_gameserver) to run geofind locally exclusive.
 
 You don't need the GameServer if you only plan to make frontend changes because
 the default configuration of the frontend connects to our live environment.
