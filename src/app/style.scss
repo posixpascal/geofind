@@ -1,4 +1,8 @@
 @import "~milligram";
+body.no-scroll {
+  overflow: hidden;
+}
+
 
 @-moz-keyframes spin {
   from { -moz-transform: rotate(0deg); }

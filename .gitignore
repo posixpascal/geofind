@@ -1,2 +1,7 @@
 .idea/
 node_modules/
+.cache/
+dist/
+yarn-error.log
+frontend.iml
+.env

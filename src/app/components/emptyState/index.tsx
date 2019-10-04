@@ -1,10 +1,10 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
-
 import styled from "styled-components";
 import {strings} from "../../i18n";
 import {Button} from "../uiWidgets/Button";
-
+import * as actions from "../../actions/lobby";
+import {connect} from 'react-redux';
+import {NavLink, withRouter} from "react-router-dom";
 interface IEmptyStateProps {
     title: string;
     description: string;
@@ -21,10 +21,15 @@ const EmptyStateWrapper = styled.div`
   flex-direction: column;
   max-width: 650px;
   margin: 0 auto;
+    @media (max-width: 767px){ padding: 10px 20px; }
 `;
 const EmptyStateTitle = styled.h3`
   margin: 0;
   padding: 0;
+    @media (max-width: 767px){ {
+    font-size: 18px;
+    text-align: center;
+    }
 `;
 const EmptyStateDescription = styled.p`
   text-align: center;
@@ -34,7 +39,7 @@ const EmptyStateDescription = styled.p`
 `;
 const EmptyStateAction = styled.div``;
 
-export const EmptyState = (props: IEmptyStateProps) => {
+const EmptyState = (props: any) => {
     return (
         <EmptyStateWrapper>
             <EmptyStateTitle>
@@ -43,11 +48,17 @@ export const EmptyState = (props: IEmptyStateProps) => {
             <EmptyStateDescription>
                 {props.description}
             </EmptyStateDescription>
-            <EmptyStateAction>
-                <NavLink to={props.ctaLink}>
+            {props.user && <EmptyStateAction>
+                 <NavLink to={props.ctaLink}>
                     <Button>{props.ctaText}</Button>
                 </NavLink>
-            </EmptyStateAction>
+            </EmptyStateAction>}
         </EmptyStateWrapper>
     )
 };
+
+function mapStateToProps(state) {
+    return {user: state.user, lobby: state.lobby, users: state.lobby.users}
+}
+
+export default withRouter(connect(mapStateToProps, actions)(EmptyState));

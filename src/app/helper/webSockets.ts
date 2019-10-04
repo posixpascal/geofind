@@ -16,12 +16,19 @@ export const webSocketConnection = io(process.env.ENVIRONMENT === "production" ?
 
 export const initWebSockets = (store) => {
     let timer = false;
+    let connected = false;
+    let reconnectTimer = setTimeout(() => {
+        if (!connected){ window.location.reload(true); }
+    }, 6000);
     webSocketConnection.on("connect", () => {
+        connected = true;
         if (timer){
             clearInterval(timer);
         }
         webSocketConnection.emit('welcome', localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {});
     });
+
+
     // TODO: extract into config.
     webSocketConnection.on('welcome', (data) => {
         store.dispatch({ type: USER_CONNECTED, payload: data})

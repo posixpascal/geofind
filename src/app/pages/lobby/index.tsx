@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import {NavLink, withRouter} from "react-router-dom";
 import {Content} from "../../components/uiWidgets/Content";
 import {Settings} from "react-feather";
-import ChatWindow from "../../components/chatWindow";
+import ChatWindow from "../../components/chat";
 import UserListing from "../../components/userListing";
 import {Button} from "../../components/uiWidgets/Button";
 import {HorizontalAlignment} from "../../components/uiWidgets/HorizontalAlignment";
@@ -19,6 +19,27 @@ justify-content: space-between;
 span {
 padding: 0 20px;
 }
+
+  @media (max-width: 767px){ 
+    flex-direction: column;
+    justify-content: center;
+    .ha {
+      flex-direction: column !important;
+      margin-top: 40px;
+    }
+    
+    div  {
+    display: flex;
+    flex-direction: column;
+    font-size: 44px;
+    svg {
+    width: 48px;
+    height: 48px;
+    margin: 15px 0;
+    }
+    }
+  }
+  
 `;
 const LobbyRoomSettingsPane = styled.div`
   background: #fafafa;
@@ -31,7 +52,19 @@ const LobbyRoomSettingsPane = styled.div`
    padding-top: 15px;
    width: 100%;
    }
+   
   ${props => !props.collapsed ? `height: 0px;` : "height: 200px"}
+  
+  @media (max-width: 767px){
+      div {
+      padding-top: 5px !important;
+      }
+       .ha {
+          flex-direction: column !important;
+       }
+       ${props => !props.collapsed ? `
+height: 0px;` : "height: 420px"}
+   }
 `;
 const VictoryScoreInput = styled.input`
 font-size: 42px;
@@ -62,6 +95,10 @@ const PublicPrivateSwitch = (props) => {
 };
 const MainArea = styled.div`
   display: flex;
+  
+    @media (max-width: 767px){ 
+    flex-direction: column-reverse;
+    }
 `;
 
 import {Edit3} from "react-feather";
@@ -108,7 +145,7 @@ const LobbyPage = (props) => {
             <LobbyRoomHeader>
                 <div>{props.lobby.name || "Lobby"} {isLeader && <span><Edit3 onClick={() => setNewName()}/></span>}{isLeader &&
                 <span><Settings onClick={() => setCollapsed(!collapsed)}/></span>}</div>
-                <HorizontalAlignment>
+                <HorizontalAlignment className={"ha"}>
                     <Button onClick={leaveLobby}>
                         {strings.leaveLobby}
                     </Button>
@@ -119,7 +156,7 @@ const LobbyPage = (props) => {
             </LobbyRoomHeader>
 
             {isLeader && <LobbyRoomSettingsPane collapsed={collapsed}>
-                <HorizontalAlignment style={{justifyContent: "space-between"}}>
+                <HorizontalAlignment className="ha" style={{justifyContent: "space-between"}}>
                     <div><LobbyRoomHeading>{strings.victoryScore}</LobbyRoomHeading>
                         <VictoryScoreInput onChange={ev => {
                             updateLobby({victoryScore: ev.target.value})
@@ -152,7 +189,7 @@ const LobbyPage = (props) => {
             </MainArea>
             <br/><br/>
             <div>{strings.inviteTip}</div>
-            <code>{window.location.href}</code>
+            <code style={{wordBreak: "break-all", whiteSpace: "normal"}}>{window.location.href}</code>
         </div>
     );
 };

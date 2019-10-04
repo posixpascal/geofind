@@ -24,6 +24,16 @@ const UserListingRow = styled.div`
   ${props => props.isUser && `
     background: #f0e3fb;
   `}
+  
+  @media (max-width: 767px){
+    flex-direction: column;
+    .userIcon {
+      display: none;
+    }
+    
+    font-size: 28px;
+    padding: 20px 0;
+  }
 `;
 const UserName = styled.div`
   margin: 0 8px;
@@ -165,7 +175,7 @@ const UserListing = (props) => {
 
                 return <UserListingRow isUser={props.user.id === user.id} key={user.id}>
                     <HorizontalAlignment>
-                        <UserIcon>{userIcon}</UserIcon>
+                        <UserIcon className={"userIcon"}>{userIcon}</UserIcon>
                         <UserName onClick={() => props.user.id === user.id ? changeName() : () => {}}>
                             <img src={user.image} width={28} />
                             {user.name}

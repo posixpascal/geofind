@@ -1,10 +1,7 @@
 import React from "react";
-import {NavLink} from "react-router-dom";
-
 import styled from "styled-components";
-import {strings} from "../../i18n";
-import {UserColor} from "../userListing";
 import {Heart} from "react-feather";
+
 const FooterWrapper = styled.div`
   margin: 40px -40px -40px;
   background: #f1f1f1;
@@ -21,6 +18,12 @@ const FooterWrapper = styled.div`
       fill: red;
       stroke: #ff414c;
     }
+  }
+  @media (max-width: 767px){
+    display: none !important;
+    margin: 0;
+    margin-top: 40px;
+   
   }
 `;
 

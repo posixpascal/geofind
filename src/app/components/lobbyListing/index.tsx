@@ -5,7 +5,7 @@ import * as actions from '../../actions/lobby';
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from "react-router-dom";
 import {Lobby} from "../../models/lobby";
-import {EmptyState} from "../emptyState";
+import EmptyState from "../emptyState";
 import {Globe, Key, Users} from "react-feather";
 import {Badge} from "../uiWidgets/Badge";
 import {sharedHistory} from "../../helper/sharedHistory";
@@ -21,6 +21,9 @@ const LobbyRow = styled.div`
     align-items: center;
     justify-content: space-between;
     background:#f9f9f9;
+    @media (max-width: 767px){
+      margin: 0 !important;
+    }
     div {
       display: flex;
       align-items: center;

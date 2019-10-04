@@ -26,7 +26,10 @@ export const Button = styled.button`
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    
+      @media (max-width: 767px){
+        font-size: 14px !important;
+        margin: 10px 0;
+      }
     span {
         display: block;
         position: relative;

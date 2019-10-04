@@ -11,6 +11,7 @@ import * as actions from "../../actions/lobby";
 export const Overlay = styled.div`
     position: absolute;
     left: 0;
+    min-height: -webkit-fill-available;
     top: 0px;
     right: 0;
     bottom: 0;
@@ -29,7 +30,7 @@ export const OverlayContent = styled.div`
   padding: 40px;
   box-shadow: 3px 3px 15px rgba(0,0,0,.3);
   z-index: 20;
-  color: #212121;
+  color: #212121; 
   
   h2 {
     text-align: center;
@@ -43,6 +44,22 @@ export const OverlayContent = styled.div`
   p {
     text-align: center;
     font-size: 24px;
+  }
+  
+  @media (max-width: 767px){
+    top:0;
+    box-shadow: none;
+    padding: 10px;
+    max-width: 100% !important;
+    h2 {
+    padding-top: 20px;
+    font-size: 24px;
+    }
+    
+    p {
+    font-size: 16px;
+    margin: 0;
+    }
   }
 `;
 
