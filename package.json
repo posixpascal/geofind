@@ -1,5 +1,6 @@
 {
   "scripts": {
+    "watch": "./node_modules/.bin/parcel src/index.html",
     "build": "rm -rf dist/ && NODE_ENV=production ./node_modules/.bin/parcel build src/index.html && cp -R src/assets/ dist/assets && cp src/.htaccess dist/"
   },
   "dependencies": {
