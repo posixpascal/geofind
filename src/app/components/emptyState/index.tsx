@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import {strings} from "../../i18n";
 import {Button} from "../uiWidgets/Button";
-import * as actions from "../../actions/lobby";
+import * as actions from "../../actions/rooms";
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from "react-router-dom";
 interface IEmptyStateProps {
@@ -39,7 +39,7 @@ const EmptyStateDescription = styled.p`
 `;
 const EmptyStateAction = styled.div``;
 
-const EmptyState = (props: any) => {
+export default (props: any) => {
     return (
         <EmptyStateWrapper>
             <EmptyStateTitle>
@@ -48,17 +48,9 @@ const EmptyState = (props: any) => {
             <EmptyStateDescription>
                 {props.description}
             </EmptyStateDescription>
-            {props.user && <EmptyStateAction>
-                 <NavLink to={props.ctaLink}>
-                    <Button>{props.ctaText}</Button>
-                </NavLink>
-            </EmptyStateAction>}
+            <EmptyStateAction onClick={props.action}>
+                 <Button>{props.ctaText}</Button>
+            </EmptyStateAction>
         </EmptyStateWrapper>
     )
 };
-
-function mapStateToProps(state) {
-    return {user: state.user, lobby: state.lobby, users: state.lobby.users}
-}
-
-export default withRouter(connect(mapStateToProps, actions)(EmptyState));

@@ -2,10 +2,11 @@ import React, {useState} from "react";
 import styled from "styled-components";
 import {strings} from "../../i18n";
 import {changeName, updateUser, UserColor} from "../userListing";
-import * as actions from "../../actions/lobby";
+import * as actions from "../../actions/rooms";
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from "react-router-dom";
 import {Loader} from "react-feather";
+import {Fire} from "../fire/fire";
 export const HeaderContainer = styled.header`
   display: flex;
   background: #fff;
@@ -109,7 +110,12 @@ const Image = styled.img`
     return (
         <HeaderContainer>
             <BrandTitle>
-                <NavLink to={"/"}><Image src={require("../../../assets/logo.svg")} /> {strings.gameName}</NavLink>
+                {props.game && props.game.isSuddenDeath && <Fire />}
+                <NavLink to={"/"}>
+                    {(!props.game || !props.game.isSuddenDeath) && <Image src={require("../../../assets/logo.svg")} />}
+                    {(!props.game || !props.game.isSuddenDeath) && strings.gameName}
+                    {(props.game && props.game.isSuddenDeath) && strings.suddenDeath}
+                </NavLink>
             </BrandTitle>
             <Navigation>
                 <ul>
@@ -134,8 +140,8 @@ const Image = styled.img`
 
                     </Divider>
                         <li><CurrentUser>
-                            <img src={props.user.image} width={32} />
-                            <span onClick={changeName}>{props.user.name}</span>
+                            <img src={props.user.avatarUrl} width={32} />
+                            <span onClick={changeName}>{props.user.displayName}</span>
                         </CurrentUser>
                         </li>
                     </>}
@@ -157,7 +163,7 @@ const Image = styled.img`
 
 
 function mapStateToProps(state) {
-    return {user: state.user, lobby: state.lobby, users: state.lobby.users}
+    return {user: state.user, room: state.room, game: state.game}
 }
 
 export default withRouter(connect(mapStateToProps, actions)(Header));

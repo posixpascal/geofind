@@ -1,8 +1,8 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, {useRef, useState, useEffect} from "react";
 import moment from "moment";
 import {strings} from "../../i18n";
 import {Send} from "react-feather";
-import * as actions from '../../actions/lobby';
+import * as actions from '../../actions/rooms';
 import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
 import {webSocketConnection} from "../../helper/webSockets";
@@ -16,42 +16,27 @@ import {
     ChatWindowWrapper,
     NewChatMessage
 } from "./widgets";
+import {hashCode} from "../../helper/hash";
 
-const ChatWindow = (props) => {
-    const [chatMessages, setChatMessages] = useState([{
-        id: Math.random(),
-        date: +new Date(),
-        user: {
-            color: "#9b4dca",
-            name: "geofind.io"
-        },
-        bold: true,
-        message: strings.chatWelcome
-    }]);
-
-    useEffect(() => {
-        const messageHandler = (message) => {
-            setChatMessages([...chatMessages, message]);
-        };
-
-        webSocketConnection.on("userChatMessage", messageHandler);
-        return () => {
-            webSocketConnection.off("userChatMessage", messageHandler);
-        }
-    });
-
-
+export default ({players = {}, messages = []}) => {
     const chatInput = useRef();
+
+    if (messages === null) {
+        return <span>Loading...</span>;
+    }
+
     const chatMessageKeyDown = (event) => {
-        if (event.keyCode === 13){
+        if (event.keyCode === 13) {
             sendMessage();
         }
     };
 
     const sendMessage = () => {
-        if (!chatInput.current.value){ return; }
+        if (!chatInput.current.value) {
+            return;
+        }
 
-        webSocketConnection.emit("userChatMessage", { text: chatInput.current.value });
+        (window as any).currentRoom.send({type: "chat:message:new", payload: chatInput.current.value})
         chatInput.current.value = "";
 
     };
@@ -63,26 +48,34 @@ const ChatWindow = (props) => {
     return (
         <ChatWindowWrapper>
             <ChatLog>
-                {chatMessages.map(chatMessage => {
+                {messages.map(chatMessage => {
                     return <ChatMessage bold={!!chatMessage.bold} key={chatMessage.id}>
                         <ChatMessageDate>{formatDate(chatMessage.date)}</ChatMessageDate>
-                        <ChatMessageUser
-                            style={{color: chatMessage.user.color}}>{chatMessage.user.name}</ChatMessageUser>
-                        <ChatMessageText>{chatMessage.message}</ChatMessageText>
+                        {// fetch uptodate user to reflect name changes
+                            players[chatMessage.player.id] &&
+                            <>
+                                <ChatMessageUser style={{color: players[chatMessage.player.id].color}}>
+                                    {players[chatMessage.player.id].displayName}
+                                </ChatMessageUser>
+                                <ChatMessageText>{chatMessage.message}</ChatMessageText>
+                            </>}
+                        {//user left meanwhile so we render the cached properties
+                            !players[chatMessage.player.id] &&
+                            <>
+                                <ChatMessageUser style={{color: chatMessage.player.color}}>
+                                    {chatMessage.player.displayName}
+                                </ChatMessageUser>
+                                <ChatMessageText>{chatMessage.message}</ChatMessageText>
+                            </>
+                        }
                     </ChatMessage>
                 })}
             </ChatLog>
             <NewChatMessage>
-                <input ref={chatInput} type="text" onKeyDown={(event) => chatMessageKeyDown(event)} placeholder={strings.newMessagePlaceholder}/>
+                <input ref={chatInput} type="text" onKeyDown={(event) => chatMessageKeyDown(event)}
+                       placeholder={strings.newMessagePlaceholder}/>
                 <Send onClick={sendMessage}/>
             </NewChatMessage>
         </ChatWindowWrapper>
     )
 };
-
-
-function mapStateToProps(state) {
-    return {chatMessages: state.lobby.chatMessages}
-}
-
-export default withRouter(connect(mapStateToProps, actions)(ChatWindow));

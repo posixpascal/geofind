@@ -1,5 +1,5 @@
-import React, {useRef, useState} from "react";
-import * as actions from '../../actions/lobby';
+import React, {useRef, useEffect, useState} from "react";
+import * as actions from '../../actions/rooms';
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from "react-router-dom";
 import styled from "styled-components";
@@ -7,8 +7,10 @@ import {strings} from "../../i18n";
 import {Button} from "../uiWidgets/Button";
 import {Check, User, XCircle, Zap} from "react-feather";
 import {HorizontalAlignment} from "../uiWidgets/HorizontalAlignment";
-import {webSocketConnection} from "../../helper/webSockets";
-import { TwitterPicker } from 'react-color'
+import {client} from "../../helper/webSockets";
+import {TwitterPicker} from 'react-color'
+import moment from "../chat";
+
 const UserListingWrapper = styled.div`
   width: 100%;
 `;
@@ -127,29 +129,25 @@ const UserIcon = styled.div`
 
 const ColorPickerWrapper = styled.div`position:relative;`;
 
-
 export const changeName = () => {
-    const newName = prompt(strings.enterNewName);
-    if (newName){updateUser({ name: newName })}
+    (window as any).currentRoom.send({ type: "user:displayName:set", payload:  prompt(strings.enterNewName) });
 };
 
-export const updateUser = (data) => {
-    webSocketConnection.emit("updateUser", data);
-};
-
-const UserListing = (props) => {
-    const users = props.users || [];
+export default ({room, isLeader, players}) => {
     const [colorPicker, toggleColorPicker] = useState(false);
 
-    const toggleReady = () => {
-        webSocketConnection.emit("toggleReadyState");
+    const onColorChange = (color) => {
+        (window as any).currentRoom.send({ type: "user:color:set", payload: color });
+        toggleColorPicker(false)
     };
 
+    const toggleReady = () => {
+        (window as any).currentRoom.send({ type: "user:readyState:toggle" });
+    };
 
-    const kickPlayer = (user) => {
-        webSocketConnection.emit("kickUser", user);
+    const kickPlayer = (player) => {
+        (window as any).currentRoom.send({ type: "user:kick", payload: player});
     }
-
 
     const popover = {
         position: 'absolute',
@@ -164,33 +162,45 @@ const UserListing = (props) => {
         right: '0px',
         bottom: '0px',
         left: '0px',
+    };
+
+    if (!players){
+        return <span>Loading...</span>
     }
+
 
     return (
         <UserListingWrapper>
-            {users.map(user => {
-                const userIcon = user.isLeader ? <Zap/> : <User/>;
-                const userReady = user.isReady ? <ReadyButton inactive={true} isReady={true}><span>{strings.userReady}</span></ReadyButton> :
+            {Object.keys(players).map((playerId) => {
+                const player = players[playerId];
+
+                const userIcon = isLeader ? <Zap/> : <User/>;
+                const userReady = player.isReady ?
+                    <ReadyButton inactive={true} isReady={true}><span>{strings.userReady}</span></ReadyButton> :
                     <ReadyButton inactive={true} isReady={false}><span>{strings.userNotReady}</span></ReadyButton>;
 
-                return <UserListingRow isUser={props.user.id === user.id} key={user.id}>
+                return <UserListingRow isUser={client.auth._id === player.id} key={player.id}>
                     <HorizontalAlignment>
                         <UserIcon className={"userIcon"}>{userIcon}</UserIcon>
-                        <UserName onClick={() => props.user.id === user.id ? changeName() : () => {}}>
-                            <img src={user.image} width={28} />
-                            {user.name}
+                        <UserName onClick={() => client.auth._id === player.id ? changeName() : () => {
+                        }}>
+                            <img src={player.avatarUrl} width={28}/>
+                            {player.displayName}
                         </UserName>
-                        <ColorPickerWrapper><UserColor onClick={() => props.user.id === user.id ? toggleColorPicker(!colorPicker) : () => {}} style={{background: user.color}}/>
-                        { colorPicker && props.user.id === user.id ? <div style={ popover }>
-                            <div style={ cover } onClick={() => toggleColorPicker(false) }/>
-                            <TwitterPicker onChangeComplete={(color) => { updateUser({ color: color.hex }); toggleColorPicker(false) }} />
-                        </div> : null }
+                        <ColorPickerWrapper><UserColor
+                            onClick={() => client.auth._id === player.id ? toggleColorPicker(!colorPicker) : () => {
+                            }} style={{background: player.color}}/>
+                            {colorPicker && client.auth._id === player.id ? <div style={popover}>
+                                <div style={cover} onClick={() => toggleColorPicker(false)}/>
+                                <TwitterPicker onChangeComplete={onColorChange}/>
+                            </div> : null}
                         </ColorPickerWrapper>
                     </HorizontalAlignment>
                     <HorizontalAlignment>
-                        {props.isLeader && props.user.id !== user.id && <Button onClick={() => kickPlayer(user)}><span>Kick</span></Button>}
-                        {props.user.id === user.id ? <ReadyButton isReady={user.isReady}
-                                                              onClick={() => toggleReady()}><span>{user.isReady ? strings.userReady : strings.ready}</span></ReadyButton> : userReady}
+                        {isLeader && client.auth._id  !== player.id &&
+                        <Button onClick={() => kickPlayer(player)}><span>Kick</span></Button>}
+                        {client.auth._id === player.id ? <ReadyButton isReady={player.isReady}
+                                                                  onClick={() => toggleReady()}><span>{player.isReady ? strings.userReady : strings.ready}</span></ReadyButton> : userReady}
                     </HorizontalAlignment>
                 </UserListingRow>
             })}
@@ -198,8 +208,3 @@ const UserListing = (props) => {
     )
 };
 
-function mapStateToProps(state) {
-    return {user: state.user, lobby: state.lobby, users: state.lobby.users}
-}
-
-export default withRouter(connect(mapStateToProps, actions)(UserListing));

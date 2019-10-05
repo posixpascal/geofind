@@ -1,20 +1,29 @@
 import {sharedHistory} from "./sharedHistory";
 import {
     LOBBIES_LIST,
-    LOBBY_JOIN,
-    LOBBY_UPDATE,
-    LOBBY_MESSAGE,
-    GAME_UPDATE,
-    USER_CONNECTED,
-    USER_LIST_LOBBY,
-    USER_DISCONNECTED
+    USER_LOGGED_IN
 } from "../actions/types";
 
-declare const io : any;
+import * as Colyseus from "colyseus.js";
+export const client = new Colyseus.Client(process.env.NODE_ENV == "production" ? "https://gameserver.geofind.io" : "ws://localhost:3888");
 
-export const webSocketConnection = io(process.env.ENVIRONMENT === "production" ? "https://gameserver.geofind.io" : "http://localhost:3888");
+if (process.env.NODE_ENV !== "production"){
+    (window as any).client = client;
+}
+
+export const prefetchRooms = async (store) => {
+};
+
+export const authenticateUser = async (store) => {
+    const auth = await client.auth.login();
+    store.dispatch({ type: USER_LOGGED_IN, payload: auth })
+};
+
+/*
+export const webSocketConnection = io();
 
 export const initWebSockets = (store) => {
+
     let timer = false;
     let connected = false;
     let reconnectTimer = setTimeout(() => {
@@ -69,9 +78,9 @@ export const initWebSockets = (store) => {
        store.dispatch({type: LOBBY_UPDATE, payload: lobby })
     });
 
-    /*webSocketConnection.on("userChatMessage", (message) => {
+    webSocketConnection.on("userChatMessage", (message) => {
         store.dispatch({type: LOBBY_MESSAGE, payload: message })
-    });*/
+    });
 
     webSocketConnection.on("lobbyCreated", (lobby) => {
        sharedHistory.push(`/lobby_${lobby.id}`)
@@ -98,4 +107,4 @@ export const initWebSockets = (store) => {
         console.error("ServerError: ", err);
     });
 };
-
+*/

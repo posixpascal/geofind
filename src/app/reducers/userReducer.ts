@@ -1,12 +1,11 @@
-import {ROUND_START, ROUND_END, USER_CONNECTED, USER_DISCONNECTED, USER_PING} from "../actions/types";
+import {ROUND_START, ROUND_END, USER_CONNECTED, USER_DISCONNECTED, USER_PING, USER_LOGGED_IN} from "../actions/types";
 
-let initialState = false;
+let initialState = {};
 // @ts-ignore
 export default function(state = initialState, action) {
     switch (action.type){
-        case USER_CONNECTED:
+        case USER_LOGGED_IN:
             const newState = {...state, ...action.payload};
-            localStorage.setItem("user", JSON.stringify(newState));
             return newState;
 
         case USER_DISCONNECTED:

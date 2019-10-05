@@ -1,13 +1,16 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import LobbyListing from "../../components/lobbyListing";
 import {strings} from "../../i18n";
 import {Content} from "../../components/uiWidgets/Content";
-import {GameMap} from "../game";
+import {GameMap} from "../game_countries";
 import styled from "styled-components";
 import {Button} from "../../components/uiWidgets/Button";
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from "react-router-dom";
-import * as actions from "../../actions/lobby";
+import * as actions from "../../actions/rooms";
+import * as gameActions from "../../actions/game";
+import {client} from "../../helper/webSockets";
+import {sharedHistory} from "../../helper/sharedHistory";
 export const Overlay = styled.div`
     position: absolute;
     left: 0;
@@ -63,9 +66,33 @@ export const OverlayContent = styled.div`
   }
 `;
 
+const REFRESH_RATE = 1000;
 
 
-const HomePage = (props) => {
+const HomePage = ({ leaveRoom, leaveGame, createRoom }) => {
+    const [rooms, setRooms] = useState([]);
+
+    useEffect(() => {
+        let fetchInterval = setInterval(async () => {
+            const rooms = await client.getAvailableRooms("lobby");
+            setRooms(rooms);
+        }, REFRESH_RATE);
+        return () => {
+            clearInterval(fetchInterval);
+        }
+    });
+
+    useEffect(() => {
+        if ((window as any).currentRoom){
+            leaveRoom((window as any).currentRoom);
+        }
+
+        if ((window as any).currentGame){
+            leaveGame((window as any).currentGame);
+        }
+    });
+
+
     return (
         <div>
                 <h2>{strings.homeTitle} </h2>
@@ -80,19 +107,20 @@ const HomePage = (props) => {
                     {strings.homeDescription3}
                 </p>
 
-            {props.lobbies.length > 0 && <center><NavLink to={"/lobbies/new"}>
-                <Button>{strings.createLobby}</Button>
-            </NavLink></center>}
+            {rooms.length > 0 && <center>
+                <Button onClick={createRoom}>{strings.createLobby}</Button>
+            </center>}
             <br/><br/>
 
-                <LobbyListing/>
+            <LobbyListing rooms={rooms}/>
         </div>
     );
 };
+
 
 
 function mapStateToProps(state) {
     return {lobbies: state.lobbies}
 }
 
-export default withRouter(connect(mapStateToProps, actions)(HomePage));
+export default withRouter(connect(mapStateToProps, {...actions, ...gameActions})(HomePage));

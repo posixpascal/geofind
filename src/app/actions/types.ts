@@ -14,3 +14,6 @@ export const USER_LIST_LOBBY = "USER_LIST_LOBBY";
 export const LOBBY_MESSAGE = "LOBBY_MESSAGE";
 export const GAME_UPDATE = "GAME_UPDATE";
 export const LOBBY_UPDATE = "LOBBY_UPDATE";
+export const USER_LOGGED_IN = "USER_LOGGED_IN";
+export const GAME_JOIN = "GAME_JOIN";
+export const GAME_LEAVE = "GAME_LEAVE";
