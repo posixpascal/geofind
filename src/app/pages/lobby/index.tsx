@@ -62,7 +62,7 @@ const LobbyRoomSettingsPane = styled.div`
           flex-direction: column !important;
        }
        ${props => !props.collapsed ? `
-height: 0px;` : "height: 420px"}
+height: 0px;` : "height: 620px"}
    }
 `;
 const VictoryScoreInput = styled.input`
@@ -105,16 +105,35 @@ const RoundStats= styled.div`
     font-size: 18px; 
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 767px){
+      font-size: 12px !important;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      flex-direction: row !important;
+    }
 `;
 const RoundStatus = styled.div`
   padding: 0 30px;
   display: flex;
+   
   flex-direction: column;
   align-items: center;
   justify-content: center;
   svg {
     display: block;
   }
+  
+  @media (max-width: 767px){
+    font-size: 18px !important;
+    padding: 0 20px;
+    width: 100%;
+    flex: 0 50%;
+    margin-bottom: 30px;
+    svg {
+    width: 20px;
+    height: 20px;
+    }
+   }
 `;
 
 const MainArea = styled.div`

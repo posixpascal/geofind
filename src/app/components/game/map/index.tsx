@@ -8,9 +8,9 @@ declare const google: any;
 export const GameMap = compose(
     withProps({
         googleMapURL: "https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=AIzaSyBrYhUk7lxR-FYLg5AQIpAIEyFlxsClq2k",
-        loadingElement: <div style={{height: `100%`}}/>,
-        containerElement: <div style={{height: (window.innerHeight - 53) + "px"}}/>,
-        mapElement: <div style={{height: (window.innerHeight - 53) + "px"}}/>,
+        loadingElement: <div style={{zIndex: 15, height: `100%`}}/>,
+        containerElement: <div style={{zIndex: 15, height: (window.innerHeight - 53) + "px"}}/>,
+        mapElement: <div style={{zIndex: 15, height: (window.innerHeight - 53) + "px"}}/>,
     }),
     withScriptjs,
     withGoogleMap

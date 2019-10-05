@@ -58,15 +58,7 @@ const Application = () => {
                         <RelativeBox>
 
                             <Overlay/>
-                            <GameMap isMarkerShown={false}
-                                     markerMoved={() => {
-                                     }}
-                                     showAllMarker={true}
-                                     player={{color: "#ff7a00"}}
-                                     game={false}
-                                     lastMarkerPosition={{lat: 32.5389916, lng: 28.7972057}}
-                                     onMarkerClick={() => {
-                                     }}/>
+                            <img style={{width: "100%", objectFit: "cover"}} src={require("../assets/background.png")} />
                             <OverlayContent>
                                 {user._id && <><Route path="/" exact component={HomePage}/>
                                 <Route path="/lobby/:id" component={LobbyPage}/></>
