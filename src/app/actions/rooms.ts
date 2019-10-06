@@ -28,7 +28,7 @@ export function unsubscribeRoom(){
 export function joinRoom(roomData) {
     return async function (dispatch) {
         try {
-            const room = await client.joinById(roomData.roomId);
+            const room = await client.joinById(roomData.roomId || roomData.id);
 
             dispatch({type: LOBBY_JOIN, payload: room});
             subscribeRoom(dispatch);
