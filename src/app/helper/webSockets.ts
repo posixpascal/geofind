@@ -15,8 +15,12 @@ export const prefetchRooms = async (store) => {
 };
 
 export const authenticateUser = async (store) => {
-    const auth = await client.auth.login();
-    store.dispatch({ type: USER_LOGGED_IN, payload: auth });
+    try {
+        const auth = await client.auth.login();
+        store.dispatch({type: USER_LOGGED_IN, payload: auth});
+    } catch (e){
+        localStorage.removeItem("colyseus-auth-token");
+    }
 };
 
 
