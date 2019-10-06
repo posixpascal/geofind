@@ -16,8 +16,9 @@ export const prefetchRooms = async (store) => {
 
 export const authenticateUser = async (store) => {
     const auth = await client.auth.login();
-    store.dispatch({ type: USER_LOGGED_IN, payload: auth })
+    store.dispatch({ type: USER_LOGGED_IN, payload: auth });
 };
+
 
 /*
 export const webSocketConnection = io();

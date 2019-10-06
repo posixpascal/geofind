@@ -153,7 +153,10 @@ const LobbyPage = ({match, room, joinRoom, leaveRoom, startGame,game, joinGame})
 
 
     const setNewName = () => {
-        (window as any).currentRoom.send({type: "room:name:set", payload: prompt(strings.enterNewLobbyName)});
+        const newName = prompt(strings.enterNewLobbyName);
+        if (newName) {
+            (window as any).currentRoom.send({type: "room:name:set", payload: newName});
+        }
     };
 
     const updateLobby = (payload) => {

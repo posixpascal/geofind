@@ -15,7 +15,7 @@ import LobbyPage from "./pages/lobby";
 import Header from "./components/header";
 import {authenticateUser, prefetchRooms} from "./helper/webSockets";
 import {Footer} from "./components/footer";
-import {GameMap} from "./components/game/map";
+import {GameMap} from "./components/game/maps";
 
 // import game pages
 import CountriesGamePage from "./pages/game_countries";
@@ -53,7 +53,7 @@ const Application = () => {
                     <Route path="/game/game_streetview/:id" component={StreetViewGamePage}/>
                     <Route path="/game/game_animals/:id" component={AnimalsGamePage}/>
                     <Route path="/game/game_buildings/:id" component={BuildingsGamePage}/>
-                    <Route path="/game/game_shape_guessing/:id" component={ShapeGuessingGamePage}/>
+                    <Route path="/game/game_shapeguessing/:id" component={ShapeGuessingGamePage}/>
                     <Route>
                         <RelativeBox>
 

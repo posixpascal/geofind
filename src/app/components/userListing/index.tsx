@@ -130,7 +130,14 @@ const UserIcon = styled.div`
 const ColorPickerWrapper = styled.div`position:relative;`;
 
 export const changeName = () => {
-    (window as any).currentRoom.send({ type: "user:displayName:set", payload:  prompt(strings.enterNewName) });
+    const newName =  prompt(strings.enterNewName);
+    if (!newName){ return; }
+
+    client.auth.displayName = newName;
+    client.auth.save();
+    // TODO: update avatar url as well
+
+    (window as any).currentRoom.send({ type: "user:displayName:set", payload: newName });
 };
 
 export default ({room, isLeader, players}) => {

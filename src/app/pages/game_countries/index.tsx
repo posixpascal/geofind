@@ -3,10 +3,11 @@ import * as actions from "../../actions/game";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
 import {sharedHistory} from "../../helper/sharedHistory";
-import {GameMap} from "../../components/game/map";
+import {GameMap} from "../../components/game/maps";
 import GameOverlay from "../../components/game/overlays";
 import ScoreBoard from "../../components/game/scoreBoard";
 import {client} from "../../helper/webSockets";
+import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
 
 
 const CAMERA_POSITION = {lat: 32.5389916, lng: 28.7972057};
@@ -40,7 +41,7 @@ const CountriesGamePage = ({game, joinGame, leaveGame, match}) => {
     });
 
     if (!game.players){
-        return <div>Loading...</div>
+        return <RoomJoinLoader/>
     }
 
 

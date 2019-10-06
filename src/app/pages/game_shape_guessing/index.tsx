@@ -3,9 +3,7 @@ import * as actions from "../../actions/rooms";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
 import {sharedHistory} from "../../helper/sharedHistory";
-import {GameMap} from "../../components/game/map";
-import {GameOverlay} from "../../components/game/overlays";
-import {ScoreBoard} from "../../components/game/scoreBoard";
+import {GameMap} from "../../components/game/maps";
 
 
 const CAMERA_POSITION = {lat: 32.5389916, lng: 28.7972057};
@@ -42,21 +40,7 @@ const ShapeGuessingGamePage = (props) => {
     };
 
     return (
-        <div>
-            <div id={"draggableContainer"}>
-                <GameMap
-                         center={center}
-                         markerMoved={markerMoved}
-                         mapClicked={markerMoved}
-                         showAllMarker={props.game.state == "roundEnd" || props.game.state == "gameEnd"}
-                         player={props.user}
-                         game={props.game}
-                         lastMarkerPosition={lastMarkerPosition}
-                         />
-            </div>
-            <GameOverlay game={props.game} user={props.user} backToLobby={backToLobby} center={center} setCenter={setCenter} />
-            <ScoreBoard />
-        </div>
+        shapes
     );
 };
 

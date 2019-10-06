@@ -3,7 +3,7 @@ import * as actions from "../../actions/rooms";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
 import {sharedHistory} from "../../helper/sharedHistory";
-import {GameMap} from "../../components/game/map";
+import {GameMap} from "../../components/game/maps";
 import {GameOverlay} from "../../components/game/overlays";
 import {ScoreBoard} from "../../components/game/scoreBoard";
 

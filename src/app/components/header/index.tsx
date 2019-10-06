@@ -25,13 +25,15 @@ export const BrandTitle = styled.h1`
   font-size: 32px;
   display: flex;
   align-items: center;
+  padding-left: 40px
   a {
   display: block;
   }
   img {
-    height: 38px;
-    position: relative;
-    top: 5px;
+    height: 48px;
+    position: absolute;
+    top: 10px;
+    left: 10px;
   }
   @media (max-width: 767px){
     font-size: 20px;

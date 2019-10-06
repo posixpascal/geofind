@@ -8,6 +8,7 @@ import {Countdown} from "../../countdown";
 import * as actions from "../../../actions/game";
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from "react-router-dom";
+import moment = require("moment");
 
 const SearchBox = styled.div`
   .loader svg {
@@ -15,7 +16,7 @@ const SearchBox = styled.div`
   }
 `;
 
-export const Overlay = styled.div`
+export const StreetViewOverlay = styled.div`
   position: absolute;
   left: 30px;
   max-width: 320px;
@@ -60,33 +61,23 @@ export const Overlay = styled.div`
 `;
 
 
-const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
+const StreetViewGameOverlay = ({game, user, center, setCenter, leaveGame}) => {
         const [showImage, setShowImage] = useState(true);
 
         let overlayContent = <></>;
 
         if (!game.gameOver && game.roundStart && !game.roundEnd) {
             overlayContent = <SearchBox>
-                <p className={"hidden-mobile"}>
-                    {strings.gamePlayInfoBefore} <PushPin size={16} pinned={true}
-                                                          color={user.color}/> {strings.gamePlayInfoAfter}
-                </p>
-                <strong>{strings.searchFor}</strong>
-                <h2>
-                    {showImage && <img width={48} onError={() => setShowImage(false)}
-                                       src={`/assets/${game.country.countryCode.toLowerCase()}.png`}/>}
-                                       {game.country.countryNameEn}</h2>
-                <hr/>
-                <h1>{game.roundTimeLeft}</h1>
-                <p>{strings.secondsTillRoundEnd}</p>
+                <h5>Wo bist du?</h5>
+                <p>{strings.streetViewGameHint3}</p>
+                <hr />
+                <h3>{moment().startOf('day')
+                    .seconds(game.timeElapsed)
+                    .format('HH:mm:ss')}</h3>
+                {strings.elapsedTime}
             </SearchBox>;
         } else if (!game.gameOver && !game.roundStart && !game.roundEnd) {
-            overlayContent = <SearchBox>
-                <p>
-                    {strings.gameStartsIn}
-                </p>
-                <Countdown from={5}/>
-            </SearchBox>;
+            overlayContent = <></>;
         } else if (!game.gameOver && !game.roundStart && game.roundEnd) {
             if (center.lat !== game.country.lat || center.lng !== game.country.lng) {
                 setCenter({lat: game.country.lat, lng: game.country.lng})
@@ -95,27 +86,28 @@ const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
                 <p>
                     {strings.roundEnd}
                 </p>
-                {Object.keys(game.players).map((playerID, index) => {
-                    const player = game.players[playerID];
-                    if (!game.votes[playerID]){
-                        return <div key={index}>
-                            <PushPin size={16} pinned={true} color={player.color}/> {player.displayName} <b className={"mobile-only"}>(Score: {game.scoreBoard[playerID].score})</b>
-                            <br/>
-                            &mdash;
-                            <br/>
-                            <hr className={"hidden-mobile"}/>
-                        </div>
-                    }
+                {game.roundWinner && <div>
+                    Round Winner<br/>
+                    {game.players[game.roundWinner].displayName}<br />
+                    <h2>
+                        {showImage && <img width={48} onError={() => setShowImage(false)}
+                                           src={`/assets/${game.country.countryCode.toLowerCase()}.png`}/>}
+                                           <br/>
+                        {game.country.countryNameEn}</h2>
+                    <hr />
+                    Next Round starts in
+                    <br />
+                    <Countdown from={7} />
+                </div>}
 
-                    return <div key={index} style={{fontWeight: game.votes[playerID].hasWon ? "bold" : ""}}>
-                        <PushPin size={16} pinned={true} color={player.color}/>
-                        {player.displayName} <b className={"mobile-only"}>(Score: {game.scoreBoard[playerID].score})</b>
-                        <br/>
-                        <img width={16} src={`/assets/${game.votes[playerID].country.countryCode.toLowerCase()}.png`} /> {game.votes[playerID].country.countryNameEn}
-                        {game.country.countryCode !== game.votes[playerID].country.countryCode && <span>({game.votes[playerID].distanceInKm.toFixed(2)}km)</span>}
-                        <hr className={"hidden-mobile"}/>
-                    </div>;
-                })}
+                {!game.roundWinner && <div>
+                    Darn it. No one found it.
+                    You were stranded in:
+                    <h2>
+                        {showImage && <img width={48} onError={() => setShowImage(false)}
+                                           src={`/assets/${game.country.countryCode.toLowerCase()}.png`}/>}
+                        {game.country.countryNameEn}</h2>
+                </div>}
             </SearchBox>
         } else if (game.gameOver) {
             overlayContent = <SearchBox>
@@ -141,7 +133,7 @@ const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
                 </div>
             </SearchBox>;
         }
-        return <Overlay>{overlayContent}</Overlay>;
+        return <StreetViewOverlay>{overlayContent}</StreetViewOverlay>;
     }
 ;
 
@@ -149,4 +141,4 @@ function mapStateToProps(state) {
     return {}
 }
 
-export default withRouter(connect(mapStateToProps, actions)(GameOverlay));
+export default withRouter(connect(mapStateToProps, actions)(StreetViewGameOverlay));
