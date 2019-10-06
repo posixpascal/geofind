@@ -4,11 +4,11 @@ import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
 import {sharedHistory} from "../../helper/sharedHistory";
 import {GameMap} from "../../components/game/maps";
-import GameOverlay from "../../components/game/overlays";
+import GameOverlay, {Overlay} from "../../components/game/overlays";
 import ScoreBoard from "../../components/game/scoreBoard";
 import {client} from "../../helper/webSockets";
 import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
-
+import ChatWindow from "../../components/chat";
 
 const CAMERA_POSITION = {lat: 32.5389916, lng: 28.7972057};
 
@@ -77,6 +77,9 @@ const CountriesGamePage = ({game, joinGame, leaveGame, match}) => {
                          lastMarkerPosition={lastMarkerPosition}
                          />
             </div>
+            {window.innerWidth > 767 && <Overlay style={{'left': 'initial', 'right': '20px', 'top': '80px'}}>
+                <ChatWindow inGame={true} players={game.players} messages={game.messages}></ChatWindow>
+            </Overlay>}
             <GameOverlay game={game} user={user} center={center} setCenter={setCenter} />
             <ScoreBoard game={game} scoreBoard={game.scoreBoard} />
         </div>

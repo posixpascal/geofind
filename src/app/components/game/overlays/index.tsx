@@ -25,6 +25,12 @@ export const Overlay = styled.div`
   background:#fff;
   text-align: center;
   box-shadow: 3px 3px 8px rgba(0,0,0,.3);
+  #chatView {
+  width: 100% !important;
+  height: 200px;
+  text-align: left; 
+  
+  }
   svg {
   }
   h2 {
@@ -131,6 +137,7 @@ const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
                         {player.displayName} <PushPin size={16} pinned={true} color={player.color}/> ({playerScore.score} {strings.points})
                     </div>
                 })}
+                <NavLink to={"/lobby/" + (window as any).currentRoom.id}><button>{strings.backToLobby}</button></NavLink>
                 <button onClick={leaveGame}>{strings.backToHome}</button>
             </SearchBox>;
         } else {

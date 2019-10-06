@@ -5,7 +5,18 @@ import {Send} from "react-feather";
 import * as actions from '../../actions/rooms';
 import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
-import {webSocketConnection} from "../../helper/webSockets";
+
+const randomInsecurityInsult = () => {
+    const insecurities = [
+        "I’m wrestling with some insecurity issues in my life but thank you all for playing with me.",
+        "Well played. I salute you all.",
+        "For glory and honor! Huzzah comrades!",
+        "It’s past my bedtime. Please don’t tell my mommy.",
+        "Gee whiz! That was fun. Good playing!",
+        "I feel very, very small... please hold me..."];
+
+    return insecurities[Math.floor(Math.random() * insecurities.length)];
+};
 
 import {
     ChatLog,
@@ -18,7 +29,7 @@ import {
 } from "./widgets";
 import {hashCode} from "../../helper/hash";
 
-export default ({players = {}, messages = []}) => {
+export default ({inGame = false, players = {}, messages = []}) => {
     const chatInput = useRef();
 
     if (messages === null) {
@@ -35,11 +46,37 @@ export default ({players = {}, messages = []}) => {
         if (!chatInput.current.value) {
             return;
         }
-
-        (window as any).currentRoom.send({type: "chat:message:new", payload: chatInput.current.value})
+        // filter value
+        let chatMessage = chatInput.current.value;
+        switch (chatMessage.toLowerCase()){
+            case "gg":
+            case "gg ez":
+            case "ez":
+            case "fu":
+            case "fuckyou":
+            case "fuck you":
+            case "rekt":
+            case "pwnd":
+            case "owned":
+            case "faggot":
+            case "stupid":
+                chatMessage = randomInsecurityInsult();
+                break;
+        }
+        if ((window as any).currentGame) {
+            (window as any).currentGame.send({type: "chat:message:new", payload: chatMessage})
+        } else {
+            (window as any).currentRoom.send({type: "chat:message:new", payload: chatMessage})
+        }
         chatInput.current.value = "";
-
     };
+
+    useEffect(() => {
+       const chatView = document.getElementById("chatView");
+       if (chatView){
+           chatView.scrollTop = chatView.scrollHeight;
+       }
+    });
 
     const formatDate = (input) => {
         return moment(input).format("HH:MM");
@@ -47,7 +84,7 @@ export default ({players = {}, messages = []}) => {
 
     return (
         <ChatWindowWrapper>
-            <ChatLog>
+            <ChatLog id="chatView">
                 {messages.map(chatMessage => {
                     return <ChatMessage bold={!!chatMessage.bold} key={chatMessage.id}>
                         <ChatMessageDate>{formatDate(chatMessage.date)}</ChatMessageDate>
