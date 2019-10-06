@@ -6,3 +6,4 @@ yarn-error.log
 frontend.iml
 .env
 .DS_Store
+log/
