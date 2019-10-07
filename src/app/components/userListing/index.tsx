@@ -116,6 +116,14 @@ const ReadyButton = styled(Button)`
         transition: all .2s ease;
         -webkit-backface-visibility: hidden;
     }
+    
+    :focus {
+        background: rgb(96, 167, 96) !important;
+        border-color: rgb(96, 140, 96) !important;
+        span {
+            color: #fff !important;
+        }
+    }
     `}
 `;
 const UserIcon = styled.div`
