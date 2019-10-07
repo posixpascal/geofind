@@ -130,30 +130,43 @@ const UserIcon = styled.div`
 const ColorPickerWrapper = styled.div`position:relative;`;
 
 export const changeName = () => {
-    const newName =  prompt(strings.enterNewName);
-    if (!newName){ return; }
+    const newName = prompt(strings.enterNewName);
+    if (!newName) {
+        return;
+    }
 
     client.auth.displayName = newName;
     client.auth.save();
     // TODO: update avatar url as well
 
-    (window as any).currentRoom.send({ type: "user:displayName:set", payload: newName });
+    (window as any).currentRoom.send({type: "user:displayName:set", payload: newName});
 };
 
 export default ({room, isLeader, players}) => {
     const [colorPicker, toggleColorPicker] = useState(false);
+    const [muted, setMuted] = useState(!!localStorage.getItem("audioMuted"));
+
+    const toggleMute = () => {
+        if (localStorage.getItem("audioMuted")) {
+            localStorage.removeItem("audioMuted");
+            setMuted(false);
+        } else {
+            localStorage.setItem("audioMuted", "1");
+            setMuted(true);
+        }
+    };
 
     const onColorChange = (color) => {
-        (window as any).currentRoom.send({ type: "user:color:set", payload: color });
+        (window as any).currentRoom.send({type: "user:color:set", payload: color});
         toggleColorPicker(false)
     };
 
     const toggleReady = () => {
-        (window as any).currentRoom.send({ type: "user:readyState:toggle" });
+        (window as any).currentRoom.send({type: "user:readyState:toggle"});
     };
 
     const kickPlayer = (player) => {
-        (window as any).currentRoom.send({ type: "user:kick", payload: player});
+        (window as any).currentRoom.send({type: "user:kick", payload: player});
     }
 
     const popover = {
@@ -171,7 +184,7 @@ export default ({room, isLeader, players}) => {
         left: '0px',
     };
 
-    if (!players){
+    if (!players) {
         return <span>Loading...</span>
     }
 
@@ -180,11 +193,14 @@ export default ({room, isLeader, players}) => {
         <UserListingWrapper>
             {Object.keys(players).map((playerId) => {
                 const player = players[playerId];
-
+                const randomInsult = Math.floor(8 * Math.random()) + 1;
+                const insultButton = <ReadyButton inactive={true}
+                                                  isReady={true}><span>{strings[`userNotReady[${randomInsult}]`]}</span></ReadyButton>;
                 const userIcon = isLeader ? <Zap/> : <User/>;
                 const userReady = player.isReady ?
                     <ReadyButton inactive={true} isReady={true}><span>{strings.userReady}</span></ReadyButton> :
-                    <ReadyButton inactive={true} isReady={false}><span>{strings.userNotReady}</span></ReadyButton>;
+                    room.roomState.insults ? insultButton :
+                        <ReadyButton inactive={true} isReady={true}><span>{strings.userNotReady}</span></ReadyButton>;
 
                 return <UserListingRow isUser={client.auth._id === player.id} key={player.id}>
                     <HorizontalAlignment>
@@ -204,10 +220,12 @@ export default ({room, isLeader, players}) => {
                         </ColorPickerWrapper>
                     </HorizontalAlignment>
                     <HorizontalAlignment>
-                        {isLeader && client.auth._id  !== player.id &&
-                        <Button onClick={() => kickPlayer(player)}><span>Kick</span></Button>}
+                        {/*isLeader && client.auth._id  !== player.id &&
+                        <Button onClick={() => kickPlayer(player)}><span>Kick</span></Button>*/}
+                        {client.auth._id === player.id &&
+                        <Button className={muted ? 'active' : ''} onClick={() => toggleMute()}>{muted ? <span>Muted</span> : <span>Mute?</span>}</Button>}
                         {client.auth._id === player.id ? <ReadyButton isReady={player.isReady}
-                                                                  onClick={() => toggleReady()}><span>{player.isReady ? strings.userReady : strings.ready}</span></ReadyButton> : userReady}
+                                                                      onClick={() => toggleReady()}><span>{player.isReady ? strings.userReady : strings.ready}</span></ReadyButton> : userReady}
                     </HorizontalAlignment>
                 </UserListingRow>
             })}

@@ -49,17 +49,10 @@ export default ({inGame = false, players = {}, messages = []}) => {
         // filter value
         let chatMessage = chatInput.current.value;
         switch (chatMessage.toLowerCase()){
-            case "gg":
             case "gg ez":
-            case "ez":
-            case "fu":
-            case "fuckyou":
-            case "fuck you":
             case "rekt":
             case "pwnd":
             case "owned":
-            case "faggot":
-            case "stupid":
                 chatMessage = randomInsecurityInsult();
                 break;
         }

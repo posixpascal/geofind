@@ -58,9 +58,18 @@
   "newMessagePlaceholder": "Deine Nachricht...",
   "ready": "Bereit?",
   "userReady": "Bereit",
-  "userNotReady": "Nicht bereit",
+  "userNotReady": "Warte auf Spieler",
+  "userNotReady1": "Übt noch",
+  "userNotReady2": "Lernt...",
+  "userNotReady3": "Schläft",
+  "userNotReady4": "Googlet noch",
+  "userNotReady5": "Kriegt's nicht hin",
+  "userNotReady6": "Netflixt",
+  "userNotReady7": "Hat's noch nicht gepeilt",
+  "userNotReady8": "Wo ist der Button??",
+  "userNotReadyBattery": "Hat nurnoch d% Akku",
   "enterNewName": "Gebe einen neuen Namen an",
   "maxRound": "Maximale Runden",
   "roundTime": "Rundenzeit in Sekunden",
-  "inviteTip": "Tipp: Du kannst deine Freunde über folgenden Link zur Partie einladen."
+  "inviteTip": "Tipp: Du kannst deine Freunde über folgenden Link zur Partie einladen:"
 }

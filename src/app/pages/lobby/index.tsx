@@ -6,7 +6,7 @@ import {strings} from "../../i18n";
 import {connect} from 'react-redux';
 import {NavLink, withRouter} from "react-router-dom";
 import {Content} from "../../components/uiWidgets/Content";
-import {Award, Eye, GitHub, Globe, Hexagon, Home, PlayCircle, Settings, Watch} from "react-feather";
+import {Award, Eye, Gift, GitHub, Globe, Hexagon, Home, PlayCircle, Settings, Watch} from "react-feather";
 import ChatWindow from "../../components/chat";
 import UserListing from "../../components/userListing";
 import {Button} from "../../components/uiWidgets/Button";
@@ -222,6 +222,10 @@ const LobbyPage = ({match, room, joinRoom, leaveRoom, startGame,game, joinGame})
                         <Watch/>
                         {room.roomState.roundTime}s
                     </RoundStatus>
+                    {/* impl bonus rounds without borders<RoundStatus>
+                        <Gift/>
+                        {room.roomState.bonusRounds}
+                    </RoundStatus>*/}
                     <RoundStatus>
                         <PlayCircle/>
                         {room.roomState.maxRounds}

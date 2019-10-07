@@ -12,6 +12,7 @@ import styled from "styled-components";
 import {sharedHistory} from "./helper/sharedHistory";
 import HomePage, {Overlay, OverlayContent} from "./pages/home";
 import LobbyPage from "./pages/lobby";
+import ThemesPage from "./pages/themes";
 import Header from "./components/header";
 import {authenticateUser, prefetchRooms} from "./helper/webSockets";
 import {Footer} from "./components/footer";
@@ -37,9 +38,9 @@ const Application = () => {
     }
 
     store.subscribe(() => {
-       if (store.getState().user){
-           setUser(store.getState().user);
-       }
+        if (store.getState().user) {
+            setUser(store.getState().user);
+        }
     });
 
     // @ts-ignore
@@ -58,11 +59,14 @@ const Application = () => {
                         <RelativeBox>
 
                             <Overlay/>
-                            <img style={{width: "100%", objectFit: "cover"}} src={require("../assets/background.png")} />
+                            <img style={{width: "100%", objectFit: "cover"}} src={require("../assets/background.png")}/>
                             <OverlayContent>
-                                {user._id && <><Route path="/" exact component={HomePage}/>
-                                <Route path="/lobby/:id" component={LobbyPage}/></>
+                                {user._id && <>
+                                    <Route path="/" exact component={HomePage}/>
+                                    <Route path="/lobby/:id" component={LobbyPage}/>
+                                    <Route path="/themes/" component={ThemesPage}/></>
                                 }
+
                                 <Footer/>
                             </OverlayContent>
                         </RelativeBox>

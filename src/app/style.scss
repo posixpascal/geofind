@@ -2,7 +2,27 @@
 body.no-scroll {
   overflow: hidden;
 }
+
+@keyframes helloDarkness {
+  0% {
+    transform: scale(1.0) rotate(0deg);
+    filter: grayscale(0%);
+  }
+  50% {
+    transform: scale(1.5) rotate(5deg);
+    filter: grayscale(200%);
+  }
+  60% {
+    transform: scale(1.0) rotate(0deg);
+    filter: grayscale(0%);
+  }
+}
+body.helloDarkness {
+  animation: helloDarkness linear forwards 20s;
+}
+
 body {
+
   header {
     transition: all ease-in-out 0.5s;
   }
@@ -15,6 +35,23 @@ body.sudden-death {
     nav ul li {
       border-color: #000 !important;
     }
+  }
+}
+
+.button:focus,  button:focus, input[type=button]:focus,  input[type=reset]:focus,  input[type=submit]:focus{
+  background: #f3f3f3 !important;
+  border-color: #9b4dca!important;
+  color: #333 !important;
+  span {
+    color:#333 !important;
+  }
+}
+button.active, .button:hover, button:hover,input[type=button]:hover,input[type=reset]:hover,input[type=submit]:hover{
+  background: #9b4dca !important;
+  border-color: #8c14ca !important;
+  color: #fff !important;
+  span {
+    color: #fff !important;
   }
 }
 

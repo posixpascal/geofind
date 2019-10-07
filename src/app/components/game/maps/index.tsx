@@ -14,9 +14,10 @@ export const GameMap = compose(
     }),
     withScriptjs,
     withGoogleMap
-)((props) =>
-    <GoogleMap
+)((props) => {
+    return <GoogleMap
         defaultZoom={3}
+        ref={props.passRef}
         defaultCenter={props.center}
         onClick={props.mapClicked}
         defaultOptions={{
@@ -53,5 +54,5 @@ export const GameMap = compose(
         <Marker position={{lat: props.game.country.lat, lng: props.game.country.lng}}
                 icon={{url: LogoSVG()}} animation={(google as any).maps.Animation.DROP} draggable={false}/>
         }
-    </GoogleMap>
+    </GoogleMap>}
 );

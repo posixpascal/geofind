@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import * as actions from "../../actions/game";
 import {connect} from 'react-redux';
 import {withRouter} from "react-router-dom";
@@ -9,25 +9,82 @@ import ScoreBoard from "../../components/game/scoreBoard";
 import {client} from "../../helper/webSockets";
 import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
 import ChatWindow from "../../components/chat";
+import UIfx from "uifx";
+import helloDarknessAudio from "../../../sounds/helloDarkness.mp3";
+import mapPinAudio from "../../../sounds/mapPin.mp3";
+
+const helloDarkness = new UIfx(
+    helloDarknessAudio,
+    {
+        volume: 0.5,
+    }
+);
+
+const mapPin = new UIfx(
+    mapPinAudio,
+    {
+        volume: 0.05,
+    }
+)
 
 const CAMERA_POSITION = {lat: 32.5389916, lng: 28.7972057};
-
 const CountriesGamePage = ({game, joinGame, leaveGame, match}) => {
     const [lastMarkerPosition, setLastMarkerPosition] = useState(CAMERA_POSITION);
     const [center, setCenter] = useState(CAMERA_POSITION);
-
+    const googleMap = useRef();
     useEffect(() => { // mobile optimizations
-       document.body.classList.add("no-scroll");
-       if (game && game.isSuddenDeath){
-           document.body.classList.add("sudden-death");
-       } else {
-           document.body.classList.remove("sudden-death");
-       }
-       return () => {
-           document.body.classList.remove("no-scroll");
-       }
+        document.body.classList.add("no-scroll");
+        if (game && game.isSuddenDeath) {
+            document.body.classList.add("sudden-death");
+        } else {
+            document.body.classList.remove("sudden-death");
+        }
+        return () => {
+            document.body.classList.remove("no-scroll");
+        }
     });
 
+    useEffect(() => {
+        if (!(window as any).currentGame) {
+            return;
+        }
+
+        // just used for memes at the moment.
+        if ((window as any).currentGame.listenerAttached){ return; }
+        (window as any).currentGame.listenerAttached = true;
+        (window as any).currentGame.onMessage(message => {
+            console.log(googleMap);
+            switch (message.type) {
+                case "map:animateTo":
+                    if (googleMap.current){
+                        googleMap.current.panTo(message.payload);
+                    }
+                    break;
+                case "map:roundInit":
+                    if (googleMap.current && lastMarkerPosition){
+
+                        //googleMap.current.panTo(lastMarkerPosition);
+                    }
+                    break;
+                case "insult:distance":
+                    if (googleMap.current && !localStorage.getItem("audioMuted")){
+                        document.body.classList.add("helloDarkness");
+                        helloDarkness.play();
+                        googleMap.current.panTo(message.payload.vote.country);
+                        setTimeout(() => {
+                           document.body.classList.remove("helloDarkness");
+                        }, 10000);
+                    }
+                    break;
+                case "insult:info":
+                    break;
+                case "insult:closeTogether":
+                    break;
+                case "insult:closeTogether":
+                    break;
+            }
+        });
+    });
 
     useEffect(() => { // user reconnect logic. if user still has no game after 3s we rejoin the game.
         let timer = setTimeout(() => {
@@ -40,7 +97,7 @@ const CountriesGamePage = ({game, joinGame, leaveGame, match}) => {
         }
     });
 
-    if (!game.players){
+    if (!game.players) {
         return <RoomJoinLoader/>
     }
 
@@ -48,40 +105,41 @@ const CountriesGamePage = ({game, joinGame, leaveGame, match}) => {
     let isLeader = false;
     let user;
 
-    for (let playerId in game.players){
-        if (game.players[playerId].id === client.auth._id){
+    for (let playerId in game.players) {
+        if (game.players[playerId].id === client.auth._id) {
             user = game.players[playerId];
         }
-        if (game.leader === game.players[playerId].id){
+        if (game.leader === game.players[playerId].id) {
             isLeader = true;
         }
     }
 
     const markerMoved = (ev) => {
-        const vote = { lat: ev.latLng.lat(), lng: ev.latLng.lng() };
-
+        const vote = {lat: ev.latLng.lat(), lng: ev.latLng.lng()};
+        if ( !localStorage.getItem("audioMuted")){mapPin.play();}
         setLastMarkerPosition(vote);
-        (window as any).currentGame.send({ type: "game:vote", payload: vote})
+        (window as any).currentGame.send({type: "game:vote", payload: vote})
     };
 
     return (
         <div>
             <div id={"draggableContainer"}>
                 <GameMap
-                         center={center}
-                         markerMoved={markerMoved}
-                         mapClicked={markerMoved}
-                         showAllMarker={game.roundEnd}
-                         player={user}
-                         game={game}
-                         lastMarkerPosition={lastMarkerPosition}
-                         />
+                    passRef={googleMap}
+                    center={center}
+                    markerMoved={markerMoved}
+                    mapClicked={markerMoved}
+                    showAllMarker={game.roundEnd}
+                    player={user}
+                    game={game}
+                    lastMarkerPosition={lastMarkerPosition}
+                />
             </div>
             {window.innerWidth > 767 && <Overlay style={{'left': 'initial', 'right': '20px', 'top': '80px'}}>
                 <ChatWindow inGame={true} players={game.players} messages={game.messages}></ChatWindow>
             </Overlay>}
-            <GameOverlay game={game} user={user} center={center} setCenter={setCenter} />
-            <ScoreBoard game={game} scoreBoard={game.scoreBoard} />
+            <GameOverlay game={game} user={user} center={center} setCenter={setCenter}/>
+            <ScoreBoard game={game} scoreBoard={game.scoreBoard}/>
         </div>
     );
 };

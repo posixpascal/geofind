@@ -124,9 +124,9 @@ const Image = styled.img`
                     <NavItem hiddenMobile={true}>
                         <NavLink to={"/"}>{strings.homeLink}</NavLink>
                     </NavItem>
-                    <NavItem hiddenMobile={true}>
-                        <NavLink to={"/lobbies/new"}>{strings.createLobbyLink}</NavLink>
-                    </NavItem>
+                    {/*<NavItem hiddenMobile={true}>
+                        <NavLink to={"/themes/"}>Themes</NavLink>
+                    </NavItem>*/}
                     {/*<li>
                         <a onClick={() => setShowProfileEdit(!showProfileEdit)}>
                             {strings.editProfile}
