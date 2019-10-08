@@ -4,8 +4,11 @@ import {Heart} from "react-feather";
 
 const FooterWrapper = styled.div`
   margin: 40px -40px -40px;
-  background: #f1f1f1;
-  min-height: 40px;
+  background: #663385;
+  color:#fff;
+  a {
+  color: #fff;
+  }
   display: flex;
   justify-content: space-between;
   padding: 15px; 
@@ -23,7 +26,6 @@ const FooterWrapper = styled.div`
     display: none !important;
     margin: 0;
     margin-top: 40px;
-   
   }
 `;
 

@@ -10,6 +10,8 @@ import {HorizontalAlignment} from "../uiWidgets/HorizontalAlignment";
 import {client} from "../../helper/webSockets";
 import {TwitterPicker} from 'react-color'
 import moment from "../chat";
+import {store} from "../../main";
+import {USER_LOGGED_IN} from "../../actions/types";
 
 const UserListingWrapper = styled.div`
   width: 100%;
@@ -145,9 +147,10 @@ export const changeName = () => {
 
     client.auth.displayName = newName;
     client.auth.save();
+    store.dispatch({type: USER_LOGGED_IN, payload: client.auth})
     // TODO: update avatar url as well
 
-    (window as any).currentRoom.send({type: "user:displayName:set", payload: newName});
+    if ((window as any).currentRoom) (window as any).currentRoom.send({type: "user:displayName:set", payload: newName});
 };
 
 export default ({room, isLeader, players}) => {
@@ -202,13 +205,14 @@ export default ({room, isLeader, players}) => {
             {Object.keys(players).map((playerId) => {
                 const player = players[playerId];
                 const randomInsult = Math.floor(8 * Math.random()) + 1;
+                console.log(randomInsult);
                 const insultButton = <ReadyButton inactive={true}
-                                                  isReady={true}><span>{strings[`userNotReady[${randomInsult}]`]}</span></ReadyButton>;
+                                                  isReady={false}><span>{strings[`userNotReady${randomInsult}`]}</span></ReadyButton>;
                 const userIcon = isLeader ? <Zap/> : <User/>;
                 const userReady = player.isReady ?
                     <ReadyButton inactive={true} isReady={true}><span>{strings.userReady}</span></ReadyButton> :
-                    room.roomState.insults ? insultButton :
-                        <ReadyButton inactive={true} isReady={true}><span>{strings.userNotReady}</span></ReadyButton>;
+                    room.roomState.insultMode ? insultButton :
+                        <ReadyButton inactive={true} isReady={player.isReady}><span>{strings.userNotReady}</span></ReadyButton>;
 
                 return <UserListingRow isUser={client.auth._id === player.id} key={player.id}>
                     <HorizontalAlignment>

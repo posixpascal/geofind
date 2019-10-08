@@ -52,7 +52,7 @@ const LobbyRoomSettingsPane = styled.div`
    width: 100%;
    }
    
-  ${props => !props.collapsed ? `height: 0px;` : "height: 200px"}
+  ${props => !props.collapsed ? `height: 0px;` : "height: 240px"}
   
   @media (max-width: 767px){
       div {
@@ -62,7 +62,7 @@ const LobbyRoomSettingsPane = styled.div`
           flex-direction: column !important;
        }
        ${props => !props.collapsed ? `
-height: 0px;` : "height: 620px"}
+height: 0px;` : "height: 640px"}
    }
 `;
 const VictoryScoreInput = styled.input`
@@ -157,6 +157,10 @@ const LobbyPage = ({match, room, joinRoom, leaveRoom, startGame,game, joinGame})
         if (newName) {
             (window as any).currentRoom.send({type: "room:name:set", payload: newName});
         }
+    };
+
+    const setInsultMode = () => {
+        (window as any).currentRoom.send({type: "room:insultMode:set", payload: !room.roomState.insultMode});
     };
 
     const updateLobby = (payload) => {
@@ -271,6 +275,9 @@ const LobbyPage = ({match, room, joinRoom, leaveRoom, startGame,game, joinGame})
                             updateLobby({victoryScore: ev.target.value})
                         }} maxLength={2} defaultValue={room.roomState.victoryScore}/></div>
                 </HorizontalAlignment>
+                <div>
+                    <input type={"checkbox"} defaultChecked={room.roomState.insultMode} onChange={setInsultMode} /> Insult Mode? <small>(Insults users randomly based on their bad answers)</small>
+                </div>
             </LobbyRoomSettingsPane>}
 
             <MainArea>

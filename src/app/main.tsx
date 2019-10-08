@@ -25,7 +25,7 @@ import AnimalsGamePage from "./pages/game_animals";
 import StreetViewGamePage from "./pages/game_streetview";
 import ShapeGuessingGamePage from "./pages/game_shape_guessing";
 
-const store = createStore(reducers, composeWithDevTools(applyMiddleware(routerMiddleware(sharedHistory), reduxThunk)));
+export const store = createStore(reducers, composeWithDevTools(applyMiddleware(routerMiddleware(sharedHistory), reduxThunk)));
 const RelativeBox = styled.div`
   position: relative;
 `;
