@@ -1,6 +1,6 @@
-import {ROUND_START, ROUND_END, USER_CONNECTED, USER_DISCONNECTED, USER_PING, USER_LOGGED_IN} from "../actions/types";
+import {ROUND_END, ROUND_START, USER_CONNECTED, USER_DISCONNECTED, USER_LOGGED_IN, USER_PING} from "../actions/types";
 
-let initialState = {};
+const initialState = {};
 // @ts-ignore
 export default function(state = initialState, action) {
     switch (action.type){

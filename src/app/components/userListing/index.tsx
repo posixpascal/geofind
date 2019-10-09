@@ -1,17 +1,17 @@
-import React, {useRef, useEffect, useState} from "react";
-import * as actions from '../../actions/rooms';
-import {connect} from 'react-redux';
+import React, {useEffect, useRef, useState} from "react";
+import {TwitterPicker} from "react-color";
+import {Check, User, XCircle, Zap} from "react-feather";
+import {connect} from "react-redux";
 import {NavLink, withRouter} from "react-router-dom";
 import styled from "styled-components";
-import {strings} from "../../i18n";
-import {Button} from "../uiWidgets/Button";
-import {Check, User, XCircle, Zap} from "react-feather";
-import {HorizontalAlignment} from "../uiWidgets/HorizontalAlignment";
-import {client} from "../../helper/webSockets";
-import {TwitterPicker} from 'react-color'
-import moment from "../chat";
-import {store} from "../../main";
+import * as actions from "../../actions/rooms";
 import {USER_LOGGED_IN} from "../../actions/types";
+import {client} from "../../helper/webSockets";
+import {strings} from "../../i18n";
+import {store} from "../../main";
+import moment from "../chat";
+import {Button} from "../uiWidgets/Button";
+import {HorizontalAlignment} from "../uiWidgets/HorizontalAlignment";
 
 const UserListingWrapper = styled.div`
   width: 100%;
@@ -25,16 +25,16 @@ const UserListingRow = styled.div`
   align-items:center;
   margin-bottom: 10px;
   padding-right: 30px;
-  ${props => props.isUser && `
+  ${(props) => props.isUser && `
     background: #f0e3fb;
   `}
-  
+
   @media (max-width: 767px){
     flex-direction: column;
     .userIcon {
       display: none;
     }
-    
+
     font-size: 28px;
     padding: 20px 0;
   }
@@ -55,19 +55,19 @@ const ReadyButton = styled(Button)`
   float: right;
   overflow:hidden;
   border:none;
-  ${props => props.isReady ? `
+  ${(props) => props.isReady ? `
     background:  rgba(97,202,97,.9);
       border-left: 10px solid rgb(70,140,70) !important;
     span { color: #fff !important; }
   ` : ""}
-  
-  ${props => props.inactive ? `pointer-events:none` : ""}
+
+  ${(props) => props.inactive ? `pointer-events:none` : ""}
   span {
   color: #212121;
   font-size:20px;
   }
- 
-  
+
+
   :hover {
     background: rgba(97,202,97,.9) !important;
     border-left: 10px solid rgb(70,140,70) !important;
@@ -78,13 +78,13 @@ const ReadyButton = styled(Button)`
   :focus {
     background: #f1f1f1;
     span { color: #212121 !important; }
-    ${props => props.isReady ? `
+    ${(props) => props.isReady ? `
 
     background:  #60a760;
     span { color: #fff !important; }
   ` : ""}
   }
-  ${props => !props.inactive && `
+  ${(props) => !props.inactive && `
     :after {
         content: '';
         position: absolute;
@@ -118,7 +118,7 @@ const ReadyButton = styled(Button)`
         transition: all .2s ease;
         -webkit-backface-visibility: hidden;
     }
-    
+
     :focus {
         background: rgb(96, 167, 96) !important;
         border-color: rgb(96, 140, 96) !important;
@@ -136,7 +136,6 @@ const UserIcon = styled.div`
   }
 `;
 
-
 const ColorPickerWrapper = styled.div`position:relative;`;
 
 export const changeName = () => {
@@ -147,7 +146,7 @@ export const changeName = () => {
 
     client.auth.displayName = newName;
     client.auth.save();
-    store.dispatch({type: USER_LOGGED_IN, payload: client.auth})
+    store.dispatch({type: USER_LOGGED_IN, payload: client.auth});
     // TODO: update avatar url as well
 
     if ((window as any).currentRoom) (window as any).currentRoom.send({type: "user:displayName:set", payload: newName});
@@ -169,7 +168,7 @@ export default ({room, isLeader, players}) => {
 
     const onColorChange = (color) => {
         (window as any).currentRoom.send({type: "user:color:set", payload: color});
-        toggleColorPicker(false)
+        toggleColorPicker(false);
     };
 
     const toggleReady = () => {
@@ -178,27 +177,26 @@ export default ({room, isLeader, players}) => {
 
     const kickPlayer = (player) => {
         (window as any).currentRoom.send({type: "user:kick", payload: player});
-    }
+    };
 
     const popover = {
-        position: 'absolute',
-        zIndex: '2',
-        top: '25px',
-        left: '-8px'
-    }
+        position: "absolute",
+        zIndex: "2",
+        top: "25px",
+        left: "-8px",
+    };
 
     const cover = {
-        position: 'fixed',
-        top: '0px',
-        right: '0px',
-        bottom: '0px',
-        left: '0px',
+        position: "fixed",
+        top: "0px",
+        right: "0px",
+        bottom: "0px",
+        left: "0px",
     };
 
     if (!players) {
-        return <span>Loading...</span>
+        return <span>Loading...</span>;
     }
-
 
     return (
         <UserListingWrapper>
@@ -235,13 +233,12 @@ export default ({room, isLeader, players}) => {
                         {/*isLeader && client.auth._id  !== player.id &&
                         <Button onClick={() => kickPlayer(player)}><span>Kick</span></Button>*/}
                         {client.auth._id === player.id &&
-                        <Button className={muted ? 'active' : ''} onClick={() => toggleMute()}>{muted ? <span>Muted</span> : <span>Mute?</span>}</Button>}
+                        <Button className={muted ? "active" : ""} onClick={() => toggleMute()}>{muted ? <span>Muted</span> : <span>Mute?</span>}</Button>}
                         {client.auth._id === player.id ? <ReadyButton isReady={player.isReady}
                                                                       onClick={() => toggleReady()}><span>{player.isReady ? strings.userReady : strings.ready}</span></ReadyButton> : userReady}
                     </HorizontalAlignment>
-                </UserListingRow>
+                </UserListingRow>;
             })}
         </UserListingWrapper>
-    )
+    );
 };
-

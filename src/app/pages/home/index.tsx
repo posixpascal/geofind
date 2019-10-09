@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from "react";
-import LobbyListing from "../../components/lobbyListing";
-import {strings} from "../../i18n";
-import {Content} from "../../components/uiWidgets/Content";
-import {GameMap} from "../game_countries";
-import styled from "styled-components";
-import {Button} from "../../components/uiWidgets/Button";
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
 import {NavLink, withRouter} from "react-router-dom";
-import * as actions from "../../actions/rooms";
+import styled from "styled-components";
 import * as gameActions from "../../actions/game";
-import {client} from "../../helper/webSockets";
+import * as actions from "../../actions/rooms";
+import LobbyListing from "../../components/lobbyListing";
+import {Button} from "../../components/uiWidgets/Button";
+import {Content} from "../../components/uiWidgets/Content";
 import {sharedHistory} from "../../helper/sharedHistory";
+import {client} from "../../helper/webSockets";
+import {strings} from "../../i18n";
+import {GameMap} from "../game_countries";
 export const Overlay = styled.div`
     position: absolute;
     left: 0;
@@ -33,8 +33,8 @@ export const OverlayContent = styled.div`
   padding: 40px;
   box-shadow: 3px 3px 15px rgba(0,0,0,.3);
   z-index: 20;
-  color: #212121; 
-  
+  color: #212121;
+
   h2 {
     text-align: center;
     font-weight: 700;
@@ -43,12 +43,12 @@ export const OverlayContent = styled.div`
     padding: 0;
     margin-bottom: 40px;
   }
-  
+
   p {
     text-align: center;
     font-size: 24px;
   }
-  
+
   @media (max-width: 767px){
     top:0;
     box-shadow: none;
@@ -58,7 +58,7 @@ export const OverlayContent = styled.div`
     padding-top: 20px;
     font-size: 24px;
     }
-    
+
     p {
     font-size: 16px;
     margin: 0;
@@ -68,18 +68,17 @@ export const OverlayContent = styled.div`
 
 const REFRESH_RATE = 1000;
 
-
 const HomePage = ({ leaveRoom, leaveGame, createRoom }) => {
     const [rooms, setRooms] = useState([]);
 
     useEffect(() => {
-        let fetchInterval = setInterval(async () => {
+        const fetchInterval = setInterval(async () => {
             const rooms = await client.getAvailableRooms("lobby");
             setRooms(rooms);
         }, REFRESH_RATE);
         return () => {
             clearInterval(fetchInterval);
-        }
+        };
     });
 
     useEffect(() => {
@@ -91,7 +90,6 @@ const HomePage = ({ leaveRoom, leaveGame, createRoom }) => {
             leaveGame((window as any).currentGame);
         }
     });
-
 
     return (
         <div>
@@ -117,10 +115,8 @@ const HomePage = ({ leaveRoom, leaveGame, createRoom }) => {
     );
 };
 
-
-
 function mapStateToProps(state) {
-    return {lobbies: state.lobbies}
+    return {lobbies: state.lobbies};
 }
 
 export default withRouter(connect(mapStateToProps, {...actions, ...gameActions})(HomePage));

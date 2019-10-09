@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
 import {Heart} from "react-feather";
+import styled from "styled-components";
 
 const FooterWrapper = styled.div`
   margin: 40px -40px -40px;
@@ -11,7 +11,7 @@ const FooterWrapper = styled.div`
   }
   display: flex;
   justify-content: space-between;
-  padding: 15px; 
+  padding: 15px;
   svg {
     width: 18px;
     height: 18px;
@@ -37,5 +37,5 @@ export const Footer = (props) => {
                 <a target={"_blank"} href={"https://pascalraszyk.de/de/impressum/"}>Imprint</a>
             </div>
         </FooterWrapper>
-    )
+    );
 };

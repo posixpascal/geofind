@@ -9,5 +9,5 @@ export const Countdown = ({from}) => {
     }, 1000);
     return (
         <h1>{count}</h1>
-    )
+    );
 };

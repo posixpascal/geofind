@@ -1,22 +1,22 @@
 import React from "react";
 import styled from "styled-components";
-import {HorizontalAlignment} from "../../uiWidgets/HorizontalAlignment";
 import {strings} from "../../../i18n";
+import {HorizontalAlignment} from "../../uiWidgets/HorizontalAlignment";
+import {GameModeSelection} from "./gameModeSelection";
 import {
     MaxRoundsInput,
     RoomSettingsHeader,
     RoomSettingsPaneWrapper,
     RoundTimeInput,
     SelectInput,
-    VictoryScoreInput
+    VictoryScoreInput,
 } from "./widgets";
-import {GameModeSelection} from "./gameModeSelection";
 
 export const RoomSettingsPane = ({collapsed, roomSettings, updateRoomSettings}) => {
     const updateSettingFromEvent = (key) => {
         return (event) => {
-            updateRoomSettings({[key]: event.target.value})
-        }
+            updateRoomSettings({[key]: event.target.value});
+        };
     };
 
     return (<RoomSettingsPaneWrapper collapsed={collapsed}>
@@ -46,5 +46,5 @@ export const RoomSettingsPane = ({collapsed, roomSettings, updateRoomSettings}) 
                    onChange={() => updateRoomSettings({insultMode: !roomSettings.insultMode})}/> Insult
             Mode? <small>(Insults users randomly based on their bad answers)</small>
         </div>
-    </RoomSettingsPaneWrapper>)
-}
+    </RoomSettingsPaneWrapper>);
+};

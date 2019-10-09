@@ -43,7 +43,6 @@ export const NavItem = styled.li`
   }
 `;
 
-
 export const Navigation = styled.nav`
   display: flex;
   align-items: center;
@@ -85,7 +84,7 @@ export const CurrentUser = styled.div`
     left: 0;
     top: 2px;
   }
-  
+
   @media (max-width: 767px){
     padding-left: 40px;
     img {

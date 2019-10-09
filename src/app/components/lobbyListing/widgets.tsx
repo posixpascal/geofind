@@ -35,5 +35,5 @@ export const JoinLobbyButton = styled.button`
   margin: 0 5px;
   height: 33px;
   line-height: 33px;
-  
+
 `;

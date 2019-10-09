@@ -1,4 +1,4 @@
-import {ROUND_START, ROUND_END} from "../actions/types";
+import {ROUND_END, ROUND_START} from "../actions/types";
 
 // @ts-ignore
 export default function(state = {}, action) {

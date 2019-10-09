@@ -1,7 +1,6 @@
 import React from "react";
+import { renderToString } from "react-dom/server";
 import {ColorLuminance} from "./colorLuminance";
-import { renderToString } from 'react-dom/server'
-
 
 export const PushPinSVG = ({color, size = 30}) => {
     const encodedSVG = btoa(renderToString(<PushPin color={color} size={size} pinned={true}/>));
@@ -14,7 +13,7 @@ export const PushPin = ({color, size = 30, pinned = false}) => {
     const colorLight3 = ColorLuminance(color, -0.1);
     const pinStyle = pinned ? {
         transform: "rotate(-45deg)",
-        transition: "transform ease-in-out 0.5s"
+        transition: "transform ease-in-out 0.5s",
     } : {transition: "transform ease-in-out 0.5s"};
     return <svg style={pinStyle} xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 30 30`} width={size} height={size}>
         <path fill="#a3b7cc" d="M2 28.75L1 29 1.25 28 13.646 15.646 14.354 16.354z"/>
@@ -32,7 +31,7 @@ export const PushPin = ({color, size = 30, pinned = false}) => {
             <path fill={colorLight}
                   d="M10.021,12c0.818,0,1.587,0.319,2.166,0.897l4.916,4.916c1.193,1.194,1.193,3.137,0,4.33 l-0.443,0.442l-9.247-9.247l0.442-0.442C8.434,12.319,9.204,12,10.021,12 M10.021,11c-1.04,0-2.079,0.397-2.873,1.19L6,13.339 L16.661,24l1.15-1.149c1.586-1.587,1.586-4.158,0-5.745l-4.916-4.916C12.101,11.397,11.061,11,10.021,11L10.021,11z"/>
         </g>
-    </svg>
+    </svg>;
 };
 
 export const LogoSVG = () => {

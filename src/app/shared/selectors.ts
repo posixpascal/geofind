@@ -6,7 +6,7 @@ export const arePlayersReady = (room) => {
     }
 
     let allReady = true;
-    for (let playerID in room.players) {
+    for (const playerID in room.players) {
         if (!room.players.hasOwnProperty(playerID)){
             continue;
         }

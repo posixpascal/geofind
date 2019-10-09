@@ -1,7 +1,7 @@
-import {RoomSettingsView} from "./settingsView";
 import {RoomSettingsPane} from "./settingsPane";
+import {RoomSettingsView} from "./settingsView";
 
 export {
     RoomSettingsPane,
-    RoomSettingsView
-}
+    RoomSettingsView,
+};

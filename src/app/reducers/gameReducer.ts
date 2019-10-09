@@ -7,7 +7,6 @@ export default function(state = {users: []}, action) {
             (window as any).currentGame = action.payload;
             return {mode: action.payload.name, id: action.payload.id, gameState: {...action.payload.serializer.state}};
 
-
         case GAME_LEAVE:
             if ((window as any).currentGame) { // user is in room
                 (window as any).currentGame.leave();

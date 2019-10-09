@@ -1,8 +1,8 @@
 import React from "react";
-import {compose, withProps} from "recompose"
-import {withScriptjs, withGoogleMap, GoogleMap, Marker} from "react-google-maps"
-import {LogoSVG, PushPinSVG} from "../../../helper/svgs";
+import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
+import {compose, withProps} from "recompose";
 import {hashCode} from "../../../helper/hash";
+import {LogoSVG, PushPinSVG} from "../../../helper/svgs";
 
 declare const google: any;
 
@@ -14,7 +14,7 @@ export const StreetViewVoteMap = compose(
         mapElement: <div style={{zIndex: 15, height: "260px"}}/>,
     }),
     withScriptjs,
-    withGoogleMap
+    withGoogleMap,
 )((props) =>
     <GoogleMap
         defaultZoom={3}
@@ -27,10 +27,10 @@ export const StreetViewVoteMap = compose(
                     featureType: "all",
                     elementType: "labels",
                     stylers: [
-                        {visibility: "off"}
-                    ]
-                }
-            ]
+                        {visibility: "off"},
+                    ],
+                },
+            ],
         }}
     >
 
@@ -41,9 +41,9 @@ export const StreetViewVoteMap = compose(
         {props.game && Object.keys(props.game.votes).map((playerID, index) => {
             const vote = props.game.votes[playerID];
             const player = props.game.players[playerID];
-            return <div key={playerID+"_pin_1_"+index}>
+            return <div key={playerID + "_pin_1_" + index}>
             {vote.pin_1 && <Marker
-                    key={playerID+"_pin_1_"+index}
+                    key={playerID + "_pin_1_" + index}
                     icon={{url: PushPinSVG({color: player.color})}}
                     position={
                         {lat: vote.pin_1.lat, lng: vote.pin_1.lng}
@@ -51,7 +51,7 @@ export const StreetViewVoteMap = compose(
                     animation={(google as any).maps.Animation.DROP}
                     draggable={false}/>}
             {vote.pin_2 && <Marker
-                    key={playerID+"_pin_2_"+index}
+                    key={playerID + "_pin_2_" + index}
                     icon={{url: PushPinSVG({color: player.color})}}
                     position={
                         {lat: vote.pin_2.lat, lng: vote.pin_2.lng}
@@ -59,7 +59,7 @@ export const StreetViewVoteMap = compose(
                     animation={(google as any).maps.Animation.DROP}
                     draggable={false}/>}
             {vote.pin_3 && <Marker
-                    key={playerID+"_pin_3_"+index}
+                    key={playerID + "_pin_3_" + index}
                     icon={{url: PushPinSVG({color: player.color})}}
                     position={
                         {lat: vote.pin_3.lat, lng: vote.pin_3.lng}
@@ -67,7 +67,7 @@ export const StreetViewVoteMap = compose(
                     animation={(google as any).maps.Animation.DROP}
                     draggable={false}/>}
             {vote.pin_4 && <Marker
-                    key={playerID+"_pin_4_"+index}
+                    key={playerID + "_pin_4_" + index}
                     icon={{url: PushPinSVG({color: player.color})}}
                     position={
                         {lat: vote.pin_4.lat, lng: vote.pin_4.lng}
@@ -75,14 +75,14 @@ export const StreetViewVoteMap = compose(
                     animation={(google as any).maps.Animation.DROP}
                     draggable={false}/>}
             {vote.pin_5 && <Marker
-                    key={playerID+"_pin_5_"+index}
+                    key={playerID + "_pin_5_" + index}
                     icon={{url: PushPinSVG({color: player.color})}}
                     position={
                         {lat: vote.pin_5.lat, lng: vote.pin_5.lng}
                     }
                     animation={(google as any).maps.Animation.DROP}
                     draggable={false}/>}
-            </div>
+            </div>;
         })}
-    </GoogleMap>
+    </GoogleMap>,
 );

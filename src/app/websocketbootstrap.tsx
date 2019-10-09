@@ -1,22 +1,22 @@
+import {ConnectedRouter, routerMiddleware} from "connected-react-router";
 import React from "react";
 import ReactDOM from "react-dom";
-import {HashRouter as Router, Switch, Route, NavLink} from "react-router-dom";
 import {Provider} from "react-redux";
-import {createStore, applyMiddleware} from "redux";
-import reducers from "./reducers";
-import reduxThunk from "redux-thunk";
-import {ConnectedRouter, routerMiddleware} from "connected-react-router";
+import {HashRouter as Router, NavLink, Route, Switch} from "react-router-dom";
+import {applyMiddleware, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
+import reduxThunk from "redux-thunk";
 import styled from "styled-components";
 import {sharedHistory} from "./helper/sharedHistory";
+import reducers from "./reducers";
 
-import {HomePage, Overlay, OverlayContent} from "./pages/home";
-import LobbyPage from "./pages/room";
-import GamePage, {GameMap} from "./pages/game_countries";
-import {Header} from "./components/header";
-import {LobbyCreatePage} from "./pages/lobbyCreate";
-import {initWebSockets} from "./helper/webSockets";
 import {Footer} from "./components/footer";
+import {Header} from "./components/header";
+import {initWebSockets} from "./helper/webSockets";
+import GamePage, {GameMap} from "./pages/game_countries";
+import {HomePage, Overlay, OverlayContent} from "./pages/home";
+import {LobbyCreatePage} from "./pages/lobbyCreate";
+import LobbyPage from "./pages/room";
 
 const head = document.querySelector("head");
 const socketio = document.createElement("script");

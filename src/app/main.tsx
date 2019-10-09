@@ -1,25 +1,24 @@
-import React from "react";
-import styled from "styled-components";
-import ReactDOM from "react-dom";
 import FastClick from "fastclick";
+import React from "react";
+import ReactDOM from "react-dom";
+import reduxThunk from "redux-thunk";
+import styled from "styled-components";
+import Header from "./components/header";
+import CountriesGamePage from "./pages/game_countries";
+import StreetViewGamePage from "./pages/game_streetview";
 import HomePage, {Overlay, OverlayContent} from "./pages/home";
 import RoomPage from "./pages/room";
 import ThemesPage from "./pages/themes";
-import CountriesGamePage from "./pages/game_countries";
-import StreetViewGamePage from "./pages/game_streetview";
-import Header from "./components/header";
 import reducers from "./reducers";
-import reduxThunk from "redux-thunk";
 
-import {Switch, Route} from "react-router-dom";
-import {Provider} from "react-redux";
-import {createStore, applyMiddleware} from "redux";
 import {ConnectedRouter, routerMiddleware} from "connected-react-router";
+import {Provider} from "react-redux";
+import {Route, Switch} from "react-router-dom";
+import {applyMiddleware, createStore} from "redux";
 import {composeWithDevTools} from "redux-devtools-extension";
+import {Footer} from "./components/footer";
 import {sharedHistory} from "./helper/sharedHistory";
 import {authenticateUser, prefetchRooms} from "./helper/webSockets";
-import {Footer} from "./components/footer";
-
 
 export const store = createStore(reducers, composeWithDevTools(applyMiddleware(routerMiddleware(sharedHistory), reduxThunk)));
 
@@ -52,15 +51,15 @@ const Application = () => {
                 </Switch>
             </ConnectedRouter>
         </Provider>
-    )
+    );
 };
 
 document.addEventListener("DOMContentLoaded", async () => {
     ReactDOM.render(<Application/>, document.querySelector("#app"));
 
     // Removes mobile click delay of 300ms from buttons and other clickable links
-    if ('addEventListener' in document) {
-        document.addEventListener('DOMContentLoaded', function () {
+    if ("addEventListener" in document) {
+        document.addEventListener("DOMContentLoaded", function() {
             FastClick.attach(document.body);
         }, false);
     }

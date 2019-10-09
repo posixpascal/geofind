@@ -1,6 +1,6 @@
 import React from "react";
-import {compose, withProps} from "recompose"
-import {withScriptjs, withGoogleMap, GoogleMap, Marker} from "react-google-maps"
+import {GoogleMap, Marker, withGoogleMap, withScriptjs} from "react-google-maps";
+import {compose, withProps} from "recompose";
 import {LogoSVG, PushPinSVG} from "../../../helper/svgs";
 
 declare const google: any;
@@ -13,7 +13,7 @@ export const GameMap = compose(
         mapElement: <div style={{zIndex: 15, height: (window.innerHeight - 53) + "px"}}/>,
     }),
     withScriptjs,
-    withGoogleMap
+    withGoogleMap,
 )((props) => {
     return <GoogleMap
         defaultZoom={3}
@@ -27,10 +27,10 @@ export const GameMap = compose(
                     featureType: "all",
                     elementType: "labels",
                     stylers: [
-                        {visibility: "off"}
-                    ]
-                }
-            ]
+                        {visibility: "off"},
+                    ],
+                },
+            ],
         }}
     >
 
@@ -48,11 +48,11 @@ export const GameMap = compose(
                     {lat: vote.country.lat, lng: vote.country.lng}
                 }
                 animation={(google as any).maps.Animation.DROP}
-                draggable={false}/>
+                draggable={false}/>;
         })}
         {props.showAllMarker && props.game &&
         <Marker position={{lat: props.game.country.lat, lng: props.game.country.lng}}
                 icon={{url: LogoSVG()}} animation={(google as any).maps.Animation.DROP} draggable={false}/>
         }
-    </GoogleMap>}
+    </GoogleMap>;},
 );

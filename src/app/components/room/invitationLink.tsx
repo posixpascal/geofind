@@ -18,5 +18,5 @@ export const RoomInvitationLink = () => {
     return <RoomInvitationWrapper>
         <div>{strings.inviteTip}</div>
         <RoomInvitationCopy>{invitationLink}</RoomInvitationCopy>
-    </RoomInvitationWrapper>
+    </RoomInvitationWrapper>;
 };

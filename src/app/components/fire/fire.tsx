@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import styled from "styled-components";
 
 const COUNT_OF_PARTICLES = 50;
@@ -31,11 +31,11 @@ const Flame = styled.div`
       transform: translateY(0) scale(1);
       filter: opacity(0);
   }
-  
+
   25% {
       filter: opacity(1);
   }
-  
+
   to {
       transform: translateY(-40px) scale(0);
       filter: opacity(0);
@@ -49,17 +49,17 @@ export const Fire = () => {
     useEffect(() => {
         if (sparks.length === 0) {
             setSparks(
-                Array(COUNT_OF_PARTICLES).fill('').map((particle, i) => {
-                    return {n: i + 1, 'rnd': Math.random()}
+                Array(COUNT_OF_PARTICLES).fill("").map((particle, i) => {
+                    return {n: i + 1, rnd: Math.random()};
                 });
         }
     });
 
     return <Flame>
         {sparks.map((spark) => {
-            return <span style={{'--n': spark.n, '--rnd': spark.rnd}}>
-                </span>
+            return <span style={{"--n": spark.n, "--rnd": spark.rnd}}>
+                </span>;
         })}
-    </Flame>
+    </Flame>;
 
 };

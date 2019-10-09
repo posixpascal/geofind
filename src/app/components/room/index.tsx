@@ -3,5 +3,5 @@ import {RoomInvitationLink} from "./invitationLink";
 
 export {
     RoomHeader,
-    RoomInvitationLink
-}
+    RoomInvitationLink,
+};

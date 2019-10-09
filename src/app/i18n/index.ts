@@ -1,6 +1,6 @@
 import * as DE from "./de.json";
 import * as EN from "./en.json";
-var language = navigator.languages && navigator.languages[0] || // Chrome / Firefox
+let language = navigator.languages && navigator.languages[0] || // Chrome / Firefox
     navigator.language ||   // All browsers
     (navigator as any).userLanguage; // IE <= 10
-export const strings : any = language.indexOf("de") > -1 ? DE : EN;
+export const strings: any = language.indexOf("de") > -1 ? DE : EN;

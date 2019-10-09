@@ -1,10 +1,10 @@
-import React, {useRef, useState, useEffect} from "react";
 import moment from "moment";
-import {strings} from "../../i18n";
+import React, {useEffect, useRef, useState} from "react";
 import {Send} from "react-feather";
-import * as actions from '../../actions/rooms';
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+import * as actions from "../../actions/rooms";
+import {strings} from "../../i18n";
 
 const randomInsecurityInsult = () => {
     const insecurities = [
@@ -18,6 +18,7 @@ const randomInsecurityInsult = () => {
     return insecurities[Math.floor(Math.random() * insecurities.length)];
 };
 
+import {hashCode} from "../../helper/hash";
 import {
     ChatLog,
     ChatMessage,
@@ -25,9 +26,8 @@ import {
     ChatMessageText,
     ChatMessageUser,
     ChatWindowWrapper,
-    NewChatMessage
+    NewChatMessage,
 } from "./widgets";
-import {hashCode} from "../../helper/hash";
 
 export default ({inGame = false, players = {}, messages = []}) => {
     const chatInput = useRef();
@@ -57,9 +57,9 @@ export default ({inGame = false, players = {}, messages = []}) => {
                 break;
         }
         if ((window as any).currentGame) {
-            (window as any).currentGame.send({type: "chat:message:new", payload: chatMessage})
+            (window as any).currentGame.send({type: "chat:message:new", payload: chatMessage});
         } else {
-            (window as any).currentRoom.send({type: "chat:message:new", payload: chatMessage})
+            (window as any).currentRoom.send({type: "chat:message:new", payload: chatMessage});
         }
         chatInput.current.value = "";
     };
@@ -78,12 +78,12 @@ export default ({inGame = false, players = {}, messages = []}) => {
     return (
         <ChatWindowWrapper>
             <ChatLog id="chatView">
-                {messages.map(chatMessage => {
+                {messages.map((chatMessage) => {
                     return <ChatMessage bold={!!chatMessage.bold} key={chatMessage.id}>
                         <ChatMessageDate>{formatDate(chatMessage.date)}</ChatMessageDate>
                         {// fetch uptodate user to reflect name changes
                             players[chatMessage.player.id] &&
-                            <>
+                            < >
                                 <ChatMessageUser style={{color: players[chatMessage.player.id].color}}>
                                     {players[chatMessage.player.id].displayName}
                                 </ChatMessageUser>
@@ -91,14 +91,14 @@ export default ({inGame = false, players = {}, messages = []}) => {
                             </>}
                         {//user left meanwhile so we render the cached properties
                             !players[chatMessage.player.id] &&
-                            <>
+                            < >
                                 <ChatMessageUser style={{color: chatMessage.player.color}}>
                                     {chatMessage.player.displayName}
                                 </ChatMessageUser>
                                 <ChatMessageText>{chatMessage.message}</ChatMessageText>
                             </>
                         }
-                    </ChatMessage>
+                    </ChatMessage>;
                 })}
             </ChatLog>
             <NewChatMessage>
@@ -107,5 +107,5 @@ export default ({inGame = false, players = {}, messages = []}) => {
                 <Send onClick={sendMessage}/>
             </NewChatMessage>
         </ChatWindowWrapper>
-    )
+    );
 };

@@ -1,13 +1,13 @@
 import React, {useState} from "react";
 import {Loader} from "react-feather";
-import styled from "styled-components";
-import {compare} from "../../../helper/compare";
-import {strings} from "../../../i18n";
-import {PushPin} from "../../../helper/svgs";
-import {Countdown} from "../../countdown";
-import * as actions from "../../../actions/game";
-import {connect} from 'react-redux';
+import {connect} from "react-redux";
 import {NavLink, withRouter} from "react-router-dom";
+import styled from "styled-components";
+import * as actions from "../../../actions/game";
+import {compare} from "../../../helper/compare";
+import {PushPin} from "../../../helper/svgs";
+import {strings} from "../../../i18n";
+import {Countdown} from "../../countdown";
 
 const SearchBox = styled.div`
   .loader svg {
@@ -28,8 +28,8 @@ export const Overlay = styled.div`
   #chatView {
   width: 100% !important;
   height: 200px;
-  text-align: left; 
-  
+  text-align: left;
+
   }
   svg {
   }
@@ -56,7 +56,7 @@ export const Overlay = styled.div`
     hr {
       margin: 10px 0;
     }
-    
+
     h1 {
     font-size: 20px;
     margin: 0;
@@ -65,11 +65,10 @@ export const Overlay = styled.div`
   }
 `;
 
-
 const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
         const [showImage, setShowImage] = useState(true);
 
-        let overlayContent = <></>;
+        let overlayContent =  < > </; > ;
 
         if (!game.gameOver && game.roundStart && !game.roundEnd) {
             overlayContent = <SearchBox>
@@ -95,7 +94,7 @@ const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
             </SearchBox>;
         } else if (!game.gameOver && !game.roundStart && game.roundEnd) {
             if (center.lat !== game.country.lat || center.lng !== game.country.lng) {
-                setCenter({lat: game.country.lat, lng: game.country.lng})
+                setCenter({lat: game.country.lat, lng: game.country.lng});
             }
             overlayContent = <SearchBox>
                 <p>
@@ -110,7 +109,7 @@ const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
                             &mdash;
                             <br/>
                             <hr className={"hidden-mobile"}/>
-                        </div>
+                        </div>;
                     }
 
                     return <div key={index} style={{fontWeight: game.votes[playerID].hasWon ? "bold" : ""}}>
@@ -122,7 +121,7 @@ const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
                         <hr className={"hidden-mobile"}/>
                     </div>;
                 })}
-            </SearchBox>
+            </SearchBox>;
         } else if (game.gameOver) {
             overlayContent = <SearchBox>
                 <p>
@@ -133,9 +132,9 @@ const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
                     const player = game.players[playerID];
                     const playerScore = game.scoreBoard[playerID];
 
-                    return <div className={`${game.gameWinner === playerID ? 'user-result-won' : 'user-result-lost'}`} key={playerID} id={playerID}>
+                    return <div className={`${game.gameWinner === playerID ? "user-result-won" : "user-result-lost"}`} key={playerID} id={playerID}>
                         {player.displayName} <PushPin size={16} pinned={true} color={player.color}/> ({playerScore.score} {strings.points})
-                    </div>
+                    </div>;
                 })}
                 <NavLink to={"/lobby/" + (window as any).currentRoom.id}><button>{strings.backToLobby}</button></NavLink>
                 <button onClick={leaveGame}>{strings.backToHome}</button>
@@ -153,7 +152,7 @@ const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
 ;
 
 function mapStateToProps(state) {
-    return {}
+    return {};
 }
 
 export default withRouter(connect(mapStateToProps, actions)(GameOverlay));

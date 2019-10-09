@@ -1,2 +1,2 @@
-import { createBrowserHistory } from 'history'
+import { createBrowserHistory } from "history";
 export const sharedHistory = createBrowserHistory();

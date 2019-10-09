@@ -1,8 +1,8 @@
 import React from "react";
-import {CurrentUser, Divider, Navigation, NavItem} from "./widgets";
+import {NavLink} from "react-router-dom";
 import {strings} from "../../i18n";
 import {changeName} from "../userListing";
-import {NavLink} from "react-router-dom";
+import {CurrentUser, Divider, Navigation, NavItem} from "./widgets";
 
 export const HeaderNavigation = ({user}) => {
     return <Navigation>
@@ -15,7 +15,7 @@ export const HeaderNavigation = ({user}) => {
                     {strings.sourceCode}
                 </a>
             </NavItem>
-            {user && <>
+            {user && < >
                 <Divider>
 
                 </Divider>
@@ -26,5 +26,5 @@ export const HeaderNavigation = ({user}) => {
                 </li>
             </>}
         </ul>
-    </Navigation>
+    </Navigation>;
 };

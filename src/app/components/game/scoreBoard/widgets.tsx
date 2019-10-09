@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {strings} from "../../../i18n";
 import {PushPin} from "../../../helper/svgs";
+import {strings} from "../../../i18n";
 import {HorizontalAlignment} from "../../uiWidgets/HorizontalAlignment";
 
 export const UserList = styled.div`
@@ -14,7 +14,7 @@ export const UserList = styled.div`
         flex: 0 50%;
     }
   }
-  
+
   h3 {
     margin: 0;
     font-size: 20px !important;
@@ -32,12 +32,12 @@ export const PlayerScore = ({game, playerID}) => {
         <UserName>
             {game.players[playerID].displayName} ({game.scoreBoard[playerID].score})
         </UserName>
-    </HorizontalAlignment>
+    </HorizontalAlignment>;
 };
 
 export const RequiredVictoryScore = ({game}) => {
     return <div className={"hidden-mobile"}>
         <hr/>
         {strings.victoryScoreInfoBefore} {game.victoryScore} {strings.victoryScoreInfoAfter}
-    </div>
+    </div>;
 };

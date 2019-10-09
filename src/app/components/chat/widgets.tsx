@@ -11,8 +11,8 @@ export const ChatLog = styled.div`
   overflow-y: auto;
   width: 380px;
   font-size: 14px;
-  
-    @media (max-width: 767px){ 
+
+    @media (max-width: 767px){
     width: 100% !important;
     }
 `;
@@ -26,9 +26,9 @@ export const NewChatMessage = styled.div`
     margin:0;
     border-radius: 0;
     font-size: 16px !important;
-    
+
   }
-  
+
   svg {
     position: absolute;
     right: 10px;
@@ -40,7 +40,7 @@ export const NewChatMessage = styled.div`
 
 export const ChatMessage = styled.div`
   margin-bottom: 5px;
-  ${props => props.bold && `font-weight: 700`}
+  ${(props) => props.bold && `font-weight: 700`}
 `;
 
 export const ChatMessageDate = styled.span`

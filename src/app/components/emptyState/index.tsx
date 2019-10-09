@@ -1,10 +1,10 @@
 import React from "react";
+import {connect} from "react-redux";
+import {NavLink, withRouter} from "react-router-dom";
 import styled from "styled-components";
+import * as actions from "../../actions/rooms";
 import {strings} from "../../i18n";
 import {Button} from "../uiWidgets/Button";
-import * as actions from "../../actions/rooms";
-import {connect} from 'react-redux';
-import {NavLink, withRouter} from "react-router-dom";
 interface IEmptyStateProps {
     title: string;
     description: string;
@@ -52,5 +52,5 @@ export default (props: any) => {
                  <Button>{props.ctaText}</Button>
             </EmptyStateAction>
         </EmptyStateWrapper>
-    )
+    );
 };

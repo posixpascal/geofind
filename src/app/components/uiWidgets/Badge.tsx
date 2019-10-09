@@ -6,7 +6,7 @@ export const Badge = styled.span`
   padding: 4px 8px;
   background-color: #9b4dca;
   color: #fff;
-  
+
   svg {
   width: 12px;
   height: 12px;

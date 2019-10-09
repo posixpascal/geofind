@@ -31,5 +31,5 @@ export const RoomJoinLoader = (props) => {
                 Loading...
             </h2>
         </RoomJoinLoaderWrapper>
-    )
+    );
 };

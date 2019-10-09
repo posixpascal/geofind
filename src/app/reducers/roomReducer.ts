@@ -27,4 +27,4 @@ export default (state: IRoom | boolean = false, action) => {
         default:
             return state;
     }
-}
+};

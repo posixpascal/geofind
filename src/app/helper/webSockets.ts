@@ -1,8 +1,8 @@
-import {sharedHistory} from "./sharedHistory";
 import {
     LOBBIES_LIST,
-    USER_LOGGED_IN
+    USER_LOGGED_IN,
 } from "../actions/types";
+import {sharedHistory} from "./sharedHistory";
 
 import * as Colyseus from "colyseus.js";
 export const client = new Colyseus.Client(process.env.NODE_ENV == "production" ? "wss://gameserver.geofind.io" : "ws://localhost:3888");
@@ -23,7 +23,6 @@ export const authenticateUser = async (store) => {
     }
 };
 
-
 /*
 export const webSocketConnection = io();
 
@@ -42,7 +41,6 @@ export const initWebSockets = (store) => {
         webSocketConnection.emit('welcome', localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : {});
     });
 
-
     // TODO: extract into config.
     webSocketConnection.on('welcome', (data) => {
         store.dispatch({ type: USER_CONNECTED, payload: data})
@@ -54,7 +52,6 @@ export const initWebSockets = (store) => {
             webSocketConnection.connect();
         }, 500);
     })
-
 
     // TODO: cleanup
     try {

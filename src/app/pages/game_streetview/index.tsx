@@ -1,21 +1,19 @@
-import React, {useState, useEffect} from "react";
-import * as actions from "../../actions/game";
-import {connect} from 'react-redux';
-import {withRouter} from "react-router-dom";
-import {sharedHistory} from "../../helper/sharedHistory";
-import {GameMap} from "../../components/game/maps";
-import {client} from "../../helper/webSockets";
-import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
-import {StreetViewGameMap} from "../../components/game/maps/streetView";
+import React, {useEffect, useState} from "react";
 import {Marker, OverlayView} from "react-google-maps";
-import StreetViewGameOverlay from "../../components/game/overlays/streetView";
-import {Overlay} from "../../components/game/overlays";
+import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
+import * as actions from "../../actions/game";
+import {GameMap} from "../../components/game/maps";
+import {StreetViewGameMap} from "../../components/game/maps/streetView";
 import {StreetViewVoteMap} from "../../components/game/maps/streetViewVoteMap";
+import {Overlay} from "../../components/game/overlays";
+import StreetViewGameOverlay from "../../components/game/overlays/streetView";
+import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
+import {sharedHistory} from "../../helper/sharedHistory";
 import {PushPin, PushPinSVG} from "../../helper/svgs";
-
+import {client} from "../../helper/webSockets";
 
 const CAMERA_POSITION = {lat: 32.5389916, lng: 28.7972057};
-
 
 const StreetViewGamePage = ({game, joinGame, leaveGame, match}) => {
     const [lastMarkerPosition, setLastMarkerPosition] = useState(CAMERA_POSITION);
@@ -30,30 +28,28 @@ const StreetViewGamePage = ({game, joinGame, leaveGame, match}) => {
         }
         return () => {
             document.body.classList.remove("no-scroll");
-        }
+        };
     });
 
-
     useEffect(() => { // user reconnect logic. if user still has no game after 3s we rejoin the game.
-        let timer = setTimeout(() => {
+        const timer = setTimeout(() => {
             if (!game.players) {
                 return joinGame({id: match.params.id, mode: "game_streetview"});
             }
         }, 3000);
         return () => {
             clearTimeout(timer);
-        }
+        };
     }, [game.players]);
 
     if (!game.players) {
-        return <RoomJoinLoader/>
+        return <RoomJoinLoader/>;
     }
-
 
     let isLeader = false;
     let user;
 
-    for (let playerId in game.players) {
+    for (const playerId in game.players) {
         if (game.players[playerId].id === client.auth._id) {
             user = game.players[playerId];
         }
@@ -66,7 +62,7 @@ const StreetViewGamePage = ({game, joinGame, leaveGame, match}) => {
         const vote = {lat: ev.latLng.lat(), lng: ev.latLng.lng()};
 
         setLastMarkerPosition(vote);
-        (window as any).currentGame.send({type: "game:vote", payload: vote})
+        (window as any).currentGame.send({type: "game:vote", payload: vote});
     };
 
     return (
@@ -89,7 +85,7 @@ const StreetViewGamePage = ({game, joinGame, leaveGame, match}) => {
                 bottom: "20px",
                 left: "initial",
                 width: "100%",
-                height: "300px"
+                height: "300px",
             }}>
                 <StreetViewVoteMap
                     center={center}
@@ -125,11 +121,10 @@ const StreetViewGamePage = ({game, joinGame, leaveGame, match}) => {
             </Overlay>
         </div>
     );
-}
-
+};
 
 function mapStateToProps(state) {
-    return {...state.lobby, user: state.user, game: state.game}
+    return {...state.lobby, user: state.user, game: state.game};
 }
 
 export default withRouter(connect(mapStateToProps, actions)(StreetViewGamePage));

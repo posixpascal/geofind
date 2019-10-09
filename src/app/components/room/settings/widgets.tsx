@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const RoomSettingsWrapper = styled.div`
    display: flex;
-    font-size: 18px; 
+    font-size: 18px;
     align-items: center;
     justify-content: space-between;
     @media (max-width: 767px){
@@ -17,14 +17,14 @@ export const RoomSettingsWrapper = styled.div`
 export const RoomSetting = styled.div`
   padding: 0 30px;
   display: flex;
-   
+
   flex-direction: column;
   align-items: center;
   justify-content: center;
   svg {
     display: block;
   }
-  
+
   @media (max-width: 767px){
     font-size: 18px !important;
     padding: 0 20px;
@@ -49,9 +49,9 @@ export const RoomSettingsPaneWrapper = styled.div`
    padding-top: 15px;
    width: 100%;
    }
-   
-  ${props => !props.collapsed ? `height: 0px;` : "height: 240px"}
-  
+
+  ${(props) => !props.collapsed ? `height: 0px;` : "height: 240px"}
+
   @media (max-width: 767px){
       div {
       padding-top: 5px !important;
@@ -59,8 +59,8 @@ export const RoomSettingsPaneWrapper = styled.div`
        .ha {
           flex-direction: column !important;
        }
-       
-       ${props => !props.collapsed ? `height: 0px;` : "height: 640px"}
+
+       ${(props) => !props.collapsed ? `height: 0px;` : "height: 640px"}
    }
 `;
 export const VictoryScoreInput = styled.input`

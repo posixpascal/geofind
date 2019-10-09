@@ -47,7 +47,7 @@ export const Button = styled.button`
         transition: all .2s linear;
         -webkit-backface-visibility: hidden;
     }
-    
+
     :hover {
       background-color: #9b4dca;
       border-left: 10px solid #4e2867;
