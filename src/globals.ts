@@ -3,6 +3,7 @@ interface SocketResource {
     removeAllListeners: Function;
     send: Function;
     onStateChange: Function;
+    leave: Function;
 }
 
 declare global {
