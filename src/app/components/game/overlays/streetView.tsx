@@ -61,80 +61,81 @@ export const StreetViewOverlay = styled.div`
 `;
 
 const StreetViewGameOverlay = ({game, user, center, setCenter, leaveGame}) => {
-        const [showImage, setShowImage] = useState(true);
+    const [showImage, setShowImage] = useState(true);
 
-        let overlayContent =  < > </; > ;
+    let overlayContent = <> </>;
 
-        if (!game.gameOver && game.roundStart && !game.roundEnd) {
-            overlayContent = <SearchBox>
-                <h5>Wo bist du?</h5>
-                <p>{strings.streetViewGameHint3}</p>
-                <hr />
-                <h3>{moment().startOf("day")
-                    .seconds(game.timeElapsed)
-                    .format("HH:mm:ss")}</h3>
-                {strings.elapsedTime}
-            </SearchBox>;
-        } else if (!game.gameOver && !game.roundStart && !game.roundEnd) {
-            overlayContent =  <>; </ > ;
-        } else if (!game.gameOver && !game.roundStart && game.roundEnd) {
-            if (center.lat !== game.country.lat || center.lng !== game.country.lng) {
-                setCenter({lat: game.country.lat, lng: game.country.lng});
-            }
-            overlayContent = <SearchBox>
-                <p>
-                    {strings.roundEnd}
-                </p>
-                {game.roundWinner && <div>
-                    Round Winner<br/>
-                    {game.players[game.roundWinner].displayName}<br />
-                    <h2>
-                        {showImage && <img width={48} onError={() => setShowImage(false)}
-                                           src={`/assets/${game.country.countryCode.toLowerCase()}.png`}/>}
-                                           <br/>
-                        {game.country.countryNameEn}</h2>
-                    <hr />
-                    Next Round starts in
-                    <br />
-                    <Countdown from={7} />
-                </div>}
-
-                {!game.roundWinner && <div>
-                    Darn it. No one found it.
-                    You were stranded in:
-                    <h2>
-                        {showImage && <img width={48} onError={() => setShowImage(false)}
-                                           src={`/assets/${game.country.countryCode.toLowerCase()}.png`}/>}
-                        {game.country.countryNameEn}</h2>
-                </div>}
-            </SearchBox>;
-        } else if (game.gameOver) {
-            overlayContent = <SearchBox>
-                <p>
-                    {strings.gameDone}
-                </p>
-                <strong>{strings.scoreTable}</strong>
-                {Object.keys(game.players).map((playerID) => {
-                    const player = game.players[playerID];
-                    const playerScore = game.scoreBoard[playerID];
-
-                    return <div className={`${game.gameWinner === playerID ? "user-result-won" : "user-result-lost"}`} key={playerID} id={playerID}>
-                        {player.displayName} <PushPin size={16} pinned={true} color={player.color}/> ({playerScore.score} {strings.points})
-                    </div>;
-                })}
-                <button onClick={leaveGame}>{strings.backToHome}</button>
-            </SearchBox>;
-        } else {
-            overlayContent = <SearchBox>
-                <p>{strings.gameLoading}</p>
-                <div className={"loader"}>
-                    <Loader/>
-                </div>
-            </SearchBox>;
+    if (!game.gameOver && game.roundStart && !game.roundEnd) {
+        overlayContent = <SearchBox>
+            <h5>Wo bist du?</h5>
+            <p>{strings.streetViewGameHint3}</p>
+            <hr/>
+            <h3>{moment().startOf("day")
+                .seconds(game.timeElapsed)
+                .format("HH:mm:ss")}</h3>
+            {strings.elapsedTime}
+        </SearchBox>;
+    } else if (!game.gameOver && !game.roundStart && !game.roundEnd) {
+        overlayContent = <></>;
+    } else if (!game.gameOver && !game.roundStart && game.roundEnd) {
+        if (center.lat !== game.country.lat || center.lng !== game.country.lng) {
+            setCenter({lat: game.country.lat, lng: game.country.lng});
         }
-        return <StreetViewOverlay>{overlayContent}</StreetViewOverlay>;
+        overlayContent = <SearchBox>
+            <p>
+                {strings.roundEnd}
+            </p>
+            {game.roundWinner && <div>
+                Round Winner<br/>
+                {game.players[game.roundWinner].displayName}<br/>
+                <h2>
+                    {showImage && <img width={48} onError={() => setShowImage(false)}
+                                       src={`/assets/${game.country.countryCode.toLowerCase()}.png`}/>}
+                    <br/>
+                    {game.country.countryNameEn}</h2>
+                <hr/>
+                Next Round starts in
+                <br/>
+                <Countdown from={7}/>
+            </div>}
+
+            {!game.roundWinner && <div>
+                Darn it. No one found it.
+                You were stranded in:
+                <h2>
+                    {showImage && <img width={48} onError={() => setShowImage(false)}
+                                       src={`/assets/${game.country.countryCode.toLowerCase()}.png`}/>}
+                    {game.country.countryNameEn}</h2>
+            </div>}
+        </SearchBox>;
+    } else if (game.gameOver) {
+        overlayContent = <SearchBox>
+            <p>
+                {strings.gameDone}
+            </p>
+            <strong>{strings.scoreTable}</strong>
+            {Object.keys(game.players).map((playerID) => {
+                const player = game.players[playerID];
+                const playerScore = game.scoreBoard[playerID];
+
+                return <div className={`${game.gameWinner === playerID ? "user-result-won" : "user-result-lost"}`}
+                            key={playerID} id={playerID}>
+                    {player.displayName} <PushPin size={16} pinned={true}
+                                                  color={player.color}/> ({playerScore.score} {strings.points})
+                </div>;
+            })}
+            <button onClick={leaveGame}>{strings.backToHome}</button>
+        </SearchBox>;
+    } else {
+        overlayContent = <SearchBox>
+            <p>{strings.gameLoading}</p>
+            <div className={"loader"}>
+                <Loader/>
+            </div>
+        </SearchBox>;
     }
-;
+    return <StreetViewOverlay>{overlayContent}</StreetViewOverlay>;
+};
 
 function mapStateToProps(state) {
     return {};

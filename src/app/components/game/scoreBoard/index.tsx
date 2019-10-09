@@ -18,7 +18,7 @@ const ScoreBoard = ({game}) => {
     };
 
     if (!showScoreBoard) {
-        return <>; </ > ;
+        return <></> ;
     }
 
     let scoreBoardTitle = <h3>Score</h3>;
