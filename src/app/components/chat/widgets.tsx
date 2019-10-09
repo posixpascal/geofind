@@ -47,9 +47,7 @@ export const ChatMessageDate = styled.span`
    color: rgb(117, 133, 140);
    padding-right: 8px;
 `;
-export const ChatMessageText = styled.span`
-  
-`;
+export const ChatMessageText = styled.span``;
 export const ChatMessageUser = styled.span`
   padding-right: 8px;
 `;

@@ -11,7 +11,7 @@ import styled from "styled-components";
 import {sharedHistory} from "./helper/sharedHistory";
 
 import {HomePage, Overlay, OverlayContent} from "./pages/home";
-import LobbyPage from "./pages/lobby";
+import LobbyPage from "./pages/room";
 import GamePage, {GameMap} from "./pages/game_countries";
 import {Header} from "./components/header";
 import {LobbyCreatePage} from "./pages/lobbyCreate";

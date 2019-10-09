@@ -11,7 +11,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import styled from "styled-components";
 import {sharedHistory} from "./helper/sharedHistory";
 import HomePage, {Overlay, OverlayContent} from "./pages/home";
-import LobbyPage from "./pages/lobby";
+import RoomPage from "./pages/room";
 import ThemesPage from "./pages/themes";
 import Header from "./components/header";
 import {authenticateUser, prefetchRooms} from "./helper/webSockets";
@@ -63,7 +63,7 @@ const Application = () => {
                             <OverlayContent>
                                 {user._id && <>
                                     <Route path="/" exact component={HomePage}/>
-                                    <Route path="/lobby/:id" component={LobbyPage}/>
+                                    <Route path="/lobby/:id" component={RoomPage}/>
                                     <Route path="/themes/" component={ThemesPage}/></>
                                 }
 
