@@ -20,10 +20,7 @@ import {GameMap} from "./components/game/maps";
 
 // import game pages
 import CountriesGamePage from "./pages/game_countries";
-import BuildingsGamePage from "./pages/game_buildings";
-import AnimalsGamePage from "./pages/game_animals";
 import StreetViewGamePage from "./pages/game_streetview";
-import ShapeGuessingGamePage from "./pages/game_shape_guessing";
 
 export const store = createStore(reducers, composeWithDevTools(applyMiddleware(routerMiddleware(sharedHistory), reduxThunk)));
 const RelativeBox = styled.div`
@@ -52,9 +49,7 @@ const Application = () => {
                 <Switch>
                     <Route path="/game/game_countries/:id" component={CountriesGamePage}/>
                     <Route path="/game/game_streetview/:id" component={StreetViewGamePage}/>
-                    <Route path="/game/game_animals/:id" component={AnimalsGamePage}/>
-                    <Route path="/game/game_buildings/:id" component={BuildingsGamePage}/>
-                    <Route path="/game/game_shapeguessing/:id" component={ShapeGuessingGamePage}/>
+
                     <Route>
                         <RelativeBox>
 
