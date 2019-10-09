@@ -7,37 +7,42 @@ import {PlayerScore, RequiredVictoryScore, UserList, UserName} from "./widgets";
 
 
 const ScoreBoard = ({game}) => {
-    const showScoreBoard = game && (game.roundStart || game.gameOver || window.innerWidth > 767);
+    const isMobile = window.innerWidth <= 767;
+    const padding = isMobile ? 0 : 20;
+
+    const showScoreBoard = (game.roundStart || game.gameOver || !isMobile);
     const scoreBoardStyle = {
         'top': 'initial',
         'left': 'initial',
-        right: window.innerWidth > 767 ? 20 : 0,
-        bottom: window.innerWidth > 767 ? 20 : 0
+        'right': padding,
+        'bottom': padding,
     };
 
-    const scoreBoardTitle = game && game.currentRound > 0 && !game.roundEnd ? (
-        <h3>Runde {game.currentRound} / {game.maxRounds}</h3>) : <h3>Score</h3>;
-
     if (!showScoreBoard) {
-        return <></>
+        return <></>;
     }
+
+    let scoreBoardTitle = <h3>Score</h3>;
+    if (game.currentRound > 0 && !game.roundEnd) {
+        scoreBoardTitle = <h3>Runde {game.currentRound} / {game.maxRounds}</h3>;
+    }
+
 
     return <Overlay style={scoreBoardStyle}>
         <UserList>
             {scoreBoardTitle}
             <div className={"hay"}>
-                {Object.keys(game.players).map(playerID => {
-                    const player = game.players[playerID];
-                    return <PlayerScore game={game} player={player} playerID={playerID} />
+                {Object.keys(game.players).map((playerID) => {
+                    return <PlayerScore game={game} playerID={playerID}/>;
                 })}
             </div>
-            <RequiredVictoryScore game={game} />
+            <RequiredVictoryScore game={game}/>
         </UserList>
-    </Overlay>
+    </Overlay>;
 };
 
 function mapStateToProps(state) {
-    return {}
+    return {game: state.game}
 }
 
 export default withRouter(connect(mapStateToProps, actions)(ScoreBoard));

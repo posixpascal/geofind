@@ -24,11 +24,14 @@ export const UserList = styled.div`
 
 export const UserName = styled.div``;
 
-export const PlayerScore = ({game, player, playerID}) => {
+export const PlayerScore = ({game, playerID}) => {
     return <HorizontalAlignment key={playerID}>
-        <PushPin size={16} color={player.color}
+        <PushPin size={16}
+                 color={game.players[playerID].color}
                  pinned={game.votes[playerID] && game.votes[playerID].hasVoted}/>
-        <UserName>{player.displayName} ({game.scoreBoard[playerID].score})</UserName>
+        <UserName>
+            {game.players[playerID].displayName} ({game.scoreBoard[playerID].score})
+        </UserName>
     </HorizontalAlignment>
 };
 
