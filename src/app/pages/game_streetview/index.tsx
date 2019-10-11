@@ -35,31 +35,25 @@ const StreetViewGamePage = ({game, joinGame, match}) => {
         (window as any).currentGame.send({type: "game:vote", payload: vote});
     };
 
+    const mapProps = {
+        center,
+        player,
+        game,
+        lastMarkerPosition,
+        showAllMarker: game.roundEnd,
+        markerMoved,
+        mapClicked: markerMoved,
+    };
+
     return (
         <div>
             <div id={"draggableContainer"} style={{position: "relative", top: "-80px"}}>
-                {!game.roundEnd && <StreetViewGameMap
-                    center={center}
-                    markerMoved={markerMoved}
-                    mapClicked={markerMoved}
-                    showAllMarker={game.roundEnd}
-                    player={player}
-                    game={game}
-                    lastMarkerPosition={lastMarkerPosition}
-                />}
+                {!game.roundEnd && <StreetViewGameMap {...mapProps} />}
             </div>
 
             <StreetViewGameOverlay game={game} user={player} center={center} setCenter={setCenter}/>
             <StreetViewOverlay>
-                <StreetViewVoteMap
-                    center={center}
-                    markerMoved={markerMoved}
-                    mapClicked={markerMoved}
-                    showAllMarker={game.roundEnd}
-                    player={player}
-                    game={game}
-                    lastMarkerPosition={lastMarkerPosition}
-                />
+                <StreetViewVoteMap {...mapProps} />
             </StreetViewOverlay>
 
             <StreetViewMovesOverlay game={game}/>
