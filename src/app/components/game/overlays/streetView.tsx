@@ -9,7 +9,7 @@ import {GameLoadingOverlay} from "./streetview/gameLoadingOverlay";
 import {StreetViewOverlay} from "./widgets";
 
 
-const StreetViewGameOverlay = ({game, leaveGame}) => {
+export const StreetViewGameOverlay = ({game, leaveGame}) => {
     if (game.gameOver){
         return <StreetViewOverlay><GameOverOverlay game={game} leaveGame={leaveGame} /></StreetViewOverlay>;
     }

@@ -7,7 +7,7 @@ import mapPinAudio from "../../../sounds/mapPin.mp3";
 import * as actions from "../../actions/game";
 import ChatWindow from "../../components/chat";
 import {GameMap} from "../../components/game/maps";
-import GameOverlay, {Overlay} from "../../components/game/overlays";
+import GameOverlay, {Overlay} from "../../components/game/overlays/countries";
 import ScoreBoard from "../../components/game/scoreBoard";
 import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
 import {sharedHistory} from "../../helper/sharedHistory";

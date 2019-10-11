@@ -2,7 +2,7 @@ import React from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../../../actions/game";
-import {Overlay} from "../overlays";
+import {Overlay} from "../overlays/countries";
 import {PlayerScore, RequiredVictoryScore, UserList, UserName} from "./widgets";
 
 const ScoreBoard = ({game}) => {

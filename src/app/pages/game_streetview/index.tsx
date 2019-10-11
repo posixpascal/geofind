@@ -6,7 +6,7 @@ import * as actions from "../../actions/game";
 import {GameMap} from "../../components/game/maps";
 import {StreetViewGameMap} from "../../components/game/maps/streetView";
 import {StreetViewVoteMap} from "../../components/game/maps/streetViewVoteMap";
-import {Overlay} from "../../components/game/overlays";
+import {Overlay} from "../../components/game/overlays/countries";
 import StreetViewGameOverlay from "../../components/game/overlays/streetView";
 import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
 import {sharedHistory} from "../../helper/sharedHistory";

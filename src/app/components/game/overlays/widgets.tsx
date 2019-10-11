@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-export const StreetViewOverlay = styled.div`
+export const Overlay = styled.div`
   position: absolute;
   left: 30px;
   max-width: 320px;
@@ -11,6 +11,12 @@ export const StreetViewOverlay = styled.div`
   background:#fff;
   text-align: center;
   box-shadow: 3px 3px 8px rgba(0,0,0,.3);
+  #chatView {
+  width: 100% !important;
+  height: 200px;
+  text-align: left;
+
+  }
   svg {
   }
   h2 {
@@ -42,5 +48,14 @@ export const StreetViewOverlay = styled.div`
     margin: 0;
     }
     p { margin: 0;}
+  }
+`;
+
+
+export const StreetViewOverlay = styled(Overlay)``;
+
+export const SpinningVectorBox = styled.div`
+  .loader svg {
+    animation: spin 0.8s linear infinite;
   }
 `;
