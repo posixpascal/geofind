@@ -19,3 +19,23 @@ export const arePlayersReady = (room) => {
 export const isRoomLeader = (room) => {
     return room && room.leader === client.auth._id;
 };
+
+export const isGameLeader = (game) => {
+    let isLeader = false;
+    for (const playerId in game.players) {
+        if (game.leader === game.players[playerId].id) {
+            isLeader = true;
+        }
+    }
+    return isLeader;
+};
+
+export const getCurrentPlayer = (game) => {
+    let user = false;
+    for (const playerId in game.players) {
+        if (game.players[playerId].id === client.auth._id) {
+            user = game.players[playerId];
+        }
+    }
+    return user;
+};

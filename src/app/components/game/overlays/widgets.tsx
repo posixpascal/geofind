@@ -51,6 +51,11 @@ export const Overlay = styled.div`
   }
 `;
 
+export const ChatOverlay = styled(Overlay)`
+  left: initial;
+  right: 20px;
+  top: 80px;
+`;
 
 export const StreetViewOverlay = styled(Overlay)``;
 

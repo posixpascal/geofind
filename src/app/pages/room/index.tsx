@@ -1,11 +1,4 @@
 import React, {useEffect, useState} from "react";
-import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
-import {bindActionCreators} from "redux";
-
-import * as gameActions from "../../actions/game";
-import * as roomActions from "../../actions/rooms";
-
 import ChatWindow from "../../components/chat";
 import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
 import {RoomHeader, RoomInvitationLink} from "../../components/room";

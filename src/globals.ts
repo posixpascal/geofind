@@ -4,6 +4,7 @@ interface SocketResource {
     send: Function;
     onStateChange: Function;
     leave: Function;
+    listenerAttached:boolean;
 }
 
 declare global {
