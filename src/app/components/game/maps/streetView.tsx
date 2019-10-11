@@ -2,6 +2,7 @@ import React from "react";
 import {GoogleMap, Marker, OverlayView, StreetViewPanorama, withGoogleMap, withScriptjs} from "react-google-maps";
 import {compose, withProps} from "recompose";
 import {LogoSVG, PushPinSVG} from "../../../helper/svgs";
+import {WorldMap} from "./worldMap";
 
 declare const google: any;
 const getPixelPositionOffset = (width, height) => ({
@@ -17,26 +18,9 @@ export const StreetViewGameMap = compose(
     }),
     withScriptjs,
     withGoogleMap,
-)((props) =>
-    <GoogleMap
-        defaultZoom={3}
-        defaultCenter={props.center}
-        onClick={props.mapClicked}
-        defaultOptions={{
-            disableDefaultUI: true,
-            styles: [
-                {
-                    featureType: "all",
-                    elementType: "labels",
-                    stylers: [
-                        {visibility: "off"},
-                    ],
-                },
-            ],
-        }}
-    >
+)((props) => <WorldMap {...props}>
         <StreetViewPanorama position={props.game.country} visible>
 
         </StreetViewPanorama>
-    </GoogleMap>,
+    </WorldMap>
 );

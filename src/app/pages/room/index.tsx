@@ -1,4 +1,8 @@
 import React, {useEffect, useState} from "react";
+import {connect} from "react-redux";
+import {withRouter} from "react-router-dom";
+import * as gameActions from "../../actions/game";
+import * as roomActions from "../../actions/rooms";
 import ChatWindow from "../../components/chat";
 import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
 import {RoomHeader, RoomInvitationLink} from "../../components/room";
@@ -6,6 +10,7 @@ import {RoomSettingsPane} from "../../components/room/settings";
 import {BreakOnMobile} from "../../components/uiWidgets/BreakOnMobile";
 import UserListing from "../../components/userListing";
 import {isRoomLeader} from "../../shared/selectors";
+import {bindActionCreators} from "redux";
 
 const subscribeRoomEvents = ({isLeader, actions}) => {
     if (!window.currentRoom) {
@@ -29,7 +34,7 @@ const RoomPage = ({match, room, roomActions, gameActions}) => {
 
     const isLeader = room && isRoomLeader(roomState);
 
-    useEffect(() => subscribeRoomEvents({ isLeader, actions: {...gameActions} }));
+    useEffect(() => subscribeRoomEvents({isLeader, actions: {...gameActions}}));
 
     if (!room) {
         roomActions.join({id: match.params.id});
@@ -44,13 +49,16 @@ const RoomPage = ({match, room, roomActions, gameActions}) => {
     };
 
     return (
-        < >
+        <>
             <RoomHeader {...roomHeaderActions} roomSettings={roomState}/>;
 
-    {isLeader &&
-            <RoomSettingsPane roomSettings={roomState} collapsed={collapsed} updateRoomSettings={roomActions.update}/>; }
+            {
+                isLeader &&
+                <RoomSettingsPane roomSettings={roomState} collapsed={collapsed}
+                                  updateRoomSettings={roomActions.update}/>
+            }
 
-    <BreakOnMobile reverse>
+            <BreakOnMobile reverse>
                 <ChatWindow players={roomState.players} messages={roomState.messages}>
 
                 </ChatWindow>
@@ -58,10 +66,10 @@ const RoomPage = ({match, room, roomActions, gameActions}) => {
 
                 </UserListing>
             </BreakOnMobile>
-            <RoomInvitationLink/>; ;
-        </ > ;
+            <RoomInvitationLink/>
+        </>
     )
-}
+};
 
 function mapStateToProps(state) {
     return {room: state.room, game: state.game};
