@@ -57,7 +57,13 @@ export const ChatOverlay = styled(Overlay)`
   top: 80px;
 `;
 
-export const StreetViewOverlay = styled(Overlay)``;
+export const StreetViewOverlay = styled(Overlay)`
+  right: 20px;
+  bottom: 20px;
+  left: initial;
+  width: 100%;
+  height: 300px;
+`;
 
 export const SpinningVectorBox = styled.div`
   .loader svg {

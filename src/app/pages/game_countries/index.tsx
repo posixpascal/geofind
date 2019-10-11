@@ -10,10 +10,10 @@ import {helloDarknessSound, mapPinSound, playSoundIfPossible} from "../../sounds
 import {getCurrentPlayer} from "../../shared/selectors";
 import {GameChatOverlay} from "../../components/game/overlays/chat";
 
-const subscribeConnectionEvents = ({game, match, joinGame}) => { // user reconnect logic. if user still has no game after 3s we rejoin the game.
+export const subscribeConnectionEvents = ({game, match, joinGame, mode = "game_countries"}) => { // user reconnect logic. if user still has no game after 3s we rejoin the game.
     const timer = setTimeout(() => {
         if (!game.players) {
-            joinGame({id: match.params.id, mode: "game_countries"});
+            joinGame({id: match.params.id, mode});
         }
     }, 3000);
     return () => {
@@ -21,7 +21,7 @@ const subscribeConnectionEvents = ({game, match, joinGame}) => { // user reconne
     };
 };
 
-const subscribeGameStateEvents = ({game}) => { // mobile optimizations
+export const subscribeGameStateEvents = ({game}) => { // mobile optimizations
     document.body.classList.add("no-scroll");
 
     if (game && game.isSuddenDeath) {
@@ -35,7 +35,7 @@ const subscribeGameStateEvents = ({game}) => { // mobile optimizations
     };
 };
 
-const subscribeInsultEvents = ({googleMap}) => {
+export const subscribeInsultEvents = ({googleMap}) => {
     if (!window.currentGame) {
         return;
     }
@@ -74,7 +74,7 @@ const CountriesGamePage = ({game, joinGame, leaveGame, match}) => {
 
     useEffect(() => subscribeGameStateEvents({game}));
     useEffect(() => subscribeInsultEvents({googleMap}));
-    useEffect(() => subscribeConnectionEvents({game, match, joinGame}));
+    useEffect(() => subscribeConnectionEvents({game, match, joinGame}), [game.players]);
 
     if (!game.players) {
         return <RoomJoinLoader/>;
