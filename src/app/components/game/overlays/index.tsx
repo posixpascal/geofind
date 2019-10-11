@@ -68,7 +68,7 @@ export const Overlay = styled.div`
 const GameOverlay = ({game, user, center, setCenter, leaveGame}) => {
         const [showImage, setShowImage] = useState(true);
 
-        let overlayContent =  < > </; > ;
+        let overlayContent =  <></>;
 
         if (!game.gameOver && game.roundStart && !game.roundEnd) {
             overlayContent = <SearchBox>
