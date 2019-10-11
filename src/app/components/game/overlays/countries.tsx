@@ -11,7 +11,7 @@ import {GameOverOverlay} from "./countries/gameOverOverlay";
 
 export const CountriesGameOverlay = ({game, user, leaveGame}) => {
     if (game.gameOver) {
-        return <Overlay><GameOverOverlay game={game} leaveGame={leaveGame}/></Overlay>
+        return <Overlay><GameOverOverlay {...{game, leaveGame}}/></Overlay>
     }
 
     if (game.roundEnd) {
@@ -19,7 +19,7 @@ export const CountriesGameOverlay = ({game, user, leaveGame}) => {
     }
 
     if (game.roundStart) {
-        return <Overlay><RoundOverlay user={user} game={game}/></Overlay>
+        return <Overlay><RoundOverlay {...{user, game}} /></Overlay>
     }
 
     return <GameLoadingOverlay/>

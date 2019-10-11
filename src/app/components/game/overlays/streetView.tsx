@@ -11,7 +11,7 @@ import {StreetViewOverlay} from "./widgets";
 
 export const StreetViewGameOverlay = ({game, leaveGame}) => {
     if (game.gameOver){
-        return <StreetViewOverlay><GameOverOverlay game={game} leaveGame={leaveGame} /></StreetViewOverlay>;
+        return <StreetViewOverlay><GameOverOverlay {...{leaveGame, game}} /></StreetViewOverlay>;
     }
 
     if (game.roundEnd){
@@ -19,7 +19,7 @@ export const StreetViewGameOverlay = ({game, leaveGame}) => {
     }
 
     if (game.roundStart){
-        return <StreetViewOverlay><RoundOverlay game={game} /></StreetViewOverlay>;
+        return <StreetViewOverlay><RoundOverlay {...{game}} /></StreetViewOverlay>;
     }
 
     return <StreetViewOverlay><GameLoadingOverlay /></StreetViewOverlay>;
