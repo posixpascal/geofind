@@ -53,7 +53,7 @@ export const PlayerRow = ({player, onColorChange, room}) => {
     };
 
     return (
-        <UserListingRow isUser={client.auth._id === player.id} key={player.id}>
+        <UserListingRow isUser={isCurrentPlayer} key={player.id}>
             <HorizontalAlignment>
                 <UserIcon className={"userIcon"}>{userIcon}</UserIcon>
                 <UserName onClick={handleUserNameClick}>
@@ -67,7 +67,8 @@ export const PlayerRow = ({player, onColorChange, room}) => {
             </HorizontalAlignment>
             <HorizontalAlignment>
                 {isCurrentPlayer && <MuteButton muted={muted} toggleMute={toggleMute}/>}
-                {isCurrentPlayer ? GetReadyButton : PlayerStatusButton}
+                {isCurrentPlayer && GetReadyButton}
+                {!isCurrentPlayer && PlayerStatusButton}
             </HorizontalAlignment>
         </UserListingRow>
     );
