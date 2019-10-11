@@ -9,15 +9,12 @@ import {GameLoadingOverlay} from "./streetview/gameLoadingOverlay";
 import {StreetViewOverlay} from "./widgets";
 
 
-const StreetViewGameOverlay = ({game, user, center, setCenter, leaveGame}) => {
+const StreetViewGameOverlay = ({game, leaveGame}) => {
     if (game.gameOver){
         return <StreetViewOverlay><GameOverOverlay game={game} leaveGame={leaveGame} /></StreetViewOverlay>;
     }
 
     if (game.roundEnd){
-        if (center.lat !== game.country.lat || center.lng !== game.country.lng) {
-            setCenter({lat: game.country.lat, lng: game.country.lng});
-        }
         return <StreetViewOverlay><RoundEndOverlay game={game} /></StreetViewOverlay>;
     }
 
