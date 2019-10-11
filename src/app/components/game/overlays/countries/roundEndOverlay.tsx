@@ -1,33 +1,70 @@
 import React from "react";
+import {PushPin} from "../../../../helper/svgs";
 import {strings} from "../../../../i18n";
 import {SpinningVectorBox} from "../widgets";
-import {PushPin} from "../../../../helper/svgs";
 
 export const RoundEndOverlay = ({game}) => {
-    return <SpinningVectorBox>
-        <p>
-            {strings.roundEnd}
-        </p>
-        {Object.keys(game.players).map((playerID, index) => {
-            const player = game.players[playerID];
-            if (!game.votes[playerID]){
-                return <div key={index}>
-                    <PushPin size={16} pinned={true} color={player.color}/> {player.displayName} <b className={"mobile-only"}>(Score: {game.scoreBoard[playerID].score})</b>
-                    <br/>
-                    &mdash;
-                    <br/>
-                    <hr className={"hidden-mobile"}/>
-                </div>;
-            }
+    const playerIDs = Object.keys(game.players);
 
-            return <div key={index} style={{fontWeight: game.votes[playerID].hasWon ? "bold" : ""}}>
+    const NoVote = ({player, scoreBoard}) => {
+        return (
+            <div key={player.id}>
                 <PushPin size={16} pinned={true} color={player.color}/>
-                {player.displayName} <b className={"mobile-only"}>(Score: {game.scoreBoard[playerID].score})</b>
+                {player.displayName}
+                <b className={"mobile-only"}>(Score: {scoreBoard[player.id].score})</b>
                 <br/>
-                <img width={16} src={`/assets/${game.votes[playerID].country.countryCode.toLowerCase()}.png`} /> {game.votes[playerID].country.countryNameEn}
-                {game.country.countryCode !== game.votes[playerID].country.countryCode && <span>({game.votes[playerID].distanceInKm.toFixed(2)}km)</span>}
+                &mdash;
+                <br/>
                 <hr className={"hidden-mobile"}/>
-            </div>;
-        })}
-    </SpinningVectorBox>;
+            </div>
+        );
+    };
+
+    const UserDistance = ({distance}) => {
+        return <span>({distance}km)</span>;
+    };
+
+    const CountryVote = ({country, player, scoreBoard, votes}) => {
+        const showDistance = country.countryCode !== game.votes[player.id].country.countryCode;
+        return (
+            <div key={`cv_${player.id}`} style={{fontWeight: game.votes[player.id].hasWon ? "bold" : ""}}>
+                <PushPin size={16} pinned={true} color={player.color}/>
+                {player.displayName} <b className={"mobile-only"}>(Score: {scoreBoard[player.id].score})</b>
+                <br/>
+                <img
+                    alt={"Country Flag of " + country.countryNameEn}
+                    width={16}
+                    src={`/assets/${votes[player.id].country.countryCode.toLowerCase()}.png`}
+                />
+                {votes[player.id].country.countryNameEn}
+                {showDistance && <UserDistance distance={votes[player.id].distanceInKm.toFixed(2)}/>}
+                <hr className={"hidden-mobile"}/>
+            </div>
+        );
+    };
+
+    const playerScores = playerIDs.map((playerID) => {
+        const player = game.players[playerID];
+        if (!game.votes[playerID]) {
+            return <NoVote player={player} scoreBoard={game.scoreBoard}/>;
+        }
+
+        return (
+            <CountryVote
+                country={game.country}
+                votes={game.votes}
+                player={player}
+                scoreBoard={game.scoreBoard}
+            />
+        );
+    });
+
+    return (
+        <SpinningVectorBox>
+            <p>
+                {strings.roundEnd}
+            </p>
+            {playerScores}
+        </SpinningVectorBox>
+    );
 };

@@ -1,12 +1,14 @@
 import React from "react";
-import {strings} from "../../../../i18n";
 import {Loader} from "react-feather";
+import {strings} from "../../../../i18n";
 
 export const GameLoadingOverlay = () => {
-    return <div>
-        <p>{strings.gameLoading}</p>
-        <div className={"loader"}>
-            <Loader/>
+    return (
+        <div>
+            <p>{strings.gameLoading}</p>
+            <div className={"loader"}>
+                <Loader/>
+            </div>
         </div>
-    </div>;
+    );
 };
