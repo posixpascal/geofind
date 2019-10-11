@@ -16,11 +16,10 @@ export const StreetViewMovesOverlay = ({game}) => {
             const player = game.players[playerID];
             return <div>
                 {player.displayName}
-                <PushPin size={12} color={player.color} pinned={!!vote.pin_1}/>
-                <PushPin size={12} color={player.color} pinned={!!vote.pin_2}/>
-                <PushPin size={12} color={player.color} pinned={!!vote.pin_3}/>
-                <PushPin size={12} color={player.color} pinned={!!vote.pin_4}/>
-                <PushPin size={12} color={player.color} pinned={!!vote.pin_5}/>
+                {["pin_1", "pin_2", "pin_3", "pin_4", "pin_5"].map(pinID => {
+                    return<PushPin size={12} color={player.color} pinned={!!vote[pinID]} />
+                })}
+
                 (Score: {game.scoreBoard[playerID].score})
             </div>;
         })}
