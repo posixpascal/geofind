@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {NavLink, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import styled from "styled-components";
 import * as gameActions from "../../actions/game";
 import * as actions from "../../actions/rooms";
 import LobbyListing from "../../components/lobbyListing";
 import {Button} from "../../components/uiWidgets/Button";
-import {Content} from "../../components/uiWidgets/Content";
-import {sharedHistory} from "../../helper/sharedHistory";
 import {client} from "../../helper/webSockets";
 import {strings} from "../../i18n";
-import {GameMap} from "../game_countries";
+
 export const Overlay = styled.div`
     position: absolute;
     left: 0;
@@ -68,46 +66,45 @@ export const OverlayContent = styled.div`
 
 const REFRESH_RATE = 1000;
 
-const HomePage = ({ leaveRoom, leaveGame, createRoom }) => {
+const HomePage = ({leaveRoom, leaveGame, createRoom}) => {
     const [rooms, setRooms] = useState([]);
 
     useEffect(() => {
         const fetchInterval = setInterval(async () => {
-            const rooms = await client.getAvailableRooms("lobby");
-            setRooms(rooms);
+            const listRooms = await client.getAvailableRooms("lobby");
+            setRooms(listRooms);
         }, REFRESH_RATE);
+
         return () => {
             clearInterval(fetchInterval);
         };
     });
 
     useEffect(() => {
-        if ((window as any).currentRoom){
+        if ((window as any).currentRoom) {
             leaveRoom((window as any).currentRoom);
         }
 
-        if ((window as any).currentGame){
+        if ((window as any).currentGame) {
             leaveGame((window as any).currentGame);
         }
     });
 
     return (
         <div>
-                <h2>{strings.homeTitle} </h2>
+            <h2>{strings.homeTitle} </h2>
 
-                <p>
-                    {strings.homeDescription}
-                </p>
-                <p>
-                    {strings.homeDescription2}
-                </p>
-                <p>
-                    {strings.homeDescription3}
-                </p>
+            <p>
+                {strings.homeDescription}
+            </p>
+            <p>
+                {strings.homeDescription2}
+            </p>
+            <p>
+                {strings.homeDescription3}
+            </p>
 
-            {rooms.length > 0 && <center>
-                <Button onClick={createRoom}>{strings.createLobby}</Button>
-            </center>}
+            {rooms.length > 0 && <Button onClick={createRoom}>{strings.createLobby}</Button>}
             <br/><br/>
 
             <LobbyListing rooms={rooms}/>

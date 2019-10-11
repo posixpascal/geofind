@@ -5,18 +5,17 @@ import * as actions from "../../actions/game";
 import {StreetViewGameMap} from "../../components/game/maps/streetView";
 import {StreetViewVoteMap} from "../../components/game/maps/streetViewVoteMap";
 import StreetViewGameOverlay from "../../components/game/overlays/streetView";
-import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
-import {subscribeConnectionEvents, subscribeGameStateEvents} from "../game_countries";
-import {getCurrentPlayer} from "../../shared/selectors";
-import {StreetViewOverlay} from "../../components/game/overlays/widgets";
 import {StreetViewMovesOverlay} from "../../components/game/overlays/streetview/movesOverlay";
+import {StreetViewOverlay} from "../../components/game/overlays/widgets";
+import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
+import {getCurrentPlayer} from "../../shared/selectors";
+import {subscribeConnectionEvents, subscribeGameStateEvents} from "../game_countries";
 
 const CAMERA_POSITION = {lat: 32.5389916, lng: 28.7972057};
 
 const StreetViewGamePage = ({game, joinGame, match}) => {
     const [lastMarkerPosition, setLastMarkerPosition] = useState(CAMERA_POSITION);
     const [center, setCenter] = useState(lastMarkerPosition);
-
 
     useEffect(() => subscribeGameStateEvents({game}));
     useEffect(() => subscribeConnectionEvents({game, match, joinGame, mode: "game_streetview"}), [game.players]);
@@ -25,8 +24,7 @@ const StreetViewGamePage = ({game, joinGame, match}) => {
         return <RoomJoinLoader/>;
     }
 
-    let player = getCurrentPlayer(game);
-
+    const player = getCurrentPlayer(game);
 
     const markerMoved = (ev) => {
         const vote = {lat: ev.latLng.lat(), lng: ev.latLng.lng()};
@@ -37,12 +35,12 @@ const StreetViewGamePage = ({game, joinGame, match}) => {
 
     const mapProps = {
         center,
-        player,
         game,
         lastMarkerPosition,
-        showAllMarker: game.roundEnd,
-        markerMoved,
         mapClicked: markerMoved,
+        markerMoved,
+        player,
+        showAllMarker: game.roundEnd,
     };
 
     return (

@@ -50,6 +50,7 @@ export const RoundEndOverlay = ({game}) => {
         }
 
         return (
+            // tslint:disable-next-line:jsx-key
             <CountryVote
                 country={game.country}
                 votes={game.votes}

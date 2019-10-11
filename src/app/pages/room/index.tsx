@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import * as gameActions from "../../actions/game";
-import * as roomActions from "../../actions/rooms";
+import {bindActionCreators} from "redux";
+import * as allGameActions from "../../actions/game";
+import * as allRoomActions from "../../actions/rooms";
 import ChatWindow from "../../components/chat";
 import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
 import {RoomHeader, RoomInvitationLink} from "../../components/room";
@@ -10,7 +11,6 @@ import {RoomSettingsPane} from "../../components/room/settings";
 import {BreakOnMobile} from "../../components/uiWidgets/BreakOnMobile";
 import UserListing from "../../components/userListing";
 import {isRoomLeader} from "../../shared/selectors";
-import {bindActionCreators} from "redux";
 
 const subscribeRoomEvents = ({isLeader, actions}) => {
     if (!window.currentRoom) {
@@ -42,33 +42,33 @@ const RoomPage = ({match, room, roomActions, gameActions}) => {
     }
 
     const roomHeaderActions = {
-        startGameClick: () => gameActions.start(roomState.gameMode, {room: roomState}),
-        settingsClick: () => setCollapsed(),
-        leaveRoomClick: () => roomActions.leave(room),
         editClick: () => roomActions.setName(),
+        leaveRoomClick: () => roomActions.leave(room),
+        settingsClick: () => setCollapsed(),
+        startGameClick: () => gameActions.start(roomState.gameMode, {room: roomState}),
     };
+
+    const LeaderSettingsPane = (
+        <RoomSettingsPane
+            roomSettings={roomState}
+            collapsed={collapsed}
+            updateRoomSettings={roomActions.update}
+        />
+    );
 
     return (
         <>
             <RoomHeader {...roomHeaderActions} roomSettings={roomState}/>;
 
-            {
-                isLeader &&
-                <RoomSettingsPane roomSettings={roomState} collapsed={collapsed}
-                                  updateRoomSettings={roomActions.update}/>
-            }
+            {isLeader && <LeaderSettingsPane/>}
 
-            <BreakOnMobile reverse>
-                <ChatWindow players={roomState.players} messages={roomState.messages}>
-
-                </ChatWindow>
-                <UserListing isLeader={isLeader} room={room} players={roomState.players}>
-
-                </UserListing>
+            <BreakOnMobile reverse={true}>
+                <ChatWindow players={roomState.players} messages={roomState.messages}/>
+                <UserListing isLeader={isLeader} room={room} players={roomState.players}/>
             </BreakOnMobile>
             <RoomInvitationLink/>
         </>
-    )
+    );
 };
 
 function mapStateToProps(state) {
@@ -77,8 +77,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        roomActions: bindActionCreators(roomActions, dispatch),
-        gameActions: bindActionCreators(gameActions, dispatch),
+        gameActions: bindActionCreators(allGameActions, dispatch),
+        roomActions: bindActionCreators(allRoomActions, dispatch),
     };
 }
 

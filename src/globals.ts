@@ -1,17 +1,18 @@
-interface SocketResource {
-    onMessage: Function;
-    removeAllListeners: Function;
-    send: Function;
-    onStateChange: Function;
-    leave: Function;
-    listenerAttached:boolean;
+interface ISocketResource {
+    onMessage: (cb) => void;
+    removeAllListeners: () => void;
+    send: (data) => void;
+    onStateChange: (cb) => void;
+    leave: (room) => void;
+    listenerAttached: boolean;
 }
 
 declare global {
+    // tslint:disable-next-line:interface-name
     interface Window {
         isJoining?: boolean;
-        currentRoom: SocketResource;
-        currentGame: SocketResource;
+        currentRoom: ISocketResource;
+        currentGame: ISocketResource;
     }
 }
 

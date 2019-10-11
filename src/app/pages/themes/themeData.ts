@@ -1,51 +1,44 @@
 export const THEMES = [
     {
-        name: "Default",
-        image: "",
+
         gmapStyle: [],
+        image: "",
+        name: "Default",
     },
     {
+
+        gmapStyle: [],
+        image: "",
         name: "Blue / White",
-        image: "",
-        gmapStyle: [],
     },
     {
+
+        gmapStyle: [],
+        image: "",
         name: "Teal",
-        image: "",
-        gmapStyle: [],
     },
     {
+
+        gmapStyle: [],
+        image: "",
         name: "Orange White",
-        image: "",
-        gmapStyle: [],
     },
     {
+
+        gmapStyle: [],
+        image: "",
         name: "Dark Mode",
-        image: "",
-        gmapStyle: [],
     },
     {
-        name: "Default",
-        image: "",
+
         gmapStyle: [],
+        image: "",
+        name: "Default",
     },
     {
-        name: "Default",
-        image: "",
+
         gmapStyle: [],
+        image: "",
+        name: "Default",
     },
-    {
-        name: "Default",
-        image: "",
-        gmapStyle: [],
-    },
-    {
-        name: "Default",
-        image: "",
-        gmapStyle: [],
-    },
-    {
-        name: "Default",
-        image: "",
-        gmapStyle: [],
-    }];
+];

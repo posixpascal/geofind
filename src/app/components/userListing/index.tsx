@@ -1,15 +1,11 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useState} from "react";
 import {TwitterPicker} from "react-color";
-import {Check, User, XCircle, Zap} from "react-feather";
-import {connect} from "react-redux";
-import {NavLink, withRouter} from "react-router-dom";
+import {User, Zap} from "react-feather";
 import styled from "styled-components";
-import * as actions from "../../actions/rooms";
 import {USER_LOGGED_IN} from "../../actions/types";
 import {client} from "../../helper/webSockets";
 import {strings} from "../../i18n";
 import {store} from "../../main";
-import moment from "../chat";
 import {Button} from "../uiWidgets/Button";
 import {HorizontalAlignment} from "../uiWidgets/HorizontalAlignment";
 
@@ -128,6 +124,7 @@ const ReadyButton = styled(Button)`
     }
     `}
 `;
+
 const UserIcon = styled.div`
   padding-right: 5px;
   svg {
@@ -149,7 +146,9 @@ export const changeName = () => {
     store.dispatch({type: USER_LOGGED_IN, payload: client.auth});
     // TODO: update avatar url as well
 
-    if ((window as any).currentRoom) (window as any).currentRoom.send({type: "user:displayName:set", payload: newName});
+    if (window.currentRoom) {
+        window.currentRoom.send({type: "user:displayName:set", payload: newName});
+    }
 };
 
 export default ({room, isLeader, players}) => {
@@ -167,31 +166,32 @@ export default ({room, isLeader, players}) => {
     };
 
     const onColorChange = (color) => {
-        (window as any).currentRoom.send({type: "user:color:set", payload: color});
+        window.currentRoom.send({type: "user:color:set", payload: color});
         toggleColorPicker(false);
     };
 
     const toggleReady = () => {
-        (window as any).currentRoom.send({type: "user:readyState:toggle"});
+        window.currentRoom.send({type: "user:readyState:toggle"});
     };
 
     const kickPlayer = (player) => {
-        (window as any).currentRoom.send({type: "user:kick", payload: player});
+        window.currentRoom.send({type: "user:kick", payload: player});
     };
 
     const popover = {
-        position: "absolute",
-        zIndex: "2",
-        top: "25px",
         left: "-8px",
+        position: "absolute",
+        top: "25px",
+        zIndex: "2",
     };
 
     const cover = {
-        position: "fixed",
-        top: "0px",
-        right: "0px",
         bottom: "0px",
         left: "0px",
+        position: "fixed",
+        right: "0px",
+        top: "0px",
+
     };
 
     if (!players) {
@@ -203,14 +203,14 @@ export default ({room, isLeader, players}) => {
             {Object.keys(players).map((playerId) => {
                 const player = players[playerId];
                 const randomInsult = Math.floor(8 * Math.random()) + 1;
-                console.log(randomInsult);
                 const insultButton = <ReadyButton inactive={true}
                                                   isReady={false}><span>{strings[`userNotReady${randomInsult}`]}</span></ReadyButton>;
                 const userIcon = isLeader ? <Zap/> : <User/>;
                 const userReady = player.isReady ?
                     <ReadyButton inactive={true} isReady={true}><span>{strings.userReady}</span></ReadyButton> :
                     room.roomState.insultMode ? insultButton :
-                        <ReadyButton inactive={true} isReady={player.isReady}><span>{strings.userNotReady}</span></ReadyButton>;
+                        <ReadyButton inactive={true}
+                                     isReady={player.isReady}><span>{strings.userNotReady}</span></ReadyButton>;
 
                 return <UserListingRow isUser={client.auth._id === player.id} key={player.id}>
                     <HorizontalAlignment>
@@ -230,10 +230,9 @@ export default ({room, isLeader, players}) => {
                         </ColorPickerWrapper>
                     </HorizontalAlignment>
                     <HorizontalAlignment>
-                        {/*isLeader && client.auth._id  !== player.id &&
-                        <Button onClick={() => kickPlayer(player)}><span>Kick</span></Button>*/}
                         {client.auth._id === player.id &&
-                        <Button className={muted ? "active" : ""} onClick={() => toggleMute()}>{muted ? <span>Muted</span> : <span>Mute?</span>}</Button>}
+                        <Button className={muted ? "active" : ""} onClick={() => toggleMute()}>{muted ?
+                            <span>Muted</span> : <span>Mute?</span>}</Button>}
                         {client.auth._id === player.id ? <ReadyButton isReady={player.isReady}
                                                                       onClick={() => toggleReady()}><span>{player.isReady ? strings.userReady : strings.ready}</span></ReadyButton> : userReady}
                     </HorizontalAlignment>

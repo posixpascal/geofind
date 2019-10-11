@@ -7,7 +7,9 @@ export const ColorLuminance = (hex, lum) => {
     lum = lum || 0;
 
     // convert to decimal and change luminosity
-    let rgb = "#", c, i;
+    let rgb = "#";
+    let c;
+    let i;
     for (i = 0; i < 3; i++) {
         c = parseInt(hex.substr(i * 2, 2), 16);
         c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);

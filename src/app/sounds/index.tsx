@@ -20,8 +20,8 @@ export const mapPinSound = new UIfx(
     },
 );
 
-export const playSoundIfPossible = (sound) => {
+export const playSoundIfPossible = async (sound) => {
     if (!localStorage.getItem("audioMuted")) {
-        sound.play();
+        return sound.play();
     }
 };

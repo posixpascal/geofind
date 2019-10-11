@@ -7,7 +7,7 @@ export const arePlayersReady = (room) => {
 
     let allReady = true;
     for (const playerID in room.players) {
-        if (!room.players.hasOwnProperty(playerID)){
+        if (!room.players.hasOwnProperty(playerID)) {
             continue;
         }
 
@@ -23,6 +23,10 @@ export const isRoomLeader = (room) => {
 export const isGameLeader = (game) => {
     let isLeader = false;
     for (const playerId in game.players) {
+        if (!game.players.hasOwnProperty(playerId)) {
+            continue;
+        }
+
         if (game.leader === game.players[playerId].id) {
             isLeader = true;
         }
@@ -33,6 +37,9 @@ export const isGameLeader = (game) => {
 export const getCurrentPlayer = (game) => {
     let user = false;
     for (const playerId in game.players) {
+        if (!game.players.hasOwnProperty(playerId)) {
+            continue;
+        }
         if (game.players[playerId].id === client.auth._id) {
             user = game.players[playerId];
         }
@@ -41,9 +48,9 @@ export const getCurrentPlayer = (game) => {
 };
 
 export const scoreBoardForGame = (game) => {
-    return game.players.map(playerID => {
+    return game.players.map((playerID) => {
         const player = game.players[playerID];
         const playerScore = game.scoreBoard[playerID];
-        return {player, playerScore}
+        return {player, playerScore};
     });
-}
+};

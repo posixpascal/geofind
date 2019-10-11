@@ -15,8 +15,10 @@ const RoomInvitationCopy = styled.code`
 export const RoomInvitationLink = () => {
     const invitationLink = window.location.href;
 
-    return <RoomInvitationWrapper>
-        <div>{strings.inviteTip}</div>
-        <RoomInvitationCopy>{invitationLink}</RoomInvitationCopy>
-    </RoomInvitationWrapper>;
+    return (
+        <RoomInvitationWrapper>
+            <div>{strings.inviteTip}</div>
+            <RoomInvitationCopy>{invitationLink}</RoomInvitationCopy>
+        </RoomInvitationWrapper>
+    );
 };

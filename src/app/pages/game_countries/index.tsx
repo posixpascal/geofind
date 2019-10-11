@@ -3,14 +3,15 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../../actions/game";
 import {GameMap} from "../../components/game/maps";
+import {GameChatOverlay} from "../../components/game/overlays/chat";
 import GameOverlay from "../../components/game/overlays/countries";
 import ScoreBoard from "../../components/game/scoreBoard";
 import {RoomJoinLoader} from "../../components/loading/roomJoinLoader";
-import {helloDarknessSound, mapPinSound, playSoundIfPossible} from "../../sounds";
 import {getCurrentPlayer} from "../../shared/selectors";
-import {GameChatOverlay} from "../../components/game/overlays/chat";
+import {helloDarknessSound, mapPinSound, playSoundIfPossible} from "../../sounds";
 
-export const subscribeConnectionEvents = ({game, match, joinGame, mode = "game_countries"}) => { // user reconnect logic. if user still has no game after 3s we rejoin the game.
+// user reconnect logic. if user still has no game after 3s we rejoin the game.
+export const subscribeConnectionEvents = ({game, match, joinGame, mode = "game_countries"}) => {
     const timer = setTimeout(() => {
         if (!game.players) {
             joinGame({id: match.params.id, mode});
@@ -55,6 +56,7 @@ export const subscribeInsultEvents = ({googleMap}) => {
 
         if (message.type === "insult:distance") {
             document.body.classList.add("helloDarkness");
+            // noinspection JSIgnoredPromiseFromCall
             playSoundIfPossible(helloDarknessSound);
             googleMap.current.panTo(message.payload.vote.country);
             setTimeout(() => {
@@ -66,7 +68,7 @@ export const subscribeInsultEvents = ({googleMap}) => {
 };
 
 const CAMERA_POSITION = {lat: 32.5389916, lng: 28.7972057};
-const CountriesGamePage = ({game, joinGame, leaveGame, match}) => {
+const CountriesGamePage = ({game, joinGame, match}) => {
     const [lastMarkerPosition, setLastMarkerPosition] = useState(CAMERA_POSITION);
     const [center, setCenter] = useState(lastMarkerPosition);
 
@@ -80,12 +82,12 @@ const CountriesGamePage = ({game, joinGame, leaveGame, match}) => {
         return <RoomJoinLoader/>;
     }
 
-    let player = getCurrentPlayer(game);
-
+    const player = getCurrentPlayer(game);
 
     const markerMoved = (ev) => {
         const vote = {lat: ev.latLng.lat(), lng: ev.latLng.lng()};
 
+        // noinspection JSIgnoredPromiseFromCall
         playSoundIfPossible(mapPinSound);
 
         setLastMarkerPosition(vote);

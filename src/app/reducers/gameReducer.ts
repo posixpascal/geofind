@@ -1,8 +1,8 @@
-import {GAME_END, GAME_JOIN, GAME_LEAVE, GAME_START, GAME_UPDATE, LOBBY_JOIN, LOBBY_LEAVE} from "../actions/types";
+import {GAME_JOIN, GAME_LEAVE, GAME_UPDATE} from "../actions/types";
 
 // @ts-ignore
 export default function(state = {users: []}, action) {
-    switch (action.type){
+    switch (action.type) {
         case GAME_JOIN:
             (window as any).currentGame = action.payload;
             return {mode: action.payload.name, id: action.payload.id, gameState: {...action.payload.serializer.state}};

@@ -2,8 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../../../actions/game";
-import {Overlay} from "../overlays/countries";
 import {PlayerScore, RequiredVictoryScore, UserList, UserName} from "./widgets";
+import {Overlay} from "../overlays/widgets";
 
 const ScoreBoard = ({game}) => {
     const isMobile = window.innerWidth <= 767;
@@ -11,14 +11,14 @@ const ScoreBoard = ({game}) => {
 
     const showScoreBoard = (game.roundStart || game.gameOver || !isMobile);
     const scoreBoardStyle = {
-        top: "initial",
+        bottom: padding,
         left: "initial",
         right: padding,
-        bottom: padding,
+        top: "initial",
     };
 
     if (!showScoreBoard) {
-        return <></> ;
+        return <></>;
     }
 
     let scoreBoardTitle = <h3>Score</h3>;
@@ -26,17 +26,21 @@ const ScoreBoard = ({game}) => {
         scoreBoardTitle = <h3>Runde {game.currentRound} / {game.maxRounds}</h3>;
     }
 
-    return <Overlay style={scoreBoardStyle}>
-        <UserList>
-            {scoreBoardTitle}
-            <div className={"hay"}>
-                {Object.keys(game.players).map((playerID) => {
-                    return <PlayerScore game={game} playerID={playerID}/>;
-                })}
-            </div>
-            <RequiredVictoryScore game={game}/>
-        </UserList>
-    </Overlay>;
+    const playerScores = Object.keys(game.players).map((playerID) => {
+        return <span key={playerID}><PlayerScore game={game} playerID={playerID}/></span>;
+    });
+
+    return (
+        <Overlay style={scoreBoardStyle}>
+            <UserList>
+                {scoreBoardTitle}
+                <div className={"hay"}>
+                    {playerScores}
+                </div>
+                <RequiredVictoryScore game={game}/>
+            </UserList>
+        </Overlay>
+    );
 };
 
 function mapStateToProps(state) {
