@@ -35,20 +35,22 @@ export const unsubscribe = () => {
     window.currentRoom.removeAllListeners();
 };
 
-export const join = (roomData) => async (dispatch) => {
-    try {
-        const room = await client.joinById(roomData.roomId || roomData.id);
+export const join = (roomData) => {
+    return async (dispatch) => {
+        try {
+            const room = await client.joinById(roomData.roomId || roomData.id);
 
-        dispatch({type: LOBBY_JOIN, payload: room});
-        subscribe(dispatch);
+            dispatch({type: LOBBY_JOIN, payload: room});
+            subscribe(dispatch);
 
-        sharedHistory.push("/lobby/" + room.id);
-    } catch (e) {
+            sharedHistory.push("/lobby/" + room.id);
+        } catch (e) {
 
-        if (e instanceof MatchMakeError && e.code === ROOM_NOT_FOUND_ERROR) {
-            await create()(dispatch);
+            if (e instanceof MatchMakeError && e.code === ROOM_NOT_FOUND_ERROR) {
+                await create()(dispatch);
+            }
         }
-    }
+    };
 };
 
 export const leave = () => (dispatch) => {

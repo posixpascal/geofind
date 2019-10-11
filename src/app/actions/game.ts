@@ -14,21 +14,22 @@ export const start = (gameName = "game_countries", options = {}) => async (dispa
     sharedHistory.push("/game/" + gameName + "/" + room.id);
 };
 
-export const join = (gameData, retryCount = 1) => async (dispatch) => {
-    try {
-        const room = await client.joinById(gameData.id);
+export const join = (gameData, retryCount = 1) => {
+    return async (dispatch) => {
+        try {
+            const room = await client.joinById(gameData.id);
 
-        dispatch({type: GAME_JOIN, payload: room});
-        subscribe(dispatch);
-        window.isJoining = false; // todo: ugly fix.
+            dispatch({type: GAME_JOIN, payload: room});
+            subscribe(dispatch);
+            window.isJoining = false; // todo: ugly fix.
 
-        sharedHistory.push("/game/" + gameData.name + "/" + room.id);
-    } catch (e) {
-
-        if (e instanceof MatchMakeError && e.code === ROOM_NOT_FOUND_ERROR) {
-            sharedHistory.push("/");
+            sharedHistory.push("/game/" + gameData.name + "/" + room.id);
+        } catch (e) {
+            if (e instanceof MatchMakeError && e.code === ROOM_NOT_FOUND_ERROR) {
+                sharedHistory.push("/");
+            }
         }
-    }
+    };
 };
 
 export const leave = () => (dispatch) => {
