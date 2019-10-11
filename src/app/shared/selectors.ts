@@ -39,3 +39,11 @@ export const getCurrentPlayer = (game) => {
     }
     return user;
 };
+
+export const scoreBoardForGame = (game) => {
+    return game.players.map(playerID => {
+        const player = game.players[playerID];
+        const playerScore = game.scoreBoard[playerID];
+        return {player, playerScore}
+    });
+}

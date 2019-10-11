@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {PushPin} from "../../../helper/svgs";
 import {strings} from "../../../i18n";
 import {HorizontalAlignment} from "../../uiWidgets/HorizontalAlignment";
+import {SpinningVectorBox} from "../overlays/widgets";
 
 export const UserList = styled.div`
 @media (max-width: 767px){
@@ -23,6 +24,17 @@ export const UserList = styled.div`
 `;
 
 export const UserName = styled.div``;
+
+export const MiniScoreboard = ({game}) => {
+    return Object.keys(game.players).map((playerID) => {
+        const player = game.players[playerID];
+        const playerScore = game.scoreBoard[playerID];
+
+        return <div className={`${game.gameWinner === playerID ? "user-result-won" : "user-result-lost"}`} key={playerID} id={playerID}>
+            {player.displayName} <PushPin size={16} pinned={true} color={player.color}/> ({playerScore.score} {strings.points})
+        </div>;
+    });
+};
 
 export const PlayerScore = ({game, playerID}) => {
     return <HorizontalAlignment key={playerID}>
