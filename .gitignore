@@ -7,4 +7,3 @@ frontend.iml
 .env
 .DS_Store
 log/
-coverage/

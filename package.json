@@ -5,6 +5,7 @@
     "build": "rm -rf dist/ && NODE_ENV=production ./node_modules/.bin/parcel build src/index.html && cp -R src/assets/ dist/assets && cp src/.htaccess dist/"
   },
   "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "@types/socket.io": "^2.1.3",
