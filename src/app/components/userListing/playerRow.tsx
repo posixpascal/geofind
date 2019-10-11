@@ -10,12 +10,13 @@ import {changeName} from "./index";
 import {ColorPickerWrapper, UserColor, UserIcon, UserListingRow} from "./widgets";
 
 export const PlayerRow = ({player, onColorChange, room}) => {
-    const audioMuted = !!localStorage.getItem("audioMuted");
+    const audioMuted = localStorage.getItem("audioMuted") !== null;
     const [colorPicker, toggleColorPicker] = useState(false);
     const [muted, setMuted] = useState(audioMuted);
 
     const isLeader = isRoomLeader(room);
     const userIcon = isLeader ? <Zap/> : <User/>;
+    const isCurrentPlayer = client.auth._id === player.id;
 
     const colorPickerComponent = (
         <UserColorPicker
@@ -38,14 +39,14 @@ export const PlayerRow = ({player, onColorChange, room}) => {
     };
 
     const handleUserNameClick = () => {
-        if (client.auth._id !== player.id) {
+        if (!isCurrentPlayer) {
             return;
         }
         changeName();
     };
 
     const handleUserColorClick = () => {
-        if (client.auth._id !== player.id) {
+        if (!isCurrentPlayer) {
             return;
         }
         toggleColorPicker(!colorPicker);
@@ -65,8 +66,8 @@ export const PlayerRow = ({player, onColorChange, room}) => {
                 </ColorPickerWrapper>
             </HorizontalAlignment>
             <HorizontalAlignment>
-                {client.auth._id === player.id && <MuteButton muted={muted} toggleMute={toggleMute}/>}
-                {client.auth._id === player.id ? GetReadyButton : PlayerStatusButton}
+                {isCurrentPlayer && <MuteButton muted={muted} toggleMute={toggleMute}/>}
+                {isCurrentPlayer ? GetReadyButton : PlayerStatusButton}
             </HorizontalAlignment>
         </UserListingRow>
     );
