@@ -1,15 +1,13 @@
 import React from "react";
-import {connect} from "react-redux";
-import {NavLink, withRouter} from "react-router-dom";
 import styled from "styled-components";
-import * as actions from "../../actions/rooms";
-import {strings} from "../../i18n";
 import {Button} from "../uiWidgets/Button";
+
 interface IEmptyStateProps {
     title: string;
     description: string;
     ctaText: string;
     ctaLink: string;
+    action: Function;
 }
 
 const EmptyStateWrapper = styled.div`
@@ -39,17 +37,17 @@ const EmptyStateDescription = styled.p`
 `;
 const EmptyStateAction = styled.div``;
 
-export default (props: any) => {
+export default ({title, description, action, ctaText}: IEmptyStateProps) => {
     return (
         <EmptyStateWrapper>
             <EmptyStateTitle>
-                {props.title}
+                {title}
             </EmptyStateTitle>
             <EmptyStateDescription>
-                {props.description}
+                {description}
             </EmptyStateDescription>
-            <EmptyStateAction onClick={props.action}>
-                 <Button>{props.ctaText}</Button>
+            <EmptyStateAction onClick={action}>
+                <Button>{ctaText}</Button>
             </EmptyStateAction>
         </EmptyStateWrapper>
     );

@@ -1,10 +1,14 @@
 import moment from "moment";
-import React, {useEffect, useRef, useState} from "react";
-import {Send} from "react-feather";
-import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
-import * as actions from "../../actions/rooms";
+import React, {useEffect, useRef} from "react";
+
+import {
+    ChatLog,
+    ChatMessage,
+    ChatMessageDate, ChatMessageText, ChatMessageUser,
+    ChatWindowWrapper, NewChatMessage,
+} from "./widgets";
 import {strings} from "../../i18n";
+import {Send} from "react-feather";
 
 const randomInsecurityInsult = () => {
     const insecurities = [
@@ -18,16 +22,6 @@ const randomInsecurityInsult = () => {
     return insecurities[Math.floor(Math.random() * insecurities.length)];
 };
 
-import {hashCode} from "../../helper/hash";
-import {
-    ChatLog,
-    ChatMessage,
-    ChatMessageDate,
-    ChatMessageText,
-    ChatMessageUser,
-    ChatWindowWrapper,
-    NewChatMessage,
-} from "./widgets";
 
 export default ({inGame = false, players = {}, messages = []}) => {
     const chatInput = useRef();
@@ -48,7 +42,7 @@ export default ({inGame = false, players = {}, messages = []}) => {
         }
         // filter value
         let chatMessage = chatInput.current.value;
-        switch (chatMessage.toLowerCase()){
+        switch (chatMessage.toLowerCase()) {
             case "gg ez":
             case "rekt":
             case "pwnd":
@@ -56,19 +50,19 @@ export default ({inGame = false, players = {}, messages = []}) => {
                 chatMessage = randomInsecurityInsult();
                 break;
         }
-        if ((window as any).currentGame) {
-            (window as any).currentGame.send({type: "chat:message:new", payload: chatMessage});
+        if (window.currentGame) {
+            window.currentGame.send({type: "chat:message:new", payload: chatMessage});
         } else {
-            (window as any).currentRoom.send({type: "chat:message:new", payload: chatMessage});
+            window.currentRoom.send({type: "chat:message:new", payload: chatMessage});
         }
         chatInput.current.value = "";
     };
 
     useEffect(() => {
-       const chatView = document.getElementById("chatView");
-       if (chatView){
-           chatView.scrollTop = chatView.scrollHeight;
-       }
+        const chatView = document.getElementById("chatView");
+        if (chatView) {
+            chatView.scrollTop = chatView.scrollHeight;
+        }
     });
 
     const formatDate = (input) => {
@@ -78,32 +72,37 @@ export default ({inGame = false, players = {}, messages = []}) => {
     return (
         <ChatWindowWrapper>
             <ChatLog id="chatView">
-                {messages.map((chatMessage) => {
-                    return <ChatMessage bold={!!chatMessage.bold} key={chatMessage.id}>
+                {messages.map((chatMessage) => (
+                    <ChatMessage bold={!!chatMessage.bold} key={chatMessage.id}>
                         <ChatMessageDate>{formatDate(chatMessage.date)}</ChatMessageDate>
                         {// fetch uptodate user to reflect name changes
-                            players[chatMessage.player.id] &&
-                            < >
-                                <ChatMessageUser style={{color: players[chatMessage.player.id].color}}>
-                                    {players[chatMessage.player.id].displayName}
-                                </ChatMessageUser>
-                                <ChatMessageText>{chatMessage.message}</ChatMessageText>
-                            </>}
-                        {//user left meanwhile so we render the cached properties
-                            !players[chatMessage.player.id] &&
-                            < >
-                                <ChatMessageUser style={{color: chatMessage.player.color}}>
-                                    {chatMessage.player.displayName}
-                                </ChatMessageUser>
-                                <ChatMessageText>{chatMessage.message}</ChatMessageText>
-                            </>
-                        }
-                    </ChatMessage>;
-                })}
+                            players[chatMessage.player.id] && (
+                                <>
+                                    <ChatMessageUser style={{color: players[chatMessage.player.id].color}}>
+                                        {players[chatMessage.player.id].displayName}
+                                    </ChatMessageUser>
+                                    <ChatMessageText>{chatMessage.message}</ChatMessageText>
+                                </>
+                            )}
+                        {// user left meanwhile so we render the cached properties
+                            !players[chatMessage.player.id] && (
+                                <>
+                                    <ChatMessageUser style={{color: chatMessage.player.color}}>
+                                        {chatMessage.player.displayName}
+                                    </ChatMessageUser>
+                                    <ChatMessageText>{chatMessage.message}</ChatMessageText>
+                                </>
+                            )}
+                    </ChatMessage>
+                ))}
             </ChatLog>
             <NewChatMessage>
-                <input ref={chatInput} type="text" onKeyDown={(event) => chatMessageKeyDown(event)}
-                       placeholder={strings.newMessagePlaceholder}/>
+                <input
+                    ref={chatInput}
+                    type="text"
+                    onKeyDown={chatMessageKeyDown}
+                    placeholder={strings.newMessagePlaceholder}
+                />
                 <Send onClick={sendMessage}/>
             </NewChatMessage>
         </ChatWindowWrapper>

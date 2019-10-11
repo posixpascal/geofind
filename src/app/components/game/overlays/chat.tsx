@@ -3,7 +3,7 @@ import ChatWindow from "../../chat";
 import {ChatOverlay} from "./widgets";
 
 export const GameChatOverlay = ({players, messages}) => {
-    if (window.innerWidth > 767){
+    if (window.innerWidth > 767) {
         return <></>;
     }
     return <ChatOverlay>
