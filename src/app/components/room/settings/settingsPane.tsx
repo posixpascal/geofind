@@ -19,27 +19,21 @@ export const RoomSettingsPane = ({collapsed, roomSettings, updateRoomSettings}) 
         };
     };
 
+    const settings = [
+        {key: "gameMode", component: GameModeSelection},
+        {key: "roundTime", component: RoundTimeInput},
+        {key: "maxRounds", component: MaxRoundsInput},
+        {key: "victoryScore", component: VictoryScoreInput},
+    ];
+
     return (<RoomSettingsPaneWrapper collapsed={collapsed}>
         <HorizontalAlignment className="ha" style={{justifyContent: "space-between"}}>
-            <div>
-                <RoomSettingsHeader>{strings.gameMode}</RoomSettingsHeader>
-                <GameModeSelection onChange={updateSettingFromEvent("gameMode")} />
-            </div>
-            <div>
-                <RoomSettingsHeader>{strings.roundTime}</RoomSettingsHeader>
-                <RoundTimeInput onChange={updateSettingFromEvent("roundTime")} maxLength={2}
-                                defaultValue={roomSettings.roundTime}/>
-            </div>
-            <div>
-                <RoomSettingsHeader>{strings.maxRound}</RoomSettingsHeader>
-                <MaxRoundsInput onChange={updateSettingFromEvent("maxRounds")} maxLength={2}
-                                defaultValue={roomSettings.maxRounds}/>
-            </div>
-            <div>
-                <RoomSettingsHeader>{strings.victoryScore}</RoomSettingsHeader>
-                <VictoryScoreInput onChange={updateSettingFromEvent("victoryScore")} maxLength={2}
-                                   defaultValue={roomSettings.victoryScore}/>
-            </div>
+            {settings.map(settingsField => {
+                return <div>
+                    <RoomSettingsHeader>{strings[settingsField.key]}</RoomSettingsHeader>
+                    <settingsField.component onChange={updateSettingFromEvent(settingsField.key)}/>
+                </div>
+            })}
         </HorizontalAlignment>
         <div>
             <input type={"checkbox"} defaultChecked={roomSettings.insultMode}
