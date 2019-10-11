@@ -7,7 +7,7 @@ interface IEmptyStateProps {
     description: string;
     ctaText: string;
     ctaLink: string;
-    action: Function;
+    action: () => void;
 }
 
 const EmptyStateWrapper = styled.div`

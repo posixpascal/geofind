@@ -12,5 +12,5 @@ export const composeMap = ({height}) => {
         }),
         withScriptjs,
         withGoogleMap,
-    )
+    );
 };

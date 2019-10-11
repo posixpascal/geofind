@@ -1,14 +1,14 @@
 import moment from "moment";
 import React, {useEffect, useRef} from "react";
 
+import {Send} from "react-feather";
+import {strings} from "../../i18n";
 import {
     ChatLog,
     ChatMessage,
     ChatMessageDate, ChatMessageText, ChatMessageUser,
     ChatWindowWrapper, NewChatMessage,
 } from "./widgets";
-import {strings} from "../../i18n";
-import {Send} from "react-feather";
 
 const randomInsecurityInsult = () => {
     const insecurities = [
@@ -21,7 +21,6 @@ const randomInsecurityInsult = () => {
 
     return insecurities[Math.floor(Math.random() * insecurities.length)];
 };
-
 
 export default ({inGame = false, players = {}, messages = []}) => {
     const chatInput = useRef();
@@ -69,6 +68,17 @@ export default ({inGame = false, players = {}, messages = []}) => {
         return moment(input).format("HH:MM");
     };
 
+    const ChatLine = ({message, player}) => {
+        return (
+            <>
+                <ChatMessageUser style={{color: player.color}}>
+                    {player.displayName}
+                </ChatMessageUser>
+                <ChatMessageText>{message}</ChatMessageText>
+            </>
+        )
+    };
+
     return (
         <ChatWindowWrapper>
             <ChatLog id="chatView">
@@ -76,23 +86,11 @@ export default ({inGame = false, players = {}, messages = []}) => {
                     <ChatMessage bold={!!chatMessage.bold} key={chatMessage.id}>
                         <ChatMessageDate>{formatDate(chatMessage.date)}</ChatMessageDate>
                         {// fetch uptodate user to reflect name changes
-                            players[chatMessage.player.id] && (
-                                <>
-                                    <ChatMessageUser style={{color: players[chatMessage.player.id].color}}>
-                                        {players[chatMessage.player.id].displayName}
-                                    </ChatMessageUser>
-                                    <ChatMessageText>{chatMessage.message}</ChatMessageText>
-                                </>
-                            )}
+                            players[chatMessage.player.id] &&
+                            <ChatLine player={players[chatMessage.player.id]} message={chatMessage.message}/>}
                         {// user left meanwhile so we render the cached properties
-                            !players[chatMessage.player.id] && (
-                                <>
-                                    <ChatMessageUser style={{color: chatMessage.player.color}}>
-                                        {chatMessage.player.displayName}
-                                    </ChatMessageUser>
-                                    <ChatMessageText>{chatMessage.message}</ChatMessageText>
-                                </>
-                            )}
+                            !players[chatMessage.player.id] &&
+                            <ChatLine player={chatMessage.player} message={chatMessage.message}/>}
                     </ChatMessage>
                 ))}
             </ChatLog>
