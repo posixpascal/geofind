@@ -9,19 +9,34 @@ import {Badge} from "../uiWidgets/Badge";
 import {JoinLobbyButton, LobbyIcon, LobbyName, LobbyRow} from "./widgets";
 
 const LobbyListing = ({rooms, joinRoom, createRoom}) => {
-    const RoomList = rooms.map((room) => {
-        const handleLobbyJoin = () => joinRoom(room);
+    const RoomNameWithIcon = ({room}) => {
         const lobbyIcon = room.password ? <Key/> : <Globe/>;
         return (
+            <div>
+                <LobbyIcon>{lobbyIcon}</LobbyIcon>
+                <LobbyName>{room.name !== "lobby" ? room.name : room.roomId}</LobbyName>
+            </div>
+        );
+    };
+
+    const RoomJoinButton = ({room, handleLobbyJoin}) => {
+        return (
+            <div>
+                <Badge><Users/> {room.clients} / {room.maxClients} </Badge>
+                <JoinLobbyButton onClick={handleLobbyJoin}>{strings.joinLobby}</JoinLobbyButton>
+            </div>
+        );
+    };
+
+    const RoomList = rooms.map((room) => {
+        const handleLobbyJoin = () => {
+            joinRoom(room);
+        };
+
+        return (
             <LobbyRow key={room.roomId}>
-                <div>
-                    <LobbyIcon>{lobbyIcon}</LobbyIcon>
-                    <LobbyName>{room.name !== "lobby" ? room.name : room.roomId}</LobbyName>
-                </div>
-                <div>
-                    {<Badge><Users/> {room.clients} / {room.maxClients || 32} </Badge>}
-                    <JoinLobbyButton onClick={handleLobbyJoin}>{strings.joinLobby}</JoinLobbyButton>
-                </div>
+                <RoomNameWithIcon room={room}/>
+                <RoomJoinButton room={room} handleLobbyJoin={handleLobbyJoin}/>
             </LobbyRow>
         );
     });
