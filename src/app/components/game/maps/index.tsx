@@ -10,8 +10,7 @@ declare const google: any;
 export const GameMap = composeMap({height: (window.innerHeight - 53) + "px"})((props) => {
         return <WorldMap {...props}>
 
-            {!props.showAllMarker &&
-            <PinMarker markerMoved={props.markerMoved} color={props.player.color} position={props.lastMarkerPosition}/>}
+            {!props.showAllMarker && <PinMarker {...props} position={props.lastMarkerPosition}/>}
 
             {props.showAllMarker && props.game && Object.keys(props.game.votes).map((playerID) => {
                 const vote = props.game.votes[playerID];

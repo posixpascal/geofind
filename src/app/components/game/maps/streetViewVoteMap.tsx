@@ -10,10 +10,9 @@ declare const google: any;
 export const StreetViewVoteMap = composeMap({height: "260px"})((props) =>
     <WorldMap {...props}>
 
-        {!props.showAllMarker &&
-        <PinMarker markerMoved={props.markerMoved} color={props.player.color} position={props.lastMarkerPosition}/>}
+        {!props.showAllMarker && <PinMarker {...props} position={props.lastMarkerPosition}/>}
 
-        {props.game && Object.keys(props.game.votes).map((playerID, index) => {
+        {props.game && Object.keys(props.game.votes).map((playerID) => {
             const vote = props.game.votes[playerID];
             const player = props.game.players[playerID];
             const pins = ["pin_1", "pin_2", "pin_3", "pin_4", "pin_5"].filter(pinID => vote[pinID]);
