@@ -3,7 +3,7 @@ import {USER_LOGGED_IN} from "../../actions/types";
 import {client} from "../../helper/webSockets";
 import {strings} from "../../i18n";
 import {store} from "../../main";
-import {PlayerRow} from "./playerRow";
+import {PlayerRows} from "./playerRows";
 import {UserListingWrapper} from "./widgets";
 
 export const changeName = () => {
@@ -27,11 +27,13 @@ export default ({room, players}) => {
         return <span>Loading...</span>;
     }
 
-    const playerObjects = Object.keys(players).map((playerId) => players[playerId]);
+    const onColorChange = (color) => {
+        window.currentRoom.send({type: "user:color:set", payload: color});
+    };
 
     return (
         <UserListingWrapper>
-            {players.map((player) => <div key={player.id}><PlayerRow room={room} player={playerObjects}/></div>)}
+            <PlayerRows room={room} onColorChange={onColorChange} players={players}/>
         </UserListingWrapper>
     );
 };

@@ -9,27 +9,34 @@ import {UserColorPicker} from "./colorPicker";
 import {changeName} from "./index";
 import {ColorPickerWrapper, UserColor, UserIcon, UserListingRow} from "./widgets";
 
-export const PlayerRow = ({player, room}) => {
+export const PlayerRow = ({player, onColorChange, room}) => {
+    const audioMuted = !!localStorage.getItem("audioMuted");
     const [colorPicker, toggleColorPicker] = useState(false);
-    const [muted, setMuted] = useState(!!localStorage.getItem("audioMuted"));
-
-    const toggleMute = () => {
-        if (localStorage.getItem("audioMuted")) {
-            localStorage.removeItem("audioMuted");
-            setMuted(false);
-        } else {
-            localStorage.setItem("audioMuted", "1");
-            setMuted(true);
-        }
-    };
-
-    const onColorChange = (color) => {
-        window.currentRoom.send({type: "user:color:set", payload: color});
-    };
+    const [muted, setMuted] = useState(audioMuted);
 
     const isLeader = isRoomLeader(room);
-
     const userIcon = isLeader ? <Zap/> : <User/>;
+
+    const colorPickerComponent = (
+        <UserColorPicker
+            onColorChange={onColorChange}
+            player={player}
+            toggleColorPicker={toggleColorPicker}
+        />
+    );
+
+    const toggleMute = () => {
+        if (audioMuted) {
+            localStorage.removeItem("audioMuted");
+        }
+
+        if (!audioMuted) {
+            localStorage.setItem("audioMuted", "1");
+        }
+
+        return setMuted(!audioMuted);
+    };
+
     const handleUserNameClick = () => {
         if (client.auth._id !== player.id) {
             return;
@@ -43,14 +50,6 @@ export const PlayerRow = ({player, room}) => {
         }
         toggleColorPicker(!colorPicker);
     };
-
-    const colorPickerComponent = (
-        <UserColorPicker
-            onColorChange={onColorChange}
-            player={player}
-            toggleColorPicker={toggleColorPicker}
-        />
-    );
 
     return (
         <UserListingRow isUser={client.auth._id === player.id} key={player.id}>
