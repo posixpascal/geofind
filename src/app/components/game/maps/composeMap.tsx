@@ -1,6 +1,6 @@
 import React from "react";
-import {compose, withProps} from "recompose";
 import {withGoogleMap, withScriptjs} from "react-google-maps";
+import {compose, withProps} from "recompose";
 
 export const composeMap = ({height}) => {
     return compose(

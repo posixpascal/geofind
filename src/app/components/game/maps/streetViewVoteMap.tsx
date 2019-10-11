@@ -1,10 +1,10 @@
 import React from "react";
 import {Marker} from "react-google-maps";
 import {PushPinSVG} from "../../../helper/svgs";
-import {PinMarker} from "./pinMarker";
-import {WorldMap} from "./worldMap";
 import {composeMap} from "./composeMap";
+import {PinMarker} from "./pinMarker";
 import {StreetViewPlayerMarkers} from "./playerMarkers";
+import {WorldMap} from "./worldMap";
 
 declare const google: any;
 

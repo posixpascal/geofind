@@ -7,5 +7,5 @@ export const StreetViewGameMap = composeMap({height: (window.innerHeight + 80) +
         <WorldMap {...props}>
             <StreetViewPanorama position={props.game.country} visible={true} />
         </WorldMap>
-    )
+    ),
 );

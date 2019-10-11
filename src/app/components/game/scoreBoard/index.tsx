@@ -2,8 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../../../actions/game";
-import {PlayerScore, RequiredVictoryScore, UserList, UserName} from "./widgets";
 import {Overlay} from "../overlays/widgets";
+import {PlayerScore, RequiredVictoryScore, UserList, UserName} from "./widgets";
 
 const ScoreBoard = ({game}) => {
     const isMobile = window.innerWidth <= 767;
@@ -18,7 +18,7 @@ const ScoreBoard = ({game}) => {
     };
 
     if (!showScoreBoard) {
-        return <></>;
+        return <>; </ > ;
     }
 
     let scoreBoardTitle = <h3>Score</h3>;

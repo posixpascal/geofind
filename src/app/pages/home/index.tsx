@@ -81,12 +81,12 @@ const HomePage = ({leaveRoom, leaveGame, createRoom}) => {
     });
 
     useEffect(() => {
-        if ((window as any).currentRoom) {
-            leaveRoom((window as any).currentRoom);
+        if (window.currentRoom) {
+            leaveRoom(window.currentRoom);
         }
 
-        if ((window as any).currentGame) {
-            leaveGame((window as any).currentGame);
+        if (window.currentGame) {
+            leaveGame(window.currentGame);
         }
     });
 

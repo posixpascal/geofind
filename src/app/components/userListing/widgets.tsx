@@ -7,7 +7,6 @@ export const UserListingWrapper = styled.div`
   width: 100%;
 `;
 
-
 export const UserListingRow = styled.div`
   display: flex;
   width: 100%;

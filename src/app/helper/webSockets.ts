@@ -21,4 +21,3 @@ export const authenticateUser = async (store) => {
         localStorage.removeItem("colyseus-auth-token");
     }
 };
-
