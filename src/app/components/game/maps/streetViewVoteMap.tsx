@@ -41,48 +41,16 @@ export const StreetViewVoteMap = compose(
         {props.game && Object.keys(props.game.votes).map((playerID, index) => {
             const vote = props.game.votes[playerID];
             const player = props.game.players[playerID];
-            return <div key={playerID + "_pin_1_" + index}>
-            {vote.pin_1 && <Marker
-                    key={playerID + "_pin_1_" + index}
+            return ["pin_1", "pin_2", "pin_3", "pin_4", "pin_5"].map(pinID => <div key={playerID + "_pin_1_" + index}>
+            {vote[pinID] && <Marker
+                    key={`${playerID}_${pinID}_${index}`}
                     icon={{url: PushPinSVG({color: player.color})}}
                     position={
-                        {lat: vote.pin_1.lat, lng: vote.pin_1.lng}
+                        {lat: vote[pinID].lat, lng: vote[pinID].lng}
                     }
                     animation={(google as any).maps.Animation.DROP}
                     draggable={false}/>}
-            {vote.pin_2 && <Marker
-                    key={playerID + "_pin_2_" + index}
-                    icon={{url: PushPinSVG({color: player.color})}}
-                    position={
-                        {lat: vote.pin_2.lat, lng: vote.pin_2.lng}
-                    }
-                    animation={(google as any).maps.Animation.DROP}
-                    draggable={false}/>}
-            {vote.pin_3 && <Marker
-                    key={playerID + "_pin_3_" + index}
-                    icon={{url: PushPinSVG({color: player.color})}}
-                    position={
-                        {lat: vote.pin_3.lat, lng: vote.pin_3.lng}
-                    }
-                    animation={(google as any).maps.Animation.DROP}
-                    draggable={false}/>}
-            {vote.pin_4 && <Marker
-                    key={playerID + "_pin_4_" + index}
-                    icon={{url: PushPinSVG({color: player.color})}}
-                    position={
-                        {lat: vote.pin_4.lat, lng: vote.pin_4.lng}
-                    }
-                    animation={(google as any).maps.Animation.DROP}
-                    draggable={false}/>}
-            {vote.pin_5 && <Marker
-                    key={playerID + "_pin_5_" + index}
-                    icon={{url: PushPinSVG({color: player.color})}}
-                    position={
-                        {lat: vote.pin_5.lat, lng: vote.pin_5.lng}
-                    }
-                    animation={(google as any).maps.Animation.DROP}
-                    draggable={false}/>}
-            </div>;
+            </div>);
         })}
     </GoogleMap>,
 );
