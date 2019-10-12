@@ -1,5 +1,6 @@
 # geofind.io 
 [![Maintainability](https://api.codeclimate.com/v1/badges/e60d54a85ff19175c74a/maintainability)](https://codeclimate.com/github/posixpascal/geofind_frontend/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/e60d54a85ff19175c74a/test_coverage)](https://codeclimate.com/github/posixpascal/geofind_frontend/test_coverage)
 [![Build Status](https://travis-ci.org/posixpascal/geofind_frontend.svg?branch=master)](https://travis-ci.org/posixpascal/geofind_frontend)
 
 [**geofind**](https://geofind.io) is an online realtime multiplayer geographical guessing game 
