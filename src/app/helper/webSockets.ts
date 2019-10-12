@@ -4,7 +4,7 @@ import {
 
 import * as Colyseus from "colyseus.js";
 
-export const client = new Colyseus.Client(process.env.NODE_ENV === "production" ? "wss://gameserver.geofind.io" : "ws://localhost:3888");
+export const client = new Colyseus.Client(process.env.NODE_ENV !== "production" ? "wss://gameserver.geofind.io" : "ws://localhost:3888");
 
 if (process.env.NODE_ENV !== "production") {
     (window as any).client = client;
