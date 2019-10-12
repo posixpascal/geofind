@@ -5,7 +5,8 @@ node_js:
     - "9"
     - "10"
 env:
-    CC_TEST_REPORTER_ID=325f2fef181d2b41dfd850b751d40140d68170490d15d73d372e28b086b7c15f
+    global:
+        - CC_TEST_REPORTER_ID=325f2fef181d2b41dfd850b751d40140d68170490d15d73d372e28b086b7c15f
 cache:
     directories:
         - node_modules
