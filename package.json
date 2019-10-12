@@ -50,6 +50,7 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "jest": "^24.9.0",
+    "jest-environment-enzyme": "^7.1.1",
     "jest-enzyme": "^7.1.1",
     "react-test-renderer": "^16.10.2",
     "sass": "^1.22.12",
