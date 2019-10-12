@@ -2,12 +2,13 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import styled from "styled-components";
-import * as gameActions from "../../actions/game";
-import * as actions from "../../actions/rooms";
+import * as allGameActions from "../../actions/game";
+import * as allRoomActions from "../../actions/rooms";
 import LobbyListing from "../../components/lobbyListing";
 import {Button} from "../../components/uiWidgets/Button";
 import {client} from "../../helper/webSockets";
 import {strings} from "../../i18n";
+import {bindActionCreators} from "redux";
 
 export const Overlay = styled.div`
     position: absolute;
@@ -66,9 +67,8 @@ export const OverlayContent = styled.div`
 
 const REFRESH_RATE = 1000;
 
-export const HomePage = ({leaveRoom, leaveGame, createRoom}) => {
+export const HomePage = ({gameActions, roomActions}) => {
     const [rooms, setRooms] = useState([]);
-
     useEffect(() => {
         const fetchInterval = setInterval(async () => {
             const listRooms = await client.getAvailableRooms("lobby");
@@ -82,11 +82,11 @@ export const HomePage = ({leaveRoom, leaveGame, createRoom}) => {
 
     useEffect(() => {
         if (window.currentRoom) {
-            leaveRoom(window.currentRoom);
+            roomActions.leave(window.currentRoom);
         }
 
         if (window.currentGame) {
-            leaveGame(window.currentGame);
+            gameActions.leave(window.currentGame);
         }
     });
 
@@ -104,7 +104,7 @@ export const HomePage = ({leaveRoom, leaveGame, createRoom}) => {
                 {strings.homeDescription3}
             </p>
 
-            {rooms.length > 0 && <Button onClick={createRoom}>{strings.createLobby}</Button>}
+            {rooms.length > 0 && <Button onClick={roomActions.create}>{strings.createLobby}</Button>}
             <br/><br/>
 
             <LobbyListing rooms={rooms}/>
@@ -116,4 +116,11 @@ function mapStateToProps(state) {
     return {lobbies: state.lobbies};
 }
 
-export default withRouter(connect(mapStateToProps, {...actions, ...gameActions})(HomePage));
+function mapDispatchToProps(dispatch) {
+    return {
+        gameActions: bindActionCreators(allGameActions, dispatch),
+        roomActions: bindActionCreators(allRoomActions, dispatch),
+    };
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomePage));

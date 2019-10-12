@@ -8,13 +8,14 @@ export const PlayerMarkers = ({game}) => {
         const vote = game.votes[playerID];
         const player = game.players[playerID];
         return (
-            <Marker
-                key={player.displayName}
-                icon={{url: PushPinSVG({color: player.color})}}
-                position={vote.country}
-                animation={(google as any).maps.Animation.DROP}
-                draggable={false}
-            />
+            <div key={player.id}>
+                <Marker
+                    icon={{url: PushPinSVG({color: player.color})}}
+                    position={vote.country}
+                    animation={(google as any).maps.Animation.DROP}
+                    draggable={false}
+                />
+            </div>
         );
     });
 
@@ -28,15 +29,15 @@ export const StreetViewPlayerMarkers = ({game}) => {
         const player = game.players[playerID];
         const pins = availablePins.filter((pinID) => vote[pinID]);
         return pins.map((pinID) => (
-                <Marker
-                    key={`${playerID}_${pinID}`}
-                    icon={{url: PushPinSVG({color: player.color})}}
-                    position={{lat: vote[pinID].lat, lng: vote[pinID].lng}}
-                    animation={(google as any).maps.Animation.DROP}
-                    draggable={false}
-                />
-            ));
+            <Marker
+                key={`${playerID}_${pinID}`}
+                icon={{url: PushPinSVG({color: player.color})}}
+                position={{lat: vote[pinID].lat, lng: vote[pinID].lng}}
+                animation={(google as any).maps.Animation.DROP}
+                draggable={false}
+            />
+        ));
     });
 
-    return <>{playerMarkers}</>
+    return <>{playerMarkers}</>;
 };

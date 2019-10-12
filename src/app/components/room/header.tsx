@@ -36,23 +36,23 @@ const RoomHeaderWrapper = styled.h2`
 
 `;
 
-export const RoomHeader = ({settingsClick, leaveRoomClick, startGameClick, editClick, roomSettings}) => {
-    const isLeader = isRoomLeader(roomSettings);
-    const allReady = arePlayersReady(roomSettings);
+export const RoomHeader = ({settingsClick, leaveRoomClick, startGameClick, editClick, room}) => {
+    const isLeader = isRoomLeader(room);
+    const allReady = arePlayersReady(room);
     const canStartGame = isLeader && allReady;
 
     return (
         <RoomHeaderWrapper>
-            <div>{roomSettings.name ? roomSettings.name : roomSettings.id}
+            <div>{room.name ? room.name : room.id}
                 {isLeader && <span><Edit3 onClick={editClick}/></span>}
                 {isLeader && <span><Settings onClick={settingsClick}/></span>}
             </div>
-            <RoomSettingsView roomSettings={roomSettings}/>
+            <RoomSettingsView room={room}/>
             <HorizontalAlignment className={"ha"}>
                 <Button onClick={leaveRoomClick}>
                     {strings.leaveLobby}
                 </Button>
-                {canStartGame ? <Button onClick={startGameClick}>{strings.startGame}</Button> : <></>}
+                {canStartGame && <Button onClick={startGameClick}>{strings.startGame}</Button>}
             </HorizontalAlignment>
         </RoomHeaderWrapper>
     );

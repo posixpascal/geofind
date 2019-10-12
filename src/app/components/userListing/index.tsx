@@ -33,7 +33,7 @@ export default ({room, players}) => {
 
     return (
         <UserListingWrapper>
-            <PlayerRows room={room} onColorChange={onColorChange} players={players}/>
+            <PlayerRows room={room} onColorChange={onColorChange} players={room.players}/>
         </UserListingWrapper>
     );
 };

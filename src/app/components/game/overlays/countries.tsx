@@ -9,6 +9,7 @@ import {RoundOverlay} from "./countries/roundOverlay";
 import {Overlay} from "./widgets";
 
 export const CountriesGameOverlay = ({game, user, leaveGame}) => {
+
     if (game.gameOver) {
         return <Overlay><GameOverOverlay {...{game, leaveGame}}/></Overlay>;
     }
@@ -21,7 +22,7 @@ export const CountriesGameOverlay = ({game, user, leaveGame}) => {
         return <Overlay><RoundOverlay {...{user, game}} /></Overlay>;
     }
 
-    return <GameLoadingOverlay/>;
+    return <Overlay><GameLoadingOverlay/></Overlay>;
 };
 
 function mapStateToProps(state) {

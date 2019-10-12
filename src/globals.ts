@@ -3,7 +3,7 @@ interface ISocketResource {
     removeAllListeners: () => void;
     send: (data) => void;
     onStateChange: (cb) => void;
-    leave: (room) => void;
+    leave: (room?) => void;
     listenerAttached: boolean;
 }
 

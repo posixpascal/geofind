@@ -36,7 +36,7 @@ export const SvgSpinner = (
 export const RoomJoinLoader = (props) => {
     return (
         <RoomJoinLoaderWrapper>
-            <SvgSpinner/>
+            {SvgSpinner}
             <h2>
                 Loading...
             </h2>

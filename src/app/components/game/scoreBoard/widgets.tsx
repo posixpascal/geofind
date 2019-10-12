@@ -22,10 +22,13 @@ export const UserList = styled.div`
 }
 `;
 
-export const UserName = styled.div``;
+export const UserName = styled.div`
+    font-size: 24px;
+    margin-right: 20px;
+`;
 
 export const MiniScoreboard = ({game}) => {
-    return Object.keys(game.players).map((playerID) => {
+    const scores = Object.keys(game.players).map((playerID) => {
         const player = game.players[playerID];
         const playerScore = game.scoreBoard[playerID];
 
@@ -45,6 +48,7 @@ export const MiniScoreboard = ({game}) => {
             </div>
         );
     });
+    return <div>{scores}</div>;
 };
 
 export const PlayerScore = ({game, playerID}) => {

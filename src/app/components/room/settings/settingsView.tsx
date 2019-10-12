@@ -11,8 +11,8 @@ const GAME_MODE_ICONS = {
     game_streetview: <Eye/>,
 };
 
-export const RoomSettingsView = ({roomSettings}) => {
-    const gameModeIcon = GAME_MODE_ICONS[roomSettings.gameMode] || <Globe/>;
+export const RoomSettingsView = ({room}) => {
+    const gameModeIcon = GAME_MODE_ICONS[room.gameMode] || <Globe/>;
 
     return (
         <RoomSettingsWrapper>
@@ -22,15 +22,15 @@ export const RoomSettingsView = ({roomSettings}) => {
             </RoomSetting>
             <RoomSetting>
                 <Watch/>
-                {roomSettings.roundTime}s
+                {room.roundTime}s
             </RoomSetting>
             <RoomSetting>
                 <PlayCircle/>
-                {roomSettings.maxRounds}
+                {room.maxRounds}
             </RoomSetting>
             <RoomSetting>
                 <Award/>
-                {roomSettings.victoryScore}
+                {room.victoryScore}
             </RoomSetting>
         </RoomSettingsWrapper>
     );

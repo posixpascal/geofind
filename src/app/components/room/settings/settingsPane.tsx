@@ -10,7 +10,7 @@ import {
     VictoryScoreInput,
 } from "./widgets";
 
-export const RoomSettingsPane = ({collapsed, roomSettings, updateRoomSettings}) => {
+export const RoomSettingsPane = ({collapsed, room, updateRoomSettings}) => {
     const updateSettingFromEvent = (key) => {
         return (event) => {
             updateRoomSettings({[key]: event.target.value});
@@ -28,12 +28,15 @@ export const RoomSettingsPane = ({collapsed, roomSettings, updateRoomSettings}) 
         return (
             <div key={settingsField.key}>
                 <RoomSettingsHeader>{strings[settingsField.key]}</RoomSettingsHeader>
-                <settingsField.component onChange={updateSettingFromEvent(settingsField.key)}/>
+                <settingsField.component
+                    defaultValue={room[settingsField.key]}
+                    onChange={updateSettingFromEvent(settingsField.key)}
+                />
             </div>
         );
     });
 
-    const handleInsultModeChange = () => updateRoomSettings({insultMode: !roomSettings.insultMode});
+    const handleInsultModeChange = () => updateRoomSettings({insultMode: !room.insultMode});
 
     return (
         <RoomSettingsPaneWrapper collapsed={collapsed}>
@@ -43,7 +46,7 @@ export const RoomSettingsPane = ({collapsed, roomSettings, updateRoomSettings}) 
             <div>
                 <input
                     type={"checkbox"}
-                    defaultChecked={roomSettings.insultMode}
+                    defaultChecked={room.insultMode}
                     onChange={handleInsultModeChange}
                 />
                 Insult

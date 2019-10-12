@@ -29,10 +29,8 @@ const subscribeRoomEvents = ({isLeader, actions}) => {
 };
 
 const RoomPage = ({match, room, roomActions, gameActions}) => {
-    const {roomState} = room;
     const [collapsed, setCollapsed] = useState(false);
-
-    const isLeader = room && isRoomLeader(roomState);
+    const isLeader = isRoomLeader(room);
 
     useEffect(() => subscribeRoomEvents({isLeader, actions: {...gameActions}}));
 
@@ -44,13 +42,13 @@ const RoomPage = ({match, room, roomActions, gameActions}) => {
     const roomHeaderActions = {
         editClick: () => roomActions.setName(),
         leaveRoomClick: () => roomActions.leave(room),
-        settingsClick: () => setCollapsed(),
-        startGameClick: () => gameActions.start(roomState.gameMode, {room: roomState}),
+        settingsClick: () => setCollapsed(!collapsed),
+        startGameClick: () => gameActions.start(room.gameMode, {room}),
     };
 
     const LeaderSettingsPane = (
         <RoomSettingsPane
-            roomSettings={roomState}
+            room={room}
             collapsed={collapsed}
             updateRoomSettings={roomActions.update}
         />
@@ -58,13 +56,13 @@ const RoomPage = ({match, room, roomActions, gameActions}) => {
 
     return (
         <>
-            <RoomHeader {...roomHeaderActions} roomSettings={roomState}/>;
+            <RoomHeader {...roomHeaderActions} room={room}/>
 
-            {isLeader && <LeaderSettingsPane/>}
+            {isLeader && LeaderSettingsPane}
 
             <BreakOnMobile reverse={true}>
-                <ChatWindow players={roomState.players} messages={roomState.messages}/>
-                <UserListing isLeader={isLeader} room={room} players={roomState.players}/>
+                <ChatWindow players={room.players} messages={room.messages}/>
+                <UserListing room={room} players={room.players}/>
             </BreakOnMobile>
             <RoomInvitationLink/>
         </>

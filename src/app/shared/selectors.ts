@@ -34,7 +34,7 @@ export const isGameLeader = (game) => {
     return isLeader;
 };
 
-export const getCurrentPlayer = (game) => {
+export const getCurrentPlayer: any = (game) => {
     let user = false;
     for (const playerId in game.players) {
         if (!game.players.hasOwnProperty(playerId)) {

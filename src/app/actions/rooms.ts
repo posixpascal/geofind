@@ -7,12 +7,14 @@ import {LOBBY_JOIN, LOBBY_LEAVE, LOBBY_UPDATE} from "./types";
 // tslint:disable-next-line:no-submodule-imports
 import {MatchMakeError} from "colyseus.js/lib/Client";
 
-export const create = () => async (dispatch) => {
-    const room = await client.create("lobby");
-    dispatch({type: LOBBY_JOIN, payload: room});
-    subscribe(dispatch);
-    sharedHistory.push("/lobby/" + room.id);
-};
+export const create = () => {
+    return async (dispatch) => {
+        const room = await client.create("lobby");
+        dispatch({type: LOBBY_JOIN, payload: room});
+        subscribe(dispatch);
+        sharedHistory.push("/lobby/" + room.id);
+    };
+}
 
 export const setName = () => {
     const newName = prompt(strings.enterNewLobbyName);

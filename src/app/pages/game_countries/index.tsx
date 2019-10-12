@@ -11,10 +11,10 @@ import {getCurrentPlayer} from "../../shared/selectors";
 import {helloDarknessSound, mapPinSound, playSoundIfPossible} from "../../sounds";
 
 // user reconnect logic. if user still has no game after 3s we rejoin the game.
-export const subscribeConnectionEvents = ({game, match, joinGame, mode = "game_countries"}) => {
+export const subscribeConnectionEvents = ({game, match, join, mode = "game_countries"}) => {
     const timer = setTimeout(() => {
         if (!game.players) {
-            joinGame({id: match.params.id, mode});
+            join({id: match.params.id, mode});
         }
     }, 3000);
     return () => {
@@ -68,7 +68,7 @@ export const subscribeInsultEvents = ({googleMap}) => {
 };
 
 const CAMERA_POSITION = {lat: 32.5389916, lng: 28.7972057};
-const CountriesGamePage = ({game, joinGame, match}) => {
+const CountriesGamePage = ({game, join, match}) => {
     const [lastMarkerPosition, setLastMarkerPosition] = useState(CAMERA_POSITION);
     const [center, setCenter] = useState(lastMarkerPosition);
 
@@ -76,7 +76,7 @@ const CountriesGamePage = ({game, joinGame, match}) => {
 
     useEffect(() => subscribeGameStateEvents({game}));
     useEffect(() => subscribeInsultEvents({googleMap}));
-    useEffect(() => subscribeConnectionEvents({game, match, joinGame}), [game.players]);
+    useEffect(() => subscribeConnectionEvents({game, match, join}), [game.players]);
 
     if (!game.players) {
         return <RoomJoinLoader/>;
@@ -103,6 +103,7 @@ const CountriesGamePage = ({game, joinGame, match}) => {
                 mapClicked={markerMoved}
                 showAllMarker={game.roundEnd}
                 player={player}
+                color={player.color}
                 game={game}
                 lastMarkerPosition={lastMarkerPosition}
             />

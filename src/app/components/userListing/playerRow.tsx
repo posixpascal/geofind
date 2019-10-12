@@ -67,8 +67,8 @@ export const PlayerRow = ({player, onColorChange, room}) => {
             </HorizontalAlignment>
             <HorizontalAlignment>
                 {isCurrentPlayer && <MuteButton muted={muted} toggleMute={toggleMute}/>}
-                {isCurrentPlayer && GetReadyButton}
-                {!isCurrentPlayer && PlayerStatusButton}
+                {isCurrentPlayer && <GetReadyButton player={player} />}
+                {!isCurrentPlayer && <PlayerStatusButton player={player} room={room} />}
             </HorizontalAlignment>
         </UserListingRow>
     );

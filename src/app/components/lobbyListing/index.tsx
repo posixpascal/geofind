@@ -8,7 +8,7 @@ import EmptyState from "../emptyState";
 import {Badge} from "../uiWidgets/Badge";
 import {JoinLobbyButton, LobbyIcon, LobbyName, LobbyRow} from "./widgets";
 
-const LobbyListing = ({rooms, joinRoom, createRoom}) => {
+const LobbyListing = ({rooms, join, create}) => {
     const RoomNameWithIcon = ({room}) => {
         const lobbyIcon = room.password ? <Key/> : <Globe/>;
         return (
@@ -29,9 +29,7 @@ const LobbyListing = ({rooms, joinRoom, createRoom}) => {
     };
 
     const RoomList = rooms.map((room) => {
-        const handleLobbyJoin = () => {
-            joinRoom(room);
-        };
+        const handleLobbyJoin = () => join(room);
 
         return (
             <LobbyRow key={room.roomId}>
@@ -48,7 +46,7 @@ const LobbyListing = ({rooms, joinRoom, createRoom}) => {
                 description={strings.noLobbiesDescription}
                 ctaText={strings.createLobby}
                 ctaLink={""}
-                action={createRoom}
+                action={create}
             />
         );
     };
