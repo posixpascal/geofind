@@ -66,7 +66,7 @@ export const OverlayContent = styled.div`
 
 const REFRESH_RATE = 1000;
 
-const HomePage = ({leaveRoom, leaveGame, createRoom}) => {
+export const HomePage = ({leaveRoom, leaveGame, createRoom}) => {
     const [rooms, setRooms] = useState([]);
 
     useEffect(() => {

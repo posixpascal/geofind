@@ -91,6 +91,7 @@ module.exports = {
 
     "collectCoverage": true,
     "coverageReporters": ["lcov"],
+    "setupFilesAfterEnv": ['./src/setupTests.js'],
 
     // A map from regular expressions to module names that allow to stub out resources with a single module
     // moduleNameMapper: {},
@@ -187,6 +188,8 @@ module.exports = {
     // transformIgnorePatterns: [
     //   "/node_modules/"
     // ],
+    "moduleNameMapper": { "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/src/assetsTransformer.js", "\\.(css|less)$": "<rootDir>/src/assetsTransformer.js" },
+
 
     // An array of regexp pattern strings that are matched against all modules before the module loader will automatically return a mock for them
     // unmockedModulePathPatterns: undefined,

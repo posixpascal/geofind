@@ -26,7 +26,7 @@ const RelativeBox = styled.div`
   position: relative;
 `;
 
-const Application = () => {
+export const Application = () => {
     return (
         <Provider store={store}>
             <ConnectedRouter history={sharedHistory}>

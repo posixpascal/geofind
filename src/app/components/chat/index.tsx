@@ -23,7 +23,7 @@ const randomInsecurityInsult = () => {
 };
 
 export default ({inGame = false, players = {}, messages = []}) => {
-    const chatInput = useRef();
+    const chatInput : any = useRef();
 
     if (messages === null) {
         return <span>Loading...</span>;
@@ -36,7 +36,7 @@ export default ({inGame = false, players = {}, messages = []}) => {
     };
 
     const sendMessage = () => {
-        if (!chatInput.current.value) {
+        if (!chatInput.current || !chatInput.current.value) {
             return;
         }
         // filter value

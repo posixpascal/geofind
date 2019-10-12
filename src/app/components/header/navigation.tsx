@@ -5,7 +5,7 @@ import {changeName} from "../userListing";
 import {CurrentUser, Divider, Navigation, NavItem} from "./widgets";
 
 export const HeaderNavigation = ({user}) => {
-    const UserNavItem = (
+    const UserNavItem = () => (
         <>
             <Divider/>
             <li><CurrentUser>

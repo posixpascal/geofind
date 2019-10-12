@@ -10,20 +10,24 @@ import {BrandTitle, HeaderContainer, Image} from "./widgets";
 import LOGO_SVG from "../../../assets/logo.svg";
 
 const Header = ({user, game}) => {
-    const BrandName = (
-        <>
-            <Image src={LOGO_SVG}/>;
-            {strings.gameName}
-        </>
-    );
+    const BrandName = () => {
+        if (game && game.isSuddenDeath) {
+            return <span>{strings.suddenDeath}</span>;
+        }
 
-    const brandTitle = (game && game.isSuddenDeath ? strings.suddenDeath : <BrandName/>);
+        return (
+            <span>
+                <Image src={LOGO_SVG}/>
+                {strings.gameName}
+            </span>
+        );
+    };
 
     return (
         <HeaderContainer>
             <BrandTitle>
                 <NavLink to={"/"}>
-                    {brandTitle}
+                    <BrandName />
                 </NavLink>
             </BrandTitle>
             <HeaderNavigation user={user}/>

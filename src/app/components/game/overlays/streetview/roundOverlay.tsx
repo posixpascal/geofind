@@ -1,4 +1,4 @@
-import moment = require("moment");
+import moment from "moment";
 import React from "react";
 import {strings} from "../../../../i18n";
 
