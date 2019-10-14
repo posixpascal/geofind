@@ -1,19 +1,35 @@
-# geofind.io 
-[![Maintainability](https://api.codeclimate.com/v1/badges/e60d54a85ff19175c74a/maintainability)](https://codeclimate.com/github/posixpascal/geofind_frontend/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/e60d54a85ff19175c74a/test_coverage)](https://codeclimate.com/github/posixpascal/geofind_frontend/test_coverage)
-[![Build Status](https://travis-ci.org/posixpascal/geofind_frontend.svg?branch=master)](https://travis-ci.org/posixpascal/geofind_frontend)
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0
+# 🌍 🔍 geofind.io 
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/c81ea928b2b76d4efae5/maintainability)](https://codeclimate.com/github/posixpascal/geofind/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/c81ea928b2b76d4efae5/test_coverage)](https://codeclimate.com/github/posixpascal/geofind/test_coverage)
+[![Build Status](https://travis-ci.org/posixpascal/geofind.svg?branch=master)](https://travis-ci.org/posixpascal/geofind)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![David](https://david-dm.org/posixpascal/geofind.svg)](https://img.shields.io/david/posixpascal/geofind)
+[![Uptime](https://img.shields.io/uptimerobot/ratio/m783620652-575ef546c2e2407fd4bca7d7)](https://status.geofind.io)
+[![Status](https://img.shields.io/uptimerobot/status/m783620652-575ef546c2e2407fd4bca7d7)](https://status.geofind.io)
+
+<p align="center">
+  <img width="150" src="https://github.com/posixpascal/geofind/raw/master/packages/web/public/apple-touch-icon.png">
+</p>
 
 [**geofind**](https://geofind.io) is an online realtime multiplayer geographical guessing game 
 written exclusively in TypeScript.
 
+## 🌈 Screenshots
+
+Lobby
+<p align="center">
+  <img width="500" src="https://github.com/posixpascal/geofind/raw/master/screenshots/lobby.png">
+</p>
+
+Gameplay
+<p align="center">
+  <img width="500" src="https://github.com/posixpascal/geofind/raw/master/screenshots/gameplay.png">
+</p>
+
 ## 🚀 Up and running
 
-To install geofind on your local machine, follow the instructions listed below. Note that 
-you'll also need the [GameServer](https://github.com/posixpascal/geofind_gameserver) to run geofind locally exclusive.
-
-You don't need the GameServer if you only plan to make frontend changes because
-the default configuration of the frontend connects to our live environment.
+To install geofind on your local machine, follow the instructions listed below. 
 
 ### 🐳 Docker
 
@@ -69,9 +85,9 @@ To run the project in development:
 ## Architecture
 This project is a monorepo (with the help of Yarn workspaces). It contains the following packages:
 
-web - The frontend application using Create React App.
-server - The authoritarive server running on NodeJS, Express and Colyseus.
-sharred - A collection of constants and methods shared amongst web and server.
+`web` - The frontend application using Create React App.
+`server` - The authoritarive server running on NodeJS, Express and Colyseus.
+`shared` - A collection of constants and methods shared amongst web and server.
 
 ## Contribution
 
@@ -90,4 +106,4 @@ Our internal roadmap is still subject to change but this is our current draft:
 This project is licensed under GNU GPLv3. View [LICENSE](https://github.com/posixpascal/geofind_frontend/blob/master/LICENSE) for more information.
 
 ## Copyright
-geofind.io is copyright 2019 by Pascal Raszyk 
+`geofind.io` is Copyright © 2019 by Pascal Raszyk 
