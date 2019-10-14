@@ -1,0 +1,9 @@
+version: "3.7"
+
+services:
+  geofind:
+    image: posixpascal/geofind
+    container_name: geofind
+    restart: always
+    ports:
+      - 3001:3001
