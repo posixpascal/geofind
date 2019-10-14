@@ -1,4 +1,6 @@
-# 🌍 🔍 geofind.io 
+<p align="center">
+  <img width="150" src="https://github.com/posixpascal/geofind/raw/master/packages/web/public/apple-touch-icon.png">
+</p>
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/c81ea928b2b76d4efae5/maintainability)](https://codeclimate.com/github/posixpascal/geofind/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/c81ea928b2b76d4efae5/test_coverage)](https://codeclimate.com/github/posixpascal/geofind/test_coverage)
@@ -8,12 +10,10 @@
 [![Uptime](https://img.shields.io/uptimerobot/ratio/m783620652-575ef546c2e2407fd4bca7d7)](https://status.geofind.io)
 [![Status](https://img.shields.io/uptimerobot/status/m783620652-575ef546c2e2407fd4bca7d7)](https://status.geofind.io)
 
-<p align="center">
-  <img width="150" src="https://github.com/posixpascal/geofind/raw/master/packages/web/public/apple-touch-icon.png">
-</p>
+# 🌍 🔍 geofind.io 
 
 <p align="center">
-[**geofind**](https://geofind.io) is an online realtime multiplayer geographical guessing game 
+<strong>geofind.io</strong> is an online realtime multiplayer geographical guessing game 
 written exclusively in TypeScript featuring different game modes (streetview and more coming soon), slurs and insults for "weak" players, educational benefits,
 sounds, custom pins, custom maps, sudden death and other interesting ideas to make the game more fun to play. 
 </p>
