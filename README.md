@@ -12,19 +12,22 @@
   <img width="150" src="https://github.com/posixpascal/geofind/raw/master/packages/web/public/apple-touch-icon.png">
 </p>
 
+<p align="center">
 [**geofind**](https://geofind.io) is an online realtime multiplayer geographical guessing game 
-written exclusively in TypeScript.
+written exclusively in TypeScript featuring different game modes (streetview and more coming soon), slurs and insults for "weak" players, educational benefits,
+sounds, custom pins, custom maps, sudden death and other interesting ideas to make the game more fun to play. 
+</p>
 
 ## 🌈 Screenshots
 
 Lobby
 <p align="center">
-  <img width="500" src="https://github.com/posixpascal/geofind/raw/master/screenshots/lobby.png">
+  <img src="https://github.com/posixpascal/geofind/raw/master/screenshots/lobby.png">
 </p>
 
 Gameplay
 <p align="center">
-  <img width="500" src="https://github.com/posixpascal/geofind/raw/master/screenshots/gameplay.png">
+  <img src="https://github.com/posixpascal/geofind/raw/master/screenshots/gameplay.png">
 </p>
 
 ## 🚀 Up and running
