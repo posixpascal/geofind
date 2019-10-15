@@ -11,7 +11,7 @@ import styled from "styled-components";
 import {Footer} from "./components/footer";
 import Header from "./components/header";
 import {sharedHistory} from "./helper/sharedHistory";
-import {authenticateUser, prefetchRooms} from "./helper/webSockets";
+import {authenticateUser} from "./helper/webSockets";
 import CountriesGamePage from "./pages/game_countries";
 import StreetViewGamePage from "./pages/game_streetview";
 import HomePage, {Overlay, OverlayContent} from "./pages/home";
