@@ -79,7 +79,8 @@ const CountriesGamePage = ({game, join, match}) => {
     useEffect(() => subscribeConnectionEvents({game, match, join}), [
         game.players,
         join,
-        match
+        match,
+        game
     ]);
 
     if (!game.players) {
