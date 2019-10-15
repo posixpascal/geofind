@@ -18,7 +18,7 @@ export const RoundEndOverlay = ({game}) => {
         );
     };
 
-    const LoserText = ({game}) => {
+    const LoserText = () => {
         return (
             <div>
                 Darn it. No one found it.
@@ -36,7 +36,7 @@ export const RoundEndOverlay = ({game}) => {
                 {strings.roundEnd}
             </p>
             {game.roundWinner && <WinnerText/>}
-            {!game.roundWinner && <LoserText game={game}/>}
+            {!game.roundWinner && <LoserText/>}
         </div>
     );
 };

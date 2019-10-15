@@ -11,18 +11,18 @@ export interface IMessage {
  *
  */
 export class Handler {
-    public room: Room & { handlers: any };
 
-    constructor(room: any) {
-        this.room = room;
-    }
-
-    static handleMessage(room: Room & { handlers: any }, client: Client, message: IMessage) {
+    public static handleMessage(room: Room & { handlers: any }, client: Client, message: IMessage) {
         if (registeredCommands[message.type]) {
             registeredCommands[message.type].bind({room})(client, message.payload);
             return true;
         }
         return false;
+    }
+    public room: Room & { handlers: any };
+
+    constructor(room: any) {
+        this.room = room;
     }
 }
 
@@ -42,5 +42,5 @@ export class Handler {
 export const handle = (message: string) => {
     return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
         registeredCommands[message] = descriptor.value;
-    }
+    };
 };

@@ -8,7 +8,7 @@
     "url": "https://github.com/posixpascal/geofind_server"
   },
   "author": "Pascal Raszyk",
-  "license": "GNU-GPLv3",
+  "license": "GPL-3.0",
   "scripts": {
     "start": "npm run serve",
     "build": "npm run build-ts",
@@ -19,14 +19,15 @@
     "watch-test": "npm run test -- --watchAll",
     "build-ts": "./node_modules/.bin/tsc",
     "watch-ts": "./node_modules/.bin/tsc -w",
-    "lint": "",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect build/server.js",
     "watch-debug": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run serve-debug\""
   },
-
   "dependencies": {
     "@colyseus/monitor": "^0.11.0",
+    "@colyseus/schema": "^0.4.61",
     "@colyseus/social": "^0.11.6",
     "@google/maps": "^1.0.1",
     "async": "^3.0.1",

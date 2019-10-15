@@ -1,25 +1,25 @@
-import { Schema, MapSchema, type } from "@colyseus/schema";
+import { MapSchema, Schema, type } from "@colyseus/schema";
 import {Player} from "./Player";
 
 export const ChatMessageTypes = {
     USER_MESSAGE: 1,
     STATUS_MESSAGE: 2,
-    SYSTEM_MESSAGE: 3
+    SYSTEM_MESSAGE: 3,
 };
 
 export class ChatMessage extends Schema {
     @type("string")
-    id: string;
+    public id: string;
 
     @type("string")
-    message: string;
+    public message: string;
 
     @type("number")
-    createdAt: number;
+    public createdAt: number;
 
     @type(Player)
-    player: Player;
+    public player: Player;
 
     @type("number")
-    type: number;
+    public type: number;
 }

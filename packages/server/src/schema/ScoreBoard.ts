@@ -1,11 +1,11 @@
-import {Schema, ArraySchema, MapSchema, type} from "@colyseus/schema";
-import {Player} from "./Player";
+import {ArraySchema, MapSchema, Schema, type} from "@colyseus/schema";
 import {ChatMessage} from "./ChatMessage";
+import {Player} from "./Player";
 
 export class ScoreBoard extends Schema {
     @type(Player)
-    player: Player;
+    public player: Player;
 
     @type("number")
-    score: number
+    public score: number;
 }

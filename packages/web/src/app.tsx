@@ -40,7 +40,11 @@ export const Application = () => {
                         <RelativeBox>
 
                             <Overlay/>
-                            <img alt={"map of the World used as background"} style={{width: "100%", objectFit: "cover"}} src={require("./assets/background.png")}/>
+                            <img
+                                alt={"map of the World used as background"}
+                                style={{width: "100%", objectFit: "cover"}}
+                                src={require("./assets/background.png")}
+                            />
                             <OverlayContent>
                                 <Route path="/" exact={true} component={HomePage}/>
                                 <Route path="/lobby/:id" component={RoomPage}/>

@@ -4,6 +4,7 @@
   "private": true,
   "main": "build/index.js",
   "typings": "build/index.d.ts",
+  "license": "GPL-3.0",
   "dependencies": {
     "react": "^16.10.2"
   },

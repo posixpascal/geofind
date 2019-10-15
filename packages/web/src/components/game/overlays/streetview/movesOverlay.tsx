@@ -3,7 +3,7 @@ import {PushPin} from "../../../../helper/svgs";
 import {Overlay} from "../widgets";
 
 export const StreetViewMovesOverlay = ({game}) => {
-    const availablePins = ["pin_1", "pin_2", "pin_3", "pin_4", "pin_5"];
+    const availablePins = ["pin1", "pin2", "pin3", "pin4", "pin5"];
 
     const overlayStyle = {
         bottom: "20px",

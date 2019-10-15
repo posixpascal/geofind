@@ -1,3 +1,4 @@
-export const googleMapsClient = require('@google/maps').createClient({
-    key: process.env.GOOGLE_MAPS_API_KEY
+import * as gmaps from "@google/maps";
+export const googleMapsClient = gmaps.createClient({
+    key: process.env.GOOGLE_MAPS_API_KEY,
 });

@@ -3,10 +3,10 @@ import { Logger, LoggerOptions, transports } from "winston";
 const options: LoggerOptions = {
     transports: [
         new transports.Console({
-            level: process.env.NODE_ENV === "production" ? "error" : "debug"
+            level: process.env.NODE_ENV === "production" ? "error" : "debug",
         }),
-        new transports.File({ filename: `log/${process.env.NODE_ENV || "development"}.log`, level: "debug" })
-    ]
+        new transports.File({ filename: `log/${process.env.NODE_ENV || "development"}.log`, level: "debug" }),
+    ],
 };
 
 const logger = new Logger(options);

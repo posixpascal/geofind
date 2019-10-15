@@ -1,0 +1,9 @@
+{
+  "extends": ["tslint:latest"],
+  "rules": {
+    // override tslint-react rules here
+    "no-submodule-imports": false,
+    "object-literal-sort-keys": false,
+    "no-bitwise": false
+  }
+}

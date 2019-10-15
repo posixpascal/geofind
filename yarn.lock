@@ -831,7 +831,7 @@
   dependencies:
     express "^4.16.3"
 
-"@colyseus/schema@^0.4.0":
+"@colyseus/schema@^0.4.0", "@colyseus/schema@^0.4.61":
   version "0.4.61"
   resolved "https://registry.yarnpkg.com/@colyseus/schema/-/schema-0.4.61.tgz#d858a754fe9df8991e805ef60058a4d9aaa412eb"
 

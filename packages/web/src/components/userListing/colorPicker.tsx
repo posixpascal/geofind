@@ -4,14 +4,14 @@ import {client} from "../../helper/webSockets";
 
 export const UserColorPicker = ({player, onColorChange, toggleColorPicker}) => {
     const hideColorPicker = () => toggleColorPicker(false);
-    const popover : any = {
+    const popover: any = {
         left: "-8px",
         position: "absolute",
         top: "25px",
         zIndex: "2",
     };
 
-    const cover : any = {
+    const cover: any = {
         bottom: "0px",
         left: "0px",
         position: "fixed",

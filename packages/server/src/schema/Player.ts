@@ -1,7 +1,9 @@
-import { Schema, MapSchema, type } from "@colyseus/schema";
-import {hooks, User} from "@colyseus/social";
+import { Schema, type } from "@colyseus/schema";
+import {hooks} from "@colyseus/social";
+import {Chance} from "chance";
 import md5 from "md5";
-const chance = require("chance").Chance();
+
+const chance = Chance();
 
 hooks.beforeAuthenticate((provider, $setOnInsert, $set) => {
     // assign default metadata upon registration
@@ -15,26 +17,26 @@ hooks.beforeAuthenticate((provider, $setOnInsert, $set) => {
         gamesPlayed: 0,
         level: 1,
         correctGuesses: 0,
-        wrongGuesses: 0
+        wrongGuesses: 0,
     };
 });
 
 export class Player extends Schema {
     @type("string")
-    id: string;
+    public id: string;
 
     @type("string")
-    player_id: string;
+    public playerId: string;
 
     @type("string")
-    displayName : string;
+    public displayName: string;
 
     @type("string")
-    avatarUrl : string;
+    public avatarUrl: string;
 
     @type("string")
-    color:string;
+    public color: string;
 
     @type("boolean")
-    isReady:boolean;
+    public isReady: boolean;
 }

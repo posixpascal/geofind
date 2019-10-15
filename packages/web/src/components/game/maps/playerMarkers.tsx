@@ -23,7 +23,7 @@ export const PlayerMarkers = ({game}) => {
 };
 
 export const StreetViewPlayerMarkers = ({game}) => {
-    const availablePins = ["pin_1", "pin_2", "pin_3", "pin_4", "pin_5"];
+    const availablePins = ["pin1", "pin2", "pin3", "pin4", "pin5"];
     const playerMarkers = Object.keys(game.votes).map((playerID) => {
         const vote = game.votes[playerID];
         const player = game.players[playerID];

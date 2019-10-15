@@ -1,38 +1,44 @@
-import {Delayed, Room} from "colyseus";
-import {StreetviewGame, StreetviewGameVote, Country} from "../schema/StreetviewGame";
-import {googleMapsClient} from "../util/googlemaps";
 import {User, verifyToken} from "@colyseus/social";
-import { Player} from "../schema/Player";
-import {ScoreBoard} from "../schema/ScoreBoard";
+import {Delayed, Room} from "colyseus";
 import {STREET_VIEW_COUNTRIES} from "../config/streetViewCountries";
+import {Country} from "../schema/Country";
+import {Player} from "../schema/Player";
+import {ScoreBoard} from "../schema/ScoreBoard";
+import {StreetviewGame} from "../schema/StreetviewGame";
+import {StreetviewGameVote} from "../schema/StreetviewGameVote";
+import {googleMapsClient} from "../util/googlemaps";
 
 export class StreetviewGameRoom extends Room {
     public roundTimer: Delayed;
     public roundCountUp: Delayed;
 
-    onMessage(client: any, data): void {
+    public lobbyOptions: any = {};
+
+    public playedCountries = [];
+
+    public onMessage(client: any, data): void {
         switch (data.type) {
             case "game:vote":
-                let vote = new StreetviewGameVote();
-                let nextPin = "pin_1";
+                const vote = new StreetviewGameVote();
+                let nextPin = "pin1";
 
                 if (this.state.votes[client.sessionId]) {
                     // max pins reached
-                    if (this.state.votes[client.sessionId].pin_5) {
+                    if (this.state.votes[client.sessionId].pin5) {
                         this.checkVotes();
                         return;
                     }
-                    if (this.state.votes[client.sessionId].pin_4) {
-                        nextPin = "pin_5";
+                    if (this.state.votes[client.sessionId].pin4) {
+                        nextPin = "pin5";
                     }
-                    if (this.state.votes[client.sessionId].pin_3) {
-                        nextPin = "pin_4";
+                    if (this.state.votes[client.sessionId].pin3) {
+                        nextPin = "pin4";
                     }
-                    if (this.state.votes[client.sessionId].pin_2) {
-                        nextPin = "pin_3";
+                    if (this.state.votes[client.sessionId].pin2) {
+                        nextPin = "pin3";
                     }
-                    if (this.state.votes[client.sessionId].pin_1) {
-                        nextPin = "pin_2";
+                    if (this.state.votes[client.sessionId].pin1) {
+                        nextPin = "pin2";
                     }
                 }
 
@@ -45,14 +51,13 @@ export class StreetviewGameRoom extends Room {
                 googleMapsClient.reverseGeocode({latlng: data.payload, result_type: "country"}, (err, res) => {
                     if (err) {
                         // TODO: tell user about the error
-                        console.error(err);
                         // store vote without resolved countryCode
                         vote.hasVoted = true;
                         vote.hasWon = false;
                         vote[nextPin] = country;
                         vote.distanceInKm = this.distanceInKm({
                             lat: this.state.country.lat,
-                            lng: this.state.country.lng
+                            lng: this.state.country.lng,
                         }, data.payload);
                         this.state.votes[client.sessionId] = vote;
                         this.checkVotes();
@@ -68,14 +73,13 @@ export class StreetviewGameRoom extends Room {
                         country.countryNameEn = res.json.results[0].formatted_address;
                     }
 
-
                     vote.hasVoted = true;
-                    vote.hasWon = this.state.country.countryCode && this.state.country.countryCode === country.countryCode;
+                    vote.hasWon = this.state.country.countryCode === country.countryCode;
 
                     if (!vote.hasWon) {
                         vote.distanceInKm = this.distanceInKm({
                             lat: this.state.country.lat,
-                            lng: this.state.country.lng
+                            lng: this.state.country.lng,
                         }, data.payload);
                     }
 
@@ -85,21 +89,21 @@ export class StreetviewGameRoom extends Room {
                     this.checkVotes();
                 });
 
-
                 break;
         }
     }
 
     // checks if all votes were made and or someone found the answer
-    async checkVotes() {
-        console.log("checkvotes");
+    public async checkVotes() {
         // check for instant win
-        for (let playerID in this.state.votes) {
+        for (const playerID in this.state.votes) {
+            if (!this.state.votes.hasOwnProperty(playerID)) {
+                continue;
+            }
             const voteSet = this.state.votes[playerID];
 
             if (voteSet.hasWon) {
                 this.state.roundWinner = playerID;
-                console.log(this.state.roundWinner);
                 this.roundEnd();
                 return;
             }
@@ -107,20 +111,22 @@ export class StreetviewGameRoom extends Room {
 
         let allVotesPlaced = true;
 
-        for (let playerID in this.state.votes) {
+        for (const playerID in this.state.votes) {
+            if (!this.state.votes.hasOwnProperty(playerID)) {
+                continue;
+            }
             const voteSet = this.state.votes[playerID];
-            if (!voteSet || !voteSet.pin_5 || !voteSet.pin_5.lat || !voteSet.pin_5.lng) {
+            if (!voteSet || !voteSet.pin5 || !voteSet.pin5.lat || !voteSet.pin5.lng) {
                 allVotesPlaced = false;
             }
         }
-        console.log("all votes placed: ", allVotesPlaced);
         if (allVotesPlaced) {
             this.state.roundWinner = "";
             this.roundEnd();
         }
     }
 
-    async onAuth(client, options) {
+    public async onAuth(client, options) {
         const token = verifyToken(options.token);
         try {
             const user = await User.findById(token._id);
@@ -133,19 +139,20 @@ export class StreetviewGameRoom extends Room {
         return new Player();
     }
 
-    public lobbyOptions: any = {};
-
     public onCreate(options: any) {
         this.lobbyOptions = options.room;
         this.setState(new StreetviewGame());
     }
 
     // populate game state
-    startGame() {
+    public startGame() {
         this.state.gameStart = true;
 
         // reset votes
-        for (let playerID in this.state.votes) {
+        for (const playerID in this.state.votes) {
+            if (!this.state.votes.hasOwnProperty(playerID)) {
+                continue;
+            }
             delete this.state.votes[playerID];
         }
 
@@ -156,7 +163,6 @@ export class StreetviewGameRoom extends Room {
         this.state.maxRounds = this.lobbyOptions.maxRounds || 50;
         this.state.victoryScore = this.lobbyOptions.victoryScore || 10;
 
-
         // TODO: implement player waiting
         this.state.isWaitingForPlayers = false;
 
@@ -165,10 +171,13 @@ export class StreetviewGameRoom extends Room {
         }, 2000);
     }
 
-    roundStart() {
+    public roundStart() {
         this.state.country = this.getRandomCountry();
         // reset votes
-        for (let playerID in this.state.votes) {
+        for (const playerID in this.state.votes) {
+            if (!this.state.votes.hasOwnProperty(playerID)) {
+                continue;
+            }
             delete this.state.votes[playerID];
         }
 
@@ -187,7 +196,10 @@ export class StreetviewGameRoom extends Room {
         let isDrawn = false;
         let highestScoreUsers = [];
         let currentHighScore = "";
-        for (let playerID in this.state.scoreBoard) {
+        for (const playerID in this.state.scoreBoard) {
+            if (!this.state.scoreBoard.hasOwnProperty(playerID)) {
+                continue;
+            }
             const scoreBoard = this.state.scoreBoard[playerID];
             if (scoreBoard.score === currentHighScore) {
                 isDrawn = true;
@@ -209,13 +221,15 @@ export class StreetviewGameRoom extends Room {
     }
 
     // duplicate code from countries game
-    roundEnd() {
-        console.log("round end");
+    public roundEnd() {
         this.state.roundStart = false;
         this.state.roundEnd = true;
 
         let onlyDirectVotesWin = false;
-        for (let playerID in this.state.votes) {
+        for (const playerID in this.state.votes) {
+            if (!this.state.votes.hasOwnProperty(playerID)) {
+                continue;
+            }
             if (this.state.votes[playerID].hasWon) {
                 onlyDirectVotesWin = true;
                 this.state.scoreBoard[playerID].score += 1;
@@ -223,7 +237,10 @@ export class StreetviewGameRoom extends Room {
         }
 
         // check scores
-        for (let playerID in this.state.scoreBoard) {
+        for (const playerID in this.state.scoreBoard) {
+            if (!this.state.scoreBoard.hasOwnProperty(playerID)) {
+                continue;
+            }
             const scoreBoard = this.state.scoreBoard[playerID];
             if (scoreBoard.score >= this.state.victoryScore) {
                 this.state.gameWinner = playerID;
@@ -240,7 +257,10 @@ export class StreetviewGameRoom extends Room {
             let winner = "";
             let maxScore = 0;
             let isDraw = false;
-            for (let playerID in this.state.scoreBoard) {
+            for (const playerID in this.state.scoreBoard) {
+                if (!this.state.scoreBoard.hasOwnProperty(playerID)) {
+                    continue;
+                }
                 const scoreBoard = this.state.scoreBoard[playerID];
                 if (scoreBoard.score === maxScore) {
                     isDraw = true;
@@ -265,15 +285,13 @@ export class StreetviewGameRoom extends Room {
         }, 7000);
     }
 
-    endGame() {
+    public endGame() {
         this.state.isSuddenDeath = false;
         this.state.gameOver = true;
         this.broadcast({type: "game:over", payload: {...this.state}});
     }
 
-    public playedCountries = [];
-
-    getRandomCountry() {
+    public getRandomCountry() {
         let countryData: any = false;
         while (!countryData || this.playedCountries.indexOf(countryData.country_code) > -1) {
             countryData = STREET_VIEW_COUNTRIES[Math.floor(Math.random() * STREET_VIEW_COUNTRIES.length)];
@@ -287,7 +305,7 @@ export class StreetviewGameRoom extends Room {
         return country;
     }
 
-    onJoin(client) {
+    public onJoin(client) {
         if (!this.state.gameStart) {
             this.startGame();
         }
@@ -299,7 +317,7 @@ export class StreetviewGameRoom extends Room {
         this.state.players[client.sessionId] = new Player();
         this.state.players[client.sessionId].id = client.auth._id.toString();
         this.state.players[client.sessionId].displayName = client.auth.displayName;
-        this.state.players[client.sessionId].color = client.auth.metadata.pin_color;
+        this.state.players[client.sessionId].color = client.auth.metadata.pincolor;
         this.state.players[client.sessionId].avatarUrl = client.auth.avatarUrl;
 
         this.state.scoreBoard[client.sessionId] = new ScoreBoard();
@@ -307,26 +325,26 @@ export class StreetviewGameRoom extends Room {
         this.state.scoreBoard[client.sessionId].score = 0;
     }
 
-    distanceInKm(point1, point2) {
+    public distanceInKm(point1, point2) {
         return this.calcDistance(point1.lat, point2.lat, point1.lng, point2.lng);
     }
 
-    calcDistance(lat1, lat2, lng1, lng2) {
-        var R = 6371; // km
-        var dLat = this.toRad(lat2 - lat1);
-        var dLon = this.toRad(lng2 - lng1);
+    public calcDistance(lat1, lat2, lng1, lng2) {
+        const R = 6371; // km
+        const dLat = this.toRad(lat2 - lat1);
+        const dLon = this.toRad(lng2 - lng1);
         lat1 = this.toRad(lat1);
         lat2 = this.toRad(lat2);
 
-        var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
             Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = R * c;
+        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        const d = R * c;
         return d;
     }
 
     // Converts numeric degrees to radians
-    toRad(Value) {
+    public toRad(Value) {
         return Value * Math.PI / 180;
     }
 }

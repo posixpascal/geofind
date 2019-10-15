@@ -1,8 +1,8 @@
-import {handle, Handler} from "./index";
 import {Client} from "colyseus";
 import {ChatMessage, ChatMessageTypes} from "../schema/ChatMessage";
-import {uniqueID} from "../util/uniqueID";
 import {Player} from "../schema/Player";
+import {uniqueID} from "../util/uniqueID";
+import {handle, Handler} from "./index";
 
 /**
  * A handler for chat messages
@@ -14,7 +14,7 @@ export class ChatHandler extends Handler {
      * @param message
      */
     @handle("chat:message:new")
-    public newChatMessage(client : Client, message : any){
+    public newChatMessage(client: Client, message: any) {
         this.room.handlers.chat.addMessage(client, {
             type: ChatMessageTypes.USER_MESSAGE,
             createdAt: +new Date(),
@@ -22,8 +22,8 @@ export class ChatHandler extends Handler {
             player: {
                 id: client.sessionId,
                 color: client.auth.metadata.pin_color,
-                displayName: client.auth.displayName
-            }
+                displayName: client.auth.displayName,
+            },
         });
     }
 
@@ -32,7 +32,7 @@ export class ChatHandler extends Handler {
      * @param client
      * @param message
      */
-    public addMessage(client: Client, message : any) {
+    public addMessage(client: Client, message: any) {
         const chatMessage = new ChatMessage();
         chatMessage.id = uniqueID("chat_message_");
         chatMessage.message = message.message;

@@ -1,13 +1,14 @@
-import {handle, Handler} from "./index";
 import {Client} from "colyseus";
-import {Country, CountryGameVote} from "../schema/CountriesGame";
+import {Country} from "../schema/Country";
+import {CountryGameVote} from "../schema/CountryGameVote";
 import {googleMapsClient} from "../util/googlemaps";
-import {distanceInKm} from "../util/math";
 import logger from "../util/logger";
+import {distanceInKm} from "../util/math";
+import {handle, Handler} from "./index";
 
 export class CountryGameHandler extends Handler {
     @handle("game:vote")
-    gameVote(client: Client, payload: any) {
+    public gameVote(client: Client, payload: any) {
         if (this.room.state.roundEnd) {
             return;
         }
@@ -45,7 +46,7 @@ export class CountryGameHandler extends Handler {
             }
 
             vote.hasVoted = true;
-            vote.hasWon = this.room.state.country.countryCode && this.room.state.country.countryCode === country.countryCode;
+            vote.hasWon = this.room.state.country.countryCode === country.countryCode;
             vote.distanceInKm = distanceInKm(this.room.state.country, payload);
             vote.country = country;
 

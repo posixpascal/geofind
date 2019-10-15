@@ -14,7 +14,7 @@ export const create = () => {
         subscribe(dispatch);
         sharedHistory.push("/lobby/" + room.id);
     };
-}
+};
 
 export const setName = () => {
     const newName = prompt(strings.enterNewLobbyName);

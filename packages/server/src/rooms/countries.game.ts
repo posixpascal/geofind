@@ -1,16 +1,17 @@
-import {Client, Delayed, Presence, Room} from "colyseus";
-import {CountriesGame, Country} from "../schema/CountriesGame";
-import {Player} from "../schema/Player";
-import {ChatMessageTypes} from "../schema/ChatMessage";
-import {COUNTRIES} from "../config/countries";
-import {ScoreBoard} from "../schema/ScoreBoard";
 import {User, verifyToken} from "@colyseus/social";
+import {Client, Delayed, Presence, Room} from "colyseus";
+import {COUNTRIES} from "../config/countries";
 import {TRANSLATED_COUNTRIES} from "../config/translatedCountries";
+import {Handler, IMessage} from "../handlers";
 import {ChatHandler} from "../handlers/chatHandler";
+import {CountryGameHandler} from "../handlers/countryGameHandler";
 import {GameHandler} from "../handlers/gameHandler";
 import {RoomHandler} from "../handlers/roomHandler";
-import {Handler, IMessage} from "../handlers";
-import {CountryGameHandler} from "../handlers/countryGameHandler";
+import {ChatMessageTypes} from "../schema/ChatMessage";
+import {CountriesGame} from "../schema/CountriesGame";
+import {Country} from "../schema/Country";
+import {Player} from "../schema/Player";
+import {ScoreBoard} from "../schema/ScoreBoard";
 import {shuffle} from "../util/collections";
 import {distanceInKm} from "../util/math";
 
@@ -26,18 +27,18 @@ export class CountriesGameRoom extends Room {
         super(presence);
 
         this.handlers = {
-            "chat": new ChatHandler(this),
-            "game": new GameHandler(this),
-            "room": new RoomHandler(this),
-            "countryGame": new CountryGameHandler(this)
+            chat: new ChatHandler(this),
+            game: new GameHandler(this),
+            room: new RoomHandler(this),
+            countryGame: new CountryGameHandler(this),
         };
     }
 
-    onMessage(client: any, data: IMessage): void {
+    public onMessage(client: any, data: IMessage): void {
         Handler.handleMessage(this, client, data);
     }
 
-    async onAuth(client: Client, options: any) {
+    public async onAuth(client: Client, options: any) {
         const token = verifyToken(options.token);
         try {
             const user = await User.findById(token._id);
@@ -50,7 +51,7 @@ export class CountriesGameRoom extends Room {
         return new Player();
     }
 
-    onJoin(client: Client, options: any) {
+    public onJoin(client: Client, options: any) {
         if (!this.state.gameStart) {
             this.startGame();
         }
@@ -61,7 +62,7 @@ export class CountriesGameRoom extends Room {
 
         const player = new Player();
         player.id = client.auth._id.toString();
-        player.player_id = client.sessionId;
+        player.playerId = client.sessionId;
         player.displayName = client.auth.displayName;
         player.color = client.auth.metadata.pin_color;
         player.avatarUrl = client.auth.avatarUrl;
@@ -76,17 +77,16 @@ export class CountriesGameRoom extends Room {
             type: ChatMessageTypes.STATUS_MESSAGE,
             createdAt: +new Date(),
             message: `${client.auth.displayName} joined the game`,
-            player: false
+            player: false,
         });
     }
-
 
     public onCreate(options: any) {
         this.lobbyOptions = options.room;
         this.setState(new CountriesGame());
     }
 
-    startGame() {
+    public startGame() {
         this.state.gameStart = true;
 
         this.state.roundStart = false;
@@ -106,12 +106,15 @@ export class CountriesGameRoom extends Room {
         }, 5000);
     }
 
-    roundStart() {
+    public roundStart() {
         this.broadcast({type: "map:roundInit"});
         this.additionalRoundTime = 0;
 
         // reset votes for next round
-        for (let playerID in this.state.votes) {
+        for (const playerID in this.state.votes) {
+            if (!this.state.votes.hasOwnProperty(playerID)) {
+                continue;
+            }
             delete this.state.votes[playerID];
         }
 
@@ -129,7 +132,6 @@ export class CountriesGameRoom extends Room {
             }
         }, 1000);
 
-
         this.state.isSuddenDeath = this.isHeadToHeadRound();
 
         this.roundTimer = this.clock.setTimeout(() => {
@@ -137,13 +139,13 @@ export class CountriesGameRoom extends Room {
         }, this.state.roundTime * 1000);
     }
 
-    roundEnd() {
+    public roundEnd() {
         this.state.roundStart = false;
         this.state.roundEnd = true;
 
         // give users with a direct match a point
         let onlyDirectVotesWin = false;
-        for (let playerID in this.state.votes) {
+        for (const playerID in this.state.votes) {
             if (this.state.votes[playerID].hasWon) {
                 onlyDirectVotesWin = true;
                 this.state.scoreBoard[playerID].score += 1;
@@ -154,7 +156,7 @@ export class CountriesGameRoom extends Room {
         if (!onlyDirectVotesWin) {
             let closestDistance = 1000000000;
             let closestPlayer = "";
-            for (let playerID in this.state.votes) {
+            for (const playerID in this.state.votes) {
                 if (this.state.votes[playerID].hasVoted && this.state.votes[playerID].distanceInKm < closestDistance) {
                     closestDistance = this.state.votes[playerID].distanceInKm;
                     closestPlayer = playerID;
@@ -180,7 +182,7 @@ export class CountriesGameRoom extends Room {
     /**
      * Starts a new round after 7s, may wait additional seconds if an insult is requiring more time
      */
-    transitionToNextRound() {
+    public transitionToNextRound() {
         this.clock.setTimeout(() => {
             if (this.additionalRoundTime) {
                 return this.clock.setTimeout(() => {
@@ -191,18 +193,16 @@ export class CountriesGameRoom extends Room {
         }, 7000);
     }
 
-
-    endGame() {
+    public endGame() {
         this.state.isSuddenDeath = false;
         this.state.gameOver = true;
         this.broadcast({type: "game:over", payload: {...this.state}});
     }
 
-
     /**
      * Returns a random country which has not played in the game before
      */
-    getRandomCountry() {
+    public getRandomCountry() {
         let countryData: any = false;
         while (!countryData || this.playedCountries.indexOf(countryData.country_code) > -1) {
             countryData = TRANSLATED_COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
@@ -224,7 +224,11 @@ export class CountriesGameRoom extends Room {
         let bestPlayers: any = [];
         let maxScore = 0;
 
-        for (let playerID in this.state.scoreBoard) {
+        for (const playerID in this.state.scoreBoard) {
+            if (!this.state.scoreBoard.hasOwnProperty(playerID)) {
+                continue;
+            }
+
             const scoreBoard = this.state.scoreBoard[playerID];
             if (scoreBoard.score === maxScore) {
                 bestPlayers.push(playerID);
@@ -249,7 +253,8 @@ export class CountriesGameRoom extends Room {
         let gameOver = false;
 
         // check if any player has reached required win score
-        for (let playerID in this.state.scoreBoard) {
+        for (const playerID in this.state.scoreBoard) {
+            if (!this.state.scoreBoard.hasOwnProperty(playerID)) { continue; }
             const scoreBoard = this.state.scoreBoard[playerID];
             if (scoreBoard.score >= this.state.victoryScore) {
                 gameOver = true;
@@ -263,19 +268,19 @@ export class CountriesGameRoom extends Room {
         return gameOver;
     }
 
-
     /**
      * Try to insult players if possible
      * TODO: outsource
      */
-    insultPlayers() {
+    public insultPlayers() {
         let playedInsult = false;
-        let playerIDs = [];
-        for (let playerID in this.state.votes) {
+        const playerIDs = [];
+        for (const playerID in this.state.votes) {
+            if (!this.state.votes.hasOwnProperty(playerID)) { continue; }
             playerIDs.push(playerID);
         }
 
-        for (let playerID of shuffle(playerIDs)) {
+        for (const playerID of shuffle(playerIDs)) {
             if (this.insultVote({sessionId: playerID}, this.state.votes[playerID])) {
                 playedInsult = true;
                 break;
@@ -296,7 +301,7 @@ export class CountriesGameRoom extends Room {
      * @param client
      * @param vote
      */
-    insultVote(client: any, vote) {
+    public insultVote(client: any, vote) {
         if (Object.keys(this.state.players).length <= 3) {
             return false;
         }
@@ -305,7 +310,7 @@ export class CountriesGameRoom extends Room {
         if (vote.distanceInKm >= 8000) {
             // check if all other players are near 2000 radius
             let in2000radius = true;
-            for (let playerID in this.state.players) {
+            for (const playerID in this.state.players) {
                 if (playerID === client.sessionId) {
                     continue;
                 }
@@ -327,7 +332,7 @@ export class CountriesGameRoom extends Room {
 
         // triggers 20% check if all votes are wrong
         let allVotesWrong = true;
-        for (let playerID in this.state.votes) {
+        for (const playerID in this.state.votes) {
             if (this.state[playerID] && this.state[playerID].hasWon) {
                 allVotesWrong = false;
             }
@@ -340,14 +345,16 @@ export class CountriesGameRoom extends Room {
 
         // triggers 50% - check if all all pins are approximately near each other (250km)
         // and the target is at least 5000 km away from the pins
-        let distances = [];
-        for (let playerID in this.state.players) {
+        const distances = [];
+        for (const playerID in this.state.players) {
             if (!this.state.votes[playerID] || !this.state.votes[playerID].hasVoted) {
                 continue;
             }
             const playerVote = this.state.votes[playerID].country;
-            for (let otherPlayerID in this.state.players) {
-                if (playerID === otherPlayerID || !this.state.votes[otherPlayerID] || !this.state.votes[otherPlayerID].hasVoted) {
+            for (const otherPlayerID in this.state.players) {
+                if (!this.state.players.hasOwnProperty(otherPlayerID)) { continue; }
+                const playerHasVoted = !this.state.votes[otherPlayerID] || !this.state.votes[otherPlayerID].hasVoted;
+                if (playerID === otherPlayerID || playerHasVoted) {
                     continue;
                 }
                 // compare distance
@@ -356,16 +363,16 @@ export class CountriesGameRoom extends Room {
             }
         }
 
-        let allAreClose = distances.reduce((a, c) => a + c, 0) < (distances.length * 250);
+        const allAreClose = distances.reduce((a, c) => a + c, 0) < (distances.length * 250);
         if (allAreClose && vote.distanceInKm > 5000 && Math.random() < 0.5) {
             this.broadcast({
                 type: "insult:closeTogether",
-                payload: {playerID: client.sessionId, vote, country: this.state.country}
+                payload: {playerID: client.sessionId, vote, country: this.state.country},
             });
             this.clock.setTimeout(() => {
                 this.broadcast({
                     type: "insult:closeTogether2",
-                    payload: {playerID: client.sessionId, vote, country: this.state.country}
+                    payload: {playerID: client.sessionId, vote, country: this.state.country},
                 });
             }, 4000);
             this.additionalRoundTime = 5;
@@ -378,10 +385,10 @@ export class CountriesGameRoom extends Room {
     /**
      * Checks if 2 (or more) people are close to winning the game
      */
-    isHeadToHeadRound() {
+    public isHeadToHeadRound() {
         const currentHighScore = this.getPlayerHighScore();
         // check if near round end
-        let isDrawn = this.getBestPlayers().length > 1;
+        const isDrawn = this.getBestPlayers().length > 1;
 
         if (isDrawn && this.state.currentRound + 1 >= this.state.maxRounds) {
             return true;
@@ -397,11 +404,11 @@ export class CountriesGameRoom extends Room {
     /**
      * Returns the current max score
      */
-    getPlayerHighScore() {
+    public getPlayerHighScore() {
         let highscore = 0;
-        for (let playerID in this.state.scoreBoard) {
+        for (const playerID in this.state.scoreBoard) {
             if (this.state.scoreBoard.hasOwnProperty(playerID)) {
-                const playerScore = this.state.scoreBoard[playerID].score
+                const playerScore = this.state.scoreBoard[playerID].score;
                 if (playerScore > highscore) {
                     highscore = playerScore;
                 }

@@ -1,12 +1,10 @@
-import express from "express";
-import compression from "compression";  // compresses requests
-import session from "express-session";
-import bodyParser from "body-parser";
-import lusca from "lusca";
-import flash from "express-flash";
-import path from "path";
-import cors from "cors";
 import socialRoutes from "@colyseus/social/express";
+import bodyParser from "body-parser";
+import compression from "compression";  // compresses requests
+import cors from "cors";
+import express from "express";
+import flash from "express-flash";
+import lusca from "lusca";
 
 const app = express();
 // Express configuration

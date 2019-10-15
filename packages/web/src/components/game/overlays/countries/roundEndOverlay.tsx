@@ -1,15 +1,15 @@
 import React from "react";
 import {PushPin} from "../../../../helper/svgs";
 import {language, strings} from "../../../../i18n";
-import {SpinningVectorBox} from "../widgets";
 import {Flag} from "../../flag";
+import {SpinningVectorBox} from "../widgets";
 
 export const RoundEndOverlay = ({game}) => {
     const playerIDs = Object.keys(game.players);
 
     const NoVote = ({player, scoreBoard}) => {
         return (
-            <div key={player.player_id}>
+            <div key={player.playerId}>
                 <PushPin size={16} pinned={true} color={player.color}/>
                 {player.displayName}
                 <b className={"mobile-only"}>(Score: {scoreBoard.score})</b>
@@ -26,19 +26,23 @@ export const RoundEndOverlay = ({game}) => {
     };
 
     const CountryVote = ({country, player, scoreBoard, votes}) => {
-        const showDistance = country.countryCode !== votes[player.player_id].country.countryCode;
+        const showDistance = country.countryCode !== votes[player.playerId].country.countryCode;
+        const countryNameDE = votes[player.playerId].country.countryNameDe;
+        const countryNameEN = votes[player.playerId].country.countryNameEn;
+        const playerVote = votes[player.playerId];
+
         return (
-            <div key={`cv_${player.id}`} style={{fontWeight: game.votes[player.player_id].hasWon ? "bold" : "normal"}}>
+            <div key={`cv_${player.id}`} style={{fontWeight: playerVote.hasWon ? "bold" : "normal"}}>
                 <PushPin size={16} pinned={true} color={player.color}/>
-                {player.displayName} <b className={"mobile-only"}>(Score: {scoreBoard[player.player_id].score})</b>
+                {player.displayName} <b className={"mobile-only"}>(Score: {scoreBoard[player.playerId].score})</b>
                 <br/>
                 <img
                     alt={""}
                     width={16}
-                    src={`/assets/${votes[player.player_id].country.countryCode.toLowerCase()}.png`}
+                    src={`/assets/${playerVote.country.countryCode.toLowerCase()}.png`}
                 />
-                {language.indexOf("de") > -1 ? votes[player.player_id].country.countryNameDe : votes[player.player_id].country.countryNameEn}
-                {showDistance && <UserDistance distance={votes[player.player_id].distanceInKm.toFixed(2)}/>}
+                {language.indexOf("de") > -1 ? countryNameDE : countryNameEN}
+                {showDistance && <UserDistance distance={playerVote.distanceInKm.toFixed(2)}/>}
                 <hr className={"hidden-mobile"}/>
             </div>
         );

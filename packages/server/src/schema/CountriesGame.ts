@@ -1,97 +1,65 @@
-import { Schema, ArraySchema, MapSchema, type } from "@colyseus/schema";
-import {Player} from "./Player";
+import { ArraySchema, MapSchema, Schema, type } from "@colyseus/schema";
 import {ChatMessage} from "./ChatMessage";
+import {Country} from "./Country";
+import {CountryGameVote} from "./CountryGameVote";
+import {Player} from "./Player";
 import {ScoreBoard} from "./ScoreBoard";
-
-export class Country extends Schema {
-    @type("number")
-    lat: number;
-
-    @type("number")
-    lng: number;
-
-    @type("string")
-    countryCode: string;
-
-    @type("string")
-    countryNameEn: string;
-
-    @type("string")
-    countryNameDe: string;
-}
-
-export class CountryGameVote extends Schema {
-    @type(Player)
-    player: Player;
-
-    @type(Country)
-    country: Country;
-
-    @type("number")
-    distanceInKm: number;
-
-    @type("boolean")
-    hasWon: boolean;
-
-    @type("boolean")
-    hasVoted: boolean;
-}
 
 export class CountriesGame extends Schema {
     @type([ChatMessage])
-    messages = new ArraySchema<ChatMessage>();
+    public messages = new ArraySchema<ChatMessage>();
 
     @type({map: Player})
-    players = new MapSchema<Player>();
+    public players = new MapSchema<Player>();
 
     @type({map: ScoreBoard})
-    scoreBoard = new MapSchema<ScoreBoard>();
+    public scoreBoard = new MapSchema<ScoreBoard>();
 
     @type("boolean")
-    gameStart : boolean;
+    public gameStart: boolean;
 
     @type("boolean")
-    gameOver : boolean;
+    public gameOver: boolean;
 
     @type("boolean")
-    roundStart : boolean;
+    public roundStart: boolean;
 
     @type("boolean")
-    roundEnd : boolean;
+    public roundEnd: boolean;
 
     @type("number")
-    currentRound: number;
+    public currentRound: number;
 
     @type("boolean")
-    isSuddenDeath: boolean;
+    public isSuddenDeath: boolean;
 
     @type("number")
-    maxRounds: number;
+    public maxRounds: number;
 
     @type("number")
-    victoryScore: number;
+    public victoryScore: number;
 
     @type("number")
-    roundTimeLeft: number;
+    public roundTimeLeft: number;
 
     @type("boolean")
-    canForceRoundEnd: boolean;
+    public canForceRoundEnd: boolean;
 
     @type("boolean")
-    isWaitingForPlayers: boolean;
+    public isWaitingForPlayers: boolean;
 
     @type("boolean")
-    insultMode: boolean;
+    public insultMode: boolean;
 
     @type("string")
-    leader: string;
+    public leader: string;
 
     @type("string")
-    gameWinner: string;
+    public gameWinner: string;
 
     @type(Country)
-    country: Country;
+    public country: Country;
 
     @type({map: CountryGameVote})
-    votes = new MapSchema<CountryGameVote>();
+    public votes = new MapSchema<CountryGameVote>();
 }

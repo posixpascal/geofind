@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
+import {bindActionCreators} from "redux";
 import styled from "styled-components";
 import * as allGameActions from "../../actions/game";
 import * as allRoomActions from "../../actions/rooms";
@@ -8,7 +9,6 @@ import LobbyListing from "../../components/lobbyListing";
 import {Button} from "../../components/uiWidgets/Button";
 import {client} from "../../helper/webSockets";
 import {strings} from "../../i18n";
-import {bindActionCreators} from "redux";
 
 export const Overlay = styled.div`
     position: absolute;

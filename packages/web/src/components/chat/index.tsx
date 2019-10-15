@@ -23,7 +23,7 @@ const randomInsecurityInsult = () => {
 };
 
 export default ({inGame = false, players = {}, messages = []}) => {
-    const chatInput : any = useRef();
+    const chatInput: any = useRef();
 
     if (messages === null) {
         return <span>Loading...</span>;
@@ -76,23 +76,24 @@ export default ({inGame = false, players = {}, messages = []}) => {
                 </ChatMessageUser>
                 <ChatMessageText>{message}</ChatMessageText>
             </>
-        )
+        );
     };
+
+    const chatMessages = messages.map((chatMessage) => {
+        const player = players[chatMessage.player.id] || chatMessage.player;
+
+        return (
+            <ChatMessage bold={!!chatMessage.bold} key={chatMessage.id}>
+                <ChatMessageDate>{formatDate(chatMessage.date)}</ChatMessageDate>
+                <ChatLine player={player} message={chatMessage.message}/>
+            </ChatMessage>
+        );
+    });
 
     return (
         <ChatWindowWrapper>
             <ChatLog id="chatView">
-                {messages.map((chatMessage) => (
-                    <ChatMessage bold={!!chatMessage.bold} key={chatMessage.id}>
-                        <ChatMessageDate>{formatDate(chatMessage.date)}</ChatMessageDate>
-                        {// fetch uptodate user to reflect name changes
-                            players[chatMessage.player.id] &&
-                            <ChatLine player={players[chatMessage.player.id]} message={chatMessage.message}/>}
-                        {// user left meanwhile so we render the cached properties
-                            !players[chatMessage.player.id] &&
-                            <ChatLine player={chatMessage.player} message={chatMessage.message}/>}
-                    </ChatMessage>
-                ))}
+                {chatMessages}
             </ChatLog>
             <NewChatMessage>
                 <input

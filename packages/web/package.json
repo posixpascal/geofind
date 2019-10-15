@@ -2,6 +2,7 @@
   "name": "@geofind/web",
   "version": "1.0.0",
   "private": true,
+  "license": "GPL-3.0",
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
@@ -39,6 +40,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "lint:fix": "tslint --fix -c tslint.json 'src/**/*.{ts,tsx}'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -1,8 +1,8 @@
 import React from "react";
 import {USER_LOGGED_IN} from "../../actions/types";
+import {store} from "../../app";
 import {client} from "../../helper/webSockets";
 import {strings} from "../../i18n";
-import {store} from "../../app";
 import {PlayerRows} from "./playerRows";
 import {UserListingWrapper} from "./widgets";
 
