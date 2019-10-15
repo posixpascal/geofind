@@ -20,7 +20,7 @@ jobs:
     - name: npm install and lint
       run: |
         npm install -g yarn
-        yarn .
+        yarn
         yarn run lint
       env:
         CI: true
