@@ -27,6 +27,7 @@ const RelativeBox = styled.div`
 `;
 
 export const Application = () => {
+    authenticateUser(store);
     return (
         <Provider store={store}>
             <ConnectedRouter history={sharedHistory}>

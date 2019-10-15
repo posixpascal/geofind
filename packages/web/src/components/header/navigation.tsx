@@ -9,7 +9,7 @@ export const HeaderNavigation = ({user}) => {
         <>
             <Divider/>
             <li><CurrentUser>
-                <img alt="Your user's avatar" src={user.avatarUrl} width={32}/>
+                <img alt="" src={user.avatarUrl} width={32}/>
                 <span onClick={changeName}>{user.displayName}</span>
             </CurrentUser>
             </li>

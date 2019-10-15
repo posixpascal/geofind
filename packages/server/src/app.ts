@@ -6,11 +6,11 @@ import lusca from "lusca";
 import flash from "express-flash";
 import path from "path";
 import cors from "cors";
-import socialRoutes from "@colyseus/social/express"
+import socialRoutes from "@colyseus/social/express";
 
 const app = express();
 // Express configuration
-app.set("port", process.env.PORT);
+app.set("port", process.env.GAMESERVER_PORT);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,6 +20,6 @@ app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
 
 app.use("/social/", socialRoutes);
-app.use("/", express.static("../public"));
+app.use("/", express.static("./public"));
 
 export default app;

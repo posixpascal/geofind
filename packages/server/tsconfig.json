@@ -8,7 +8,7 @@
         "noImplicitAny": false,
         "moduleResolution": "node",
         "sourceMap": true,
-        "outDir": "dist",
+        "outDir": "build",
         "experimentalDecorators": true,
         "baseUrl": ".",
         "paths": {

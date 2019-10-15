@@ -12,10 +12,12 @@ import {BuildingsGameRoom} from "./rooms/buildings.game";
 import {MongooseDriver} from "colyseus/lib/matchmaker/drivers/MongooseDriver";
 
 const gameServer = new Server({
-    presence: new RedisPresence(),
+    presence: new RedisPresence({
+        url: process.env.LOCAL_REDIS_URI
+    }),
     express: app,
     server: createServer(app),
-    driver: new MongooseDriver()
+    driver: new MongooseDriver(process.env.LOCAL_MONGODB_URI)
 });
 
 gameServer.define("lobby", LobbyRoom).sortBy({clients: 1}).on("create", (room) => {
@@ -42,6 +44,6 @@ gameServer
     .define("game_buildings", BuildingsGameRoom, {mode: "buildings"})
     .sortBy({clients: 1});
 
-gameServer.listen(parseInt(process.env.PORT), app.get("hostname"), 30, () => {
+gameServer.listen(app.get("port"), app.get("hostname"), 30, () => {
     logger.info("  App is running at http://localhost:%d in %s mode", app.get("port"), app.get("env"));
 });

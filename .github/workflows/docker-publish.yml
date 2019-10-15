@@ -1,0 +1,20 @@
+name: Publish to Docker Hub
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Master
+        uses: actions/checkout@master
+
+      - name: Build & Publish
+        uses: elgohr/Publish-Docker-Github-Action@master
+        with:
+          name: posixpascal/github
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}

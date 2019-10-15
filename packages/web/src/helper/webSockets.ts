@@ -4,11 +4,9 @@ import {
 
 import * as Colyseus from "colyseus.js";
 
-export const client = new Colyseus.Client("ws://localhost:3888");
-
-if (process.env.NODE_ENV !== "production") {
-    (window as any).client = client;
-}
+export const client = new Colyseus.Client(process.env.NODE_ENV === "production" ?
+    process.env.REACT_APP_WEBSOCKET_URI : process.env.REACT_APP_WEBSOCKET_URI_LOCAL);
+(client.auth as any).endpoint += "/social";
 
 export const prefetchRooms = async (store) => {
 };

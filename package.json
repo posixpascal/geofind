@@ -22,15 +22,16 @@
     "lint": "yarn workspace @geofind/web lint; yarn workspace @geofind/server lint",
     "lint:fix": "yarn workspace @geofind/web lint:fix; yarn workspace @geofind/server lint:fix",
     "start:shared": "yarn workspace @geofind/shared start",
-    "start:web": "yarn workspace @geofind/web start",
+    "start:web": "yarn run copy:env && yarn workspace @geofind/web start",
     "start:server": "yarn workspace @geofind/server start",
     "start": "yarn build:shared && concurrently --kill-others-on-fail \"yarn start:shared\" \"yarn start:web\" \"yarn start:server\"",
     "build:shared": "yarn workspace @geofind/shared build",
-    "build:web": "yarn workspace @geofind/web build",
+    "build:web": "yarn run copy:env && yarn workspace @geofind/web build",
     "build:server": "yarn workspace @geofind/server build",
-    "build:move": "mv ./packages/web/build ./packages/server/build/public",
+    "build:move": "rm -rf ./packages/server/public && mv ./packages/web/build ./packages/server/public",
     "build": "yarn build:shared && yarn build:web && yarn build:server && yarn build:move",
-    "serve": "yarn workspace @geofind/server serve"
+    "serve": "yarn workspace @geofind/server serve",
+    "copy:env": "rm -f ./packages/web/.env && cp .env ./packages/web/.env"
   },
   "dependencies": {
     "concurrently": "^4.1.1",
