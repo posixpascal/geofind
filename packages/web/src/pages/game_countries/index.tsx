@@ -76,7 +76,11 @@ const CountriesGamePage = ({game, join, match}) => {
 
     useEffect(() => subscribeGameStateEvents({game}));
     useEffect(() => subscribeInsultEvents({googleMap}));
-    useEffect(() => subscribeConnectionEvents({game, match, join}), [game.players]);
+    useEffect(() => subscribeConnectionEvents({game, match, join}), [
+        game.players,
+        join,
+        match
+    ]);
 
     if (!game.players) {
         return <RoomJoinLoader/>;

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {strings} from "../../../../i18n";
 import {Countdown} from "../../../countdown";
 import {Flag} from "../../flag";

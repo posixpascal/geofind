@@ -1,7 +1,7 @@
 import {ROOM_NOT_FOUND_ERROR} from "../helper/errors";
 import {sharedHistory} from "../helper/sharedHistory";
 import {client} from "../helper/webSockets";
-import {GAME_JOIN, GAME_LEAVE, GAME_UPDATE, LOBBY_UPDATE} from "./types";
+import {GAME_JOIN, GAME_LEAVE, GAME_UPDATE} from "./types";
 
 // tslint:disable-next-line:no-submodule-imports
 import {MatchMakeError} from "colyseus.js/lib/Client";

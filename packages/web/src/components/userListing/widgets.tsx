@@ -1,7 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
 import styled from "styled-components";
 import {Button} from "../uiWidgets/Button";
-import {UserColorPicker} from "./colorPicker";
 
 export const UserListingWrapper = styled.div`
   width: 100%;

@@ -1,6 +1,4 @@
 import React from "react";
-import {Marker} from "react-google-maps";
-import {PushPinSVG} from "../../../helper/svgs";
 import {composeMap} from "./composeMap";
 import {PinMarker} from "./pinMarker";
 import {StreetViewPlayerMarkers} from "./playerMarkers";

@@ -18,7 +18,9 @@ const StreetViewGamePage = ({game, join, match}) => {
     const [center, setCenter] = useState(lastMarkerPosition);
 
     useEffect(() => subscribeGameStateEvents({game}));
-    useEffect(() => subscribeConnectionEvents({game, match, join, mode: "game_streetview"}), [game.players]);
+    useEffect(() => subscribeConnectionEvents({game, match, join, mode: "game_streetview"}), [
+        game.players, game, join, match
+    ]);
 
     if (!game.players || !game.country) {
         return <RoomJoinLoader/>;

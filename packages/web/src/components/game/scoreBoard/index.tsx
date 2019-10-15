@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import * as actions from "../../../actions/game";
 import {Overlay} from "../overlays/widgets";
-import {PlayerScore, RequiredVictoryScore, UserList, UserName} from "./widgets";
+import {PlayerScore, RequiredVictoryScore, UserList} from "./widgets";
 
 const ScoreBoard = ({game}) => {
     const isMobile = window.innerWidth <= 767;

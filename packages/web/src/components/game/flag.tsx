@@ -1,7 +1,5 @@
 import React, {useState} from "react";
 import {language} from "../../i18n";
-import * as DE from "../../i18n/de.json";
-import * as EN from "../../i18n/en.json";
 
 export const Flag = ({country}) => {
     const [showImage, setShowImage] = useState(true);
