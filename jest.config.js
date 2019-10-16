@@ -91,9 +91,11 @@ module.exports = {
 
     "collectCoverage": true,
     "coverageReporters": ["lcov"],
-    "setupFilesAfterEnv": ["jest-enzyme", './src/setupTests.js'],
+    "setupFilesAfterEnv": ["jest-enzyme"],
     "testEnvironment": "enzyme",
-
+    "transform": {
+        '^.+\\.tsx?$': 'ts-jest',
+    },
     // A map from regular expressions to module names that allow to stub out resources with a single module
     // moduleNameMapper: {},
 
@@ -132,7 +134,9 @@ module.exports = {
 
     // A list of paths to directories that Jest should use to search for files in
     roots: [
-        "src/",
+        "packages/server",
+        "packages/shared",
+        "packages/web",
     ],
 
     // Allows you to use a custom runner instead of Jest's default test runner
