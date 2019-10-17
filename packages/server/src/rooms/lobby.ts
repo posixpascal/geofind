@@ -49,9 +49,9 @@ export class LobbyRoom extends Room<Lobby> {
                 return user;
             }
         } catch (err) {
-            return false;
+            return User.create();
         }
-        return false;
+        return User.create();
     }
 
     public onJoin(client: Client, options, user) {

@@ -46,9 +46,9 @@ export class CountriesGameRoom extends Room {
                 return user;
             }
         } catch (err) {
-            return new Player();
+            return User.create();
         }
-        return new Player();
+        return User.create();
     }
 
     public onJoin(client: Client, options: any) {
