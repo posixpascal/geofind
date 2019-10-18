@@ -79,6 +79,9 @@ export const CurrentUser = styled.div`
     left: 0;
     top: -12px;
   }
+  span {
+  
+  }
   svg {
     animation: spin 0.8s linear infinite;
     position: absolute;
@@ -91,6 +94,10 @@ export const CurrentUser = styled.div`
     img {
       width: 30px;
       top: -6px;
+    }
+    span {
+    white-space: nowrap;
+    font-size: 14px;
     }
   }
 `;

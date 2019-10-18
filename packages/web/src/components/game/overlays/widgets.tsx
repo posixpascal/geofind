@@ -29,7 +29,7 @@ export const Overlay = styled.div`
     display: none;
   }
   @media (max-width: 767px){
-    top: 70px; !important;
+    top: 60px; !important;
     left: 0 !important;
     width: 100% !important;
     max-width: 100% !important;
@@ -48,7 +48,10 @@ export const Overlay = styled.div`
     font-size: 20px;
     margin: 0;
     }
-    p { margin: 0;}
+    h2 {
+    font-size: 16px;
+    }
+    p { margin: 0; font-size: 14px; }
   }
 `;
 

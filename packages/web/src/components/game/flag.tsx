@@ -3,12 +3,12 @@ import {language} from "../../i18n";
 
 export const Flag = ({country}) => {
     const [showImage, setShowImage] = useState(true);
-
+    const flagWidth = window.innerWidth < 767 ? 32 : 48;
     const handleImageError = () => setShowImage(false);
 
     const flagImage = (
         <img
-            width={48}
+            width={flagWidth}
             alt={""}
             onError={handleImageError}
             src={`/assets/${country.countryCode.toLowerCase()}.png`}

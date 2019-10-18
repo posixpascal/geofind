@@ -7,7 +7,7 @@ import {HeaderNavigation} from "./navigation";
 import {BrandTitle, HeaderContainer, Image} from "./widgets";
 
 // @ts-ignore - Parcel loads this
-import LOGO_SVG from "../../assets/logo.svg";
+const LOGO_SVG = "/assets/logo.svg";
 
 const Header = ({user, game}) => {
     const BrandName = () => {
@@ -17,7 +17,7 @@ const Header = ({user, game}) => {
 
         return (
             <span>
-                <Image src={LOGO_SVG}/>
+                <img style={{display: "inline", height: "32px"}} src={LOGO_SVG}/>
                 {strings.gameName}
             </span>
         );
