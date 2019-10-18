@@ -1,0 +1,7 @@
+{
+  "appId": "de.pascalraszyk.whereabouts",
+  "appName": "whereabouts",
+  "bundledWebRuntime": true,
+  "npmClient": "yarn",
+  "webDir": "build"
+}
