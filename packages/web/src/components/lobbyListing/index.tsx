@@ -53,7 +53,7 @@ const LobbyListing = ({rooms, join, create}) => {
 
     return (
         <div>
-            {rooms.length ? <RoomList/> : <NoRoomFound/>}
+            {rooms.length ? <>{RoomList}</> : <NoRoomFound/>}
         </div>
     );
 };
