@@ -33,7 +33,7 @@ export const BrandTitle = styled.h1`
   @media (max-width: 767px){
     font-size: 20px;
     img {
-      height: 22px;
+      height: 32px;
     }
   }
 `;
