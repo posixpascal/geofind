@@ -9,7 +9,7 @@ export const Overlay = styled.div`
   padding: 20px;
   z-index:20;
   top:90px;
-  background:#fff;
+  background:rgba(255,255,255,.8);
   text-align: center;
   box-shadow: 3px 3px 8px rgba(0,0,0,.3);
   #chatView {
@@ -32,6 +32,7 @@ export const Overlay = styled.div`
     top: 60px; !important;
     left: 0 !important;
     width: 100% !important;
+    max-height: 300px; overflow: auto;
     max-width: 100% !important;
     box-shadow: none !important;
     .hidden-mobile {

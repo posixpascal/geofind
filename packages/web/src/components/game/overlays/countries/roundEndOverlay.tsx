@@ -16,7 +16,7 @@ export const RoundEndOverlay = ({game}) => {
                 <br/>
                 &mdash;
                 <br/>
-                <hr className={"hidden-mobile"}/>
+                <hr/>
             </div>
         );
     };
@@ -43,7 +43,7 @@ export const RoundEndOverlay = ({game}) => {
                 />
                 {language.indexOf("de") > -1 ? countryNameDE : countryNameEN}
                 {showDistance && <UserDistance distance={playerVote.distanceInKm.toFixed(2)}/>}
-                <hr className={"hidden-mobile"}/>
+                <hr/>
             </div>
         );
     };
