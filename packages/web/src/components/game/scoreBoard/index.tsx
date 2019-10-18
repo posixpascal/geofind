@@ -21,6 +21,9 @@ const ScoreBoard = ({game}) => {
         return <>; </ > ;
     }
 
+    // do not show scoreboard during gameplay on mobile to save screen real estate
+    if (window.innerWidth < 767 && game.roundStart){ return <></>; }
+
     let scoreBoardTitle = <h3>Score</h3>;
     if (game.currentRound > 0 && !game.roundEnd) {
         scoreBoardTitle = <h3>Runde {game.currentRound} / {game.maxRounds}</h3>;

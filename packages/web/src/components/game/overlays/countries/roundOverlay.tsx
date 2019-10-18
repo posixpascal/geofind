@@ -19,7 +19,7 @@ export const RoundOverlay = ({game, user}) => {
             <strong>{strings.searchFor}</strong>
             <Flag country={game.country}/>
             <hr/>
-            <h1>{game.roundTimeLeft}</h1>
+            <h2>{game.roundTimeLeft}</h2>
             <p>{strings.secondsTillRoundEnd}</p>
         </SpinningVectorBox>
     );

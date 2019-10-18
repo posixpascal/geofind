@@ -34,7 +34,7 @@ export const RoundEndOverlay = ({game}) => {
         return (
             <div key={`cv_${player.id}`} style={{fontWeight: playerVote.hasWon ? "bold" : "normal"}}>
                 <PushPin size={16} pinned={true} color={player.color}/>
-                {player.displayName} <b className={"mobile-only"}>(Score: {scoreBoard[player.playerId].score})</b>
+                {player.displayName} <b className={"mobile-only"}> (Score: {scoreBoard[player.playerId].score}) </b>
                 <br/>
                 <img
                     alt={""}
