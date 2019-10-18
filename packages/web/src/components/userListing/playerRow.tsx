@@ -58,7 +58,7 @@ export const PlayerRow = ({player, onColorChange, room}) => {
                 <UserIcon className={"userIcon"}>{userIcon}</UserIcon>
                 <UserName onClick={handleUserNameClick}>
                     <img alt="Player avatar" src={player.avatarUrl} width={28}/>
-                    {player.displayName}
+                    <span style={{fontSize: "24px"}}>{player.displayName}</span>
                 </UserName>
                 <ColorPickerWrapper>
                     <UserColor onClick={handleUserColorClick} style={{background: player.color}}/>

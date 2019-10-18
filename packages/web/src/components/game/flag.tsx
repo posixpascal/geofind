@@ -10,7 +10,7 @@ export const Flag = ({country}) => {
         <img
             width={flagWidth}
             alt={""}
-            style={{position: "relative", top: "4px"}}
+            style={{position: "relative", top: "4px", left: "-4px"}}
             onError={handleImageError}
             src={`/assets/${country.countryCode.toLowerCase()}.png`}
         />

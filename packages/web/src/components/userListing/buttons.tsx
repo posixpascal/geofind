@@ -61,6 +61,7 @@ export const MuteButton = ({muted, toggleMute}) => {
         <Button
             className={muted ? "active" : ""}
             onClick={toggleMute}
+            style={{marginRight: "20px"}}
         >
             {muted ? <span>Muted</span> : <span>Mute?</span>}
         </Button>

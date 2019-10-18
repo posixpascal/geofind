@@ -16,6 +16,7 @@ import HomePage, {Overlay, OverlayContent} from "./pages/home";
 import RoomPage from "./pages/room";
 import ThemesPage from "./pages/themes";
 import reducers from "./reducers";
+import * as FastClick from "fastclick";
 
 const middleWares = composeWithDevTools(applyMiddleware(routerMiddleware(sharedHistory), reduxThunk));
 export const store = createStore(reducers, middleWares);
@@ -56,3 +57,7 @@ export const Application = () => {
         </Provider>
     );
 };
+
+document.body.addEventListener("DOMContentReady", () => {
+   FastClick.attach(document.body);
+});

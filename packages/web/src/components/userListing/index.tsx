@@ -13,12 +13,17 @@ export const changeName = () => {
     }
 
     client.auth.displayName = newName;
-    client.auth.save();
     store.dispatch({type: USER_LOGGED_IN, payload: client.auth});
     // TODO: update avatar url as well
 
     if (window.currentRoom) {
         window.currentRoom.send({type: "user:displayName:set", payload: newName});
+    }
+
+    try {
+        client.auth.save();
+    } catch (e){
+        // todo: instrumentation needed
     }
 };
 
