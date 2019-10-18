@@ -12,8 +12,10 @@ export const UserList = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
     > div {
-        flex: 0 50%;
+        flex: 0 33%;
     }
+    
+    
   }
 
   h3 {
@@ -26,6 +28,9 @@ export const UserList = styled.div`
 export const UserName = styled.div`
     font-size: 24px;
     margin-right: 20px;
+    @media (max-width: 767px){
+      font-size: 14px;
+    }
 `;
 
 export const MiniScoreboard = ({game}) => {

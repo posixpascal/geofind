@@ -27,7 +27,10 @@ const Header = ({user, game}) => {
         <HeaderContainer>
             <BrandTitle>
                 <NavLink to={"/"}>
-                    <BrandName />
+                    <span>
+                        <img style={{display: "inline", height: "32px"}} src={LOGO_SVG}/>
+                        {strings.gameName}
+                    </span>
                 </NavLink>
             </BrandTitle>
             <HeaderNavigation user={user}/>
