@@ -1,6 +1,8 @@
+import 'package:app/colyseus/connection.dart';
+import 'package:app/colyseus/protocol.dart';
+import 'package:app/colyseus/serializer/schema_serializer.dart';
+import 'package:app/colyseus/serializer/serializer.dart';
 import 'package:app/colyseus/signal.dart';
-
-import 'connection.dart';
 
 class Room {
   String id;
@@ -21,45 +23,44 @@ class Room {
   Protocol previousCode;
   RootSchema rootSchema;
 
-  constructor(String name, RootSchema rootSchema) {
+  Room(String name, RootSchema rootSchema) {
     this.id = null;
     this.name = name;
 
-    this.serializer = new (getSerializer("schema"));
+    this.serializer = (getSerializer("schema"));
     this.rootSchema = rootSchema;
-    (this.serializer as SchemaSerializer).state = new (rootSchema)();
+    (this.serializer as SchemaSerializer).state = new RootSchema();
 
-    this.onError((message) => console.error(message));
-    this.onLeave(() => this.removeAllListeners());
+    this.onError.add((message) { print(message); });
+    this.onLeave.add(() => this.removeAllListeners());
   }
 
   connect(String endpoint) {
-    this.connection = new Connection(endpoint, false);
+    this.connection = new Connection(endpoint);
     this.connection.reconnectEnabled = false;
     this.connection.onmessage = this.onMessageCallback.bind(this);
-    this.connection.onclose = (e: CloseEvent)
+    this.connection.onclose = (var e)
     {
-      this.onLeave.invoke(e.code)
+      this.onLeave.invoke(code: e.code)
     };
 
-    this.connection.onerror = (e: CloseEvent)
+    this.connection.onerror = (var e)
     {
-      console.warn("Room, onError (${e.code}): ${e.reason}");
-      this.onError.invoke(e.reason);
+      this.onError.invoke(code: e.reason);
     };
 
     this.connection.open();
   }
 
   leave({bool consented = true}) {
-    if (this.connection) {
+    if (this.connection != null) {
       if (consented) {
         this.connection.send([Protocol.LEAVE_ROOM]);
       } else {
         this.connection.close();
       }
     } else {
-      this.onLeave.invoke(4000); // "consented" code
+      this.onLeave.invoke(code: 4000); // "consented" code
     }
   }
 
@@ -72,7 +73,7 @@ class Room {
   }
 
   removeAllListeners() {
-    if (this.serializer) {
+    if (this.serializer != null) {
       this.serializer.teardown();
     }
     this.onJoin.clear();
@@ -82,8 +83,8 @@ class Room {
     this.onLeave.clear();
   }
 
-  onMessageCallback(MessageEvent event) {
-    if (!this.previousCode) {
+  onMessageCallback(var event) {
+    if (this.previousCode == null) {
       const view = new DataView(event.data);
       const code = view.getUint8(0);
 
@@ -94,9 +95,9 @@ class Room {
         offset += utf8Length(this.serializerId);
 
       // get serializer implementation
-        const serializer = getSerializer(this.serializerId);
+        var serializer = getSerializer(this.serializerId);
         if (!serializer) {
-          throw new Error("missing serializer: " + this.serializerId);
+          throw new Error();
         }
 
         if (view.buffer.byteLength > offset && this.serializer.handshake) {
@@ -122,7 +123,7 @@ class Room {
         this.onMessage.invoke(msgpack.decode(event.data));
       }
 
-      this.previousCode = undefined;
+      this.previousCode = null;
     }
   }
 

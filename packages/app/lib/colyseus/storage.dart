@@ -1,11 +1,11 @@
 var storage;
 
-getStorage(){
-if (!storage)  {
-  // TODO: implement
-  storage = {};
-}
-return storage;
+getStorage() {
+  if (!storage) {
+    // TODO: implement
+    storage = {};
+  }
+  return storage;
 }
 
 setItem(String key, String value) {
@@ -13,10 +13,10 @@ setItem(String key, String value) {
 }
 
 removeItem(String key) {
-getStorage().removeItem(key);
+  getStorage().removeItem(key);
 }
 
 getItem(String key, Function callback) {
-var value = getStorage().getItem(key);
-return value;
+  var value = getStorage().getItem(key);
+  return value;
 }

@@ -1,4 +1,8 @@
+import 'dart:async';
 import 'dart:core';
+
+import 'package:app/colyseus/storage.dart';
+import 'package:http/http.dart' as http;
 
 const TOKEN_STORAGE = "colyseus-auth-token";
 
@@ -8,28 +12,28 @@ class Platform {
 }
 
 class Auth {
-  String _id;
-  String username;
-  String displayName;
-  String avatarUrl;
-
+  var _id;
+  var username;
+  var displayName;
+  var avatarUrl;
+  Map attributes;
   bool isAnonymous;
-  String email;
+  var email;
 
-  String lang;
-  String location;
-  String timezone;
+  var lang;
+  var location;
+  var timezone;
   Object metadata = {};
   Object devices;
 
-  String facebookId;
-  String twitterId;
-  String googleId;
-  String gameCenterId;
-  String steamId;
+  var facebookId;
+  var twitterId;
+  var googleId;
+  var gameCenterId;
+  var steamId;
 
-  String[] friendIds;
-  String[] blockedUserIds;
+  var friendIds;
+  var blockedUserIds;
 
   DateTime createdAt;
   DateTime updatedAt;
@@ -37,109 +41,131 @@ class Auth {
   // auth token
   String token;
 
-  String endpoint: string;
-  // TODO:
-  Object keepOnlineInterval:;
+  String endpoint;
+
+  Timer keepOnlineInterval;
+  var timer;
 
   Auth(String endpoint) {
-    this.endpoint = endpoint.replace("ws", "http");
+    this.endpoint = endpoint.replaceAll("ws", "http");
     getItem(TOKEN_STORAGE, (token) => this.token = token);
   }
 
-  get hasToken() {
-    return !!this.token;
+  get hasToken {
+    return this.token;
   }
 
-   login (Object options = {}) async {
-    const queryParams = Object.assign({}, options);
+  login(var options) async {
+    var queryParams = options;
 
-  if (this.hasToken) {
-  queryParams.token = this.token;
-  }
+    if (this.hasToken) {
+      queryParams.token = this.token;
+    }
 
-  var data = await this.request('post', '/auth', queryParams);
+    var data = await this.request('post', '/auth', body: {queryParams: queryParams});
 
-  // set & cache token
-  this.token = data.token;
-  setItem(TOKEN_STORAGE, this.token);
+    // set & cache token
+    this.token = data.token;
+    setItem(TOKEN_STORAGE, this.token);
 
-  for (var attr in data) {
-  if (this.hasOwnProperty(attr)) { this[attr] = data[attr]; }
-  }
+    for (var attr in data) {
+      this.attributes[attr] = data[attr];
+    }
 
-  this.registerPingService();
+    this.registerPingService(15000);
 
-  return this;
+    return this;
   }
 
   save() async {
-    await this.request('put', '/auth', {}, {
-      username: this.username,
-      displayName: this.displayName,
-      avatarUrl: this.avatarUrl,
-      lang: this.lang,
-      location: this.location,
-      timezone: this.timezone,
+    await this.request('put', '/auth', body: {
+      "username": this.username,
+      "displayName": this.displayName,
+      "avatarUrl": this.avatarUrl,
+      "lang": this.lang,
+      "location": this.location,
+      "timezone": this.timezone,
     });
 
     return this;
   }
 
-  getFriends() async  {
-    return (await this.request('get', '/friends/all')) as IUser[];
+  getFriends() async {
+    return (await this.request('get', '/friends/all'));
   }
 
   getOnlineFriends() async {
-    return (await this.request('get', '/friends/online')) as IUser[];
+    return (await this.request('get', '/friends/online'));
   }
 
   getFriendRequests() async {
-    return (await this.request('get', '/friends/requests')) as IUser[];
+    return (await this.request('get', '/friends/requests'));
   }
 
-  sendFriendRequest(friendId: string) async {
-  return (await this.request('post', '/friends/requests', { userId: friendId })) as IStatus;
+  sendFriendRequest(String friendId) async {
+    return (await this
+        .request('post', '/friends/requests', body: {"userId": friendId}));
   }
 
-  acceptFriendRequest(friendId: string) async {
-  return (await this.request('put', '/friends/requests', { userId: friendId })) as IStatus;
+  acceptFriendRequest(String friendId) async {
+    return (await this
+        .request('put', '/friends/requests', body: {"userId": friendId}));
   }
 
-  declineFriendRequest(friendId: string) async {
-  return (await this.request('del', '/friends/requests', { userId: friendId })) as IStatus;
+  declineFriendRequest(String friendId) async {
+    return (await this
+        .request('del', '/friends/requests', body: {"userId": friendId}));
   }
 
-  blockUser(friendId: string) async {
-  return (await this.request('post', '/friends/block', { userId: friendId })) as IStatus;
+  blockUser(String friendId) async {
+    return (await this
+        .request('post', '/friends/block', body: {"userId": friendId}));
   }
 
-  unblockUser(friendId: string) async {
-  return (await this.request('put', '/friends/block', { userId: friendId })) as IStatus;
+  unblockUser(String friendId) async {
+    return (await this
+        .request('put', '/friends/block', body: {"userId": friendId}));
   }
 
-  request(
-  method: 'get' | 'post' | 'put' | 'del',
-  segments: string,
-  query: {[key: string]: number | string} = {},
-  body: any,
-  headers: {[key: string]: string} = {}
-  ) async {
-  headers['Accept'] = 'application/json';
-  if (this.hasToken) { headers['Authorization'] = 'Bearer ' + this.token; }
+  request(String method, String segments, {query, body, headers}) async {
+    headers['Accept'] = 'application/json';
+    if (this.hasToken) {
+      headers['Authorization'] = 'Bearer ' + this.token;
+    }
 
-  const queryParams: string[] = [];
-  for (const name in query) {
-  queryParams.push(`${name}=${query[name]}`);
-  }
+    var queryParams = [];
+    for (const name in query) {
+      queryParams.add("$name=${query[name]}");
+    }
 
-  const queryString = (queryParams.length > 0)
-  ? `?${queryParams.join("&")}`
-      : '';
+    var queryString =
+    (queryParams.length > 0) ? "?${queryParams.join("&")}" : '';
 
-  const opts: Partial<http.HttpieOptions> = { headers };
-  if (body) { opts.body = body; }
+    var opts = {headers: headers};
+    if (body) {
+      opts["body"] = body;
+    }
 
-  return (await http[method](`${this.endpoint}${segments}${queryString}`, opts)).data;
+    var url = "${this.endpoint}$segments$queryString";
+    var request;
+    switch (method) {
+      case "post":
+        request =
+        await http.post(url, headers: opts["headers"], body: opts["body"]);
+        break;
+      case "put":
+        request =
+        await http.put(url, headers: opts["headers"], body: opts["body"]);
+        break;
+      case "get":
+        request = await http.get(url, headers: opts["body"]);
+        break;
+      case "del":
+        request = await http.delete(url, headers: opts["headers"]);
+        break;
+    }
+
+    return request.body;
   }
 
   logout() {
@@ -148,13 +174,16 @@ class Auth {
     this.unregisterPingService();
   }
 
-  registerPingService(15000) {
-  this.unregisterPingService();
+  registerPingService(int timeout) {
+    this.unregisterPingService();
 
-  this.keepOnlineInterval = setInterval(() => this.request('get', '/auth'), timeout);
+    this.keepOnlineInterval =
+        Timer.periodic(new Duration(milliseconds: 300), (timer) {
+      this.request('get', '/auth');
+    });
   }
 
   unregisterPingService() {
-    clearInterval(this.keepOnlineInterval);
+    this.keepOnlineInterval.cancel();
   }
 }

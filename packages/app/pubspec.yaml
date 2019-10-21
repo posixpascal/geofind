@@ -12,6 +12,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   web_socket_channel: 1.1.0
   msgpack2: ^2.0.0
+  http: 0.12.0+2
 
 dev_dependencies:
   flutter_test:

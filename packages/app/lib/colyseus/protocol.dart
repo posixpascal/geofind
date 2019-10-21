@@ -42,14 +42,16 @@ utf8Read(DataView view, int offset) {
       ((view.getUint8(++i) & 0x3f) << 0);
       if (chr >= 0x010000) { // surrogate pair
         chr -= 0x010000;
+        // TODO: fix this
         string +=
-            String.fromCharCode((chr >>> 10) + 0xD800, (chr & 0x3FF) + 0xDC00);
+            String.fromCharCodes(((chr >> 10) + 0xD800, (chr & 0x3FF) + 0xDC00));
+        // ============
       } else {
         string += String.fromCharCode(chr);
       }
       continue;
     }
-    throw new Error('Invalid byte ' + byte.toString(16));
+    throw new Error(); // TODO: add error
   }
   return string;
 }
@@ -58,8 +60,9 @@ utf8Read(DataView view, int offset) {
 utf8Length(String str) {
   var c = 0;
   var length = 0;
+
   for (var i = 0, l = str.length; i < l; i++) {
-    c = str.charCodeAt(i);
+    c = str.codeUnitAt(i);
     if (c < 0x80) {
       length += 1;
     } else if (c < 0x800) {
