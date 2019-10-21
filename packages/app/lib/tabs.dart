@@ -1,5 +1,6 @@
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 const tabItems = <BubbleBottomBarItem>[
   BubbleBottomBarItem(
@@ -38,14 +39,25 @@ const tabItems = <BubbleBottomBarItem>[
   BubbleBottomBarItem(
       backgroundColor: Colors.green,
       icon: Icon(
-        Icons.settings,
+        Icons.format_list_numbered,
         color: Colors.green,
       ),
       activeIcon: Icon(
-        Icons.settings,
+        Icons.format_list_numbered,
         color: Colors.green,
       ),
-      title: Text("Menu"))
+      title: Text("Highscore")),
+  BubbleBottomBarItem(
+      backgroundColor: Colors.blue,
+      icon: Icon(
+        Icons.settings,
+        color: Colors.blue,
+      ),
+      activeIcon: Icon(
+        Icons.settings,
+        color: Colors.blue,
+      ),
+      title: Text("Settings"))
 ];
 
 class Tabs extends StatefulWidget{
@@ -69,10 +81,10 @@ class TabsState extends State<Tabs> {
         currentIndex: widget.currentIndex,
         onTap: widget.onChange,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        elevation: 8,
-        fabLocation: BubbleBottomBarFabLocation.end,
+        elevation: 2,
         //new
-        hasNotch: true,
+        hasNotch: false,
+        iconSize: 32,
         //new
         hasInk: true,
         //new, gives a cute ink effect

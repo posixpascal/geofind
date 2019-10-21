@@ -1,14 +1,23 @@
 import 'package:app/scenes/friends/friends.dart';
+import 'package:app/scenes/leaderboard/leaderboard.dart';
 import 'package:app/scenes/play/play.dart';
 import 'package:app/scenes/profile/profile.dart';
 import 'package:app/scenes/settings/settings.dart';
 import 'package:bubble_bottom_bar/bubble_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'colyseus/client.dart';
 import 'tabs.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+      ColyseusClient colyseusClient = ColyseusClient();
+      colyseusClient.connect("wss://geofind.io");
+      runApp(MyApp(colyseusClient: colyseusClient));
+    }
 
 class MyApp extends StatelessWidget {
+  MyApp({Key key, this.colyseusClient}) : super(key: key);
+  ColyseusClient colyseusClient;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),
-      home: HomePage(title: 'geofind'),
+      home: HomePage(title: 'geofind', colyseusClient: colyseusClient),
       initialRoute: "/",
       routes: {},
     );
@@ -24,8 +33,9 @@ class MyApp extends StatelessWidget {
 }
 
 class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+  HomePage({Key key, this.title, this.colyseusClient}) : super(key: key);
   final String title;
+  ColyseusClient colyseusClient;
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -55,6 +65,9 @@ class _HomePageState extends State<HomePage> {
         activeWidget = ProfilePage();
         break;
       case 3:
+        activeWidget = LeaderboardPage();
+        break;
+      case 4:
         activeWidget = SettingsPage();
         break;
     }
@@ -67,12 +80,6 @@ class _HomePageState extends State<HomePage> {
             brightness: Brightness.light,
             backgroundColor: activeTab.backgroundColor,
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: (){},
-            child: Icon(Icons.add),
-            backgroundColor: Colors.red,
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
           bottomNavigationBar: Tabs(currentIndex: currentIndex, onChange:setCurrentIndex),
           body: activeWidget
         ));
