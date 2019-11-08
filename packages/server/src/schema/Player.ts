@@ -40,6 +40,8 @@ hooks.beforeAuthenticate((provider, $setOnInsert, $set) => {
 
 
         training_progress: 0,
+        language: "en",
+
     };
 });
 

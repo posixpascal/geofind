@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import styled, {keyframes, css} from "styled-components";
 import {FancyButton} from "../buttons";
 import {HorizontalAlignment} from "../uiWidgets/HorizontalAlignment";
+import {ChangeNameDialog} from "./changeNameDialog";
 
 const spring = keyframes`
   from {
@@ -28,11 +29,17 @@ const shadowAnimation = keyframes`
 
 const FancyDialogWrapper = styled.div`
    position: relative;
-   
+  
    ${FancyButton}{
       transition: all ease-in-out 0.3s;
        z-index: 2;
    }
+   
+   ${props => props.inline && css`
+     ${FancyDialogContentWrapper} {
+        transform: scale(0.0);
+     }
+    `}
    
    
    ${props => props.visible && css`
@@ -44,7 +51,17 @@ const FancyDialogWrapper = styled.div`
         
         ${FancyDialogContentWrapper} {
             overflow: hidden;
-            transition: box-shadow ease-in-out 0.2s, height ease-in-out 0.4s;
+            transition: transform cubic-bezier(.52,1.22,.8,1.1) 0.3s, box-shadow ease-in-out 0.2s, height ease-in-out 0.3s;
+            ${props => props.inline && css`
+              transform: scale(1.0);
+              max-width: 500px;
+              margin: 0 auto;
+              max-height: 200px;
+              
+              > div {
+                padding: 20px;
+              }
+            `}
             animation: ${shadowAnimation} 0.2s ease-in-out, ${spring} 0.6s cubic-bezier(.52,1.22,.8,1.1);
             animation-iteration-count: 1;
             animation-fill-mode: forwards;
@@ -86,8 +103,8 @@ const FancyDialogContentWrapper = styled.div`
   margin: 0 20px;
 `;
 
-export const FancyDialog = ({visible, children}) => {
-    return <FancyDialogWrapper visible={visible}>
+export const FancyDialog = ({inline = false, visible, children}) => {
+    return <FancyDialogWrapper inline={inline} visible={visible}>
         {children}
     </FancyDialogWrapper>;
 };
@@ -98,8 +115,44 @@ export const FancyDialogTrigger = ({children}) => {
     </div>;
 };
 
+export const FancyDialogHeaderWrapper = styled.div`
+  border-bottom: 2px solid #999;
+  margin: -20px -20px 20px;
+  padding: 24px 24px 14px;
+  font-family: "Luckiest Guy";
+  display: flex;
+  justify-content: space-between;
+  font-size: 36px;
+  ${props => props.variant === "yellow" && `
+    background: linear-gradient(to top, #ffb319 0%, #ffe000  100%);
+    border-bottom: 2px solid #ffb319 ;
+    border-top: 4px solid rgba(255,255,255,.4);
+    :hover { box-shadow: 0 0 8px #ffe000, inset 0 -3px 3px #ffb319; }
+    text-shadow: 1px 1px 0 rgba(0,0,0,.3);
+    box-shadow: 0 3px 15px rgba(0,0,0,.2);
+  `}
+  
+  .close {
+  }
+`;
+
+export const FancyDialogHeader = ({variant, children}) => {
+    return <FancyDialogHeaderWrapper variant={variant }>
+        {children}
+        <div className={"close"}>X</div>
+    </FancyDialogHeaderWrapper>
+}
+
 export const FancyDialogContent = ({children}) => {
     return <FancyDialogContentWrapper>
         <div>{children}</div>
     </FancyDialogContentWrapper>
 };
+
+export default {
+    FancyDialog,
+    FancyDialogTrigger,
+    FancyDialogContent,
+    FancyDialogHeader,
+    ChangeNameDialog
+}

@@ -1,17 +1,39 @@
-import React from "react";
+import React, {useState} from "react";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import {bindActionCreators} from "redux";
-import * as allGameActions from "../../actions/game";
-import * as allRoomActions from "../../actions/rooms";
-import {List, ListItem} from "../../components/list";
+import * as allUserActions from "../../actions/user";
+import {List, ListItem, ListItemSuffix} from "../../components/list";
+import {UserPin} from "../../components/pins/userPin";
+import {ColorDot} from "../../components/userListing/colorDot";
+import {ChangeNameDialog} from "../../components/dialogs/changeNameDialog";
 
 
-const ProfilePage = ({match, room, roomActions, gameActions}) => {
+const ProfilePage = ({user, userActions}) => {
+    const [changeNameVisible, setChangeNameVisibility] = useState(true);
+
+    const toggleChangeNameVisibility = () => {
+        setChangeNameVisibility(!changeNameVisible);
+    };
+
+    if (!user || !user._id){
+        return <span>...</span>
+    }
+
     return <div>
+        <ChangeNameDialog user={user} visible={changeNameVisible}/>
         <List>
-            <ListItem>Name</ListItem>
-            <ListItem>Pin / Farbe</ListItem>
+            <ListItem onClick={toggleChangeNameVisibility}>
+                Name
+                <ListItemSuffix>{user.displayName}</ListItemSuffix>
+            </ListItem>
+            <ListItem>
+                Pin / Farbe
+                <ListItemSuffix>
+                    <UserPin user={user} />
+                    <ColorDot color={user.metadata.pin_color} />
+                </ListItemSuffix>
+            </ListItem>
             <ListItem>Erfolge</ListItem>
             <ListItem>Konto anlegen</ListItem>
             <ListItem>Einstellungen</ListItem>
@@ -20,13 +42,12 @@ const ProfilePage = ({match, room, roomActions, gameActions}) => {
 };
 
 function mapStateToProps(state) {
-    return {room: state.room, game: state.game};
+    return {user: state.user};
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        gameActions: bindActionCreators(allGameActions, dispatch),
-        roomActions: bindActionCreators(allRoomActions, dispatch),
+        gameActions: bindActionCreators(allUserActions, dispatch),
     };
 }
 

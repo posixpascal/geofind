@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import {UserPin} from "../pins/userPin";
 
 const ListItemWrapper = styled.div`
   height: 80px;
@@ -12,7 +13,9 @@ const ListItemWrapper = styled.div`
   text-transform: uppercase;
   font-family: 'Luckiest Guy';
   font-size: 24px;
-  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   :first-child {
     border-radius: 8px 8px 0 0;
   }
@@ -34,10 +37,27 @@ const ListItemWrapper = styled.div`
   }
 `;
 
-export const ListItem = ({children}) => {
+const ListItemSuffixWrapper = styled.div`
+  color: #999;
+  display: flex;
+  align-items: center;
+  svg {
+    margin-right: 10px;
+  }
+`;
+
+export const ListItem = ({children, onClick = () => {}}) => {
     return (
-        <ListItemWrapper>
+        <ListItemWrapper onClick={onClick}>
             {children}
         </ListItemWrapper>
     );
+};
+
+export const ListItemSuffix = ({children}) => {
+    return (
+        <ListItemSuffixWrapper>
+            {children}
+        </ListItemSuffixWrapper>
+    )
 };
