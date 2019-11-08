@@ -1,7 +1,7 @@
 import React from "react";
 import {strings} from "../../i18n";
-import {Button} from "../uiWidgets/Button";
 import {ReadyButton} from "./widgets";
+import {Button} from "../buttons";
 
 export const GetReadyButton = ({player}) => {
     const toggleReady = () => {
@@ -59,11 +59,7 @@ export const PlayerStatusButton = ({player, room}) => {
 export const MuteButton = ({muted, toggleMute}) => {
     return (
         <Button
-            className={muted ? "active" : ""}
-            onClick={toggleMute}
-            style={{marginRight: "20px"}}
-        >
-            {muted ? <span>Muted</span> : <span>Mute?</span>}
-        </Button>
+            variant={"purple"}
+            title={muted ? <span>Muted</span> : <span>Mute?</span>}/>
     );
 };

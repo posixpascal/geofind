@@ -31,11 +31,6 @@ const FooterWrapper = styled.div`
 
 export const Footer = () => {
     return (
-        <FooterWrapper>
-            <div>Made with <Heart/> by <a href="https://pascalraszyk.de">PR</a></div>
-            <div>
-                <a target={"_blank"} href={"https://pascalraszyk.de/de/impressum/"}>Imprint</a>
-            </div>
-        </FooterWrapper>
+        <></>
     );
 };

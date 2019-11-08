@@ -6,31 +6,12 @@ import {strings} from "../../i18n";
 import {HeaderNavigation} from "./navigation";
 import {BrandTitle, HeaderContainer, Image} from "./widgets";
 
-// @ts-ignore - Parcel loads this
-const LOGO_SVG = "/assets/logo.svg";
-
 const Header = ({user, game}) => {
-    const BrandName = () => {
-        if (game && game.isSuddenDeath) {
-            return <span>{strings.suddenDeath}</span>;
-        }
-
-        return (
-            <span>
-                <img style={{display: "inline", height: "32px"}} src={LOGO_SVG}/>
-                {strings.gameName}
-            </span>
-        );
-    };
-
     return (
         <HeaderContainer>
             <BrandTitle>
                 <NavLink to={"/"}>
-                    <span>
-                        <img style={{display: "inline", height: "32px"}} src={LOGO_SVG}/>
-                        {strings.gameName}
-                    </span>
+                    {strings.gameName}
                 </NavLink>
             </BrandTitle>
             <HeaderNavigation user={user}/>

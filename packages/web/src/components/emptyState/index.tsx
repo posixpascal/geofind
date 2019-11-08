@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import {Button} from "../uiWidgets/Button";
+import {Button} from "../buttons";
+
 
 interface IEmptyStateProps {
     title: string;
@@ -47,7 +48,7 @@ export default ({title, description, action, ctaText}: IEmptyStateProps) => {
                 {description}
             </EmptyStateDescription>
             <EmptyStateAction onClick={action}>
-                <Button>{ctaText}</Button>
+                <Button variant={"purple"} title={ctaText} />
             </EmptyStateAction>
         </EmptyStateWrapper>
     );

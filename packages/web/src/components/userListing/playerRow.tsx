@@ -1,13 +1,13 @@
 import React, {useState} from "react";
-import {User, Zap} from "react-feather";
+import {Eye, MessageCircle, Settings, User, UserPlus, Zap} from "react-feather";
 import {client} from "../../helper/webSockets";
 import {isRoomLeader} from "../../shared/selectors";
-import {UserName} from "../game/scoreBoard/widgets";
+
 import {HorizontalAlignment} from "../uiWidgets/HorizontalAlignment";
 import {GetReadyButton, MuteButton, PlayerStatusButton} from "./buttons";
 import {UserColorPicker} from "./colorPicker";
 import {changeName} from "./index";
-import {ColorPickerWrapper, UserColor, UserIcon, UserListingRow} from "./widgets";
+import {ColorPickerWrapper, UserColor, UserName, UserActions, UserIcon, UserListingRow} from "./widgets";
 
 export const PlayerRow = ({player, onColorChange, room}) => {
     const audioMuted = localStorage.getItem("audioMuted") !== null;
@@ -53,23 +53,27 @@ export const PlayerRow = ({player, onColorChange, room}) => {
     };
 
     return (
-        <UserListingRow isUser={isCurrentPlayer} key={player.id}>
-            <HorizontalAlignment>
-                <UserIcon className={"userIcon"}>{userIcon}</UserIcon>
-                <UserName onClick={handleUserNameClick}>
+        <UserListingRow key={player.id}>
+                <UserName borderColor={player.color} onClick={handleUserNameClick}>
                     <img alt="Player avatar" src={player.avatarUrl} width={28}/>
-                    <span style={{fontSize: "24px"}}>{player.displayName}</span>
+                    <span>
+                    {player.displayName}
+                        {/*<UserIcon className={"userIcon"}>{userIcon}</UserIcon>*/}
+                </span>
                 </UserName>
-                <ColorPickerWrapper>
+            <UserActions>
+                {isCurrentPlayer && <MessageCircle/>}
+                {!isCurrentPlayer && <UserPlus />}
+            </UserActions>
+            {/*<ColorPickerWrapper>
                     <UserColor onClick={handleUserColorClick} style={{background: player.color}}/>
                     {colorPicker && colorPickerComponent}
-                </ColorPickerWrapper>
-            </HorizontalAlignment>
-            <HorizontalAlignment>
+                </ColorPickerWrapper>*/}
+            {/*<HorizontalAlignment>
                 {isCurrentPlayer && <MuteButton muted={muted} toggleMute={toggleMute}/>}
                 {isCurrentPlayer && <GetReadyButton player={player} />}
                 {!isCurrentPlayer && <PlayerStatusButton player={player} room={room} />}
-            </HorizontalAlignment>
+            </HorizontalAlignment>*/}
         </UserListingRow>
     );
 };

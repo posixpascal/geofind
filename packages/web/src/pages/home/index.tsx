@@ -1,14 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
+import {withRouter, NavLink} from "react-router-dom";
 import {bindActionCreators} from "redux";
 import styled from "styled-components";
 import * as allGameActions from "../../actions/game";
 import * as allRoomActions from "../../actions/rooms";
-import LobbyListing from "../../components/lobbyListing";
-import {Button} from "../../components/uiWidgets/Button";
 import {client} from "../../helper/webSockets";
-import {strings} from "../../i18n";
+import {CreateRoomButton, FriendsListButton, MultiPlayerButton, ProfileButton} from "../../components/buttons";
+import {sharedHistory} from "../../helper/sharedHistory";
+import {SinglePlayerButton} from "../../components/buttons/singlePlayer";
+
+
 
 export const Overlay = styled.div`
     position: absolute;
@@ -92,22 +94,11 @@ export const HomePage = ({gameActions, roomActions}) => {
 
     return (
         <div>
-            <h2>{strings.homeTitle} </h2>
-
-            <p>
-                {strings.homeDescription}
-            </p>
-            <p>
-                {strings.homeDescription2}
-            </p>
-            <p>
-                {strings.homeDescription3}
-            </p>
-
-            {rooms.length > 0 && <Button onClick={roomActions.create}>{strings.createLobby}</Button>}
-            <br/><br/>
-
-            <LobbyListing rooms={rooms}/>
+            <SinglePlayerButton  title="Single Player" />
+            <NavLink to={"/multiplayer"}><MultiPlayerButton title="Multi Player" /></NavLink>
+            <CreateRoomButton onClick={roomActions.create} title="Create Room" />
+            <NavLink to={"/friends"}><FriendsListButton title="Friends" /></NavLink>
+            <NavLink to={"/profile"}><ProfileButton title="Profile" /></NavLink>
         </div>
     );
 };

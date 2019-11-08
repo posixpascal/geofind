@@ -1,38 +1,51 @@
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
 import styled from "styled-components";
-import {Button} from "../uiWidgets/Button";
+import {Button} from "../buttons";
 
 export const UserListingWrapper = styled.div`
   width: 100%;
+  margin: 50px 0;
 `;
 
 export const UserListingRow = styled.div`
   display: flex;
-  width: 100%;
   justify-content: space-between;
-  padding: 8px;
   align-items:center;
-  margin-bottom: 10px;
-  padding-right: 30px;
-  ${(props) => props.isUser && `
-    background: #f0e3fb;
-  `}
+  margin: 0 20px 40px;
+`;
 
-  @media (max-width: 767px){
-    flex-direction: column;
-    .userIcon {
-      display: none;
-    }
-
-    font-size: 28px;
-    padding: 20px 0;
+export const UserActions = styled.div`
+  svg {
+    width: 42px;
+    height: 42px;
+    margin: 0 10px;
   }
 `;
+
 export const UserName = styled.div`
   margin: 0 8px;
-  border-bottom: 1px dotted #ccc;
-  font-size: 24px;
+  font-size: 32px;
+  img {
+     ${(props) => `
+        border: 4px solid ${props.borderColor}
+     `}
+     border-radius: 50%;
+     background: #fff;
+     object-fit: cover;
+     width: 64px;
+     height: 64px;
+  }
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: 'Luckiest Guy';
+  span {
+    position: relative;
+    top: 3px;
+    padding-left: 20px;
+  }
+  
 `;
 export const UserColor = styled.div`
   width: 24px;
@@ -119,7 +132,7 @@ export const ReadyButton = styled(Button)`
     `}
 `;
 
-export const UserIcon = styled.div`
+export const UserIcon = styled.span`
   padding-right: 5px;
   svg {
   width: 32px;

@@ -5,4 +5,5 @@ import styled from "styled-components";
 export const HorizontalAlignment = styled.div`
   display: flex;
   align-items: center;
+  ${props => props.between && "justify-content: space-between;"}
 `;

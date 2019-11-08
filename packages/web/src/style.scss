@@ -1,4 +1,28 @@
-@import "~milligram";
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+  margin: 0;
+  padding: 0;
+  font-weight: normal;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 body.no-scroll {
   overflow: hidden;
 }
@@ -17,6 +41,7 @@ body.no-scroll {
     filter: grayscale(0%);
   }
 }
+
 body.helloDarkness {
   animation: helloDarkness linear forwards 20s;
 }
@@ -27,65 +52,74 @@ body {
     transition: all ease-in-out 0.5s;
   }
 }
+
+@media (prefers-color-scheme: dark) {
+  html, body {background:  #222; color: white;}
+}
+
+a {
+  text-decoration: none;
+}
+
 body.sudden-death {
   header {
     background: #444 !important;
     border-color: #000 !important;
     color: #fff !important;
+
     nav ul li {
       border-color: #000 !important;
     }
   }
 }
 
-.button:focus,  button:focus, input[type=button]:focus,  input[type=reset]:focus,  input[type=submit]:focus{
+.button:focus, button:focus, input[type=button]:focus, input[type=reset]:focus, input[type=submit]:focus {
   background: #f3f3f3 !important;
-  border-color: #9b4dca!important;
+  border-color: #9b4dca !important;
   color: #333 !important;
+
   span {
-    color:#333 !important;
+    color: #333 !important;
   }
 }
-button.active, .button:hover, button:hover,input[type=button]:hover,input[type=reset]:hover,input[type=submit]:hover{
+
+button.active, .button:hover, button:hover, input[type=button]:hover, input[type=reset]:hover, input[type=submit]:hover {
   background: #9b4dca !important;
   border-color: #8c14ca !important;
   color: #fff !important;
+
   span {
     color: #fff !important;
   }
 }
 
 @-moz-keyframes spin {
-  from { -moz-transform: rotate(0deg); }
-  to { -moz-transform: rotate(359deg); }
-}
-@-webkit-keyframes spin {
-  from { -webkit-transform: rotate(0deg); }
-  to { -webkit-transform: rotate(359deg); }
-}
-@keyframes spin {
-  from {transform:rotate(0deg);}
-  to {transform:rotate(359deg);}
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to {
+    -moz-transform: rotate(359deg);
+  }
 }
 
-@mixin readyAnim {
-  0%   { opacity: 0; left: 0; }
-  5%   { opacity: 100;  }
-  15%  { opacity: 0; left: 100%; }
-  100% { opacity: 0; left: 100%; }
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(359deg);
+  }
 }
-@-webkit-keyframes readyAnim {
-  @include readyAnim;
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
-@-moz-keyframes readyAnim {
-  @include readyAnim;
-}
-@-o-keyframes readyAnim {
-  @include readyAnim;
-}
-@keyframes readyAnim {
-  @include readyAnim;
-}
+
 
 body {
   padding: 0;
@@ -95,7 +129,7 @@ body {
 }
 
 .switch {
-  input[type=checkbox]{
+  input[type=checkbox] {
     height: 0;
     width: 0;
     visibility: hidden;

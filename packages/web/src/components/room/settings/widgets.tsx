@@ -7,36 +7,24 @@ export const RoomSettingsWrapper = styled.div`
     font-size: 18px;
     align-items: center;
     justify-content: space-between;
+    
     @media (max-width: 767px){
       font-size: 12px !important;
       align-items: flex-start;
       flex-wrap: wrap;
-      flex-direction: row !important;
     }
 `;
 
 export const RoomSetting = styled.div`
   padding: 0 30px;
   display: flex;
-
+  font-family: 'Luckiest Guy', cursive;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   svg {
     display: block;
   }
-
-  @media (max-width: 767px){
-    font-size: 18px !important;
-    padding: 0 20px;
-    width: 100%;
-    flex: 0 50%;
-    margin-bottom: 30px;
-    svg {
-    width: 20px;
-    height: 20px;
-    }
-   }
 `;
 
 export const RoomSettingsPaneWrapper = styled.div`
@@ -95,4 +83,5 @@ width: 200px;
 
 export const RoomSettingsHeader = styled.h4`
   margin-top: 10px;
+  font-family: 'Luckiest Guy', cursive;
 `;

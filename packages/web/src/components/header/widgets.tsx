@@ -4,38 +4,32 @@ import styled from "styled-components";
 
 export const HeaderContainer = styled.header`
   display: flex;
-  background: #fff;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  border-bottom: 5px solid #f1f1f1;
   position: sticky;
   top: 0;
   z-index: 110;
+  height: 60px;
+  align-items: center;
+  transition: background 0.3s linear, color 0.3s linear;
+ 
+    @media (prefers-color-scheme: dark) {
+      background:  #222; color: white;
+      a {
+        color: white !important;
+      }
+    }
 `;
 
 export const BrandTitle = styled.h1`
   margin: 0;
-  padding: 0;
-  font-size: 32px;
+  font-size: 42px;
+  position:relative;
   display: flex;
   align-items: center;
-  padding-left: 40px
-  a {
-  display: block;
-  }
-  img {
-    height: 48px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-  }
-  @media (max-width: 767px){
-    font-size: 20px;
-    img {
-      height: 32px;
-    }
-  }
+  a { color: #333; text-decoration: none;padding-left: 20px; position: relative; top: 10px;}
+  font-family: 'Luckiest Guy', cursive;
 `;
 
 export const NavItem = styled.li`
@@ -51,54 +45,42 @@ export const Navigation = styled.nav`
     display: flex;
     justify-content: space-evenly;
     list-style: none;
+    align-content: flex-start;
     margin: 0;
     li {
       display: inline-block;
-      padding: 20px;
       margin: 0;
-      @media (max-width: 767px){
-        padding: 10px;
-      }
     }
   }
 `;
 
 export const Divider = styled.li`
-  border-right: 1px solid #ddd;
 `;
 
 export const CurrentUser = styled.div`
-  padding-left: 60px;
   position: relative;
   text-align: right;
   font-weight: 700;
-  font-size: 18px;
-  img {
-    position: absolute;
-    width: 40px;
-    left: 0;
-    top: -12px;
-  }
+  display: flex;
+  align-items: center;
+  padding: 10px;
   span {
-  
+    font-size: 24px;
+    display: block;
+    position: relative;
+    top: 10px;
+    font-family: 'Luckiest Guy', cursive;
   }
+  
   svg {
     animation: spin 0.8s linear infinite;
     position: absolute;
     left: 0;
     top: 2px;
   }
-
-  @media (max-width: 767px){
-    padding-left: 40px;
-    img {
-      width: 30px;
-      top: -6px;
-    }
-    span {
-    white-space: nowrap;
-    font-size: 14px;
-    }
+  
+  img {
+      width: 64px;
   }
 `;
 

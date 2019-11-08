@@ -3,56 +3,60 @@ import {Edit3, Settings} from "react-feather";
 import styled from "styled-components";
 import {strings} from "../../i18n";
 import {arePlayersReady, isRoomLeader} from "../../shared/selectors";
-import {Button} from "../uiWidgets/Button";
 import {HorizontalAlignment} from "../uiWidgets/HorizontalAlignment";
 import {RoomSettingsView} from "./settings";
+import {Button} from "../buttons";
 
-const RoomHeaderWrapper = styled.h2`
+const RoomHeaderWrapper = styled.div`
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     span {
-    padding: 0 20px;
+      padding: 0 20px;
     }
-
-  @media (max-width: 767px){
-    flex-direction: column;
-    justify-content: center;
-    .ha {
-      flex-direction: column !important;
-      margin-top: 40px;
-    }
-
-    div  {
-    display: flex;
-    flex-direction: column;
-    font-size: 44px;
-    svg {
-    width: 48px;
-    height: 48px;
-    margin: 15px 0;
-    }
-    }
-  }
-
+    h2 {
+        font-family: 'Luckiest Guy', cursive;
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+        
+        // better alignment for the eye
+        svg {
+          position: relative;
+          top: -4px;
+          left: -5px;
+        }
+    }  
 `;
 
-export const RoomHeader = ({settingsClick, leaveRoomClick, startGameClick, editClick, room}) => {
-    const isLeader = isRoomLeader(room);
-    const allReady = arePlayersReady(room);
-    const canStartGame = isLeader && allReady;
+export const WithHint = styled.p`
+  position: relative;
+  :after {
+    content: "${(attr) => attr.hint}";
+    font-size: 16px;
+    color: #aaa;
+    position: absolute;
+    bottom: 5px;
+    left: 15px;
+    text-transform: uppercase;
+    font-family: "Luckiest Guy", cursive;
+    text-align: center;
+    width: 100%;
+    white-space:nowrap;
+  }
+`;
 
+export const RoomHeader = ({settingsClick, room}) => {
+    const isLeader = isRoomLeader(room);
+
+    console.log(room);
     return (
         <RoomHeaderWrapper>
-            <div>{room.name ? room.name : room.id}
-                {isLeader && <span><Edit3 onClick={editClick}/></span>}
-                {isLeader && <span><Settings onClick={settingsClick}/></span>}
-            </div>
-            <RoomSettingsView room={room}/>
-            <HorizontalAlignment className={"ha"}>
-                <Button onClick={leaveRoomClick}>
-                    {strings.leaveLobby}
-                </Button>
-                {canStartGame && <Button onClick={startGameClick}>{strings.startGame}</Button>}
+            <HorizontalAlignment>
+                <WithHint hint={strings.roomNameInfo} as={"h2"}>
+                    <span>{room.name || room.id}</span>
+                    {isLeader && <span><Settings onClick={settingsClick}/></span>}
+                </WithHint>
             </HorizontalAlignment>
         </RoomHeaderWrapper>
     );

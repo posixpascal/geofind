@@ -10,7 +10,11 @@ import {RoomHeader, RoomInvitationLink} from "../../components/room";
 import {RoomSettingsPane} from "../../components/room/settings";
 import {BreakOnMobile} from "../../components/uiWidgets/BreakOnMobile";
 import UserListing from "../../components/userListing";
-import {isRoomLeader} from "../../shared/selectors";
+import {arePlayersReady, getCurrentPlayer, isRoomLeader} from "../../shared/selectors";
+import {Button, SmallButton} from "../../components/buttons";
+import {strings} from "../../i18n";
+import {WithHint} from "../../components/room/header";
+import {GetReadyButton} from "../../components/userListing/buttons";
 
 const subscribeRoomEvents = ({isLeader, actions}) => {
     if (!window.currentRoom) {
@@ -31,6 +35,12 @@ const subscribeRoomEvents = ({isLeader, actions}) => {
 const RoomPage = ({match, room, roomActions, gameActions}) => {
     const [collapsed, setCollapsed] = useState(false);
     const isLeader = isRoomLeader(room);
+    const allReady = arePlayersReady(room);
+    const canStartGame = isLeader && allReady;
+    const currentPlayer = getCurrentPlayer(room);
+    const toggleReady = () => {
+        window.currentRoom.send({type: "user:readyState:toggle"});
+    };
 
     useEffect(() => subscribeRoomEvents({isLeader, actions: {...gameActions}}));
 
@@ -53,7 +63,6 @@ const RoomPage = ({match, room, roomActions, gameActions}) => {
             updateRoomSettings={roomActions.update}
         />
     );
-
     return (
         <>
             <RoomHeader {...roomHeaderActions} room={room}/>
@@ -61,10 +70,31 @@ const RoomPage = ({match, room, roomActions, gameActions}) => {
             {isLeader && LeaderSettingsPane}
 
             <BreakOnMobile reverse={true}>
-                <ChatWindow players={room.players} messages={room.messages}/>
                 <UserListing room={room} players={room.players}/>
             </BreakOnMobile>
-            <RoomInvitationLink/>
+            {/*<RoomInvitationLink/>*/}
+
+            {isLeader && <>
+                {canStartGame && <Button
+                    onClick={roomHeaderActions.startGameClick}
+                    variant={"green"}
+                    title={strings.startGame}/>
+                }
+
+                {!canStartGame && <WithHint hint={strings.usersNotReady}><Button
+                    variant={"disabled"}
+                    title={strings.startGame}/></WithHint>
+                }
+            </>}
+
+            {!isLeader && <>
+                {currentPlayer.isReady && <Button variant={"yellow"} loading title={"Waiting..."}  />}
+                {!currentPlayer.isReady && <Button onClick={toggleReady} variant={"gray"} title={"I am ready"}  />}
+            </>}
+
+            <Button onClick={roomActions.leave} variant={"red"} title={strings.leaveRoom}/>
+            <SmallButton onClick={() => {
+            }} variant={"purple"} title={strings.inviteFriends}/>
         </>
     );
 };
