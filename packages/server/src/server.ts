@@ -29,6 +29,6 @@ gameServer
     .define("game_streetview", StreetviewGameRoom, {mode: "streetview"})
     .sortBy({clients: 1});
 
-gameServer.listen(app.get("port") || 3001, app.get("hostname"), 30, () => {
-    logger.info("  App is running at http://localhost:%d in %s mode", app.get("port") || 3001, app.get("env"));
+gameServer.listen(3001, app.get("hostname"), 30, () => {
+    logger.info("  App is running at http://localhost:%d in %s mode", 3001, app.get("env"));
 });
