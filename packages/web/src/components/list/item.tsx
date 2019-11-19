@@ -44,6 +44,14 @@ const ListItemSuffixWrapper = styled.div`
   svg {
     margin-right: 10px;
   }
+  ${props => props.icon && `
+    align-items: flex-end;
+    svg {
+        margin-right: -10px;
+        height: 48px;
+        width: 48px;
+    }
+  `}
 `;
 
 export const ListItem = ({children, onClick = () => {}}) => {
@@ -54,9 +62,9 @@ export const ListItem = ({children, onClick = () => {}}) => {
     );
 };
 
-export const ListItemSuffix = ({children}) => {
+export const ListItemSuffix = ({children, icon=false}) => {
     return (
-        <ListItemSuffixWrapper>
+        <ListItemSuffixWrapper icon={icon}>
             {children}
         </ListItemSuffixWrapper>
     )

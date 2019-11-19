@@ -146,13 +146,17 @@ export const FancyButton = styled.div`
         padding-top: 14px;
         margin: 10px auto;
     `}
+    
+  
 `;
 
 export const SmallButton = ({onClick, title, variant, loading = false}) => {
     return <FancyButton onClick={onClick} variant={variant} small={true} loading={loading}>{title}</FancyButton>;
 };
 
-
+export const TextButton = ({ title, onClick, variant }) => {
+    return <FancyButton onClick={onClick} variant={variant} small={true} outline={true}>{title}</FancyButton>;
+};
 
 export const MultiPlayerButton = ({title}) => {
     return <FancyButton variant={"blue"}>{title}</FancyButton>;

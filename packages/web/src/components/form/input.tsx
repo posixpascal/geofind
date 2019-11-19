@@ -11,7 +11,9 @@ export const FancyInput = styled.input`
   border: 2px solid #999;
   width: 100%;
   outline: none;
+  margin-bottom: 20px;
   @media (prefers-color-scheme: dark){
     color: #fff;
   }
+  
 `;

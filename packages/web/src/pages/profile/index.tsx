@@ -7,10 +7,11 @@ import {List, ListItem, ListItemSuffix} from "../../components/list";
 import {UserPin} from "../../components/pins/userPin";
 import {ColorDot} from "../../components/userListing/colorDot";
 import {ChangeNameDialog} from "../../components/dialogs/changeNameDialog";
+import {ChevronRight} from "react-feather";
 
 
 const ProfilePage = ({user, userActions}) => {
-    const [changeNameVisible, setChangeNameVisibility] = useState(true);
+    const [changeNameVisible, setChangeNameVisibility] = useState(false);
 
     const toggleChangeNameVisibility = () => {
         setChangeNameVisibility(!changeNameVisible);
@@ -20,8 +21,13 @@ const ProfilePage = ({user, userActions}) => {
         return <span>...</span>
     }
 
+    const changeName = (newName) => {
+        userActions.changeName(newName);
+        setChangeNameVisibility(false);
+    };
+
     return <div>
-        <ChangeNameDialog user={user} visible={changeNameVisible}/>
+        <ChangeNameDialog changeName={changeName} onClose={toggleChangeNameVisibility} user={user} visible={changeNameVisible}/>
         <List>
             <ListItem onClick={toggleChangeNameVisibility}>
                 Name
@@ -34,9 +40,21 @@ const ProfilePage = ({user, userActions}) => {
                     <ColorDot color={user.metadata.pin_color} />
                 </ListItemSuffix>
             </ListItem>
-            <ListItem>Erfolge</ListItem>
-            <ListItem>Konto anlegen</ListItem>
-            <ListItem>Einstellungen</ListItem>
+            <ListItem>
+                Erfolge
+                <ListItemSuffix icon={true}>
+                    <ChevronRight />
+                </ListItemSuffix>
+            </ListItem>
+            <ListItem>
+                Konto anlegen
+            </ListItem>
+            <ListItem>
+                Einstellungen
+                <ListItemSuffix icon={true}>
+                    <ChevronRight />
+                </ListItemSuffix>
+            </ListItem>
         </List>
     </div>
 };
@@ -47,7 +65,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        gameActions: bindActionCreators(allUserActions, dispatch),
+        userActions: bindActionCreators(allUserActions, dispatch),
     };
 }
 

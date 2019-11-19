@@ -27,6 +27,28 @@ const shadowAnimation = keyframes`
   }
 `;
 
+export const FancyDialogHeaderWrapper = styled.div`
+  border-bottom: 2px solid #999;
+  margin: -20px -20px 20px;
+  padding: 24px 24px 14px;
+  font-family: "Luckiest Guy";
+  display: flex;
+  justify-content: space-between;
+  font-size: 36px;
+  ${props => props.variant === "yellow" && `
+    background: linear-gradient(to top, #ffb319 0%, #ffe000  100%);
+    border-bottom: 2px solid #ffb319 ;
+    border-top: 4px solid rgba(255,255,255,.4);
+    :hover { box-shadow: 0 0 8px #ffe000, inset 0 -3px 3px #ffb319; }
+    text-shadow: 1px 1px 0 rgba(0,0,0,.3);
+    box-shadow: 0 3px 15px rgba(0,0,0,.2);
+  `}
+  
+  .close {
+    cursor: pointer;
+  }
+`;
+
 const FancyDialogWrapper = styled.div`
    position: relative;
   
@@ -41,7 +63,11 @@ const FancyDialogWrapper = styled.div`
      }
     `}
    
-   
+     ${props => css`
+         ${FancyDialogContentWrapper} {
+            transition: transform cubic-bezier(.52,1.22,.8,1.1) 0.3s, box-shadow ease-in-out 0.2s, height ease-in-out 0.3s;
+         }
+     `}
    ${props => props.visible && css`
         ${FancyButton} {
             transform: rotate(0deg)  scale(1.15) translate3d(0,0,2px);
@@ -56,7 +82,6 @@ const FancyDialogWrapper = styled.div`
               transform: scale(1.0);
               max-width: 500px;
               margin: 0 auto;
-              max-height: 200px;
               
               > div {
                 padding: 20px;
@@ -68,6 +93,13 @@ const FancyDialogWrapper = styled.div`
             border-radius: 4px;
         }
       `}
+   
+   ${FancyDialogHeaderWrapper} {
+    box-shadow: none;
+    :hover {
+      box-shadow: none;
+    }
+   }
    
 `;
 const FancyDialogContentWrapper = styled.div`
@@ -115,33 +147,28 @@ export const FancyDialogTrigger = ({children}) => {
     </div>;
 };
 
-export const FancyDialogHeaderWrapper = styled.div`
-  border-bottom: 2px solid #999;
-  margin: -20px -20px 20px;
-  padding: 24px 24px 14px;
-  font-family: "Luckiest Guy";
-  display: flex;
-  justify-content: space-between;
-  font-size: 36px;
-  ${props => props.variant === "yellow" && `
-    background: linear-gradient(to top, #ffb319 0%, #ffe000  100%);
-    border-bottom: 2px solid #ffb319 ;
-    border-top: 4px solid rgba(255,255,255,.4);
-    :hover { box-shadow: 0 0 8px #ffe000, inset 0 -3px 3px #ffb319; }
-    text-shadow: 1px 1px 0 rgba(0,0,0,.3);
-    box-shadow: 0 3px 15px rgba(0,0,0,.2);
-  `}
-  
-  .close {
-  }
-`;
 
-export const FancyDialogHeader = ({variant, children}) => {
-    return <FancyDialogHeaderWrapper variant={variant }>
+export const FancyDialogHeader = ({
+                                      variant, children, onClose = () => {
+    }
+                                  }) => {
+    return <FancyDialogHeaderWrapper variant={variant}>
         {children}
-        <div className={"close"}>X</div>
+        <div className={"close"} onClick={onClose}>X</div>
     </FancyDialogHeaderWrapper>
 }
+
+export const FancyDialogFooter = styled.div`
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  
+  ${FancyButton} {
+    margin: 0 !important;
+    max-width: 100%;
+  }
+`;
 
 export const FancyDialogContent = ({children}) => {
     return <FancyDialogContentWrapper>

@@ -1,24 +1,29 @@
 import React, {useEffect, useRef} from "react";
-import {FancyDialog, FancyDialogContent, FancyDialogHeader} from "./index";
+import {FancyDialog, FancyDialogFooter, FancyDialogContent, FancyDialogHeader} from "./index";
 import {FancyInput} from "../form/input";
+import {TextButton} from "../buttons";
 
-export const ChangeNameDialog = ({visible, user}) => {
-    const input : any = useRef();
+export const ChangeNameDialog = ({visible, user, changeName, onClose}) => {
+    const input: any = useRef();
 
     useEffect(() => {
-        if (input.current){
+        if (input.current) {
             input.current.focus();
         }
     });
 
+    const saveName = () => {
+        changeName(input.current.value)
+    };
+
     return <div>
         <FancyDialog inline={true} visible={visible}>
             <FancyDialogContent>
-                <FancyDialogHeader variant={"yellow"}>
+                <FancyDialogHeader onClose={onClose} variant={"yellow"}>
                     Enter a new name
                 </FancyDialogHeader>
-                <FancyInput ref={input} autofocus={true} defaultValue={user.displayName}></FancyInput>
-
+                <FancyInput ref={input} autofocus={true} defaultValue={user.displayName}/>
+                <FancyDialogFooter><TextButton title="Save" onClick={saveName} variant="green" /></FancyDialogFooter>
             </FancyDialogContent>
         </FancyDialog>
     </div>
