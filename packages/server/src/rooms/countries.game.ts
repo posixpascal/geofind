@@ -1,19 +1,11 @@
 import {User, verifyToken} from "@colyseus/social";
-import {Client, Delayed, Presence, Room} from "colyseus";
+import {Client, Delayed, Room} from "colyseus";
 import {COUNTRIES} from "../config/countries";
 import {TRANSLATED_COUNTRIES} from "../config/translatedCountries";
-import {Handler, IMessage} from "../handlers";
-import {ChatHandler} from "../handlers/chatHandler";
-import {CountryGameHandler} from "../handlers/countryGameHandler";
-import {GameHandler} from "../handlers/gameHandler";
-import {RoomHandler} from "../handlers/roomHandler";
-import {ChatMessageTypes} from "../schema/ChatMessage";
 import {CountriesGame} from "../schema/CountriesGame";
 import {Country} from "../schema/Country";
 import {Player} from "../schema/Player";
 import {ScoreBoard} from "../schema/ScoreBoard";
-import {shuffle} from "../util/collections";
-import {distanceInKm} from "../util/math";
 
 export class CountriesGameRoom extends Room {
     public roundTimer: Delayed;
@@ -21,22 +13,7 @@ export class CountriesGameRoom extends Room {
     public additionalRoundTime = 0;
     public handlers: any;
     public playedCountries: any = [];
-    public lobbyOptions: any = {};
-
-    constructor(presence?: Presence) {
-        super(presence);
-
-        this.handlers = {
-            chat: new ChatHandler(this),
-            game: new GameHandler(this),
-            room: new RoomHandler(this),
-            countryGame: new CountryGameHandler(this),
-        };
-    }
-
-    public onMessage(client: any, data: IMessage): void {
-        Handler.handleMessage(this, client, data);
-    }
+    public options: any = {};
 
     public async onAuth(client: Client, options: any) {
         const token = verifyToken(options.token);
@@ -51,7 +28,7 @@ export class CountriesGameRoom extends Room {
         return User.create();
     }
 
-    public onJoin(client: Client, options: any) {
+    public async onJoin(client: Client, options: any) {
         if (!this.state.gameStart) {
             this.startGame();
         }
@@ -66,24 +43,25 @@ export class CountriesGameRoom extends Room {
         player.displayName = client.auth.displayName;
         player.color = client.auth.metadata.pin_color;
         player.avatarUrl = client.auth.avatarUrl;
+        player.connected = true;
 
         this.state.players[client.sessionId] = player;
 
         this.state.scoreBoard[client.sessionId] = new ScoreBoard();
         this.state.scoreBoard[client.sessionId].player = this.state.players[client.sessionId];
         this.state.scoreBoard[client.sessionId].score = 0;
-
-        this.handlers.chat.addMessage(client, {
-            type: ChatMessageTypes.STATUS_MESSAGE,
-            createdAt: +new Date(),
-            message: `${client.auth.displayName} joined the game`,
-            player: false,
-        });
     }
 
-    public onCreate(options: any) {
-        this.lobbyOptions = options.room;
+
+    public async onLeave(client: Client, consented?: boolean): Promise<any> {
+        console.log("on leave", client.sessionId);
+        delete this.state.players[client.sessionId];
+    }
+
+    public onCreate(options: any = {}) {
+        this.options = options;
         this.setState(new CountriesGame());
+        console.log("state set");
     }
 
     public startGame() {
@@ -93,10 +71,9 @@ export class CountriesGameRoom extends Room {
         this.state.roundEnd = false;
 
         this.state.currentRound = 0;
-        this.state.maxRounds = this.lobbyOptions.maxRounds || 50;
-        this.state.roundTime = this.lobbyOptions.roundTime || 20;
-        this.state.victoryScore = this.lobbyOptions.victoryScore || 10;
-        this.state.insultMode = this.lobbyOptions.insultMode;
+        this.state.maxRounds = this.options.maxRounds || 50;
+        this.state.roundTime = this.options.roundTime || 20;
+        this.state.victoryScore = this.options.victoryScore || 10;
 
         // TODO: implement player waiting
         this.state.isWaitingForPlayers = false;
@@ -107,7 +84,7 @@ export class CountriesGameRoom extends Room {
     }
 
     public roundStart() {
-        this.broadcast({type: "map:roundInit"});
+        this.broadcast("map:roundInit");
         this.additionalRoundTime = 0;
 
         // reset votes for next round
@@ -175,7 +152,7 @@ export class CountriesGameRoom extends Room {
             }, 3000);
         }
 
-        this.insultPlayers();
+        this.broadcast("map:animateTo", this.state.country);
         this.transitionToNextRound();
     }
 
@@ -196,7 +173,7 @@ export class CountriesGameRoom extends Room {
     public endGame() {
         this.state.isSuddenDeath = false;
         this.state.gameOver = true;
-        this.broadcast({type: "game:over", payload: {...this.state}});
+        this.broadcast("game:over", {...this.state});
     }
 
     /**
@@ -254,7 +231,9 @@ export class CountriesGameRoom extends Room {
 
         // check if any player has reached required win score
         for (const playerID in this.state.scoreBoard) {
-            if (!this.state.scoreBoard.hasOwnProperty(playerID)) { continue; }
+            if (!this.state.scoreBoard.hasOwnProperty(playerID)) {
+                continue;
+            }
             const scoreBoard = this.state.scoreBoard[playerID];
             if (scoreBoard.score >= this.state.victoryScore) {
                 gameOver = true;
@@ -268,119 +247,6 @@ export class CountriesGameRoom extends Room {
         return gameOver;
     }
 
-    /**
-     * Try to insult players if possible
-     * TODO: outsource
-     */
-    public insultPlayers() {
-        let playedInsult = false;
-        const playerIDs = [];
-        for (const playerID in this.state.votes) {
-            if (!this.state.votes.hasOwnProperty(playerID)) { continue; }
-            playerIDs.push(playerID);
-        }
-
-        for (const playerID of shuffle(playerIDs)) {
-            if (this.insultVote({sessionId: playerID}, this.state.votes[playerID])) {
-                playedInsult = true;
-                break;
-            }
-        }
-
-        if (!playedInsult) {
-            this.broadcast({type: "map:animateTo", payload: this.state.country});
-        }
-
-        return playedInsult;
-    }
-
-    /**
-     * TODO: outsource
-     * Tries to insults a user submitted vote if possible.
-     * Works only if there are at least 4 people playing the game
-     * @param client
-     * @param vote
-     */
-    public insultVote(client: any, vote) {
-        if (Object.keys(this.state.players).length <= 3) {
-            return false;
-        }
-
-        // triggers 100% — check if vote is the only one in a 8k miles radii
-        if (vote.distanceInKm >= 8000) {
-            // check if all other players are near 2000 radius
-            let in2000radius = true;
-            for (const playerID in this.state.players) {
-                if (playerID === client.sessionId) {
-                    continue;
-                }
-                if (this.state.votes[playerID] && this.state.votes[playerID].distanceInKm > 2000) {
-                    in2000radius = false;
-                }
-            }
-
-            if (in2000radius) {
-                // we're playing "hello darkness my old friend" on the frontend and we need more roundTime
-                this.additionalRoundTime = 6;
-                this.broadcast({type: "insult:distance", payload: {playerID: client.sessionId, vote}});
-                return true;
-            }
-        }
-
-        // temporarily disabling other insults
-        return;
-
-        // triggers 20% check if all votes are wrong
-        let allVotesWrong = true;
-        for (const playerID in this.state.votes) {
-            if (this.state[playerID] && this.state[playerID].hasWon) {
-                allVotesWrong = false;
-            }
-        }
-
-        if (allVotesWrong && Math.random() <= 0.2) {
-            this.broadcast({type: "insult:info", payload: {message_type: "allWrong"}});
-            return true;
-        }
-
-        // triggers 50% - check if all all pins are approximately near each other (250km)
-        // and the target is at least 5000 km away from the pins
-        const distances = [];
-        for (const playerID in this.state.players) {
-            if (!this.state.votes[playerID] || !this.state.votes[playerID].hasVoted) {
-                continue;
-            }
-            const playerVote = this.state.votes[playerID].country;
-            for (const otherPlayerID in this.state.players) {
-                if (!this.state.players.hasOwnProperty(otherPlayerID)) { continue; }
-                const playerHasVoted = !this.state.votes[otherPlayerID] || !this.state.votes[otherPlayerID].hasVoted;
-                if (playerID === otherPlayerID || playerHasVoted) {
-                    continue;
-                }
-                // compare distance
-                const otherPlayerVote = this.state.votes[otherPlayerID].country;
-                distances.push(distanceInKm(playerVote, otherPlayerVote));
-            }
-        }
-
-        const allAreClose = distances.reduce((a, c) => a + c, 0) < (distances.length * 250);
-        if (allAreClose && vote.distanceInKm > 5000 && Math.random() < 0.5) {
-            this.broadcast({
-                type: "insult:closeTogether",
-                payload: {playerID: client.sessionId, vote, country: this.state.country},
-            });
-            this.clock.setTimeout(() => {
-                this.broadcast({
-                    type: "insult:closeTogether2",
-                    payload: {playerID: client.sessionId, vote, country: this.state.country},
-                });
-            }, 4000);
-            this.additionalRoundTime = 5;
-            return true;
-        }
-
-        return false;
-    }
 
     /**
      * Checks if 2 (or more) people are close to winning the game

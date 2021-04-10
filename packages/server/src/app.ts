@@ -9,7 +9,7 @@ import * as fs from "fs";
 
 const app = express();
 // Express configuration
-app.set("port", process.env.GAMESERVER_PORT);
+app.set("port", 3001);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

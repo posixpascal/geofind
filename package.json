@@ -41,9 +41,7 @@
   },
   "devDependencies": {
     "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.15.1",
     "jest": "^24.9.0",
-    "jest-enzyme": "^7.1.1",
     "ts-jest": "^24.1.0",
     "typescript": "^3.5.3"
   }

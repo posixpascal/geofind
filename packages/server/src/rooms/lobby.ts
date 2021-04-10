@@ -2,7 +2,6 @@ import {User, verifyToken} from "@colyseus/social";
 import {Client, Presence, Room} from "colyseus";
 import {Handler, IMessage} from "../handlers";
 import {ChatHandler} from "../handlers/chatHandler";
-import {GameHandler} from "../handlers/gameHandler";
 import {RoomHandler} from "../handlers/roomHandler";
 import {UserHandler} from "../handlers/userHandler";
 import {ChatMessageTypes} from "../schema/ChatMessage";
@@ -12,7 +11,6 @@ import {Player} from "../schema/Player";
 interface ILobbyRoomHandlers {
     chat?: ChatHandler;
     user?: UserHandler;
-    game?: GameHandler;
     room?: RoomHandler;
 
     [index: string]: Handler;
@@ -21,21 +19,6 @@ interface ILobbyRoomHandlers {
 export class LobbyRoom extends Room<Lobby> {
     public handlers: ILobbyRoomHandlers = {};
     public maxClients = 32;
-
-    constructor(presence?: Presence) {
-        super(presence);
-
-        this.handlers = {
-            chat: new ChatHandler(this),
-            user: new UserHandler(this),
-            game: new GameHandler(this),
-            room: new RoomHandler(this),
-        };
-    }
-
-    public onMessage(client: any, data: IMessage): void {
-        Handler.handleMessage(this, client, data);
-    }
 
     public onCreate(options: any) {
         this.setState(new Lobby());
@@ -97,4 +80,5 @@ export class LobbyRoom extends Room<Lobby> {
             player: false,
         });
     }
+
 }

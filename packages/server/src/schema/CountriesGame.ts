@@ -1,9 +1,10 @@
-import { ArraySchema, MapSchema, Schema, type } from "@colyseus/schema";
+import {ArraySchema, MapSchema, Schema, type} from "@colyseus/schema";
 import {ChatMessage} from "./ChatMessage";
 import {Country} from "./Country";
 import {CountryGameVote} from "./CountryGameVote";
 import {Player} from "./Player";
 import {ScoreBoard} from "./ScoreBoard";
+
 
 export class CountriesGame extends Schema {
     @type([ChatMessage])
@@ -16,40 +17,37 @@ export class CountriesGame extends Schema {
     public scoreBoard = new MapSchema<ScoreBoard>();
 
     @type("boolean")
-    public gameStart: boolean;
+    public gameStart: boolean = false;
 
     @type("boolean")
-    public gameOver: boolean;
+    public gameOver: boolean = false;
 
     @type("boolean")
-    public roundStart: boolean;
+    public roundStart: boolean = false;
 
     @type("boolean")
-    public roundEnd: boolean;
+    public roundEnd: boolean = false;
 
     @type("number")
-    public currentRound: number;
+    public currentRound: number = 0;
 
     @type("boolean")
-    public isSuddenDeath: boolean;
+    public isSuddenDeath: boolean = false;
 
     @type("number")
-    public maxRounds: number;
+    public maxRounds: number = 0;
 
     @type("number")
-    public victoryScore: number;
+    public victoryScore: number = 0;
 
     @type("number")
-    public roundTimeLeft: number;
+    public roundTimeLeft: number = 0;
 
     @type("boolean")
-    public canForceRoundEnd: boolean;
+    public canForceRoundEnd: boolean = false;
 
     @type("boolean")
-    public isWaitingForPlayers: boolean;
-
-    @type("boolean")
-    public insultMode: boolean;
+    public isWaitingForPlayers: boolean = false;
 
     @type("string")
     public leader: string;
