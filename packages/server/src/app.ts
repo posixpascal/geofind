@@ -6,7 +6,6 @@ import express from "express";
 import flash from "express-flash";
 import lusca from "lusca";
 import * as fs from "fs";
-
 const app = express();
 // Express configuration
 app.set("port", 3001);

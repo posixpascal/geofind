@@ -2,18 +2,26 @@ import {User, verifyToken} from "@colyseus/social";
 import {Client, Delayed, Room} from "colyseus";
 import {COUNTRIES} from "../config/countries";
 import {TRANSLATED_COUNTRIES} from "../config/translatedCountries";
+import {GameMode} from "../GameMode";
 import {CountriesGame} from "../schema/CountriesGame";
 import {Country} from "../schema/Country";
 import {Player} from "../schema/Player";
 import {ScoreBoard} from "../schema/ScoreBoard";
+import {Vote} from "../schema/Vote";
+import {googleMapsClient} from "../util/googlemaps";
+import logger from "../util/logger";
+import {distanceInKm} from "../util/math";
+import {Simulate} from "react-dom/test-utils";
+import play = Simulate.play;
 
-export class CountriesGameRoom extends Room {
-    public roundTimer: Delayed;
-    public roundCountdown: Delayed;
-    public additionalRoundTime = 0;
-    public handlers: any;
-    public playedCountries: any = [];
-    public options: any = {};
+
+const MAP_SETS = {
+    earth: COUNTRIES,
+};
+
+export class CountriesGameRoom extends Room<CountriesGame> {
+    public options;
+    public mapSet: any;
 
     public async onAuth(client: Client, options: any) {
         const token = verifyToken(options.token);
@@ -29,12 +37,8 @@ export class CountriesGameRoom extends Room {
     }
 
     public async onJoin(client: Client, options: any) {
-        if (!this.state.gameStart) {
-            this.startGame();
-        }
-
-        if (!this.state.leader) {
-            this.state.leader = client.auth._id.toString();
+        if (!this.state.leaderId) {
+            this.state.leaderId = client.auth._id.toString();
         }
 
         const player = new Player();
@@ -43,244 +47,150 @@ export class CountriesGameRoom extends Room {
         player.displayName = client.auth.displayName;
         player.color = client.auth.metadata.pin_color;
         player.avatarUrl = client.auth.avatarUrl;
-        player.connected = true;
+        player.isReady = false;
 
         this.state.players[client.sessionId] = player;
 
-        this.state.scoreBoard[client.sessionId] = new ScoreBoard();
-        this.state.scoreBoard[client.sessionId].player = this.state.players[client.sessionId];
-        this.state.scoreBoard[client.sessionId].score = 0;
+        this.state.scoreboard[client.sessionId] = new ScoreBoard();
+        this.state.scoreboard[client.sessionId].score = 0;
+        this.state.scoreboard[client.sessionId].player = player;
+
+        this.state.mode = GameMode.PREPARING;
     }
 
 
     public async onLeave(client: Client, consented?: boolean): Promise<any> {
-        console.log("on leave", client.sessionId);
         delete this.state.players[client.sessionId];
     }
 
     public onCreate(options: any = {}) {
         this.options = options;
+        this.mapSet = MAP_SETS[this.options.set];
         this.setState(new CountriesGame());
-        console.log("state set");
+        this.state.mapSet = this.options.set;
+        this.state.gameMode = "countries";
+
+        this.onMessage("ready", (client, message) => {
+            this.state.players[client.sessionId].isReady = true;
+            if (this.playersReady()) {
+                this.startGame();
+            }
+        });
+
+        this.onMessage("vote", (client, message) => {
+            const vote = new Vote();
+            vote.player = this.state.players[client.sessionId];
+            vote.lat = message.lat;
+            vote.lng = message.lng;
+            const country = new Country();
+            googleMapsClient.reverseGeocode({latlng: [vote.lat, vote.lng], result_type: "country"}, (err, res) => {
+                if (err) {
+                    logger.error("Unable to resolve country address information from googleMaps", err);
+
+                    // store vote without resolved countryCode
+                    vote.country = this.state.country;
+                    vote.distanceInKm = distanceInKm(this.state.country, vote);
+                    this.state.votes[client.sessionId] = vote;
+                    return;
+                }
+
+                const geocodingResult = res.json.results[0];
+
+                // extracts formatted address and country name from google maps api response
+                if (res.json.results[0]) {
+                    if (geocodingResult.address_components[0]) {
+                        country.countryCode = geocodingResult.address_components[0].short_name;
+                    }
+                    country.countryNameEn = res.json.results[0].formatted_address;
+                    country.countryNameDe = res.json.results[0].formatted_address;
+                    vote.country = country;
+                }
+
+                vote.distanceInKm = distanceInKm(this.state.country, vote);
+
+                this.state.votes[client.sessionId] = vote;
+            });
+        });
+    }
+
+    public playersReady() {
+        let ready = true;
+        this.state.players.forEach((player) => {
+            if (!player.isReady) {
+                ready = false;
+            }
+        });
+        return ready;
     }
 
     public startGame() {
-        this.state.gameStart = true;
+        this.state.mode = GameMode.STARTING;
+        this.state.gameStartsIn = 3;
+        const timer = setInterval(() => {
+            this.state.gameStartsIn -= 1;
+            if (this.state.gameStartsIn <= 0) {
+                this.prepareRound();
+                return clearInterval(timer);
+            }
+        }, 1000);
+    }
 
-        this.state.roundStart = false;
-        this.state.roundEnd = false;
+    public prepareRound() {
+        this.state.votes.forEach((vote) => {
+            this.state.votes[vote.player.playerId].hasWon = false;
+        });
+        this.broadcast("mapreset");
+        this.state.mode = GameMode.ROUND_PREPARE;
+        this.state.roundTime = this.options.roundTime || 15;
 
-        this.state.currentRound = 0;
-        this.state.maxRounds = this.options.maxRounds || 50;
-        this.state.roundTime = this.options.roundTime || 20;
-        this.state.victoryScore = this.options.victoryScore || 10;
-
-        // TODO: implement player waiting
-        this.state.isWaitingForPlayers = false;
-
-        this.clock.setTimeout(() => {
-            this.roundStart();
+        this.setCountry();
+        setTimeout(() => {
+            this.startRound();
         }, 5000);
     }
 
-    public roundStart() {
-        this.broadcast("map:roundInit");
-        this.additionalRoundTime = 0;
-
-        // reset votes for next round
-        for (const playerID in this.state.votes) {
-            if (!this.state.votes.hasOwnProperty(playerID)) {
-                continue;
-            }
-            delete this.state.votes[playerID];
-        }
-
-        this.state.country = this.getRandomCountry();
-        this.state.currentRound += 1;
-        this.state.roundTimeLeft = this.state.roundTime;
-        this.state.canForceRoundEnd = false;
-        this.state.roundStart = true;
-        this.state.roundEnd = false;
-
-        this.roundCountdown = this.clock.setInterval(() => {
-            this.state.roundTimeLeft -= 1;
-            if (this.state.roundTimeLeft === 0) {
-                this.roundCountdown.clear();
+    public startRound() {
+        this.state.mode = GameMode.ROUND_START;
+        const timer = setInterval(() => {
+            this.state.roundTime -= 1;
+            if (this.state.roundTime <= 0) {
+                clearInterval(timer);
+                this.endRound();
             }
         }, 1000);
-
-        this.state.isSuddenDeath = this.isHeadToHeadRound();
-
-        this.roundTimer = this.clock.setTimeout(() => {
-            this.roundEnd();
-        }, this.state.roundTime * 1000);
     }
 
-    public roundEnd() {
-        this.state.roundStart = false;
-        this.state.roundEnd = true;
+    public endRound() {
+        this.state.mode = GameMode.ROUND_END;
 
-        // give users with a direct match a point
-        let onlyDirectVotesWin = false;
-        for (const playerID in this.state.votes) {
-            if (this.state.votes[playerID].hasWon) {
-                onlyDirectVotesWin = true;
-                this.state.scoreBoard[playerID].score += 1;
+        this.state.votes.forEach((vote) => {
+            if (vote.country && vote.country.countryCode === this.state.country.countryCode) {
+                this.state.votes[vote.player.playerId].hasWon = true;
             }
-        }
+        });
 
-        // give points for users with a close vote
-        if (!onlyDirectVotesWin) {
-            let closestDistance = 1000000000;
-            let closestPlayer = "";
-            for (const playerID in this.state.votes) {
-                if (this.state.votes[playerID].hasVoted && this.state.votes[playerID].distanceInKm < closestDistance) {
-                    closestDistance = this.state.votes[playerID].distanceInKm;
-                    closestPlayer = playerID;
-                }
-            }
-
-            if (closestPlayer) {
-                this.state.scoreBoard[closestPlayer].score += 1;
-            }
-        }
-
-        if (this.isGameOver()) {
-            this.state.gameWinner = this.getBestPlayers()[0];
-            this.clock.setTimeout(() => {
-                this.endGame();
-            }, 3000);
-        }
-
-        this.broadcast("map:animateTo", this.state.country);
-        this.transitionToNextRound();
+        this.updateScoreboard();
+        setTimeout(() => {
+            this.prepareRound();
+        }, 8000);
     }
 
-    /**
-     * Starts a new round after 7s, may wait additional seconds if an insult is requiring more time
-     */
-    public transitionToNextRound() {
-        this.clock.setTimeout(() => {
-            if (this.additionalRoundTime) {
-                return this.clock.setTimeout(() => {
-                    this.roundStart();
-                }, this.additionalRoundTime * 1000);
+    public updateScoreboard() {
+        this.state.votes.forEach((vote) => {
+            if (vote.hasWon) {
+                this.state.scoreboard[vote.player.playerId].score += 1;
             }
-            this.roundStart();
-        }, 7000);
+        });
     }
 
-    public endGame() {
-        this.state.isSuddenDeath = false;
-        this.state.gameOver = true;
-        this.broadcast("game:over", {...this.state});
-    }
-
-    /**
-     * Returns a random country which has not played in the game before
-     */
-    public getRandomCountry() {
-        let countryData: any = false;
-        while (!countryData || this.playedCountries.indexOf(countryData.country_code) > -1) {
-            countryData = TRANSLATED_COUNTRIES[Math.floor(Math.random() * COUNTRIES.length)];
-        }
+    public setCountry() {
+        const randomCountry = this.mapSet[Math.floor(Math.random() * this.mapSet.length)];
         const country = new Country();
-        country.lat = countryData.latlng[0];
-        country.lng = countryData.latlng[1];
-        country.countryNameEn = countryData.name;
-        country.countryNameDe = countryData.countryNameDe || countryData.name;
-        country.countryCode = countryData.country_code;
-        this.playedCountries.push(country.countryCode);
-        return country;
-    }
-
-    /**
-     * Returns a list of all players currently having the best score
-     */
-    public getBestPlayers() {
-        let bestPlayers: any = [];
-        let maxScore = 0;
-
-        for (const playerID in this.state.scoreBoard) {
-            if (!this.state.scoreBoard.hasOwnProperty(playerID)) {
-                continue;
-            }
-
-            const scoreBoard = this.state.scoreBoard[playerID];
-            if (scoreBoard.score === maxScore) {
-                bestPlayers.push(playerID);
-            } else if (scoreBoard.score > maxScore) {
-                bestPlayers = [playerID];
-                maxScore = scoreBoard.maxScore;
-            }
-        }
-
-        return bestPlayers;
-    }
-
-    /**
-     * Checks if the game is over and someone won
-     */
-    public isGameOver() {
-        // play until only one player is the best
-        if (this.getBestPlayers().length > 1) {
-            return false;
-        }
-
-        let gameOver = false;
-
-        // check if any player has reached required win score
-        for (const playerID in this.state.scoreBoard) {
-            if (!this.state.scoreBoard.hasOwnProperty(playerID)) {
-                continue;
-            }
-            const scoreBoard = this.state.scoreBoard[playerID];
-            if (scoreBoard.score >= this.state.victoryScore) {
-                gameOver = true;
-            }
-        }
-
-        if (this.state.currentRound >= this.state.maxRounds) {
-            gameOver = true;
-        }
-
-        return gameOver;
-    }
-
-
-    /**
-     * Checks if 2 (or more) people are close to winning the game
-     */
-    public isHeadToHeadRound() {
-        const currentHighScore = this.getPlayerHighScore();
-        // check if near round end
-        const isDrawn = this.getBestPlayers().length > 1;
-
-        if (isDrawn && this.state.currentRound + 1 >= this.state.maxRounds) {
-            return true;
-        }
-
-        if (isDrawn && currentHighScore + 1 >= this.state.victoryScore) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Returns the current max score
-     */
-    public getPlayerHighScore() {
-        let highscore = 0;
-        for (const playerID in this.state.scoreBoard) {
-            if (this.state.scoreBoard.hasOwnProperty(playerID)) {
-                const playerScore = this.state.scoreBoard[playerID].score;
-                if (playerScore > highscore) {
-                    highscore = playerScore;
-                }
-            }
-        }
-
-        return highscore;
+        country.countryCode = randomCountry.country_code;
+        country.lat = randomCountry.latlng[0];
+        country.lng = randomCountry.latlng[1];
+        country.countryNameEn = randomCountry.name;
+        country.countryNameDe = TRANSLATED_COUNTRIES[country.countryCode] || country.countryNameEn;
+        this.state.country = country;
     }
 }

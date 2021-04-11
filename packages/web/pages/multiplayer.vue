@@ -7,15 +7,15 @@
         </nuxt-link>
       </template>
       <template #after>
-        <Icon name="cog"></Icon>
+        &nbsp;
       </template>
     </Logo>
 
-    <GameSettings v-model="settings"/>
+    <GameSettings shade="blue" v-model="settings"/>
 
-    <Button @click="create" variant="green">
+    <Button @click="create" variant="blue">
       <template #icon>🌎</template>
-      Start Game
+      Host Game
     </Button>
   </div>
 </template>
@@ -32,7 +32,7 @@ import {Room} from "~/models";
 @Component({
   components: {Button, Logo, Icon, GameSettings}
 })
-export default class Singleplayer extends Vue {
+export default class Multiplayer extends Vue {
   room : any = null;
   settings = {
     mode: "countries",
@@ -40,7 +40,7 @@ export default class Singleplayer extends Vue {
   };
 
   get gameLink() {
-    return `/play/${this.room.id}`
+    return `/lobby/${this.room.id}`
   }
 
   async create() {

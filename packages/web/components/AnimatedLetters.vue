@@ -72,6 +72,9 @@ export default class AnimatedLetters extends Vue {
       text.style.fontSize = `${textSize}px`;
       text.style.height = `${textSize}px`;
       text.style.lineHeight = `${textSize}px`;
+      if (!offscreenText){
+        return;
+      }
       offscreenText.style.fontSize = `${textSize}px`;
       const textRect = text.getBoundingClientRect();
       textCenter = textRect.top + textRect.height / 2;
@@ -168,6 +171,7 @@ export default class AnimatedLetters extends Vue {
       text.appendChild(letter);
       const color = colors[i % colors.length];
       letter.style.color = color.main;
+      if (!offscreenText){ return; }
       offscreenText.appendChild(oLetter);
       letters[i] = {offScreen: oLetter, onScreen: letter, char: char};
       animateLetterIn(letter);
@@ -192,6 +196,7 @@ export default class AnimatedLetters extends Vue {
         scale: 0, opacity: 0, ease: (window as any).Power2.easeIn, onComplete: () => {
           console.log('removing');
           console.log(letter);
+          if (!offscreenText){ return; }
           offscreenText.removeChild(letter.offScreen);
           text.removeChild(letter.onScreen);
           positionLetters();

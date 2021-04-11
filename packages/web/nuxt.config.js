@@ -44,7 +44,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     "~/plugins/collyseus",
-    "~/plugins/maps"
+    "~/plugins/maps",
+    "~/plugins/flags"
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -57,6 +58,10 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
   ],
+
+  tailwindcss: {
+    configPath: 'tailwind.config.js',
+  },
 
   // https://i18n.nuxtjs.org/options-reference#properties
   i18n: {

@@ -1,20 +1,17 @@
 <template>
   <div class="dialog" v-if="room">
-    <h2>Waiting for Players...</h2>
-    <div v-for="player in room.players">
-      <span v-if="player.isReady">✅</span>
-      <span v-else>🕐</span>
-      {{ player.displayName }}
-    </div>
+    <h2>Game starts in...</h2>
+    <h3>{{ room.gameStartsIn }}</h3>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import {Component, Prop} from "vue-property-decorator";
+import {Room} from "~/models";
 
 @Component
-export default class LoadingDialog extends Vue {
-  @Prop() room!: any;
+export default class GameStartingDialog extends Vue {
+  @Prop() room!: Room;
 }
 </script>
 <style lang="postcss" scoped>
@@ -28,5 +25,9 @@ export default class LoadingDialog extends Vue {
 
 .dialog h2 {
   @apply text-center text-4xl pt-6;
+}
+
+.dialog h3 {
+  @apply text-center text-6xl mt-5;
 }
 </style>

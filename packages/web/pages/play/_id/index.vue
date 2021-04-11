@@ -12,6 +12,7 @@
       </h2>
     </div>
     <GmapMap
+      v-if="room"
       ref="map"
       class="map"
       :center="{lat:10, lng:10}"
@@ -27,9 +28,23 @@
         :draggable="true"
       />
     </GmapMap>
-    <LoadingDialog :room="room"></LoadingDialog>
-    <div class="footer">
-      <span v-if="room">{{ room.name }} {{ room.roundTimeLeft }}</span>
+    <template v-if="room">
+      <LoadingDialog v-if="room.mode === 'preparing'" :room="room"></LoadingDialog>
+      <GameStartingDialog v-if="room.mode === 'starting'" :room="room"></GameStartingDialog>
+      <RoundPrepareDialog v-if="room.mode === 'round_prepare'" :room="room"></RoundPrepareDialog>
+      <RoundEndDialog v-if="room.mode === 'round_end'" :room="room"></RoundEndDialog>
+    </template>
+
+    <div class="footer flex justify-between">
+      <span v-if="room && room.mode === 'round_start'">
+        <h3>
+          <Flag class="flag" :size="'L'" gradient="real-linear" :code="room.country.countryCode"/>
+          {{ room.country.countryNameDe }}
+        </h3>
+      </span>
+      <span v-if="room && room.mode === 'round_start'">
+        <h3 class="flag">{{ room.roundTime }}</h3>
+      </span>
     </div>
   </div>
 </template>
@@ -38,9 +53,12 @@ import Vue from "vue";
 import {Component} from "vue-property-decorator";
 import {Room} from "~/models";
 import LoadingDialog from "~/components/LoadingDialog.vue";
+import RoundPrepareDialog from "~/components/RoundPrepareDialog.vue";
+import GameStartingDialog from "~/components/GameStartingDialog.vue";
+import RoundEndDialog from "~/components/RoundEndDialog.vue";
 
 @Component({
-  components: {LoadingDialog}
+  components: {LoadingDialog, GameStartingDialog, RoundPrepareDialog, RoundEndDialog}
 })
 export default class Countries extends Vue {
   loading = true;
@@ -53,6 +71,7 @@ export default class Countries extends Vue {
 
     if (this.room) {
       this.loading = false;
+      this.$store.dispatch("room/message", {roomId, action: "ready", payload: {}})
       return;
     }
 
@@ -60,6 +79,7 @@ export default class Countries extends Vue {
     try {
       const room = await this.$store.dispatch("room/join", roomId);
       await this.$store.dispatch("room/subscribe", room);
+
     } catch (e) {
       console.error(e);
     } finally {
@@ -72,24 +92,11 @@ export default class Countries extends Vue {
     return Room.query().find(roomId);
   }
 
-  moveMarker(ev){
-      const vote = {lat: ev.latLng.lat(), lng: ev.latLng.lng()};
-      this.marker.position = vote;
-      this.$forceUpdate();
-      console.log(vote);
-  }
-
-  target = {
-    timezones: [
-      "Europe/Tirane",
-    ],
-    latlng: [
-      41,
-      20,
-    ],
-    name: "Albania",
-    country_code: "AL",
-    capital: "Tirana",
+  moveMarker(ev: any) {
+    const vote = {lat: ev.latLng.lat(), lng: ev.latLng.lng()};
+    (this.marker as any).position = vote;
+    this.$store.dispatch("room/message", {roomId: this.room.id, action: "vote", payload: vote})
+    this.$forceUpdate();
   }
 
   mapOptions = {
@@ -136,5 +143,10 @@ export default class Countries extends Vue {
 
 .map * {
   cursor: pointer !important;
+}
+
+.flag {
+  position: relative;
+  top: 4px;
 }
 </style>

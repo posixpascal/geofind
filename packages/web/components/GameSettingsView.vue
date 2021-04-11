@@ -1,22 +1,17 @@
 <template>
-  <div class="settings-wrapper">
-    <h3>Spielmodi</h3>
+  <div class="settings-wrapper" v-if="room && mode && mapSet">
     <div class="settings-panel">
-      <div class="game-modes">
-        <div @click="settings = {...settings, mode: mode.name}" v-for="mode in modes" :class="`game-mode ${shade} w-half ${settings.mode === mode.name ? 'active' : ''} ${mode.disabled ? 'disabled': ''}`">
-          <img :src="mode.image"/>
-          {{ mode.name }}
-        </div>
+      <h3>Spielmodi</h3>
+      <div :class="`game-mode w-half`">
+        <img :src="mode.image"/>
+        {{ mode.name }}
       </div>
     </div>
-
-    <h3>Kartenset</h3>
     <div class="settings-panel">
-      <div class="game-modes">
-        <div @click="settings = {...settings, set: set.name}" v-for="set in sets" :class="`game-mode ${shade} w-half ${settings.set === set.name ? 'active' : ''} ${set.disabled ? 'disabled': ''}`">
-          <img :src="set.image"/>
-          {{ set.name }}
-        </div>
+      <h3>Kartenset</h3>
+      <div :class="`game-mode w-half`">
+        <img :src="mapSet.image"/>
+        {{ mapSet.name }}
       </div>
     </div>
   </div>
@@ -24,11 +19,25 @@
 <script lang="ts">
 import Vue from "vue";
 import {Component, Emit, Model, Prop, VModel} from "vue-property-decorator";
+import {Room} from "~/models";
 
 @Component
-export default class GameSettings extends Vue {
-  @VModel() settings!: any;
+export default class GameSettingsView extends Vue {
+  @Prop() room!: Room;
   @Prop({default: "green"}) shade!: string;
+
+  created() {
+    console.log(this.room);
+  }
+
+  get mode() {
+    return this.modes.find(m => m.name === this.room.gameMode);
+  }
+
+
+  get mapSet() {
+    return this.sets.find(m => m.name === this.room.mapSet);
+  }
 
   modes = [
     {
@@ -85,16 +94,17 @@ export default class GameSettings extends Vue {
 }
 </script>
 <style scoped lang="postcss">
-h3 {
-  @apply mt-10;
-}
 
 .settings-wrapper {
-  @apply my-10;
+  @apply my-10 flex justify-between;
+  margin-left: -8px;
+  margin-right: -8px;
 }
 
 .settings-panel {
-  @apply bg-gray-100 rounded p-5 flex justify-center items-center w-full;
+  @apply rounded w-full p-5 flex flex-col justify-center items-center;
+  margin-left: -12px;
+  margin-right: -12px;
 }
 
 .game-modes {
@@ -105,7 +115,7 @@ h3 {
 
 .game-mode {
   @apply justify-center items-center flex flex-col bg-gray-200 rounded p-5 text-center cursor-pointer;
-  width: calc(33% - 8px);
+  width: 100% !important;
   margin-bottom: 8px;
   margin-top: 8px;
   font-family: 'Luckiest Guy';

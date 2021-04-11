@@ -1,63 +1,39 @@
 import {ArraySchema, MapSchema, Schema, type} from "@colyseus/schema";
 import {ChatMessage} from "./ChatMessage";
 import {Country} from "./Country";
-import {CountryGameVote} from "./CountryGameVote";
+import {Vote} from "./Vote";
 import {Player} from "./Player";
 import {ScoreBoard} from "./ScoreBoard";
 
 
 export class CountriesGame extends Schema {
-    @type([ChatMessage])
-    public messages = new ArraySchema<ChatMessage>();
-
     @type({map: Player})
     public players = new MapSchema<Player>();
 
-    @type({map: ScoreBoard})
-    public scoreBoard = new MapSchema<ScoreBoard>();
-
-    @type("boolean")
-    public gameStart: boolean = false;
-
-    @type("boolean")
-    public gameOver: boolean = false;
-
-    @type("boolean")
-    public roundStart: boolean = false;
-
-    @type("boolean")
-    public roundEnd: boolean = false;
-
-    @type("number")
-    public currentRound: number = 0;
-
-    @type("boolean")
-    public isSuddenDeath: boolean = false;
-
-    @type("number")
-    public maxRounds: number = 0;
-
-    @type("number")
-    public victoryScore: number = 0;
-
-    @type("number")
-    public roundTimeLeft: number = 0;
-
-    @type("boolean")
-    public canForceRoundEnd: boolean = false;
-
-    @type("boolean")
-    public isWaitingForPlayers: boolean = false;
+    @type("string")
+    public leaderId: string;
 
     @type("string")
-    public leader: string;
+    public mode = "preparing";
 
     @type("string")
-    public gameWinner: string;
+    public gameMode = "";
+
+    @type("string")
+    public mapSet = "";
+
+    @type("number")
+    public gameStartsIn: number;
+
+    @type("number")
+    public roundTime: number;
 
     @type(Country)
     public country: Country;
 
-    @type({map: CountryGameVote})
-    public votes = new MapSchema<CountryGameVote>();
+    @type({ map: Vote })
+    public votes = new MapSchema<Vote>();
+
+    @type({ map: ScoreBoard })
+    public scoreboard = new MapSchema<ScoreBoard>();
 }

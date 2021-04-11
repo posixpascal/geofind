@@ -1,3 +1,4 @@
+require('dotenv').config()
 import {RedisPresence, Server} from "colyseus";
 import {MongooseDriver} from "colyseus/lib/matchmaker/drivers/MongooseDriver";
 import {createServer} from "http";

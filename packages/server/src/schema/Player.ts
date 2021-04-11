@@ -63,7 +63,4 @@ export class Player extends Schema {
 
     @type("boolean")
     public isReady: boolean;
-
-    @type("boolean")
-    public connected: boolean;
 }

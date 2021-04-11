@@ -18,6 +18,8 @@ export default class Button extends Vue {
   @Prop({type: String, default: ""}) variant!: string;
   @Prop({default: false, type: Boolean}) animated!: boolean;
   @Prop({default: false, type: Boolean}) small!: boolean;
+  @Prop({default: false, type: Boolean}) disabled!: boolean;
+
 
   get classes() {
     return {
@@ -32,7 +34,8 @@ export default class Button extends Vue {
       "animated": this.animated,
       "static": !this.animated,
       "with-icon": !!this.$slots.icon,
-      "small": this.small
+      "small": this.small,
+      'variant-disabled': this.disabled,
     }
   }
 }
@@ -165,6 +168,7 @@ export default class Button extends Vue {
     background: linear-gradient(to top, #ccc 0%, #e1e1e1 100%);
     border-top: 4px solid rgba(122, 122, 122, .4);
     pointer-events: none;
+    opacity: 0.5;
   }
 
 
