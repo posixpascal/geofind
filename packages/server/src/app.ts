@@ -6,6 +6,7 @@ import express from "express";
 import flash from "express-flash";
 import lusca from "lusca";
 import * as fs from "fs";
+import {settingsRoutes} from "./routes/settingsRoutes";
 const app = express();
 // Express configuration
 app.set("port", 3001);
@@ -18,6 +19,7 @@ app.use(lusca.xframe("SAMEORIGIN"));
 app.use(lusca.xssProtection(true));
 
 app.use("/social/", socialRoutes);
+app.use("/settings/", settingsRoutes);
 app.use("/", express.static("./public"));
 
 app.get("*", function (req, res) {

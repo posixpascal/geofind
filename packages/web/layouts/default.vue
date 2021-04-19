@@ -37,6 +37,14 @@ html {
   margin: 0 auto;
 }
 
+.lucky {
+  font-family: 'Luckiest Guy';
+}
+
+input.lucky {
+  padding-top: 15px !important;
+}
+
 h1 {
   @apply text-6xl text-center pt-10;
   font-family: 'Luckiest Guy';
@@ -48,5 +56,7 @@ h2 {
 h3 {
   @apply text-2xl;
   font-family: 'Luckiest Guy';
+  position: relative;
+  top: 3px;
 }
 </style>

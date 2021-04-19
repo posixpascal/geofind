@@ -45,7 +45,9 @@ export default {
   plugins: [
     "~/plugins/collyseus",
     "~/plugins/maps",
-    "~/plugins/flags"
+    "~/plugins/flags",
+    "~/plugins/api",
+    "~/plugins/user",
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -99,5 +101,6 @@ export default {
 
   publicRuntimeConfig: {
     collyseusUrl: process.env.COLLYSEUS_URL,
+    backendUrl: process.env.BACKEND_URL
   },
 }

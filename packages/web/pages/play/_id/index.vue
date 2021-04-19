@@ -26,7 +26,8 @@
         @dragend="moveMarker"
         :clickable="true"
         :draggable="true"
-      />
+        :icon="{ url: userPin }"
+      ></GmapMarker>
     </GmapMap>
     <template v-if="room">
       <LoadingDialog v-if="room.mode === 'preparing'" :room="room"></LoadingDialog>
@@ -56,6 +57,7 @@ import LoadingDialog from "~/components/LoadingDialog.vue";
 import RoundPrepareDialog from "~/components/RoundPrepareDialog.vue";
 import GameStartingDialog from "~/components/GameStartingDialog.vue";
 import RoundEndDialog from "~/components/RoundEndDialog.vue";
+import {PINS} from "~/constants/pins";
 
 @Component({
   components: {LoadingDialog, GameStartingDialog, RoundPrepareDialog, RoundEndDialog}
@@ -90,6 +92,19 @@ export default class Countries extends Vue {
   get room() {
     const roomId = this.$route.params.id;
     return Room.query().find(roomId);
+  }
+
+  get user(){
+    return this.$user.get();
+  }
+
+  get pins(){
+    return PINS;
+  }
+
+  get userPin(){
+    console.log(this.user.metadata.pin, PINS);
+    return PINS[this.user.metadata.pin];
   }
 
   moveMarker(ev: any) {
