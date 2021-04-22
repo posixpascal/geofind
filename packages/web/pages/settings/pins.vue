@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="main-menu">
     <Logo>
       <template #before>
         <nuxt-link to="/settings">
@@ -11,7 +11,7 @@
       </template>
     </Logo>
     <Box class="">
-	    <h3>Select your favorite Map Pin {{ user.metadata.pin }}</h3>
+	    <h3>Select your favorite Map Pin</h3>
       <PinSelection :initial="user.metadata.pin" @change="setPin" />
     </Box>
   </div>

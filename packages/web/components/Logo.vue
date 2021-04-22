@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="icon"><slot name="before"></slot></div>
-    <nuxt-link to="/"><h1 class="">GEOFIND.io</h1></nuxt-link>
+    <nuxt-link to="/"><h1 class="">woist.xyz</h1></nuxt-link>
     <div class="icon"><slot name="after"></slot></div>
   </div>
 </template>

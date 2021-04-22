@@ -59,4 +59,21 @@ h3 {
   position: relative;
   top: 3px;
 }
+
+
+.main-menu {
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .main-menu {
+    margin: 0 20px;
+  }
+}
+
+@media (min-width: 768px){
+  .main-menu {
+    width: 500px;
+  }
+}
 </style>

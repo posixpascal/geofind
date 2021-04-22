@@ -17,10 +17,6 @@ const gameServer = new Server({
     driver: new MongooseDriver(process.env.LOCAL_MONGODB_URI),
 });
 
-gameServer.define("lobby", LobbyRoom).sortBy({clients: 1}).on("create", (room) => {
-    logger.debug("Room created: " + room.roomId);
-});
-
 gameServer
     .define("game_countries", CountriesGameRoom, {mode: "countries"})
     .sortBy({clients: 1});

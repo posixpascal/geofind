@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="main-menu">
     <Logo>
       <template #before>
         <nuxt-link to="/">
@@ -10,16 +10,17 @@
         <span style="width: 50px"></span>
       </template>
     </Logo>
+
+    <h3 class="mt-10">Name</h3>
     <Box class="flex items-center justify-between">
-	    <h3>Your Name</h3>
       <Input v-model="name" @change="setName()" :placeholder="user.displayName"/>
     </Box>
 
+    <h3>Map Pin</h3>
     <Box class="flex items-center justify-between">
-      <h3>Your Map Pin</h3>
       <div class="flex items-center">
-        <Pin :id="pin" size="46" />
-        <Button to="/settings/pins" class="pl-5" variant="yellow" x-small>CHANGE</Button>
+        <Pin :id="pin" width="48" />
+        <Button to="/settings/pins" class="pl-2.5" style="width: 300px" variant="yellow" x-small>CHANGE</Button>
       </div>
     </Box>
   </div>

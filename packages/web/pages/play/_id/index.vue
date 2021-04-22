@@ -15,18 +15,49 @@
       v-if="room"
       ref="map"
       class="map"
-      :center="{lat:10, lng:10}"
-      :zoom="3"
+      :center="{lat: 43.489565, lng: -168.7008533}"
+      :zoom="zoom"
       :options="mapOptions"
       @click="moveMarker"
     >
       <GmapMarker
+        :animation="2"
         v-if="marker"
         :position="marker.position"
         @dragend="moveMarker"
         :clickable="true"
         :draggable="true"
-        :icon="{ url: userPin }"
+        :icon="{
+          url: userPin,
+          anchor: { x: pinSizeX, y: pinSize },
+          scaledSize: { height: pinSize, width: pinSize },
+        }"
+      ></GmapMarker>
+
+      <GmapMarker
+        v-if="targetMarker"
+        :animation="2"
+        :position="targetMarker.position"
+        :clickable="false"
+        :draggable="false"
+        :icon="{
+          anchor: { x: pinSizeX, y: pinSize },
+          scaledSize: { height: pinSize, width: pinSize },
+        }"
+      ></GmapMarker>
+
+      <GmapMarker
+        v-if="otherMarkers"
+        animated
+        v-for="otherMarker in otherMarkers"
+        :position="otherMarker.position"
+        :clickable="false"
+        :draggable="false"
+        :icon="{
+          url: pins[otherMarker.pin],
+          anchor: { x: pinSizeX, y: pinSize },
+          scaledSize: { height: pinSize, width: pinSize },
+        }"
       ></GmapMarker>
     </GmapMap>
     <template v-if="room">
@@ -64,8 +95,11 @@ import {PINS} from "~/constants/pins";
 })
 export default class Countries extends Vue {
   loading = true;
-
+  zoom = 3
   marker = {}
+  targetMarker = {}
+  otherMarkers = []
+  roundStats = {};
 
   async created() {
     this.loading = true;
@@ -73,7 +107,8 @@ export default class Countries extends Vue {
 
     if (this.room) {
       this.loading = false;
-      this.$store.dispatch("room/message", {roomId, action: "ready", payload: {}})
+      await this.$store.dispatch("room/message", {roomId, action: "ready", payload: {}})
+      await this.setupEvents();
       return;
     }
 
@@ -81,12 +116,35 @@ export default class Countries extends Vue {
     try {
       const room = await this.$store.dispatch("room/join", roomId);
       await this.$store.dispatch("room/subscribe", room);
-
     } catch (e) {
       console.error(e);
     } finally {
       this.loading = false;
     }
+
+    await this.setupEvents();
+  }
+
+  async setupEvents(){
+    const room = await this.$store.dispatch("room/get", this.$route.params.id);
+    if(!room){
+      return;
+    }
+
+    room.onMessage("map:position", (event) => {
+      if (!this.$refs.map || !(this.$refs.map as any).$mapObject){return;}
+      console.log(this.$refs.map);
+      (this.$refs.map as any).$mapObject.panTo(event);
+      this.zoom = event.zoom || this.zoom;
+    });
+
+    room.onMessage("round:stats", (event) => {
+      this.roundStats = event;
+    });
+  }
+
+  beforeDestroy(){
+    this.$store.dispatch("room/leave", this.$route.params.id);
   }
 
   get room() {
@@ -100,6 +158,15 @@ export default class Countries extends Vue {
 
   get pins(){
     return PINS;
+  }
+
+  get pinSize(){
+    return 64;
+  }
+
+  // Center of the Marker
+  get pinSizeX(){
+    return 28;
   }
 
   get userPin(){
@@ -121,7 +188,7 @@ export default class Countries extends Vue {
     streetViewControl: false,
     rotateControl: false,
     fullscreenControl: false,
-    disableDefaultUI: false,
+    disableDefaultUI: true,
     styles: [
       {
         elementType: "labels",

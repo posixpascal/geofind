@@ -1,6 +1,13 @@
 <template>
   <div class="container">
-    <Logo />
+    <Logo>
+      <template #before>
+        <span style="width: 35px;"></span>
+      </template>
+      <template #after>
+        <span style="width: 35px;"></span>
+      </template>
+    </Logo>
     <MainMenu />
   </div>
 </template>

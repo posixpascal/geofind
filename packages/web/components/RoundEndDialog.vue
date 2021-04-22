@@ -4,7 +4,7 @@
       Round end
     </h3>
     <div v-for="vote in votes">
-      <span v-if="vote.country && vote.country.countryCode === room.country.countryCode">👑</span> {{ vote.player.displayName }}
+      <span v-if="vote.country && validVote(vote)">👑</span> {{ vote.player.displayName }}
       (Score: {{ room.scoreboard[vote.player.playerId].score }} Pts.)
       <br/><Flag v-if="vote.country" class="mini-flag" :code="vote.country.countryCode"></Flag>
       <small v-if="vote.country">{{ vote.country.countryNameDe }}
@@ -44,6 +44,10 @@ export default class RoundEndDialog extends Vue {
 
       return 0
     });
+  }
+
+  validVote(vote){
+    return vote.country.countryCode === (this.room as any).country.countryCode
   }
 }
 </script>

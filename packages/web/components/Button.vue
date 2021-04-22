@@ -1,6 +1,6 @@
 <template>
   <nuxt-link :to="to">
-    <button @click="$emit('click')" :class="classes">
+    <button @click="$emit('click', $event)" :class="classes">
       <template v-if="$slots.icon">
         <span class="icon"><slot name="icon"></slot></span>
       </template>
@@ -14,7 +14,7 @@ import {Component, Prop} from "vue-property-decorator";
 
 @Component
 export default class Button extends Vue {
-  @Prop({default: "#"}) to!: string;
+  @Prop({default: "#void"}) to!: string;
   @Prop({type: String, default: ""}) variant!: string;
   @Prop({default: false, type: Boolean}) animated!: boolean;
   @Prop({default: false, type: Boolean}) small!: boolean;
@@ -81,6 +81,7 @@ export default class Button extends Vue {
 
 
 .fancy-button {
+  position: relative;
   width: 100%;
   cursor: pointer;
   display: flex;
@@ -240,6 +241,19 @@ export default class Button extends Vue {
   &:active {
     box-shadow: none !important;
     transform: scale(0.95) !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .fancy-button {
+    padding: 10px 15px 10px;
+    font-size: 28px;
+    display: block;
+    margin: 30px 0px;
+  }
+
+  .fancy-button.with-icon {
+    padding-left: 30px !important;
   }
 }
 </style>

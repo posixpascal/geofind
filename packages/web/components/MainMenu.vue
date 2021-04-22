@@ -1,5 +1,6 @@
 <template>
-  <div style="width: 500px; margin: 0 auto">
+  <div class="main-menu">
+    <p class="text-center">The geographical multiplayer guessing game. Challenge your friends, strangers or yourself.</p>
     <Button to="/singleplayer" variant="green" :animated="true">
       <template #icon>🕹</template>
       Single Player
@@ -11,6 +12,10 @@
     <Button to="/multiplayer" variant="blue" :animated="true">
       <template #icon>🌟</template>
       Create Room
+    </Button>
+    <Button to="lobbies" variant="purple" :animated="true">
+      <template #icon>🎮</template>
+      Public Rooms
     </Button>
     <!--<Button to="teachers" variant="blue" :animated="true">
       <template #icon>👩‍🏫</template>
@@ -47,3 +52,20 @@ import Button from "~/components/Button.vue";
 export default class MainMenu extends Vue {
 }
 </script>
+<style lang="postcss">
+.main-menu {
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .main-menu {
+    margin: 0 20px;
+  }
+}
+
+@media (min-width: 768px){
+  .main-menu {
+    width: 500px;
+  }
+}
+</style>

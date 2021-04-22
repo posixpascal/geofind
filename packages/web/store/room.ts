@@ -2,6 +2,7 @@ import {ActionTree, MutationTree} from 'vuex';
 import {RootState} from '~/store/index';
 import {Room} from "~/models";
 import * as Colyseus from "colyseus.js";
+import {OpenRoom} from "~/models/OpenRoom";
 
 const reFetchAfter = 60000; // ms
 
@@ -14,8 +15,18 @@ export const mutations: MutationTree<RoomState> = {};
 const rooms: any  = {};
 
 export const actions: ActionTree<RoomState, RootState> = {
+  async fetchAll(context: any){
+    const rooms = await (this as any).$collyseus.getAvailableRooms();
+    await OpenRoom.insert({
+      data: rooms
+    });
+
+    await OpenRoom.delete((openRoom) => {
+      return !rooms.find(r => r.roomId === openRoom.roomId);
+    });
+  },
   async create(context: any, settings){
-    const room = await (this as any).$collyseus.joinOrCreate(`game_${settings.mode}`, {
+    const room = await (this as any).$collyseus.create(`game_${settings.mode}`, {
       ...settings
     });
 
@@ -31,6 +42,9 @@ export const actions: ActionTree<RoomState, RootState> = {
 
     return room;
   },
+  async get(context: any, name){
+    return rooms[name];
+  },
   async join(context: any, roomName) {
     let room: Colyseus.Room | null = null;
     try {
@@ -44,10 +58,14 @@ export const actions: ActionTree<RoomState, RootState> = {
         }
       })
     } catch (e) {
+      console.error(e);
       this.$router.push("/");
     }
 
     return room;
+  },
+  async leave(context: any, roomName) {
+    return rooms[roomName].leave();
   },
   async message(context, { roomId, action, payload }){
     if (!rooms[roomId]){ return; }
@@ -65,10 +83,17 @@ export const actions: ActionTree<RoomState, RootState> = {
       await Room.update({
         where: room.id,
         data: {
-          ...room,
           ...changes.toJSON()
         }
       });
     });
+
+    return room;
+  },
+  async ready(context: any, room: any) {
+    rooms[room.id].send("ready");
+  },
+  async unready(context: any, room: any) {
+    rooms[room.id].send("unready");
   }
 }

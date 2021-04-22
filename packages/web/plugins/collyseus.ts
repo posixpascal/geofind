@@ -6,10 +6,19 @@ const plugin: Plugin = async (context: Context, inject) => {
   const client = new Colyseus.Client(context.$config.collyseusUrl);
   (client.auth as any).endpoint += "/social";
 
-  await client.auth.login();
-  await context.store.$db().model("users").insert({
-    data: client.auth
-  });
+  try {
+    await client.auth.login();
+    await context.store.$db().model("users").insert({
+      data: client.auth
+    });
+  } catch (e){
+    await client.auth.logout();
+    await client.auth.login();
+    await context.store.$db().model("users").insert({
+      data: client.auth
+    });
+  }
+
   console.log(client.auth);
   inject('collyseus', client);
 };

@@ -1,5 +1,5 @@
 import {User, verifyToken} from "@colyseus/social";
-import {Client, Delayed, Room} from "colyseus";
+import {Client, Delayed, Room, updateLobby} from "colyseus";
 import {COUNTRIES} from "../config/countries";
 import {TRANSLATED_COUNTRIES} from "../config/translatedCountries";
 import {GameMode} from "../GameMode";
@@ -12,8 +12,6 @@ import {googleMapsClient} from "../util/googlemaps";
 import logger from "../util/logger";
 import {distanceInKm} from "../util/math";
 import {Simulate} from "react-dom/test-utils";
-import play = Simulate.play;
-
 
 const MAP_SETS = {
     earth: COUNTRIES,
@@ -64,9 +62,19 @@ export class CountriesGameRoom extends Room<CountriesGame> {
     }
 
     public onCreate(options: any = {}) {
+        this.clock.setTimeout(() => {
+            this.setMetadata({
+                mapSet: options.set,
+                gameMode: "countries",
+                matchmaking: options.matchmaking
+            }).then(() => updateLobby(this));
+        }, 100);
+
         this.options = options;
         this.mapSet = MAP_SETS[this.options.set];
+
         this.setState(new CountriesGame());
+
         this.state.mapSet = this.options.set;
         this.state.gameMode = "countries";
 
@@ -75,6 +83,10 @@ export class CountriesGameRoom extends Room<CountriesGame> {
             if (this.playersReady()) {
                 this.startGame();
             }
+        });
+
+        this.onMessage("unready", (client, message) => {
+            this.state.players[client.sessionId].isReady = false;
         });
 
         this.onMessage("vote", (client, message) => {
@@ -124,6 +136,7 @@ export class CountriesGameRoom extends Room<CountriesGame> {
     }
 
     public startGame() {
+        this.positionMap();
         this.state.mode = GameMode.STARTING;
         this.state.gameStartsIn = 3;
         const timer = setInterval(() => {
@@ -139,11 +152,13 @@ export class CountriesGameRoom extends Room<CountriesGame> {
         this.state.votes.forEach((vote) => {
             this.state.votes[vote.player.playerId].hasWon = false;
         });
-        this.broadcast("mapreset");
+
         this.state.mode = GameMode.ROUND_PREPARE;
         this.state.roundTime = this.options.roundTime || 15;
 
         this.setCountry();
+        this.positionMap();
+
         setTimeout(() => {
             this.startRound();
         }, 5000);
@@ -162,6 +177,9 @@ export class CountriesGameRoom extends Room<CountriesGame> {
 
     public endRound() {
         this.state.mode = GameMode.ROUND_END;
+        this.broadcast("round:end", {
+            country: this.state.country
+        });
 
         this.state.votes.forEach((vote) => {
             if (vote.country && vote.country.countryCode === this.state.country.countryCode) {
@@ -170,9 +188,14 @@ export class CountriesGameRoom extends Room<CountriesGame> {
         });
 
         this.updateScoreboard();
+
+        setTimeout(() => {
+            this.state.mode = GameMode.SCORE_BOARD
+        }, 5000);
+
         setTimeout(() => {
             this.prepareRound();
-        }, 8000);
+        }, 10000);
     }
 
     public updateScoreboard() {
@@ -192,5 +215,9 @@ export class CountriesGameRoom extends Room<CountriesGame> {
         country.countryNameEn = randomCountry.name;
         country.countryNameDe = TRANSLATED_COUNTRIES[country.countryCode] || country.countryNameEn;
         this.state.country = country;
+    }
+
+    private positionMap(){
+        this.broadcast("map:position", {lat: 43.489565, lng: -168.7008533,zoom: 3});
     }
 }

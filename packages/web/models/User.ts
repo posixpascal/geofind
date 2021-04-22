@@ -12,6 +12,7 @@ export class User extends Model {
     }
   }
 
+  _id!: string;
   metadata!: any;
   displayName: string;
 }

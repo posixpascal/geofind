@@ -1,9 +1,10 @@
 import {Model} from "@vuex-orm/core";
+import {User} from "~/models/User";
 
 export class Room extends Model {
   static entity = 'rooms';
 
-  static fields(){
+  static fields() {
     return {
       id: this.uid(),
       name: this.string(null).nullable(),
@@ -16,11 +17,37 @@ export class Room extends Model {
       players: this.attr({}),
       country: this.attr(null),
       votes: this.attr(null),
-      scoreboard: this.attr(null)
+      scoreboard: this.attr(null),
+      leaderId: this.attr(null)
     }
   }
 
-  public state!:any;
-  public name!:string;
+  isLeader(user: User) {
+    return (user._id === this.leaderId);
+  }
+
+  player(user: User) {
+    for (const id in this.players) {
+      if (this.players[id].id === user._id && this.players.hasOwnProperty(id)) {
+        return this.players[id];
+      }
+    }
+    return {};
+  }
+
+  isReady() {
+    let ready = true;
+    for (const id in this.players) {
+      if (this.players.hasOwnProperty(id)) {
+        ready = (ready && this.players[id].isReady);
+      }
+    }
+    return ready;
+  }
+
+  public state!: any;
+  public name!: string;
   public scoreboard: any;
+  public leaderId!: string;
+  public players!: any;
 }

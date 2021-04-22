@@ -1,5 +1,5 @@
 <template>
-<div class="my-5 rounded p-5 bg-gray-100">
+<div class="mb-10 rounded p-5 bg-gray-100">
 	<slot></slot>
 </div>
 </template>

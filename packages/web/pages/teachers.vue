@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="main-menu">
     <Logo />
-   Matchmaking
+
   </div>
 </template>
 

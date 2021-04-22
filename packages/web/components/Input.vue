@@ -14,6 +14,7 @@ export default class Input extends Vue {
 input {
   @apply rounded shadow-sm outline-none border-transparent focus-within:ring-2;
   @apply focus:ring-yellow-200 focus:border-yellow-300 border-2 focus:ring-2 p-3;
+  @apply w-full;
   font-size: 20px;
 }
 </style>

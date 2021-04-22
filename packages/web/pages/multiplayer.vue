@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="main-menu">
     <Logo>
       <template #before>
         <nuxt-link to="/">
@@ -7,7 +7,7 @@
         </nuxt-link>
       </template>
       <template #after>
-        &nbsp;
+        <span style="width: 40px;"></span>
       </template>
     </Logo>
 
