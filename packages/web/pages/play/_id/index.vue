@@ -178,7 +178,7 @@ export default class Index extends Vue {
 
     room.onMessage("othermarkers:place", (event) => {
       this.otherMarkers = [];
-      const otherMarkers = Object.values(event.markers).filter(m => m.player.id !== this.user._id)
+      const otherMarkers = Object.values(event.markers).filter((m:any) => m.player.id !== this.user._id)
       otherMarkers.forEach((marker, index) => {
         setTimeout(() => {
           this.otherMarkers.push(marker)

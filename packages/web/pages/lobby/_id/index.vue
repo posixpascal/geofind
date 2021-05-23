@@ -100,6 +100,7 @@ export default class LobbyPage extends Vue {
   loading = false;
   imReady = false;
   editProfile = false;
+  name = ""
   settings = {
     mode: "countries",
     set: "earth"
