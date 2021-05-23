@@ -286,7 +286,7 @@ export default class Index extends Vue {
     }
   }
 
-  calculateMidPoint(latLngA: LatLng, latLngB: LatLng) {
+  calculateMidPoint(latLngA: any, latLngB: any) {
     function toRadians(degress: number): number {
       return degress * (Math.PI / 180);
     }

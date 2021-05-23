@@ -58,10 +58,6 @@ export default class MapSettingsPage extends Vue {
   get user() {
     return this.$user.get();
   }
-
-  setMap($event) {
-    this.$store.dispatch("user/setMap", $event);
-  }
 }
 </script>
 
