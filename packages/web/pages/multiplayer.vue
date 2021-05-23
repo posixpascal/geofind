@@ -13,9 +13,9 @@
 
     <GameSettings shade="blue" v-model="settings"/>
 
-    <Button @click="create" variant="blue">
+    <Button :loading="loading" @click="create" variant="blue">
       <template #icon>🌎</template>
-      Host Game
+      {{ loading ? 'Loading...' : 'Host Game' }}
     </Button>
   </div>
 </template>
@@ -33,10 +33,19 @@ import {Room} from "~/models";
   components: {Button, Logo, Icon, GameSettings}
 })
 export default class Multiplayer extends Vue {
-  room : any = null;
+  room: any = null;
+  loading = false;
+
   settings = {
     mode: "countries",
-    set: "earth"
+    set: "earth",
+    directMatchesOnly: true,
+    roundTime: 15,
+    maxRounds: 50,
+    pointsNeeded: 10,
+    borders: true,
+    suddenDeath: true,
+    public: true
   };
 
   get gameLink() {
@@ -44,10 +53,16 @@ export default class Multiplayer extends Vue {
   }
 
   async create() {
-    this.room = await this.$store.dispatch('room/create', this.settings);
-    await this.$store.dispatch("room/subscribe", this.room);
+    try {
+      this.loading = true;
+      this.room = await this.$store.dispatch('room/create', this.settings);
+      await this.$store.dispatch("room/subscribe", this.room);
 
-    this.$router.push(this.gameLink);
+      this.$router.push(this.gameLink);
+    } catch (e) {
+    } finally {
+      this.loading = false;
+    }
   }
 
   mounted() {

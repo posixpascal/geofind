@@ -3,7 +3,7 @@
 
     <div v-for="pin in pins" :key="pin">
       <div :class="`pin-wrapper ${pinSelected(pin) ? 'active' : ''}`">
-        <Pin @click="selectPin(pin)" :id="pin" width="64" height="64"/>
+        <Pin @click="selectPin(pin)" :id="pin" width="96" height="96"/>
       </div>
     </div>
   </div>

@@ -36,5 +36,20 @@ export const actions: ActionTree<UserState, RootState> = {
         }
       }
     })
+  },
+
+  async setMap(context: any, mapStyle) {
+    await this.$api.post("/settings/set-map", {mapStyle});
+
+    const user = this.$user.get();
+    await User.update({
+      data: {
+        ...user,
+        metadata: {
+          ...user.metadata,
+          mapStyle
+        }
+      }
+    })
   }
 }

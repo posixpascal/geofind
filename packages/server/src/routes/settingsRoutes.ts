@@ -53,4 +53,23 @@ router.post('/set-name', jwtMiddleware, async (req: any, res, next) => {
     res.send("OK");
 });
 
+
+router.post('/set-map', jwtMiddleware, async (req: any, res, next) => {
+    const {_id} = req.cauth;
+    const user = await User.findById(_id);
+    await User.updateOne({
+        _id,
+    }, {
+        $set: {
+            metadata: {
+                mapStyle: req.body.mapStyle,
+            }
+        },
+    });
+
+    await user.save();
+    res.send("OK");
+});
+
+
 export const settingsRoutes = router;

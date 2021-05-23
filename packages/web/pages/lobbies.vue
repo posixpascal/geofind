@@ -20,13 +20,13 @@
         </div>
       </div>
       <OpenRoomSettingsView :room="openRoom" />
-      <Button variant="purple" small @click="joinRoom(openRoom)">
+      <Button variant="purple" small :to="`/lobby/${openRoom.roomId}`">
         Join Room
       </Button>
     </Box>
     <Box v-if="!openRooms.length" class="text-center">
       <h4>There are no public rooms available. You can create one yourself.</h4>
-      <Button to="/multiplayer" variant="blue" small>Host Game</Button>
+      <Button to="/multiplayer" variant="purple" small>Create Game</Button>
     </Box>
   </div>
 </template>
@@ -56,8 +56,10 @@ export default class LobbiesPage extends Vue {
     return OpenRoom.all()
   }
 
-  joinRoom(openRoom: OpenRoom){
+  async joinRoom(openRoom: OpenRoom){
     console.log(openRoom);
+    const route = await this.$router.push(`/lobby/${openRoom.roomId}`);
+    console.log(route);
   }
 }
 </script>

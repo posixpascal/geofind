@@ -2,31 +2,37 @@
   <div class="main-menu">
     <Logo>
       <template #before>
-        <nuxt-link to="/">
+        <div @click="leave()">
           <Icon name="chevron-left"></Icon>
-        </nuxt-link>
+        </div>
       </template>
       <template #after>
-        <Icon name="cog"></Icon>
+        <span style="width: 40px;"></span>
+
       </template>
     </Logo>
 
-    <GameSettingsView :room="room"/>
 
     <template v-if="room">
       <h2 class="mt-5">Players</h2>
       <ul>
-        <li class="player-item" v-for="player in room.players">
+        <li class="player-item flex justify-between" v-for="player in room.players">
           <span v-if="player.isReady">✅</span>
           <span v-else>🕖</span>
-          {{ player.displayName }}
+          <div class="flex">
+            <span class="pl-3">{{ player.displayName }}</span>
+            <Pin :id="player.pin" width="24"/>
+          </div>
+          <span @click="editProfile = true">
+            <Icon name="pen" height="20" v-if="player.id === user._id"/>
+          </span>
         </li>
       </ul>
 
       <template v-if="room.isLeader(user)">
-        <Button v-if="Object.values(room.players).length === 1" disabled variant="green">
+        <Button v-if="!allReady()" disabled variant="green">
           <template #icon>🕖</template>
-          Waiting for players
+          Waiting
         </Button>
 
         <Button v-else @click="start" variant="green">
@@ -47,6 +53,33 @@
         </Button>
       </template>
     </template>
+
+    <h3 class="mt-10">Invite Friends</h3>
+    <Box class="flex flex-col justify-between">
+      Copy this link to invite your friends to this room.
+      <Input class="w-full" readonly v-model="shareLink"/>
+    </Box>
+
+    <GameSettingsView :room="room"/>
+    <div class='dialog-backdrop' v-if="editProfile">
+      <div class="dialog-p flex-col">
+        <h2 class="flex justify-between items-center">
+          Profil
+          <Button x-small @click="saveProfile()" variant="yellow">
+            Speichern
+          </Button>
+        </h2>
+        <h3 class="mt-10">Name</h3>
+        <Box class="flex items-center justify-between">
+          <Input class="w-full" v-model="name" @change="setName()" :placeholder="user.displayName"/>
+        </Box>
+
+        <h3>Marker</h3>
+        <Box>
+          <PinSelection :initial="user.metadata.pin" @change="setPin"/>
+        </Box>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -66,10 +99,15 @@ import GameSettingsView from "~/components/GameSettingsView.vue";
 export default class LobbyPage extends Vue {
   loading = false;
   imReady = false;
+  editProfile = false;
   settings = {
     mode: "countries",
     set: "earth"
   };
+
+  get shareLink() {
+    return window.location.href;
+  }
 
   async created() {
     this.loading = true;
@@ -77,7 +115,10 @@ export default class LobbyPage extends Vue {
 
     if (this.room) {
       this.loading = false;
-      this.$store.dispatch("room/message", {roomId, action: "ready", payload: {}})
+      if (this.room.isLeader(this.user)) {
+        await this.$store.dispatch("room/ready", this.room);
+      }
+      // this.$store.dispatch("room/message", {roomId, action: "ready", payload: {}})
       return;
     }
 
@@ -92,8 +133,20 @@ export default class LobbyPage extends Vue {
     }
   }
 
+  async saveProfile(){
+    this.editProfile = false;
+    await this.$store.dispatch("room/updatePlayer", this.room);
+    window.location.reload();
+  }
+
+  leave() {
+    console.log('leave');
+    this.$store.dispatch("room/leave", this.$route.params.id);
+    this.$router.push(`/`)
+  }
+
   async start() {
-    await this.$store.dispatch("room/ready", this.room);
+    await this.$store.dispatch("room/start", this.room);
   }
 
   async ready() {
@@ -104,19 +157,64 @@ export default class LobbyPage extends Vue {
     await this.$store.dispatch("room/unready", this.room);
   }
 
+  @Watch("room")
+  startGame() {
+    if (this.room.mode && this.room.mode !== 'preparing') {
+      this.$router.push(`/play/${this.room.id}`);
+    }
+  }
+
   get room() {
     const roomId = this.$route.params.id;
     return Room.query().withAll().with("players").find(roomId);
+  }
+
+  allReady() {
+    let allReady = true;
+    for (const player in this.room.players) {
+      if (!this.room.players.hasOwnProperty(player)) {
+        continue;
+      }
+
+      if (!this.room.players[player].isReady && this.user._id !== player) {
+        allReady = false;
+      }
+    }
+
+    return allReady;
   }
 
 
   get user() {
     return this.$user.get();
   }
+
+  async setPin($event) {
+    await this.$store.dispatch("user/setPin", $event);
+  }
+
+  async setName($event) {
+    await this.$store.dispatch("user/setName", this.name);
+  }
 }
 </script>
-<style>
+<style lang="postcss">
 .player-item {
   @apply p-3 bg-gray-200 rounded mb-2;
+}
+
+.dialog-p {
+  @apply z-20 fixed p-5 top-1/2 left-1/2 pb-10 shadow-2xl bg-white rounded bg-gray-200 flex w-3/4;
+  height: 520px;
+  overflow: auto;
+
+  transform: translateX(-50%) translateY(-50%);
+}
+
+.dialog-backdrop {
+  content: "";
+  background: rgba(0, 0, 0, .3);
+  position: fixed;
+  @apply top-0 left-0 right-0 bottom-0 w-full h-full;
 }
 </style>

@@ -1,6 +1,8 @@
 <template>
   <div class="main-menu">
-    <p class="text-center">The geographical multiplayer guessing game. Challenge your friends, strangers or yourself.</p>
+    <p class="text-center">The geographical multiplayer guessing game. Challenge your friends, strangers or
+      yourself.</p>
+
     <Button to="/singleplayer" variant="green" :animated="true">
       <template #icon>🕹</template>
       Single Player
@@ -23,9 +25,10 @@
     </Button>-->
     <Button to="settings" variant="yellow" :animated="true">
       <template #icon>🎨</template>
-      Look & Feel
+      Profile
     </Button>
-    <!--<Button variant="green" :animated="true">
+    <!--
+    <Button variant="orange" :animated="true">
       <template #icon>🥇</template>
       Achievements
     </Button>
@@ -45,11 +48,15 @@
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
 import Button from "~/components/Button.vue";
+import {User} from "~/models";
 
 @Component({
   components: {Button}
 })
 export default class MainMenu extends Vue {
+  get user() : User {
+    return this.$user.get();
+  }
 }
 </script>
 <style lang="postcss">
@@ -63,7 +70,7 @@ export default class MainMenu extends Vue {
   }
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
   .main-menu {
     width: 500px;
   }

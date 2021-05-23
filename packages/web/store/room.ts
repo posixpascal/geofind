@@ -12,10 +12,10 @@ export type RoomState = ReturnType<typeof state>
 
 export const mutations: MutationTree<RoomState> = {};
 
-const rooms: any  = {};
+const rooms: any = {};
 
 export const actions: ActionTree<RoomState, RootState> = {
-  async fetchAll(context: any){
+  async fetchAll(context: any) {
     const rooms = await (this as any).$collyseus.getAvailableRooms();
     await OpenRoom.insert({
       data: rooms
@@ -25,12 +25,14 @@ export const actions: ActionTree<RoomState, RootState> = {
       return !rooms.find(r => r.roomId === openRoom.roomId);
     });
   },
-  async create(context: any, settings){
+  async create(context: any, settings) {
     const room = await (this as any).$collyseus.create(`game_${settings.mode}`, {
       ...settings
     });
 
-    if (!room){ return; }
+    if (!room) {
+      return;
+    }
     rooms[room.id] = room;
 
     await Room.insertOrUpdate({
@@ -42,14 +44,16 @@ export const actions: ActionTree<RoomState, RootState> = {
 
     return room;
   },
-  async get(context: any, name){
+  async get(context: any, name) {
     return rooms[name];
   },
   async join(context: any, roomName) {
     let room: Colyseus.Room | null = null;
     try {
       room = await (window as any).$nuxt.$collyseus.joinById(roomName);
-      if (!room){ return; }
+      if (!room) {
+        return;
+      }
       rooms[room.id] = room;
       await Room.insertOrUpdate({
         data: {
@@ -65,13 +69,17 @@ export const actions: ActionTree<RoomState, RootState> = {
     return room;
   },
   async leave(context: any, roomName) {
-    return rooms[roomName].leave();
+    if (rooms[roomName]) {
+      return rooms[roomName].leave();
+    }
   },
-  async message(context, { roomId, action, payload }){
-    if (!rooms[roomId]){ return; }
+  async message(context, {roomId, action, payload}) {
+    if (!rooms[roomId]) {
+      return;
+    }
     rooms[roomId].send(action, payload);
   },
-  async setmap(context, {roomId, ref}){
+  async setmap(context, {roomId, ref}) {
     rooms[roomId].map = ref;
   },
   async subscribe(context: any, room: any) {
@@ -92,6 +100,12 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
   async ready(context: any, room: any) {
     rooms[room.id].send("ready");
+  },
+  async start(context: any, room: any) {
+    rooms[room.id].send("start");
+  },
+  async updatePlayer(context: any, room: any) {
+    rooms[room.id].send("updatePlayer");
   },
   async unready(context: any, room: any) {
     rooms[room.id].send("unready");

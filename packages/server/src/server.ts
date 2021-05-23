@@ -4,7 +4,6 @@ import {MongooseDriver} from "colyseus/lib/matchmaker/drivers/MongooseDriver";
 import {createServer} from "http";
 import app from "./app";
 import {CountriesGameRoom} from "./rooms/countries.game";
-import {LobbyRoom} from "./rooms/lobby";
 import logger from "./util/logger";
 import "./util/secrets";
 

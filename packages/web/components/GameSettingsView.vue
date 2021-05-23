@@ -1,27 +1,45 @@
 <template>
-  <div class="settings-wrapper" v-if="room && mode && mapSet">
-    <div class="settings-panel">
-      <h3>Spielmodi</h3>
-      <div :class="`game-mode w-half`">
-        <img :src="mode.image"/>
-        {{ mode.name }}
+  <Box class="settings-wrapper flex-col" v-if="room && mode && mapSet">
+    <div class="flex mb-5">
+      <div class="settings-panel">
+        <h3>Spielmodi</h3>
+        <div :class="`game-mode w-half`">
+          <img :src="mode.image"/>
+          {{ mode.name }}
+        </div>
+      </div>
+      <div class="settings-panel">
+        <h3>Kartenset</h3>
+        <div :class="`game-mode w-half`">
+          <img :src="mapSet.image"/>
+          {{ mapSet.name }}
+        </div>
       </div>
     </div>
+
     <div class="settings-panel">
-      <h3>Kartenset</h3>
-      <div :class="`game-mode w-half`">
-        <img :src="mapSet.image"/>
-        {{ mapSet.name }}
+      <div class="game-modes">
+        <Checkbox readonly v-model='room.directMatchesOnly' label="Nur genaue Treffer zählen"/>
+        <Checkbox readonly v-model='room.suddenDeath' label="Sudden Death"/>
+        <Checkbox readonly v-model='room.borders' label="Ländergrenzen"/>
+        <GameSettingsInput readonly disabled :value="room.roundTime" label="Rundenzeit"/>
+        <GameSettingsInput readonly disabled :value="room.maxRounds" label="Maximale Runden"/>
+        <GameSettingsInput readonly disabled :value="room.pointsNeeded" label="Punkte zum Sieg"/>
       </div>
     </div>
-  </div>
+
+  </Box>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import {Component, Emit, Model, Prop, VModel} from "vue-property-decorator";
 import {Room} from "~/models";
+import GameSettingsInput from "~/components/GameSettingsInput.vue";
+import Checkbox from "~/components/Checkbox.vue";
 
-@Component
+@Component({
+  components: {Checkbox, GameSettingsInput}
+})
 export default class GameSettingsView extends Vue {
   @Prop() room!: Room;
   @Prop({default: "green"}) shade!: string;
@@ -33,7 +51,6 @@ export default class GameSettingsView extends Vue {
   get mode() {
     return this.modes.find(m => m.name === this.room.gameMode);
   }
-
 
   get mapSet() {
     return this.sets.find(m => m.name === this.room.mapSet);
@@ -102,9 +119,7 @@ export default class GameSettingsView extends Vue {
 }
 
 .settings-panel {
-  @apply rounded w-full p-5 flex flex-col justify-center items-center;
-  margin-left: -12px;
-  margin-right: -12px;
+  @apply rounded w-full mx-3 flex flex-col justify-center items-center;
 }
 
 .game-modes {

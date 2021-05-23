@@ -10,8 +10,9 @@
         <span style="width: 50px"></span>
       </template>
     </Logo>
+
+    <h3 class="mt-5">Select your favorite Map Pin</h3>
     <Box class="">
-	    <h3>Select your favorite Map Pin</h3>
       <PinSelection :initial="user.metadata.pin" @change="setPin" />
     </Box>
   </div>

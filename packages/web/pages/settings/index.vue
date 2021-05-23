@@ -11,17 +11,35 @@
       </template>
     </Logo>
 
+    <!--<h3 class="mt-10">Hallo {{ user.displayName }}</h3>
+    <Box v-if="user.isAnonymous" class="flex items-center flex-col justify-between items-stretch">
+      Du hast noch keinen Account! Registriere dich um deine Erfolge langfristig zu speichern.
+
+      <Button small to='/' variant="purple">Anmelden</Button>
+      <Button small to='/' variant="purple">Registrieren</Button>
+    </Box>-->
+
+    <div class="mb-2 border-b-2 border-dashed border-gray-300">
+      &nbsp;
+    </div>
+
     <h3 class="mt-10">Name</h3>
     <Box class="flex items-center justify-between">
-      <Input v-model="name" @change="setName()" :placeholder="user.displayName"/>
+      <Input class="w-full" v-model="name" @change="setName()" :placeholder="user.displayName"/>
     </Box>
 
-    <h3>Map Pin</h3>
-    <Box class="flex items-center justify-between">
-      <div class="flex items-center">
-        <Pin :id="pin" width="48" />
-        <Button to="/settings/pins" class="pl-2.5" style="width: 300px" variant="yellow" x-small>CHANGE</Button>
+    <h3>Marker</h3>
+    <Box class="flex items-center flex-col justify-center content-center items-stretch">
+        <div class="flex justify-center py-3"><Pin :id="pin" width="96" /></div>
+        <Button to="/settings/pins" x variant="yellow" small>CHANGE</Button>
+    </Box>
+
+    <h3>Map Style</h3>
+    <Box class="flex items-center flex-col justify-between items-stretch">
+      <div :class="`mb-10 cursor-pointer transition-all rounded shadow-lg`">
+        <img :src="require(`~/assets/mapstyles/${user.mapStyleName}.png`)" class="rounded"/>
       </div>
+        <Button to="/settings/maps" variant="yellow" small>CHANGE</Button>
     </Box>
   </div>
 </template>
@@ -29,17 +47,21 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from "vue-class-component";
+import {User} from "~/models";
 
 @Component
 export default class SettingsPage extends Vue {
   name = "";
 
+  created(){
+    this.name = this.user.displayName;
+  }
+
   get pin(){
     return this.user.metadata.pin;
   }
 
-  get user(){
-    console.log(this.$user.get());
+  get user() : User {
     return this.$user.get();
   }
 

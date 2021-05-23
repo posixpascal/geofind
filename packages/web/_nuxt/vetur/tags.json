@@ -1,0 +1,53 @@
+{
+  "AnimatedLetters": {
+    "description": "Auto imported from components/AnimatedLetters.vue"
+  },
+  "Box": {
+    "description": "Auto imported from components/Box.vue"
+  },
+  "Button": {
+    "description": "Auto imported from components/Button.vue"
+  },
+  "GameSettings": {
+    "description": "Auto imported from components/GameSettings.vue"
+  },
+  "GameSettingsView": {
+    "description": "Auto imported from components/GameSettingsView.vue"
+  },
+  "GameStartingDialog": {
+    "description": "Auto imported from components/GameStartingDialog.vue"
+  },
+  "Icon": {
+    "description": "Auto imported from components/Icon.vue"
+  },
+  "Input": {
+    "description": "Auto imported from components/Input.vue"
+  },
+  "Loading": {
+    "description": "Auto imported from components/Loading.vue"
+  },
+  "LoadingDialog": {
+    "description": "Auto imported from components/LoadingDialog.vue"
+  },
+  "Logo": {
+    "description": "Auto imported from components/Logo.vue"
+  },
+  "MainMenu": {
+    "description": "Auto imported from components/MainMenu.vue"
+  },
+  "OpenRoomSettingsView": {
+    "description": "Auto imported from components/OpenRoomSettingsView.vue"
+  },
+  "Pin": {
+    "description": "Auto imported from components/Pin.vue"
+  },
+  "PinSelection": {
+    "description": "Auto imported from components/PinSelection.vue"
+  },
+  "RoundEndDialog": {
+    "description": "Auto imported from components/RoundEndDialog.vue"
+  },
+  "RoundPrepareDialog": {
+    "description": "Auto imported from components/RoundPrepareDialog.vue"
+  }
+}

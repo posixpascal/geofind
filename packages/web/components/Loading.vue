@@ -282,9 +282,9 @@
         </div>
       </div>
       <div id="loading_text">
-        <h3>
+        <h2>
           <slot></slot>
-        </h3>
+        </h2>
       </div>
     </div>
   </div>
@@ -315,9 +315,10 @@ export default class Loading extends Vue {
   bottom:0;
   left:0;
   right:0;
+  font-size: 48px !important;
   width:300px;
   height:50px;
-  color: #82ba41;
+  color: #3f7403;
   text-align: center;
   margin: auto;
 }

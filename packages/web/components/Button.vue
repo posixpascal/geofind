@@ -1,5 +1,6 @@
 <template>
-  <nuxt-link :to="to">
+  <div>
+    <nuxt-link :to="to" v-if="to">
     <button @click="$emit('click', $event)" :class="classes">
       <template v-if="$slots.icon">
         <span class="icon"><slot name="icon"></slot></span>
@@ -7,6 +8,13 @@
       <slot></slot>
     </button>
   </nuxt-link>
+    <button v-else @click="$emit('click', $event)" :class="classes">
+      <template v-if="$slots.icon">
+        <span class="icon"><slot name="icon"></slot></span>
+      </template>
+      <slot></slot>
+    </button>
+  </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -14,12 +22,15 @@ import {Component, Prop} from "vue-property-decorator";
 
 @Component
 export default class Button extends Vue {
-  @Prop({default: "#void"}) to!: string;
+  @Prop({default: ""}) to!: string;
   @Prop({type: String, default: ""}) variant!: string;
   @Prop({default: false, type: Boolean}) animated!: boolean;
+  @Prop({default: false, type: Boolean}) loading!: boolean;
   @Prop({default: false, type: Boolean}) small!: boolean;
   @Prop({default: false, type: Boolean}) xSmall!: boolean;
   @Prop({default: false, type: Boolean}) disabled!: boolean;
+  @Prop({default: false, type: Boolean}) block!: boolean;
+
 
 
   get classes() {
@@ -31,13 +42,14 @@ export default class Button extends Vue {
       "variant-yellow": this.variant === "yellow",
       "variant-green": this.variant === "green",
       "variant-purple": this.variant === "purple",
-      "variant-disabled": this.variant === "disabled",
+      "variant-disabled": this.variant === "disabled" || this.disabled,
       "animated": this.animated,
+      "loading": this.loading,
+      "block": this.block,
       "static": !this.animated,
       "with-icon": !!this.$slots.icon,
       "small": this.small,
       "x-small": this.xSmall,
-      'variant-disabled': this.disabled,
     }
   }
 }
@@ -79,6 +91,18 @@ export default class Button extends Vue {
   }
 }
 
+@keyframes shiningShort {
+  0% {
+    opacity: 1;
+    left: 0;
+  }
+  100% {
+    opacity: 1;
+    left: 120%;
+  }
+}
+
+
 
 .fancy-button {
   position: relative;
@@ -102,6 +126,9 @@ export default class Button extends Vue {
   background: linear-gradient(to top, #ccc 0%, #e1e1e1 100%);
   border-top: 4px solid rgba(122, 122, 122, .4);
 
+  &.block {
+    min-width: 100%;
+  }
 
   &.with-icon {
     padding-left: 85px !important;
@@ -195,7 +222,27 @@ export default class Button extends Vue {
       animation: shining 3s infinite;
       position: absolute;
       z-index: 50;
-      transition: all .2s ease;
+      transition: all .2s linear;
+      -webkit-backface-visibility: hidden;
+    }
+  }
+
+  &.loading {
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: 40;
+      width: 1px;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0;
+      background: rgba(255, 255, 255, .1);
+      box-shadow: 0 0 25px 5px rgba(255, 255, 255, .6);
+      animation: shiningShort 1s infinite;
+      position: absolute;
+      z-index: 50;
+      transition: all 1s linear;
       -webkit-backface-visibility: hidden;
     }
   }

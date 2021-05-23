@@ -1,17 +1,29 @@
 <template>
-  <div class="flex">
-    <div class="w-1/2 mr-5">
-      <h5>Spielmodi</h5>
-      <div :class="`game-mode w-half`">
-        <img :src="mode.image"/>
-        {{ mode.name }}
+  <div>
+    <div class="flex">
+      <div class="w-1/2 mr-5">
+        <h5>Spielmodi</h5>
+        <div :class="`game-mode w-half`">
+          <img :src="mode.image"/>
+          {{ mode.name }}
+        </div>
+      </div>
+      <div class="w-1/2 ml-5">
+        <h5>Kartenset</h5>
+        <div :class="`game-mode w-half`">
+          <img :src="mapSet.image"/>
+          {{ mapSet.name }}
+        </div>
       </div>
     </div>
-    <div class="w-1/2 ml-5">
-      <h5>Kartenset</h5>
-      <div :class="`game-mode w-half`">
-        <img :src="mapSet.image"/>
-        {{ mapSet.name }}
+    <div>
+      <div class="game-modes mt-3">
+        <Checkbox readonly v-model='room.metadata.directMatchesOnly' label="Nur genaue Treffer zählen"/>
+        <Checkbox readonly v-model='room.metadata.suddenDeath' label="Sudden Death"/>
+        <Checkbox readonly v-model='room.metadata.borders' label="Ländergrenzen"/>
+        <GameSettingsInput readonly disabled :value="room.metadata.roundTime" label="Rundenzeit"/>
+        <GameSettingsInput readonly disabled :value="room.metadata.maxRounds" label="Maximale Runden"/>
+        <GameSettingsInput readonly disabled :value="room.metadata.pointsNeeded" label="Punkte zum Sieg"/>
       </div>
     </div>
   </div>

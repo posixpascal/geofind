@@ -12,10 +12,8 @@
     </Logo>
 
     <template v-if="room">
-      <GameSettingsView :room="room" />
-      <h2 class="mt-10">
-        #{{ roomId }}
-      </h2>
+      <h3>Waiting for players</h3>
+      <Box>The game will start automatically once no players join in a certain time span...</Box>
       <h2 class="mt-5">Players</h2>
       <ul>
         <li class="player-item" v-for="player in room.players">
@@ -24,6 +22,7 @@
           {{ player.displayName }}
         </li>
       </ul>
+      <GameSettingsView :room="room"/>
     </template>
     <Loading v-else>{{ stateMessage }}</Loading>
   </div>
@@ -35,6 +34,8 @@ import Component from "vue-class-component";
 import GameSettings from "~/components/GameSettings.vue";
 import GameSettingsView from "~/components/GameSettingsView.vue";
 import {Room} from "~/models";
+import {Watch} from "vue-property-decorator";
+
 @Component({
   components: {GameSettingsView, GameSettings}
 })
@@ -42,27 +43,30 @@ export default class Matchmaking extends Vue {
   state = "search"
   roomId = null;
 
-  created(){
+  created() {
     this.findOrCreateMatch();
   }
 
-  beforeDestroy(){
-    if (this.roomId){
-      this.$store.dispatch("room/leave", this.roomId);
+  beforeDestroy() {
+  }
+
+  @Watch("room")
+  startGame(){
+    if (this.room.mode && this.room.mode !== 'preparing'){
+      this.$router.push(`/play/${this.room.id}`);
     }
   }
 
-  get room(){
+  get room() {
     return Room.find(this.roomId);
   }
 
-  async findOrCreateMatch(){
+  async findOrCreateMatch() {
     const openGames = await this.$collyseus.getAvailableRooms();
-    const openMatches = openGames.filter(room => room.metadata.matchmaking === true);
-    if (openMatches.length){
+    const openMatches = openGames.filter(room => room.metadata.matchmaking === true && room.metadata.mode === 'preparing');
+    if (openMatches.length) {
       this.state = "found";
       this.join(openMatches[0]);
-      console.log(openMatches[0]);
       return;
     }
 
@@ -70,30 +74,40 @@ export default class Matchmaking extends Vue {
     const room = await this.$store.dispatch('room/create', {
       mode: "countries",
       set: "earth",
-      matchmaking: true
+      matchmaking: false,
+      directMatchesOnly: true,
+      roundTime: 15,
+      maxRounds: 50,
+      pointsNeeded: 10,
+      borders: true,
+      suddenDeath: true
     });
     console.log(room);
     await this.$store.dispatch("room/subscribe", room);
     this.roomId = room.id;
   }
 
-  async join(match){
+  async join(match) {
     const room = await this.$store.dispatch('room/join', match.roomId);
     await this.$store.dispatch("room/subscribe", room);
     this.roomId = match.roomId;
     this.state = "joined";
   }
 
-  get stateMessage(){
-    switch (this.state){
+  get stateMessage() {
+    switch (this.state) {
       case "search":
         return "Looking for a Match";
-        case "found":
-          return "Found Match..."
+      case "found":
+        return "Found Match..."
       case "created":
         return "Creating Match...";
     }
   }
 }
 </script>
-
+<style lang="postcss">
+.player-item {
+  @apply p-3 bg-gray-200 rounded mb-2;
+}
+</style>

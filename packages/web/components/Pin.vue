@@ -36,4 +36,9 @@ export default class Pin extends Vue {
 .pinned {
   transform: rotate(-45deg);
 }
+
+img {
+  position: relative;
+  left: 6px;
+}
 </style>

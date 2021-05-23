@@ -1,0 +1,72 @@
+[
+  {
+    "name": "lobbies",
+    "path": "/lobbies",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/lobbies.vue",
+    "chunkName": "pages/lobbies",
+    "_name": "_abbd9860"
+  },
+  {
+    "name": "matchmaking",
+    "path": "/matchmaking",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/matchmaking.vue",
+    "chunkName": "pages/matchmaking",
+    "_name": "_039813e8"
+  },
+  {
+    "name": "multiplayer",
+    "path": "/multiplayer",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/multiplayer.vue",
+    "chunkName": "pages/multiplayer",
+    "_name": "_9876bd94"
+  },
+  {
+    "name": "settings",
+    "path": "/settings",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/settings/index.vue",
+    "chunkName": "pages/settings/index",
+    "_name": "_00ea72ba"
+  },
+  {
+    "name": "singleplayer",
+    "path": "/singleplayer",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/singleplayer.vue",
+    "chunkName": "pages/singleplayer",
+    "_name": "_9aa68506"
+  },
+  {
+    "name": "teachers",
+    "path": "/teachers",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/teachers.vue",
+    "chunkName": "pages/teachers",
+    "_name": "_40b40f25"
+  },
+  {
+    "name": "settings-pins",
+    "path": "/settings/pins",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/settings/pins.vue",
+    "chunkName": "pages/settings/pins",
+    "_name": "_603caa74"
+  },
+  {
+    "name": "lobby-id",
+    "path": "/lobby/:id",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/lobby/_id/index.vue",
+    "chunkName": "pages/lobby/_id/index",
+    "_name": "_3c1ef220"
+  },
+  {
+    "name": "play-id",
+    "path": "/play/:id",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/play/_id/index.vue",
+    "chunkName": "pages/play/_id/index",
+    "_name": "_1b5f3bf6"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/Users/pascalraszyk/Code/geofind/packages/web/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_0cbf20a4"
+  }
+]

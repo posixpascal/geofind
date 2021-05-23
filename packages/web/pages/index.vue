@@ -8,14 +8,20 @@
         <span style="width: 35px;"></span>
       </template>
     </Logo>
-    <MainMenu />
+    <MainMenu/>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import {Component} from "vue-property-decorator";
+import Logo from "~/components/Logo.vue";
+import MainMenu from "~/components/MainMenu.vue";
 
-export default Vue.extend({})
+@Component({ components: { Logo, MainMenu }})
+export default class IndexPage extends Vue {
+
+}
 </script>
 
 <style>
@@ -29,16 +35,15 @@ export default Vue.extend({})
 }
 
 .title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: 'Quicksand',
+  'Source Sans Pro',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;

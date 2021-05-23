@@ -11,6 +11,7 @@ hooks.beforeAuthenticate((provider, $setOnInsert, $set) => {
     $setOnInsert.avatarUrl = `https://gravatar.com/avatar/${md5($setOnInsert.displayName)}`;
     $setOnInsert.metadata = {
         pin: Math.floor(1 + Math.random() * 8),
+        mapStyle: "basic",
     };
 });
 
@@ -23,6 +24,9 @@ export class Player extends Schema {
 
     @type("string")
     public displayName: string;
+
+    @type("number")
+    public pin: number;
 
     @type("string")
     public avatarUrl: string;

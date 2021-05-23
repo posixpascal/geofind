@@ -22,11 +22,32 @@ export class CountriesGame extends Schema {
     @type("string")
     public mapSet = "";
 
+    @type("string")
+    public mapStyle = "";
+
     @type("number")
     public gameStartsIn: number;
 
     @type("number")
     public roundTime: number;
+
+    @type("number")
+    public round: number;
+
+    @type("number")
+    public maxRounds: number;
+
+    @type("number")
+    public pointsNeeded: number;
+
+    @type("boolean")
+    public borders: boolean;
+
+    @type("boolean")
+    public suddenDeath: boolean;
+
+    @type("boolean")
+    public directMatchesOnly: boolean;
 
     @type(Country)
     public country: Country;

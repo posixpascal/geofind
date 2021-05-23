@@ -15,6 +15,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      fontFamily: {
+        lucky: ['Luckiest Guy', 'sans-serif']
+      },
       colors: {
         green: {
           '50': '#E4F5E1',

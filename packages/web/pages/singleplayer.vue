@@ -7,15 +7,15 @@
         </nuxt-link>
       </template>
       <template #after>
-        <Icon name="cog"></Icon>
+        <span class="text-5xl">📍</span>
       </template>
     </Logo>
 
     <GameSettings v-model="settings"/>
 
-    <Button @click="create" variant="green">
+    <Button :loading="loading" @click="create" variant="green">
       <template #icon>🌎</template>
-      Start Game
+      {{ loading ? 'Loading...' : 'Start Game' }}
     </Button>
   </div>
 </template>
@@ -34,9 +34,17 @@ import {Room} from "~/models";
 })
 export default class Singleplayer extends Vue {
   room : any = null;
+  loading = false;
   settings = {
     mode: "countries",
-    set: "earth"
+    set: "earth",
+    directMatchesOnly: true,
+    roundTime: 15,
+    maxRounds: 50,
+    pointsNeeded: 10,
+    borders: true,
+    suddenDeath: true,
+    singleplayer: true,
   };
 
   get gameLink() {
@@ -44,10 +52,17 @@ export default class Singleplayer extends Vue {
   }
 
   async create() {
-    this.room = await this.$store.dispatch('room/create', this.settings);
-    await this.$store.dispatch("room/subscribe", this.room);
+    try {
+      this.loading = true;
 
-    this.$router.push(this.gameLink);
+      this.room = await this.$store.dispatch('room/create', this.settings);
+      await this.$store.dispatch("room/subscribe", this.room);
+
+      this.$router.push(this.gameLink);
+    } catch (e){
+    } finally {
+      this.loading = false;
+    }
   }
 
   mounted() {

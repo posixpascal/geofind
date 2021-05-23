@@ -19,13 +19,31 @@
         </div>
       </div>
     </div>
+
+    <h3>Sonstiges</h3>
+    <div class="settings-panel">
+      <div class="game-modes flex flex-col items-start justify-start content-start">
+        <Checkbox :extra-classes="shade" v-model='settings.directMatchesOnly' label="Nur genaue Treffer zählen" />
+        <Checkbox :extra-classes="shade" v-model='settings.suddenDeath' label="Sudden Death" />
+        <Checkbox :extra-classes="shade" v-model='settings.borders' label="Ländergrenzen" />
+        <Checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='settings.public' label="Public"/>
+
+        <GameSettingsInput v-model="settings.roundTime" label="Rundenzeit" />
+        <GameSettingsInput v-model="settings.maxRounds" label="Maximale Runden" />
+        <GameSettingsInput v-model="settings.pointsNeeded" label="Punkte zum Sieg" />
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import {Component, Emit, Model, Prop, VModel} from "vue-property-decorator";
+import GameSettingsInput from "~/components/GameSettingsInput.vue";
+import Checkbox from "~/components/Checkbox.vue";
 
-@Component
+@Component({
+  components: {Checkbox, GameSettingsInput}
+})
 export default class GameSettings extends Vue {
   @VModel() settings!: any;
   @Prop({default: "green"}) shade!: string;
@@ -40,10 +58,16 @@ export default class GameSettings extends Vue {
       image: require("~/assets/gamemodes/capitals.svg"),
       disabled: true
     },
-    /*{
+    {
       name: "sightseeing",
-      image: require("~/assets/gamemodes/sightseeing.svg")
-    }*/
+      image: require("~/assets/gamemodes/sightseeing.svg"),
+      disabled: true
+    },
+    {
+      name: "random",
+      image: require("~/assets/gamemodes/random.svg"),
+      disabled: true
+    },
   ]
 
   sets = [
@@ -98,7 +122,7 @@ h3 {
 }
 
 .game-modes {
-  @apply flex items-center justify-between flex-wrap w-full items-center;
+  @apply flex justify-between flex-wrap w-full;
   margin-left: 8px;
   margin-right: 8px;
 }
