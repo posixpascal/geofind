@@ -1,4 +1,4 @@
-export const de = {
+exports.default = {
   t: {
     save: 'Speichern',
     change: 'Ändern',

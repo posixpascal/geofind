@@ -74,11 +74,11 @@ export default class GameEndDialog extends Vue {
     console.log(Object.values(this.room.scoreboard));
     return Object.values(this.room.scoreboard).sort((a: any, b: any) => {
       if (a.score > b.score) {
-        return 1;
+        return -1;
       }
 
       if (b.score > a.score) {
-        return -1;
+        return 1;
       }
 
       return 0

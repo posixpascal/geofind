@@ -50,7 +50,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
 
         this.state.mode = GameMode.PREPARING;
 
-        if (this.options.singleplayer){
+        if (this.options.singleplayer) {
             this.startGame();
         }
 
@@ -73,11 +73,12 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
     public onCreate(options: any = {}) {
         this.setState(new CountriesGame());
         this.state.mode = GameMode.PREPARING;
+        this.options = options;
 
         this.clock.setInterval(() => {
             this.setMetadata({
-                mapSet: options.set,
-                gameMode: "countries",
+                mapSet: this.options.set,
+                gameMode: this.options.mode,
                 mode: this.state.mode,
                 matchmaking: !!options.matchmaking,
                 roundTime: parseInt(this.options.roundTime, 10) || DEFAULT_ROUND_TIME,
@@ -88,6 +89,14 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                 directMatchesOnly: this.options.directMatchesOnly,
                 public: this.options.public
             }).then(() => updateLobby(this));
+
+            if (this.options.public && this.locked) {
+                this.unlock();
+            }
+
+            if (!this.options.public && !this.locked) {
+                this.lock();
+            }
         }, 1000);
 
         this.options = options;
@@ -97,6 +106,12 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
 
         this.onMessage("ready", (client, message) => {
             this.state.players[client.sessionId].isReady = true;
+        });
+
+
+        this.onMessage('updateSettings', (client, message) => {
+            this.options = message;
+            this.reset();
         });
 
         this.onMessage('updatePlayer', (client) => {
@@ -165,7 +180,8 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
     public reset() {
         // Initial setup
         this.state.mapSet = this.options.set;
-        this.state.gameMode = "countries";
+        this.state.gameMode = this.options.mode;
+
         this.options.roundTime = parseInt(this.options.roundTime, 10) || DEFAULT_ROUND_TIME;
         this.state.roundTime = this.options.roundTime;
 
@@ -175,6 +191,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
         this.options.pointsNeeded = parseInt(this.options.pointsNeeded, 10);
         this.state.pointsNeeded = this.options.pointsNeeded;
 
+        this.state.public = this.options.public;
         this.state.borders = this.options.borders;
         this.state.suddenDeath = this.options.suddenDeath;
         this.state.directMatchesOnly = this.options.directMatchesOnly;
@@ -195,7 +212,6 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
     }
 
     public startGame() {
-        this.positionMap();
         this.state.mode = GameMode.STARTING;
         this.state.gameStartsIn = DEFAULT_GAME_START_TIME;
 
@@ -225,7 +241,6 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
         this.state.mode = GameMode.ROUND_PREPARE;
 
         this.setCountry();
-        this.positionMap();
 
         setTimeout(() => {
             this.startRound();
@@ -389,6 +404,5 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
 
 
     private positionMap() {
-        this.broadcast("map:position", {lat: 43.489565, lng: -168.7008533, zoom: 3});
     }
 }

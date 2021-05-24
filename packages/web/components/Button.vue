@@ -204,7 +204,7 @@ export default class Button extends Vue {
 
   transition: all ease-in-out 0.3s;
 
-  &.animated:hover {
+  &.animated:hover, &.animated:focus, &.animated:active {
     transform: scale(1.05) rotate(1deg);
     cursor: pointer;
 
@@ -247,7 +247,7 @@ export default class Button extends Vue {
     }
   }
 
-  &.static:hover {
+  &.static:hover &.static:focus {
     transform: scale(1.05);
 
     &:after {

@@ -2,7 +2,7 @@
   <div class="main-menu">
     <Logo>
       <template #before>
-        <nuxt-link to="/">
+        <nuxt-link :to="localePath('/')">
           <Icon name="chevron-left"></Icon>
         </nuxt-link>
       </template>
@@ -10,12 +10,13 @@
         <span class="text-5xl">📍</span>
       </template>
     </Logo>
+    <h1 class="mt-5 mb-0">{{ $t('singleplayer.title') }}</h1>
 
     <GameSettings v-model="settings"/>
 
     <Button :loading="loading" @click="create" variant="green">
       <template #icon>🌎</template>
-      {{ loading ? 'Loading...' : 'Start Game' }}
+      {{ $t(loading ? 't.loading' : 'singleplayer.cta') }}
     </Button>
   </div>
 </template>

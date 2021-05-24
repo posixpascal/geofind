@@ -2,7 +2,7 @@
   <div class="main-menu">
     <Logo>
       <template #before>
-        <nuxt-link to="/">
+        <nuxt-link :to="localePath('/')">
           <Icon name="chevron-left"></Icon>
         </nuxt-link>
       </template>
@@ -11,22 +11,23 @@
       </template>
     </Logo>
 
-    <h3 class="mt-5 mb-0">Public Rooms</h3>
+    <h1 class="mt-5 mb-0">{{ $t('lobbies.title') }}</h1>
+
     <Box v-if="openRooms.length" class="flex flex-col" v-for="openRoom of openRooms" :key="openRoom.roomId">
       <div class="flex justify-between">
-        <h2>{{ openRoom.roomId }}</h2>
+        <h2>#{{ openRoom.roomId }}</h2>
         <div>
           🕹 {{ openRoom.clients }} / {{ openRoom.maxClients || 32 }}
         </div>
       </div>
       <OpenRoomSettingsView :room="openRoom" />
       <Button variant="purple" small :to="`/lobby/${openRoom.roomId}`">
-        Join Room
+        {{ $t('lobbies.join') }}
       </Button>
     </Box>
     <Box v-if="!openRooms.length" class="text-center">
-      <h4>There are no public rooms available. You can create one yourself.</h4>
-      <Button to="/multiplayer" variant="purple" small>Create Game</Button>
+      <h4>{{ $t('lobbies.noRoomsFound') }}</h4>
+      <Button to="/multiplayer" variant="purple" small>{{ $t('multiplayer.cta') }}</Button>
     </Box>
   </div>
 </template>
@@ -45,7 +46,7 @@ export default class LobbiesPage extends Vue {
   created() {
     this.timer = setInterval(() => {
       this.$store.dispatch("room/fetchAll");
-    }, 600);
+    }, 700);
   }
 
   beforeDestroy() {

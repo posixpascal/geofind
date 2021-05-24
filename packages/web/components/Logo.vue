@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="icon"><slot name="before"></slot></div>
-    <nuxt-link to="/"><h1 class="">geofind.io</h1></nuxt-link>
-    <div class="icon"><slot name="after"></slot></div>
+    <nuxt-link :to="localePath('/')"><h1 class="">geofind.io</h1></nuxt-link>
+    <div class="icon">
+      <LanguageSwitch />
+    </div>
   </div>
 </template>
 

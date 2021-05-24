@@ -18,7 +18,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   async fetchAll(context: any) {
     const rooms = await (this as any).$collyseus.getAvailableRooms();
     await OpenRoom.insert({
-      data: rooms
+      data: rooms.filter(r => r.metadata.public)
     });
 
     await OpenRoom.delete((openRoom) => {
@@ -106,6 +106,9 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
   async updatePlayer(context: any, room: any) {
     rooms[room.id].send("updatePlayer");
+  },
+  async updateSettings(context: any, {room, settings}) {
+    rooms[room.id].send("updateSettings", settings);
   },
   async unready(context: any, room: any) {
     rooms[room.id].send("unready");

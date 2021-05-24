@@ -1,7 +1,7 @@
 <template>
   <div class="main-menu">
     <Logo />
-
+    <h1>For Schools</h1>
   </div>
 </template>
 

@@ -18,9 +18,6 @@
     </div>
     <div>
       <div class="game-modes mt-3">
-        <Checkbox readonly v-model='room.metadata.directMatchesOnly' label="Nur genaue Treffer zählen"/>
-        <Checkbox readonly v-model='room.metadata.suddenDeath' label="Sudden Death"/>
-        <Checkbox readonly v-model='room.metadata.borders' label="Ländergrenzen"/>
         <GameSettingsInput readonly disabled :value="room.metadata.roundTime" label="Rundenzeit"/>
         <GameSettingsInput readonly disabled :value="room.metadata.maxRounds" label="Maximale Runden"/>
         <GameSettingsInput readonly disabled :value="room.metadata.pointsNeeded" label="Punkte zum Sieg"/>
@@ -48,7 +45,6 @@ export default class OpenRoomSettingsView extends Vue {
   get mode() {
     return this.modes.find(m => m.name === this.room.metadata.gameMode);
   }
-
 
   modes = [
     {
@@ -92,12 +88,12 @@ export default class OpenRoomSettingsView extends Vue {
       disabled: true
     },
     {
-      name: "us",
-      image: require("~/assets/mapsets/us.svg"),
+      name: "america",
+      image: require("~/assets/mapsets/america.svg"),
       disabled: true
     },
     {
-      name: "islands",
+      name: "oceania",
       image: require("~/assets/mapsets/islands.svg"),
       disabled: true
     },

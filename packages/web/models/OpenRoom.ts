@@ -10,7 +10,8 @@ export class OpenRoom extends Model {
       clients: this.number(0),
       maxClients: this.attr(64),
       metadata: this.attr(null),
-      locked: this.boolean(false)
+      locked: this.boolean(false),
+      public: this.boolean(false),
     }
   }
 
@@ -19,4 +20,5 @@ export class OpenRoom extends Model {
   public maxClients!: any;
   public players!: any;
   public locked!: boolean;
+  public public!: boolean;
 }

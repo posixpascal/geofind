@@ -22,10 +22,6 @@
           {{ room.country.countryNameDe }}
         </h3>
       </span>
-      <span v-if="room && room.mode === 'round_start'" class="px-5 flex items-end">
-        <h3 class="flag">{{ room.roundTime }}</h3>
-        <span class="text-sm text-gray-600 lowercase">sec</span>
-      </span>
     </div>
     <GmapMap
       v-if="room"
@@ -43,7 +39,7 @@
         :position="marker.position"
         @dragend="moveMarker"
         :clickable="true"
-        :draggable="true"
+        :draggable='room.mode === "round_start"'
         :icon="{
           url: userPin,
           anchor: { x: pinSizeX, y: pinSize },
@@ -67,7 +63,7 @@
       <!-- other player markers -->
       <GmapMarker
         v-if="otherMarkers"
-        animated
+        :animation="2"
         v-for="(otherMarker, index) in otherMarkers"
         :position="otherMarker"
         :key="index"
@@ -92,6 +88,9 @@
       <ScoreBoardDialog v-if="room.mode === 'score_board'" :room="room"></ScoreBoardDialog>
       <GameEndDialog v-if="room.mode === 'ended'" :room="room"></GameEndDialog>
     </template>
+
+
+    <div class="counter">{{ room.roundTime }}</div>
   </div>
 </template>
 <script lang="ts">
@@ -182,12 +181,12 @@ export default class Index extends Vue {
       otherMarkers.forEach((marker, index) => {
         setTimeout(() => {
           this.otherMarkers.push(marker)
-        }, index * 400)
+        }, index * 300)
       })
     });
 
     room.onMessage("othermarkers:unset", (event) => {
-      console.log(event)
+      this.otherMarkers = [];
     });
 
     room.onMessage("map:position", (event) => {
@@ -381,10 +380,11 @@ export default class Index extends Vue {
 .map {
   width: 100%;
   height: 100vh;
+  cursor: crosshair;
 }
 
 .map * {
-  cursor: pointer !important;
+  cursor: crosshair !important;
 }
 
 .flag {
@@ -393,6 +393,11 @@ export default class Index extends Vue {
 }
 
 .counter {
-  @apply text-9xl absolute bottom-1 left-1 text-opacity-80 z-20;
+  @apply font-lucky text-9xl fixed bottom-0 opacity-40 z-20 flex content-end;
+  left: 30px;
+}
+
+::v-deep .vue-map .gm-style div {
+  cursor: crosshair !important;
 }
 </style>

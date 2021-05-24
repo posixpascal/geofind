@@ -1,31 +1,39 @@
 <template>
   <div class="main-menu">
-    <p class="text-center">The geographical multiplayer guessing game. Challenge your friends, strangers or
-      yourself.</p>
+    <div class="flex justify-between mb-5 mt-5">
+      <img :src="require('~/assets/gamemodes/countries.svg')" width="80"/>
+      <img :src="require('~/assets/mapsets/africa.svg')" width="45"/>
+      <img :src="require('~/assets/mapsets/asia.svg')" width="60"/>
+      <img :src="require('~/assets/mapsets/islands.svg')" width="60"/>
+      <img :src="require('~/assets/mapsets/europe.svg')" width="45"/>
+    </div>
+    <p class="text-center">
+      {{ $t('t.about') }}
+    </p>
 
-    <Button to="/singleplayer" variant="green" :animated="true">
+    <Button :to="localePath('/singleplayer')" variant="green" :animated="true">
       <template #icon>🕹</template>
-      Single Player
+      {{ $t('singleplayer.cta') }}
     </Button>
-    <Button to="/matchmaking" variant="red" :animated="true">
+    <Button :to="localePath('/matchmaking')" variant="red" :animated="true">
       <template #icon>⚡</template>
-      ️ Quick Match!
+      ️ {{ $t('matchmaking.cta') }}
     </Button>
-    <Button to="/multiplayer" variant="blue" :animated="true">
+    <Button :to="localePath('/multiplayer')" variant="blue" :animated="true">
       <template #icon>🌟</template>
-      Create Room
+      {{ $t('multiplayer.cta') }}
     </Button>
-    <Button to="lobbies" variant="purple" :animated="true">
+    <Button :to="localePath('lobbies')" variant="purple" :animated="true">
       <template #icon>🎮</template>
-      Public Rooms
+      {{ $t('lobbies.cta') }}
     </Button>
     <!--<Button to="teachers" variant="blue" :animated="true">
       <template #icon>👩‍🏫</template>
       Teacher Zone
     </Button>-->
-    <Button to="settings" variant="yellow" :animated="true">
+    <Button :to="localePath('settings')" variant="yellow" :animated="true">
       <template #icon>🎨</template>
-      Profile
+      {{ $t('profile.cta') }}
     </Button>
     <!--
     <Button variant="orange" :animated="true">
@@ -37,11 +45,16 @@
       ️ Settings
     </Button>-->
     <small class="block text-center text-gray-400">
-      Made with
+      {{ $t('t.madewithlove') }}
       <span class="text-red-600">&hearts;</span>.
-      <a href="//github.com/posixpascal/geofind.io" target="_blank">Open Source forever</a>.
+      <a href="//github.com/posixpascal/geofind.io" target="_blank">{{ $t('t.opensource') }}
+      </a>
     </small>
-    <small class="block text-center text-gray-400">Imprint | Privacy | Support</small>
+    <small class="block text-center text-gray-400">
+      <nuxt-link :to="localePath('imprint')">{{ $t('t.imprint') }}</nuxt-link> |
+      <nuxt-link :to="localePath('privacy')">{{ $t('t.privacy') }}</nuxt-link> |
+      <a href="//github.com/posixpascal/geofind" target="_blank">{{ $t('t.source') }}</a> |
+      <nuxt-link :to="localePath('teachers')">{{ $t('t.educationalEdition') }}</nuxt-link></small>
   </div>
 </template>
 <script lang="ts">

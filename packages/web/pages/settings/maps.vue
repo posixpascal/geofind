@@ -2,7 +2,7 @@
   <div class="main-menu">
     <Logo>
       <template #before>
-        <nuxt-link to="/settings">
+        <nuxt-link :to="localePath('/settings')">
           <Icon name="chevron-left"></Icon>
         </nuxt-link>
       </template>
@@ -11,7 +11,7 @@
       </template>
     </Logo>
 
-    <h3 class="mt-5">Select your favorite Map Style</h3>
+    <h3 class="mt-5">{{ $t('mapStyles.title') }}</h3>
     <Box class="">
       <div v-for="style in styles"
            @click="setMap(style)"
@@ -19,7 +19,7 @@
            :class="`mb-10 cursor-pointer shadow transition-all rounded  ${currentStyle === style ? 'bg-yellow-400' : 'bg-white'} hover:shadow-lg`">
         <img :src="require(`~/assets/mapstyles/${style}.png`)" class="rounded-t"/>
         <div class="p-3 flex justify-between">
-          <span>{{ style }}</span>
+          <span>{{ $t(`mapStyles.${style}`) }}</span>
         </div>
       </div>
     </Box>

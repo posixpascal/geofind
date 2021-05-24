@@ -1,8 +1,11 @@
 <template>
-  <div class="dialog" v-if="room">
+  <div class="dialog" v-if="room && show">
     <h4 class="text-3xl pb-3 border-b-2 border-gray-400 flex justify-between flex-col w-full">
       <div>Runde #{{ room.round }} von {{ room.maxRounds }}</div>
-      <div><Flag class="mini-flag" size="l" :code="room.country.countryCode" /> {{ room.country.countryNameDe }}</div>
+      <div>
+        <Flag class="mini-flag" size="l" :code="room.country.countryCode"/>
+        {{ room.country.countryNameDe }}
+      </div>
     </h4>
     <div class="text-2xl">
       <transition v-for="(vote, index) in votes"
@@ -15,7 +18,7 @@
       >
         <div class="my-3 py-1 border-b-2 border-gray-400 flex justify-between items-center">
           <span v-if="vote.country" class="flex">
-            <Flag class="mini-flag" size="l" :code="vote.country.countryCode" />&nbsp;
+            <Flag class="mini-flag" size="l" :code="vote.country.countryCode"/>&nbsp;
             {{ vote.country.countryNameDe }}
           </span>
           <span v-else>
@@ -23,7 +26,7 @@
           </span>
           <div class="flex">
             <span v-if="vote.player">
-               <Pin :id="vote.player.pin" width="32" />
+               <Pin :id="vote.player.pin" width="32"/>
             </span>
             <span class="text-2xl">{{ vote.player.displayName }}</span>
           </div>
@@ -45,18 +48,19 @@ import {Room} from "~/models";
 @Component
 export default class RoundEndDialog extends Vue {
   @Prop() room!: Room;
+  show: boolean;
 
-  created(){
-    console.log(this.room.scoreboard);
+  created() {
+    this.show = true;
   }
 
-  get votes(){
+  get votes() {
     return Object.values(this.room.votes).filter(v => !!v).sort((a, b) => {
-      if (a.distanceInKm > b.distanceInKm){
+      if (a.distanceInKm > b.distanceInKm) {
         return 1;
       }
 
-      if (b.distanceInKm > a.distanceInKm){
+      if (b.distanceInKm > a.distanceInKm) {
         return -1;
       }
 
@@ -64,8 +68,8 @@ export default class RoundEndDialog extends Vue {
     });
   }
 
-  validVote(vote){
-    if (!vote.country){
+  validVote(vote) {
+    if (!vote.country) {
       return false;
     }
     return vote.country.countryCode === (this.room as any).country.countryCode

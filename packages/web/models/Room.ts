@@ -26,6 +26,8 @@ export class Room extends Model {
       round: this.number(0),
       maxRounds: this.number(0),
       pointsNeeded: this.number(0),
+      locked: this.boolean(false),
+      public: this.boolean(false),
       suddenDeath: this.boolean(false),
       directMatchesOnly: this.boolean(false),
       scoreboard: this.attr(null),
@@ -70,5 +72,10 @@ export class Room extends Model {
   public borders!: boolean;
   public mapStyle!: string;
   public mapSet!: any;
+  public pointsNeeded!: any;
+  public roundTime!: any;
+  public directMatchesOnly!: any;
   public gameMode!: any;
+  public public!: any;
+  public suddenDeath!: any;
 }

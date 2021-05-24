@@ -10,11 +10,13 @@
   },
   "dependencies": {
     "@heroicons/vue": "^1.0.0",
+    "@iamtraction/google-translate": "^1.1.2",
     "@nuxtjs/axios": "^5.13.1",
     "@vuex-orm/core": "^0.36.3",
     "canvas-confetti": "^1.4.0",
     "colyseus.js": "0.14",
     "core-js": "^3.9.1",
+    "global": "^4.4.0",
     "node-sass": "^5.0.0",
     "nuxt": "^2.15.3",
     "nuxt-i18n": "^6.22.3",
@@ -25,7 +27,8 @@
     "vue-flagpack": "^1.0.1",
     "vue-property-decorator": "^9.1.2",
     "vue2-google-maps": "^0.10.7",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "zx": "^1.11.0"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.3",

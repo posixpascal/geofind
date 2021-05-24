@@ -1,36 +1,36 @@
 <template>
   <div class="settings-wrapper">
-    <h3>Spielmodi</h3>
+    <h3>{{ $t('settings.gameMode') }}</h3>
     <div class="settings-panel">
       <div class="game-modes">
         <div @click="settings = {...settings, mode: mode.name}" v-for="mode in modes" :class="`game-mode ${shade} w-half ${settings.mode === mode.name ? 'active' : ''} ${mode.disabled ? 'disabled': ''}`">
           <img :src="mode.image"/>
-          {{ mode.name }}
+          {{ $t(`settings.gameModes.${mode.name}`) }} {{ mode.disabled ? `(${$t('t.soon')})` : ""}}
         </div>
       </div>
     </div>
 
-    <h3>Kartenset</h3>
+    <h3>{{ $t('settings.mapSet') }}</h3>
     <div class="settings-panel">
       <div class="game-modes">
         <div @click="settings = {...settings, set: set.name}" v-for="set in sets" :class="`game-mode ${shade} w-half ${settings.set === set.name ? 'active' : ''} ${set.disabled ? 'disabled': ''}`">
           <img :src="set.image"/>
-          {{ set.name }}
+          {{ $t(`settings.mapSets.${set.name}`) }} {{ set.disabled ? `(${$t('t.soon')})` : ""}}
         </div>
       </div>
     </div>
 
-    <h3>Sonstiges</h3>
+    <h3>{{ $t('t.other') }}</h3>
     <div class="settings-panel">
       <div class="game-modes flex flex-col items-start justify-start content-start">
-        <Checkbox :extra-classes="shade" v-model='settings.directMatchesOnly' label="Nur genaue Treffer zählen" />
-        <Checkbox :extra-classes="shade" v-model='settings.suddenDeath' label="Sudden Death" />
-        <Checkbox :extra-classes="shade" v-model='settings.borders' label="Ländergrenzen" />
-        <Checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='settings.public' label="Public"/>
+        <Checkbox :extra-classes="shade" v-model='settings.directMatchesOnly' :label="$t('settings.directMatchesOnly')" />
+        <Checkbox :extra-classes="shade" v-model='settings.suddenDeath' :label="$t('settings.suddenDeath')" />
+        <Checkbox :extra-classes="shade" v-model='settings.borders' :label="$t('settings.borders')" />
+        <Checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='settings.public' :label="$t('settings.public')"/>
 
-        <GameSettingsInput v-model="settings.roundTime" label="Rundenzeit" />
-        <GameSettingsInput v-model="settings.maxRounds" label="Maximale Runden" />
-        <GameSettingsInput v-model="settings.pointsNeeded" label="Punkte zum Sieg" />
+        <GameSettingsInput v-model="settings.roundTime" :label="$t('settings.roundTime')" />
+        <GameSettingsInput v-model="settings.maxRounds" :label="$t('settings.maxRounds')" />
+        <GameSettingsInput v-model="settings.pointsNeeded" :label="$t('settings.pointsNeeded')" />
       </div>
     </div>
   </div>
@@ -56,7 +56,6 @@ export default class GameSettings extends Vue {
     {
       name: "capitals",
       image: require("~/assets/gamemodes/capitals.svg"),
-      disabled: true
     },
     {
       name: "sightseeing",
@@ -64,8 +63,8 @@ export default class GameSettings extends Vue {
       disabled: true
     },
     {
-      name: "random",
-      image: require("~/assets/gamemodes/random.svg"),
+      name: "domainhunt",
+      image: require("~/assets/gamemodes/domains.svg"),
       disabled: true
     },
   ]
@@ -76,34 +75,24 @@ export default class GameSettings extends Vue {
       image: require("~/assets/mapsets/earth.svg")
     },
     {
-      name: "continents",
-      image: require("~/assets/mapsets/earth.svg"),
-      disabled: true
-    },
-    {
       name: "africa",
       image: require("~/assets/mapsets/africa.svg"),
-      disabled: true
     },
     {
-      name: "europe",
-      image: require("~/assets/mapsets/europe.svg"),
-      disabled: true
+      name: "america",
+      image: require("~/assets/mapsets/america.svg"),
     },
     {
       name: "asia",
       image: require("~/assets/mapsets/asia.svg"),
-      disabled: true
     },
     {
-      name: "us",
-      image: require("~/assets/mapsets/us.svg"),
-      disabled: true
+      name: "europe",
+      image: require("~/assets/mapsets/europe.svg"),
     },
     {
-      name: "islands",
+      name: "oceania",
       image: require("~/assets/mapsets/islands.svg"),
-      disabled: true
     },
   ]
 }

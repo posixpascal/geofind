@@ -2,29 +2,31 @@
   <Box class="settings-wrapper flex-col" v-if="room && mode && mapSet">
     <div class="flex mb-5">
       <div class="settings-panel">
-        <h3>Spielmodi</h3>
+        <h3>{{ $t('settings.gameMode') }}</h3>
         <div :class="`game-mode w-half`">
           <img :src="mode.image"/>
-          {{ mode.name }}
+          {{ $t(`settings.gameModes.${mode.name}`) }}
         </div>
       </div>
       <div class="settings-panel">
-        <h3>Kartenset</h3>
+        <h3>{{ $t('settings.mapSet') }}</h3>
         <div :class="`game-mode w-half`">
           <img :src="mapSet.image"/>
-          {{ mapSet.name }}
+          {{ $t(`settings.mapSets.${mapSet.name}`) }}
         </div>
       </div>
     </div>
 
     <div class="settings-panel">
-      <div class="game-modes">
-        <Checkbox readonly v-model='room.directMatchesOnly' label="Nur genaue Treffer zählen"/>
-        <Checkbox readonly v-model='room.suddenDeath' label="Sudden Death"/>
-        <Checkbox readonly v-model='room.borders' label="Ländergrenzen"/>
-        <GameSettingsInput readonly disabled :value="room.roundTime" label="Rundenzeit"/>
-        <GameSettingsInput readonly disabled :value="room.maxRounds" label="Maximale Runden"/>
-        <GameSettingsInput readonly disabled :value="room.pointsNeeded" label="Punkte zum Sieg"/>
+      <div class="game-modes flex flex-col items-start justify-start content-start">
+        <Checkbox :extra-classes="shade" readonly v-model='room.directMatchesOnly' :label="$t('settings.directMatchesOnly')" />
+        <Checkbox :extra-classes="shade" readonly v-model='room.suddenDeath' :label="$t('settings.suddenDeath')" />
+        <Checkbox :extra-classes="shade" readonly v-model='room.borders' :label="$t('settings.borders')" />
+        <Checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='room.public' :label="$t('settings.public')" />
+
+        <GameSettingsInput readonly disabled :value="room.roundTime" :label="$t('settings.roundTime')" />
+        <GameSettingsInput readonly disabled :value="room.maxRounds" :label="$t('settings.maxRounds')" />
+        <GameSettingsInput readonly disabled :value="room.pointsNeeded" :label="$t('settings.pointsNeeded')" />
       </div>
     </div>
 
@@ -98,12 +100,12 @@ export default class GameSettingsView extends Vue {
       disabled: true
     },
     {
-      name: "us",
-      image: require("~/assets/mapsets/us.svg"),
+      name: "america",
+      image: require("~/assets/mapsets/america.svg"),
       disabled: true
     },
     {
-      name: "islands",
+      name: "oceania",
       image: require("~/assets/mapsets/islands.svg"),
       disabled: true
     },
@@ -123,7 +125,7 @@ export default class GameSettingsView extends Vue {
 }
 
 .game-modes {
-  @apply flex items-center justify-between flex-wrap w-full items-center;
+  @apply flex justify-between flex-wrap w-full;
   margin-left: 8px;
   margin-right: 8px;
 }

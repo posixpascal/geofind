@@ -47,6 +47,9 @@ export class CountriesGame extends Schema {
     public suddenDeath: boolean;
 
     @type("boolean")
+    public public: boolean;
+
+    @type("boolean")
     public directMatchesOnly: boolean;
 
     @type(Country)

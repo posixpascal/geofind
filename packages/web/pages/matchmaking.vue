@@ -2,7 +2,7 @@
   <div class="main-menu">
     <Logo>
       <template #before>
-        <nuxt-link to="/">
+        <nuxt-link :to="localePath('/')">
           <Icon name="chevron-left"></Icon>
         </nuxt-link>
       </template>
@@ -12,9 +12,7 @@
     </Logo>
 
     <template v-if="room">
-      <h3>Waiting for players</h3>
-      <Box>The game will start automatically once no players join in a certain time span...</Box>
-      <h2 class="mt-5">Players</h2>
+      <h2 class="mt-5">{{ $t("t.players") }}</h2>
       <ul>
         <li class="player-item" v-for="player in room.players">
           <span v-if="player.isReady">✅</span>
@@ -22,6 +20,8 @@
           {{ player.displayName }}
         </li>
       </ul>
+      <h3 class="mt-5">{{ $t("matchmaking.waitingForPlayers") }}</h3>
+      <Box>{{ $t("matchmaking.infoBox") }}</Box>
       <GameSettingsView :room="room"/>
     </template>
     <Loading v-else>{{ stateMessage }}</Loading>
@@ -97,11 +97,11 @@ export default class Matchmaking extends Vue {
   get stateMessage() {
     switch (this.state) {
       case "search":
-        return "Looking for a Match";
+        return this.$t("matchmaking.searching");
       case "found":
-        return "Found Match..."
+        return this.$t("matchmaking.found");
       case "created":
-        return "Creating Match...";
+        return this.$t("matchmaking.created");
     }
   }
 }

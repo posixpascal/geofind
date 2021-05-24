@@ -14,6 +14,7 @@
 
 
     <template v-if="room">
+      <h1>#{{ room.id }}</h1>
       <h2 class="mt-5">Players</h2>
       <ul>
         <li class="player-item flex justify-between" v-for="player in room.players">
@@ -30,24 +31,34 @@
       </ul>
 
       <template v-if="room.isLeader(user)">
-        <Button v-if="!allReady()" disabled variant="green">
+        <Button v-if="!room.player(user).isReady" small @click.stop="ready" variant="blue">
+          <template #icon>🌎</template>
+          I'm ready!
+        </Button>
+
+        <Button v-if="room.player(user).isReady" small @click.stop="unready">
+          <template #icon><span>&nbsp;</span></template>
+          Not ready
+        </Button>
+
+        <Button small v-if="!allReady()" :loading="true" disabled variant="blue">
           <template #icon>🕖</template>
           Waiting
         </Button>
 
-        <Button v-else @click="start" variant="green">
+        <Button small v-else @click="start" :loading="true" variant="blue">
           <template #icon>🌎</template>
           Start Game
         </Button>
       </template>
 
       <template v-else>
-        <Button v-if="room.player(user).isReady" @click="unready" :loading="true" variant="gray">
+        <Button small v-if="room.player(user).isReady" @click="unready" variant="gray">
           <template #icon>🕖</template>
-          Waiting...
+          Not ready
         </Button>
 
-        <Button v-else @click.stop="ready" variant="green">
+        <Button small v-else @click.stop="ready" variant="blue">
           <template #icon>🌎</template>
           I'm ready!
         </Button>
@@ -60,7 +71,9 @@
       <Input class="w-full" readonly v-model="shareLink"/>
     </Box>
 
-    <GameSettingsView :room="room"/>
+    <GameSettingsView  shade='blue' :room="room" v-if="room && !room.isLeader(user)"/>
+    <GameSettings shade='blue' v-model="settings" v-if="settings && room && room.isLeader(user)"/>
+
     <div class='dialog-backdrop' v-if="editProfile">
       <div class="dialog-p flex-col">
         <h2 class="flex justify-between items-center">
@@ -101,13 +114,28 @@ export default class LobbyPage extends Vue {
   imReady = false;
   editProfile = false;
   name = ""
-  settings = {
-    mode: "countries",
-    set: "earth"
-  };
+
+  settings : any = false;
 
   get shareLink() {
     return window.location.href;
+  }
+
+  @Watch('settings', {deep: true})
+  updateSettings(newSettings) {
+    if (!this.settings) {
+      return;
+    }
+
+    if (!this.room) {
+      return;
+    }
+
+    if (!this.room.isLeader(this.user)) {
+      return;
+    }
+
+    this.$store.dispatch('room/updateSettings', {room: this.room, settings: newSettings});
   }
 
   async created() {
@@ -115,6 +143,8 @@ export default class LobbyPage extends Vue {
     const roomId = this.$route.params.id;
 
     if (this.room) {
+      this.syncSettings();
+
       this.loading = false;
       if (this.room.isLeader(this.user)) {
         await this.$store.dispatch("room/ready", this.room);
@@ -134,14 +164,13 @@ export default class LobbyPage extends Vue {
     }
   }
 
-  async saveProfile(){
+  async saveProfile() {
     this.editProfile = false;
     await this.$store.dispatch("room/updatePlayer", this.room);
     window.location.reload();
   }
 
   leave() {
-    console.log('leave');
     this.$store.dispatch("room/leave", this.$route.params.id);
     this.$router.push(`/`)
   }
@@ -160,8 +189,24 @@ export default class LobbyPage extends Vue {
 
   @Watch("room")
   startGame() {
+    this.syncSettings();
+
     if (this.room.mode && this.room.mode !== 'preparing') {
       this.$router.push(`/play/${this.room.id}`);
+    }
+  }
+
+  syncSettings() {
+    this.settings = {
+      mode: this.room.gameMode,
+      set: this.room.mapSet,
+      directMatchesOnly: this.room.directMatchesOnly,
+      roundTime: this.room.roundTime,
+      maxRounds: this.room.maxRounds,
+      pointsNeeded: this.room.pointsNeeded,
+      borders: this.room.borders,
+      suddenDeath: this.room.suddenDeath,
+      public: this.room.public,
     }
   }
 
