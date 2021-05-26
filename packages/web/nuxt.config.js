@@ -23,7 +23,7 @@ export default {
         content:
           'Das Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.',
       },
-      {hid: 'og:image', property: 'og:image', content: 'https://geofind.io/social.png'},
+      {hid: 'og:image', property: 'og:image', content: 'https://geofind.io/social.jpg'},
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: 'https://geofind.io/icon.png'}
