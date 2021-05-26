@@ -14,7 +14,7 @@
 
 
     <template v-if="room">
-      <h1>#{{ room.id }}</h1>
+      <h1 class="text-2xl sm:text-3xl">#{{ room.id }}</h1>
       <h2 class="mt-5">Players</h2>
       <ul>
         <li class="player-item flex justify-between" v-for="player in room.players">

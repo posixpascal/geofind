@@ -11,7 +11,7 @@
           gradient="real-linear"
           :code="($i18n.locale === 'en' ? 'US' : $i18n.locale.toUpperCase())"/>
       </div>
-      <span class="relative top-0.5"><Icon height='32' name="chevron-down"></Icon></span>
+      <span class="relative iconv"><Icon height='32' name="chevron-down"></Icon></span>
     </div>
     <div v-if="showPopup" class="popup">
       <div :class='`hover:bg-gray-100 p-3 pt-2 cursor-pointer border-b-2 border-gray-200
@@ -48,12 +48,17 @@ export default class LanguageSwitch extends Vue {
 .flag {
   width: 32px;
   position: relative;
-  top: 4px;
+  top: 8px;
 }
 .popup {
   @apply shadow-lg z-10 right-0 absolute top-12 bg-white border-2 border-gray-200 rounded;
   min-width: 200px;
 
+}
+
+.iconv {
+  position: relative;
+  top: 5px;
 }
 
 .container {

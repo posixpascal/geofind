@@ -1,7 +1,7 @@
 <template>
   <div class="dialog" v-if="room">
     <canvas id="confetti" ref="canvas"></canvas>
-    <h4 class="text-3xl pb-3">
+    <h4 class="text-2xl sm:text-3xl pb-3">
       Game finished.
     </h4>
     <div class="text-xl sm:text-2xl">
