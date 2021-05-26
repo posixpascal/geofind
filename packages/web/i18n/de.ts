@@ -24,7 +24,7 @@ export const de = {
     gameFinished: 'Spiel beendet',
     source: 'Quellcode',
     educationalEdition: 'Lehredition',
-    about: `Geografie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.`
+    about: `Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.`
   },
   mapStyles: {
     title: 'Wähle Deinen Kartenskin',

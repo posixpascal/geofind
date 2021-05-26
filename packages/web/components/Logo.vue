@@ -1,9 +1,17 @@
 <template>
-  <div class="flex justify-between">
-    <div class="icon"><slot name="before"></slot></div>
-    <nuxt-link :to="localePath('/')"><h1 class="text-4xl sm:text-5xl">geofind.io</h1></nuxt-link>
+  <div class="flex justify-start">
+    <div class="">
+      <slot name="before"></slot>
+    </div>
+    <nuxt-link :to="localePath('/')" class="flex">
+      <div class="pr-4"><img width="96px" :src="require('~/assets/images/logo.svg')" class="logo-image relative"/>
+      </div>
+      <h1 class="text-4xl sm:text-5xl flex">
+        geofind.io
+      </h1>
+    </nuxt-link>
     <div class="icon">
-      <LanguageSwitch />
+      <LanguageSwitch/>
     </div>
   </div>
 </template>
@@ -24,8 +32,13 @@ export default class Logo extends Vue {
 </script>
 <style scoped lang="postcss">
 div {
-  @apply flex justify-between items-center;
+  @apply flex justify-start items-center;
 }
+
+.logo-image {
+  top: -0px;
+}
+
 .icon {
   margin-top: 20px;
 }

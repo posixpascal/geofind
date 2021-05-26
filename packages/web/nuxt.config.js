@@ -9,17 +9,17 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'geofind',
+    title: 'Mit Freunden spielend Geographie lernen. | geofind.io.',
     htmlAttrs: {
-      lang: 'en'
+      lang: 'de'
     },
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: ''}
+      {hid: 'description', name: 'description', content: 'Das Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.'}
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}
+      {rel: 'icon', type: 'image/x-icon', href: 'https://geofind.io/icon.png'}
     ],
     script: [
       {
@@ -58,10 +58,16 @@ export default {
     '@nuxt/typescript-build',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/pwa',
   ],
 
   tailwindcss: {
     configPath: 'tailwind.config.js',
+  },
+
+  manifest: {
+    name: 'GEOFIND',
+    lang: 'de',
   },
 
   // https://i18n.nuxtjs.org/options-reference#properties
@@ -111,7 +117,7 @@ export default {
   modules: [
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    'nuxt-i18n'
+    'nuxt-i18n',
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

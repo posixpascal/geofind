@@ -12,6 +12,7 @@
     "@heroicons/vue": "^1.0.0",
     "@iamtraction/google-translate": "^1.1.2",
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/pwa": "^3.3.5",
     "@vuex-orm/core": "^0.36.3",
     "canvas-confetti": "^1.4.0",
     "colyseus.js": "0.14",
