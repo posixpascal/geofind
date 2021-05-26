@@ -13,13 +13,14 @@
                   leave-to-class="opacity-0 scale-70"
       >
         <div class="my-3 border-b-2 border-gray-400 flex justify-between items-center">
-          <span class="text-xl sm:text-2xl">
+          <span class="text-xl sm:text-2xl flex">
             <span v-if="playerScore.player">
                <Pin :id="playerScore.player.pin" width="32"/>
             </span>
             {{ playerScore.player.displayName }}
           </span>
-          <div class="pl-3">{{ playerScore.score }} <small class="hidden sm:inline-block text-sm">PINs</small>
+          <div class="pl-3 flex">
+            {{ playerScore.score }} <small class="hidden sm:inline-block text-sm">PINs</small>
             <span v-if="playerScore.rank === 1">⭐</span>
           </div>
         </div>
