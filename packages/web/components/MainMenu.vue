@@ -1,5 +1,5 @@
 <template>
-  <div class="main-menu">
+  <div class="main-menu pb-20">
     <div class="flex justify-between mb-5 mt-5">
       <img :src="require('~/assets/gamemodes/countries.svg')" width="80"/>
       <img :src="require('~/assets/mapsets/africa.svg')" width="45"/>
