@@ -144,6 +144,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
         });
 
         this.onMessage("start", (client) => {
+            this.reset();
             this.startGame();
         });
 

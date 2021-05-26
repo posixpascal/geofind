@@ -18,7 +18,7 @@
       >
         <div
           :class="`py-3 border-b-2 border-gray-400 flex flex-col-reverse sm:flex-row justify-between sm:items-center ${vote.hasWon ? 'bg-green-100' : 'bg-red-100'}`">
-          <div class="flex">
+          <div class="pl-4 sm:pl-0 flex">
             <span v-if="vote.country" class="flex">
             <Flag class="mini-flag" size="l" :code="vote.country.alpha2Code"/>&nbsp;
             {{ vote.country.translations[$i18n.locale] }}
@@ -31,7 +31,7 @@
             <span v-if="vote.player">
                <Pin :id="vote.player.pin" width="32"/>
             </span>
-            <span class="text-xl sm:text-2xl sm:pr-4">{{ vote.player.displayName }}</span>
+            <span class="text-xl sm:text-2xl pl-2 pr-4">{{ vote.player.displayName }}</span>
             <span>
               <span v-if="validVote(vote)">👑</span>
               <span v-else-if="vote.distanceInKm">{{ vote.distanceInKm.toFixed(2) }}km</span>

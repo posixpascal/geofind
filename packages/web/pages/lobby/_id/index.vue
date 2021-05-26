@@ -191,7 +191,7 @@ export default class LobbyPage extends Vue {
   startGame() {
     this.syncSettings();
 
-    if (this.room.mode && this.room.mode !== 'preparing') {
+    if (this.room.mode && this.room.mode !== 'preparing' && this.room.mode !== 'ended') {
       this.$router.push(`/play/${this.room.id}`);
     }
   }
