@@ -79,14 +79,13 @@ export default class GameEndDialog extends Vue {
   }
 
   get playerScores() {
-    console.log(Object.values(this.room.scoreboard));
     return Object.values(this.room.scoreboard).sort((a: any, b: any) => {
       if (a.score > b.score) {
-        return 1;
+        return -1;
       }
 
       if (b.score > a.score) {
-        return -1;
+        return 1;
       }
 
       return 0
@@ -103,7 +102,7 @@ export default class GameEndDialog extends Vue {
     let rank = 1;
 
     for (const score of allScores) {
-      if (entry.score > score) {
+      if (entry.score < score) {
         rank += 1
       }
     }
