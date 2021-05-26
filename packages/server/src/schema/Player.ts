@@ -9,7 +9,7 @@ hooks.beforeAuthenticate((provider, $setOnInsert, $set) => {
     // assign default metadata upon registration
     let name = chance.animal();
     while (name.length > 8){
-        let name = chance.animal();
+        name = chance.animal();
     }
 
     $setOnInsert.displayName = name;
