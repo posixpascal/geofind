@@ -1,7 +1,6 @@
 import {Client, Room} from "colyseus";
 import {User, verifyToken} from "@colyseus/social";
 import {Country} from "../schema/Country";
-import {TRANSLATED_COUNTRIES} from "../config/translatedCountries";
 import {Translations} from "../schema/Translations";
 
 export class CoreGameRoom<T> extends Room {
@@ -52,7 +51,6 @@ export class CoreGameRoom<T> extends Room {
         country.lat = randomCountry.latlng[0];
         country.lng = randomCountry.latlng[1];
 
-        console.log(country.translations.de);
         this.state.country = country;
     }
 }
