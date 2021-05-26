@@ -180,6 +180,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                     if (geocodingResult.address_components[0]) {
                         country.countryCode = geocodingResult.address_components[0].short_name;
                     }
+
                     country.countryNameEn = res.json.results[0].formatted_address;
                     country.countryNameDe = res.json.results[0].formatted_address;
                     vote.country = country;
