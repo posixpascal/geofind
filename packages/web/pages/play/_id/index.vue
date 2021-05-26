@@ -28,6 +28,7 @@
       v-if="room"
       ref="map"
       class="map"
+      :style="{ height: fullHeight }"
       :center="{lat: 43.489565, lng: -168.7008533}"
       :zoom="zoom"
       :options="mapOptions"
@@ -233,6 +234,10 @@ export default class Index extends Vue {
     return PINS[this.user.metadata.pin || 1];
   }
 
+  get fullHeight(){
+    return window.innerHeight + "px";
+  }
+
   moveMarker(ev: any) {
     if (this.room.mode !== "round_start") {
       return;
@@ -391,7 +396,6 @@ html {
 
 .map {
   width: 100%;
-  height: 100vh;
   cursor: crosshair;
 }
 
