@@ -170,7 +170,6 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                     vote.country = this.state.country;
                     vote.distanceInKm = distanceInKm(this.state.country, vote);
                     this.state.votes[client.sessionId] = vote;
-                    console.log('meh')
                     return;
                 }
 
@@ -181,7 +180,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                     if (geocodingResult.address_components[0]) {
                         country.countryCode = geocodingResult.address_components[0].short_name;
                     }
-z                    country.countryNameEn = res.json.results[0].formatted_address;
+                    country.countryNameEn = res.json.results[0].formatted_address;
                     country.countryNameDe = res.json.results[0].formatted_address;
                     vote.country = country;
                 }
