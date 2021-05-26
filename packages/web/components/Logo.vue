@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="flex justify-between">
     <div class="icon"><slot name="before"></slot></div>
-    <nuxt-link :to="localePath('/')"><h1 class="">geofind.io</h1></nuxt-link>
+    <nuxt-link :to="localePath('/')"><h1 class="text-4xl sm:text-5xl">geofind.io</h1></nuxt-link>
     <div class="icon">
       <LanguageSwitch />
     </div>

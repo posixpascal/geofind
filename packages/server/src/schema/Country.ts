@@ -9,6 +9,9 @@ export class Country extends Schema {
     public lng: number;
 
     @type("string")
+    alpha2Code: string;
+
+    @type("string")
     public name: string;
 
     @type("string")

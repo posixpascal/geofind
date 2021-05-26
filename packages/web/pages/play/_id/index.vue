@@ -7,16 +7,17 @@
             <Icon height="24" width="24" name="close"></Icon>
           </nuxt-link>
         </div>
-        <span class="px-3 text-xl font-lucky" v-if="room.round > 0">Round #{{ room.round }} / {{
+        <span class="px-3 text-xl font-lucky" v-if="room.round > 0">
+          <span class="hidden sm:inline">{{ $t('t.round')}} </span>{{ room.round }} / {{
             room.maxRounds
           }}</span>
 
-        <span v-if="room.mapStyle == 'suddendeath'" class="px-3 text-xl font-lucky">
+        <span v-if="room.mapStyle == 'suddendeath'" class="px-3 text-xl hidden md:inline-block font-lucky">
             ☠️ SuddenDeath
         </span>
       </div>
       <span v-if="room && room.mode === 'round_start'">
-        <h3>
+        <h3 class="pr-3">
           <Flag v-if="room.country && room.country.alpha2Code" class="flag" size="l" gradient="real-linear"
                 :code="room.country.alpha2Code"/>
           {{ room.country.translations[$i18n.locale] }}
@@ -347,6 +348,17 @@ export default class Index extends Vue {
   }
 }
 </script>
+<style>
+body {
+  min-height: 100vh;
+  /* mobile viewport bug fix */
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+</style>
 <style lang="postcss" scoped>
 .banner, .footer {
   @apply absolute z-10 bg-opacity-20 bg-white w-full py-5 flex items-center h-2 text-xs;
@@ -393,7 +405,7 @@ export default class Index extends Vue {
 }
 
 .counter {
-  @apply font-lucky text-9xl fixed bottom-0 opacity-40 z-20 flex content-end;
+  @apply font-lucky text-6xl sm:text-9xl fixed bottom-0 opacity-40 z-20 flex content-end;
   left: 30px;
 }
 

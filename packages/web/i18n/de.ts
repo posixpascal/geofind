@@ -1,6 +1,7 @@
 export const de = {
   t: {
     save: 'Speichern',
+    round: 'Runde',
     change: 'Ändern',
     soon: 'Bald',
     other: 'Sonstiges',
@@ -13,6 +14,8 @@ export const de = {
     pin: 'Map Marker',
     mapStyle: 'Kartenstil',
     name: 'Name',
+    gameStartsIn: "Spiel startet in ",
+    whereIs: 'Suche nach ',
     source: 'Quellcode',
     educationalEdition: 'Lehredition',
     about: `Geografie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.`
@@ -49,7 +52,7 @@ export const de = {
     },
     directMatchesOnly: 'Nur direkte Treffer',
     suddenDeath: 'Episches Finale',
-    borders: 'Ländergrenzen anzeigen',
+    borders: 'Ländergrenzen',
     roundTime: 'Rundenzeit',
     maxRounds: 'Maximale Runden',
     pointsNeeded: 'Punkte zum Sieg',

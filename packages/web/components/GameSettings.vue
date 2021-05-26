@@ -56,6 +56,7 @@ export default class GameSettings extends Vue {
     {
       name: "capitals",
       image: require("~/assets/gamemodes/capitals.svg"),
+      disabled: true
     },
     {
       name: "sightseeing",

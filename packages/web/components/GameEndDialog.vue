@@ -4,7 +4,7 @@
     <h4 class="text-3xl pb-3">
       Game finished.
     </h4>
-    <div class="text-4xl">
+    <div class="text-xl sm:text-2xl">
       <transition v-for="(playerScore, index) in playerScores"
                   :key="playerScore.player.id"
                   enter-active-class="transition-all transition-fastest ease-out-quad"
@@ -110,7 +110,8 @@ export default class GameEndDialog extends Vue {
   @apply flex content-center justify-center bg-gray-100 bg-opacity-90 text-gray-700 flex-col;
   font-family: "Luckiest Guy";
   top: 80px;
-  min-width: 500px;
+  width: 90%;
+  max-width: 750px;
   transform: translateX(-50%);
 }
 

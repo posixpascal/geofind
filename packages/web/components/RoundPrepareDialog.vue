@@ -1,7 +1,7 @@
 <template>
   <div class="dialog" v-if="room">
-    <h2>Where is ...</h2>
-    <h3>
+    <h2 class="text-xl sm:text-2xl">{{ $t('t.whereIs') }}...</h2>
+    <h3 class="text-xl sm:text-2xl">
       <Flag class="flag"
             :hasDropShadow="true"
             :hasBorder="true"
@@ -30,7 +30,8 @@ export default class RoundPrepareDialog extends Vue {
   @apply flex content-center justify-center bg-gray-100 bg-opacity-90 text-gray-700 flex-col;
   font-family: "Luckiest Guy";
   top: 80px;
-  min-width: 500px;
+  width: 90%;
+  max-width: 750px;
   transform: translateX(-50%);
 }
 

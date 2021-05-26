@@ -11,6 +11,7 @@ import {googleMapsClient} from "../util/googlemaps";
 import logger from "../util/logger";
 import {distanceInKm} from "../util/math";
 import {CoreGameRoom} from "./CoreGameRoom";
+import {Translations} from "../schema/Translations";
 
 const DEFAULT_ROUND_TIME = 5;
 const DEFAULT_GAME_START_TIME = 3;
@@ -163,19 +164,14 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
             const country = new Country();
             googleMapsClient.reverseGeocode({latlng: [vote.lat, vote.lng], result_type: "country"}, (err, res) => {
                 if (err) {
-                    logger.error("Unable to resolve country address information from googleMaps", err);
-
-                    // store vote without resolved countryCode
-                    vote.country = this.state.country;
-                    vote.distanceInKm = distanceInKm(this.state.country, vote);
-                    this.state.votes[client.sessionId] = vote;
+                    console.log("Fehler: ", err);
                     return;
                 }
 
                 const geocodingResult = res.json.results[0];
 
                 // extracts formatted address and country name from google maps api response
-                if (res.json.results[0]) {
+                if (geocodingResult) {
                     if (geocodingResult.address_components[0]) {
                         country.name = geocodingResult.address_components[0].short_name;
                     }
@@ -183,18 +179,21 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                     const match = COUNTRIES.find((c: any) => c.alpha2Code === country.name);
 
                     if (match) {
-                        country.translations.de = match.translations.de;
-                        country.translations.en = match.name;
+                        const translations = new Translations();
+                        translations.de = match.translations.de;
+                        translations.en = match.name;
+                        country.translations = translations;
                     } else {
                         country.translations.de = res.json.results[0].formatted_address;
                         country.translations.en = res.json.results[0].formatted_address;
                     }
+
                     vote.country = country;
+                    vote.distanceInKm = distanceInKm(this.state.country, vote);
+                    this.state.votes[client.sessionId] = vote;
+                } else {
+                    console.log('No result');
                 }
-
-                vote.distanceInKm = distanceInKm(this.state.country, vote);
-
-                this.state.votes[client.sessionId] = vote;
             });
         });
     }
@@ -318,7 +317,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
         });
 
         this.state.votes.forEach((vote) => {
-            if (vote.country && vote.country.countryCode === this.state.country.alpha2Code) {
+            if (vote.country && vote.country.alpha2Code === this.state.country.alpha2Code) {
                 this.state.votes[vote.player.playerId].hasWon = true;
             }
         });

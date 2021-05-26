@@ -1,13 +1,13 @@
 <template>
   <div class="dialog" v-if="room && show">
-    <h4 class="text-3xl pb-3 border-b-2 border-gray-400 flex justify-between flex-col w-full">
-      <div>Runde #{{ room.round }} von {{ room.maxRounds }}</div>
+    <h4 class="text-2xl sm:text-3xl pb-3 border-b-2 border-gray-400 flex justify-between flex-col w-full">
+      <div>{{ $t("t.round") }} #{{ room.round }} von {{ room.maxRounds }}</div>
       <div>
         <Flag class="mini-flag" size="l" :code="room.country.alpha2Code"/>
         {{ room.country.translations[$i18n.locale] }}
       </div>
     </h4>
-    <div class="text-2xl">
+    <div class="text-xl sm:text-2xl">
       <transition v-for="(vote, index) in votes"
                   :key="vote.player.id"
                   enter-active-class="transition-all transition-fastest ease-out-quad"
@@ -18,8 +18,8 @@
       >
         <div class="my-3 py-1 border-b-2 border-gray-400 flex justify-between items-center">
           <span v-if="vote.country" class="flex">
-            <Flag class="mini-flag" size="l" :code="vote.country.countryCode"/>&nbsp;
-            {{ vote.country.countryNameEn }}
+            <Flag class="mini-flag" size="l" :code="vote.country.alpha2Code"/>&nbsp;
+            {{ vote.country.translations[$i18n.locale] }}
           </span>
           <span v-else>
             &mdash;
@@ -28,7 +28,7 @@
             <span v-if="vote.player">
                <Pin :id="vote.player.pin" width="32"/>
             </span>
-            <span class="text-2xl">{{ vote.player.displayName }}</span>
+            <span class="text-xl sm:text-2xl">{{ vote.player.displayName }}</span>
           </div>
           <span>
               <span v-if="validVote(vote)">👑</span>
@@ -72,7 +72,7 @@ export default class RoundEndDialog extends Vue {
     if (!vote.country) {
       return false;
     }
-    return vote.country.countryCode === (this.room as any).country.countryCode
+    return vote.country.alpha2Code === (this.room as any).country.alpha2Code
   }
 }
 </script>
@@ -82,7 +82,8 @@ export default class RoundEndDialog extends Vue {
   @apply flex content-center justify-center bg-gray-100 bg-opacity-90 text-gray-700 flex-col;
   font-family: "Luckiest Guy";
   top: 80px;
-  min-width: 500px;
+  width: 90%;
+  max-width: 750px;
   transform: translateX(-50%);
 }
 

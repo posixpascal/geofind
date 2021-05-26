@@ -1,6 +1,6 @@
 <template>
   <div class="dialog" v-if="room">
-    <h2>Game starts in...</h2>
+    <h2>{{ $t('t.gameStartsIn') }}</h2>
     <h3>{{ room.gameStartsIn }}</h3>
   </div>
 </template>

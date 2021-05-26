@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg :height="height" :width="height" :style="svgStyle" fill="none" viewBox="0 0 24 24" stroke="currentColor" v-if="name === 'chevron-left'">
+    <svg :height="height" :width="height" :style="svgStyle" class="relative top-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" v-if="name === 'chevron-left'">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
     </svg>
     <svg :height="height" :width="height" :style="svgStyle" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" v-if="name === 'chevron-down'">
@@ -20,7 +20,7 @@ import {Component, Prop} from "vue-property-decorator";
 @Component
 export default class Icon extends Vue {
   @Prop({ default: "cog" }) name!:string;
-  @Prop({default: 48}) height!: number;
+  @Prop({default: 32}) height!: number;
 
   get svgStyle(){
     return {

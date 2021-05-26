@@ -3,7 +3,7 @@
     <Logo>
       <template #before>
         <nuxt-link :to="localePath('/')">
-          <Icon name="chevron-left"></Icon>
+          <Icon  name="chevron-left"></Icon>
         </nuxt-link>
       </template>
       <template #after>

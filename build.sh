@@ -10,7 +10,7 @@ cd ../../
 rm -r packages/server/public/*
 rm -r packages/server/public/.*
 cp -R packages/web/dist/* packages/server/public/
-cp -R packages/web/dist/.* packages/server/public/
+cp -R packages/web/dist/.* packages/server/public/ || true
 
 pm2 restart 0
 echo "Build completed"
