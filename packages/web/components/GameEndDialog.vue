@@ -28,6 +28,8 @@
     </div>
 
     <Button variant="green" :disabled="!room.isLeader(user)" @click="restart" small>Restart</Button>
+    <Button variant="blue" :to="`/lobby/${room.id}`" small>Zur Lobby</Button>
+
     <small class="text-gray-400 block text-center mb-2 w-full" v-if="!room.isLeader(user)">Nur der Leader kann neustarten.</small>
     <Button variant="red" to="/" small>Close Game</Button>
   </div>
@@ -74,11 +76,11 @@ export default class GameEndDialog extends Vue {
     console.log(Object.values(this.room.scoreboard));
     return Object.values(this.room.scoreboard).sort((a: any, b: any) => {
       if (a.score > b.score) {
-        return -1;
+        return 1;
       }
 
       if (b.score > a.score) {
-        return 1;
+        return -1;
       }
 
       return 0

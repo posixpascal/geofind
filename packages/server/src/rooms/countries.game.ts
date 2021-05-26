@@ -421,6 +421,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
 
             if (closestPlayer) {
                 this.state.scoreboard[closestPlayer].score += 1;
+                this.state.votes[closestPlayer].hasWon = true;
             }
         }
     }
