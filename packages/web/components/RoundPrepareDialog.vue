@@ -10,7 +10,7 @@
             gradient="real-linear"
             :code="room.country.alpha2Code"
       /><br/>
-      {{ room.country.translations[$i18n.locale] }}
+      <span class="whitespace-pre-wrap break-all">{{ room.country.translations[$i18n.locale] }}</span>
     </h3>
   </div>
 </template>

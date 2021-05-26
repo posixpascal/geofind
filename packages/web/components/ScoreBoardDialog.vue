@@ -1,7 +1,7 @@
 <template>
   <div class="dialog" v-if="room">
     <h4 class="text-2xl sm:text-3xl  pb-3">
-      {{ $t("t.round") }} #{{ room.round }} of {{ room.maxRounds }}
+      {{ $t("t.round") }} #{{ room.round }} {{ $t('t.of')}} {{ room.maxRounds }}
     </h4>
     <div class="text-2xl sm:text-3xl">
       <transition v-for="(playerScore, index) in playerScores"

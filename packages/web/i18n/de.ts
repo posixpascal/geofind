@@ -1,8 +1,11 @@
 export const de = {
   t: {
+    of: 'von',
     save: 'Speichern',
     round: 'Runde',
     change: 'Ändern',
+    toLobby: 'Zur Lobby',
+    onlyLeaderCan: 'Nur der Lobbyleiter kann neustarten',
     soon: 'Bald',
     other: 'Sonstiges',
     loading: 'Lade...',
@@ -16,6 +19,9 @@ export const de = {
     name: 'Name',
     gameStartsIn: "Spiel startet in ",
     whereIs: 'Suche nach ',
+    restart: 'Neustarten',
+    close: 'Schließen',
+    gameFinished: 'Spiel beendet',
     source: 'Quellcode',
     educationalEdition: 'Lehredition',
     about: `Geografie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.`

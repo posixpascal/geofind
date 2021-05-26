@@ -1,7 +1,7 @@
 <template>
   <div class="dialog" v-if="room && show">
     <h4 class="text-2xl sm:text-3xl pb-3 border-b-2 border-gray-400 flex justify-between flex-col w-full">
-      <div>{{ $t("t.round") }} #{{ room.round }} von {{ room.maxRounds }}</div>
+      <div>{{ $t("t.round") }} #{{ room.round }} {{ $t('t.of')}} {{ room.maxRounds }}</div>
       <div>
         <Flag class="mini-flag" size="l" :code="room.country.alpha2Code"/>
         {{ room.country.translations[$i18n.locale] }}
@@ -31,7 +31,7 @@
             <span v-if="vote.player">
                <Pin :id="vote.player.pin" width="32"/>
             </span>
-            <span class="text-xl sm:text-2xl pr-4">{{ vote.player.displayName }}</span>
+            <span class="text-xl sm:text-2xl sm:pr-4">{{ vote.player.displayName }}</span>
             <span>
               <span v-if="validVote(vote)">👑</span>
               <span v-else-if="vote.distanceInKm">{{ vote.distanceInKm.toFixed(2) }}km</span>

@@ -2,7 +2,7 @@
   <div class="dialog" v-if="room">
     <canvas id="confetti" ref="canvas"></canvas>
     <h4 class="text-2xl sm:text-3xl pb-3">
-      Game finished.
+      {{ $t('t.gameFinished') }}
     </h4>
     <div class="text-lg sm:text-2xl">
       <transition v-for="(playerScore, index) in playerScores"
@@ -14,24 +14,30 @@
                   leave-to-class="opacity-0 scale-70"
       >
         <div class="my-3 border-b-2 border-gray-400 flex justify-between items-center">
-          <span>
+          <div class="flex">
+            <span>
             #{{ playerScore.rank }}
           </span>
-          <span>{{ playerScore.player.displayName }}
+            <span>{{ playerScore.player.displayName }}
             <span v-if="playerScore.rank === 1">👑</span>
           </span>
-          <div class="pl-3">
-            {{ playerScore.score }} <small class="text-xl">PTS</small>
+          </div>
+          <div class="pl-3 flex">
+            {{ playerScore.score }} <small class="text-xl">PINs</small>
           </div>
         </div>
       </transition>
     </div>
 
-    <Button variant="green" :disabled="!room.isLeader(user)" @click="restart" small>Restart</Button>
-    <Button variant="blue" :to="`/lobby/${room.id}`" small>Zur Lobby</Button>
+    <Button variant="green" :disabled="!room.isLeader(user)" @click="restart" small>
+      {{ $t('t.restart')}}
+    </Button>
+    <Button variant="blue" :to="`/lobby/${room.id}`" small>{{ $t('t.toLobby')}}</Button>
 
-    <small class="text-gray-400 block text-center mb-2 w-full" v-if="!room.isLeader(user)">Nur der Leader kann neustarten.</small>
-    <Button variant="red" to="/" small>Close Game</Button>
+    <small class="text-gray-400 block text-center mb-2 w-full" v-if="!room.isLeader(user)">{{ $t('t.onlyLeaderCan')}}</small>
+    <Button variant="red" to="/" small>
+      {{ $t('t.close')}}
+    </Button>
   </div>
 </template>
 <script lang="ts">
@@ -64,7 +70,7 @@ export default class GameEndDialog extends Vue {
     return this.$user.get();
   }
 
-  restart(){
+  restart() {
     this.$store.dispatch("room/message", {roomId: this.room.id, action: "restart"})
   }
 
