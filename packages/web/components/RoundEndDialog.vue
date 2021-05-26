@@ -31,7 +31,7 @@
             <span v-if="vote.player">
                <Pin :id="vote.player.pin" width="32"/>
             </span>
-            <span class="text-xl sm:text-2xl">{{ vote.player.displayName }}</span>
+            <span class="text-xl sm:text-2xl pr-4">{{ vote.player.displayName }}</span>
             <span>
               <span v-if="validVote(vote)">👑</span>
               <span v-else-if="vote.distanceInKm">{{ vote.distanceInKm.toFixed(2) }}km</span>
