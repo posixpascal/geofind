@@ -1,4 +1,5 @@
 import {Schema, type} from "@colyseus/schema";
+import {Translations} from "./Translations";
 
 export class Country extends Schema {
     @type("number")
@@ -8,11 +9,11 @@ export class Country extends Schema {
     public lng: number;
 
     @type("string")
-    public countryCode: string;
+    public name: string;
 
     @type("string")
-    public countryNameEn: string;
+    public capital: string;
 
-    @type("string")
-    public countryNameDe: string;
+    @type(Translations)
+    public translations: Translations;
 }

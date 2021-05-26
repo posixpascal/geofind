@@ -22,6 +22,21 @@ const DEFAULT_MAX_ROUNDS = 10;
 
 const MAP_SETS = {
     earth: COUNTRIES,
+    africa: COUNTRIES.filter(country => {
+        return country.region === 'Africa';
+    }),
+    asia: COUNTRIES.filter(country => {
+        return country.region === 'Asia';
+    }),
+    europe: COUNTRIES.filter(country => {
+        return country.region === 'Europe';
+    }),
+    america: COUNTRIES.filter(country => {
+        return country.region === 'Americas';
+    }),
+    oceania: COUNTRIES.filter(country => {
+        return country.region === 'Oceania';
+    }),
 };
 
 export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
@@ -155,6 +170,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                     vote.country = this.state.country;
                     vote.distanceInKm = distanceInKm(this.state.country, vote);
                     this.state.votes[client.sessionId] = vote;
+                    console.log('meh')
                     return;
                 }
 
@@ -165,7 +181,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                     if (geocodingResult.address_components[0]) {
                         country.countryCode = geocodingResult.address_components[0].short_name;
                     }
-                    country.countryNameEn = res.json.results[0].formatted_address;
+z                    country.countryNameEn = res.json.results[0].formatted_address;
                     country.countryNameDe = res.json.results[0].formatted_address;
                     vote.country = country;
                 }
@@ -296,7 +312,7 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
         });
 
         this.state.votes.forEach((vote) => {
-            if (vote.country && vote.country.countryCode === this.state.country.countryCode) {
+            if (vote.country && vote.country.countryCode === this.state.country.alpha2Code) {
                 this.state.votes[vote.player.playerId].hasWon = true;
             }
         });

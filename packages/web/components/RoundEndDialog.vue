@@ -3,8 +3,8 @@
     <h4 class="text-3xl pb-3 border-b-2 border-gray-400 flex justify-between flex-col w-full">
       <div>Runde #{{ room.round }} von {{ room.maxRounds }}</div>
       <div>
-        <Flag class="mini-flag" size="l" :code="room.country.countryCode"/>
-        {{ room.country.countryNameDe }}
+        <Flag class="mini-flag" size="l" :code="room.country.alpha2Code"/>
+        {{ room.country.translations[$i18n.locale] }}
       </div>
     </h4>
     <div class="text-2xl">
@@ -19,7 +19,7 @@
         <div class="my-3 py-1 border-b-2 border-gray-400 flex justify-between items-center">
           <span v-if="vote.country" class="flex">
             <Flag class="mini-flag" size="l" :code="vote.country.countryCode"/>&nbsp;
-            {{ vote.country.countryNameDe }}
+            {{ vote.country.countryNameEn }}
           </span>
           <span v-else>
             &mdash;

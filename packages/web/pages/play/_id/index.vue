@@ -17,9 +17,9 @@
       </div>
       <span v-if="room && room.mode === 'round_start'">
         <h3>
-          <Flag v-if="room.country && room.country.countryCode" class="flag" size="l" gradient="real-linear"
-                :code="room.country.countryCode"/>
-          {{ room.country.countryNameDe }}
+          <Flag v-if="room.country && room.country.alpha2Code" class="flag" size="l" gradient="real-linear"
+                :code="room.country.alpha2Code"/>
+          {{ room.country.translations[$i18n.locale] }}
         </h3>
       </span>
     </div>

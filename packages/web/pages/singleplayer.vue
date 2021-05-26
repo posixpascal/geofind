@@ -7,7 +7,6 @@
         </nuxt-link>
       </template>
       <template #after>
-        <span class="text-5xl">📍</span>
       </template>
     </Logo>
     <h1 class="mt-5 mb-0">{{ $t('singleplayer.title') }}</h1>

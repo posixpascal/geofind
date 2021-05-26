@@ -17,6 +17,7 @@
     "colyseus.js": "0.14",
     "core-js": "^3.9.1",
     "global": "^4.4.0",
+    "leaflet": "^1.7.1",
     "node-sass": "^5.0.0",
     "nuxt": "^2.15.3",
     "nuxt-i18n": "^6.22.3",
@@ -27,6 +28,7 @@
     "vue-flagpack": "^1.0.1",
     "vue-property-decorator": "^9.1.2",
     "vue2-google-maps": "^0.10.7",
+    "vue2-leaflet": "^2.7.0",
     "vuex": "^3.6.2",
     "zx": "^1.11.0"
   },

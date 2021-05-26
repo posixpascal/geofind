@@ -8,9 +8,9 @@
             :hasBorderRadius="true"
             size="L"
             gradient="real-linear"
-            :code="room.country.countryCode"
+            :code="room.country.alpha2Code"
       /><br/>
-      {{ room.country.countryNameDe }}
+      {{ room.country.translations[$i18n.locale] }}
     </h3>
   </div>
 </template>
