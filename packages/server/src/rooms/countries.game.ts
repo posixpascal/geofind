@@ -178,11 +178,18 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                 // extracts formatted address and country name from google maps api response
                 if (res.json.results[0]) {
                     if (geocodingResult.address_components[0]) {
-                        country.countryCode = geocodingResult.address_components[0].short_name;
+                        country.name = geocodingResult.address_components[0].short_name;
                     }
 
-                    country.countryNameEn = res.json.results[0].formatted_address;
-                    country.countryNameDe = res.json.results[0].formatted_address;
+                    const match = COUNTRIES.find((c: any) => c.alpha2Code === country.name);
+
+                    if (match) {
+                        country.translations.de = match.translations.de;
+                        country.translations.en = match.name;
+                    } else {
+                        country.translations.de = res.json.results[0].formatted_address;
+                        country.translations.en = res.json.results[0].formatted_address;
+                    }
                     vote.country = country;
                 }
 
