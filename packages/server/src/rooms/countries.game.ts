@@ -183,10 +183,12 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
                         translations.de = match.translations.de;
                         translations.en = match.name;
                         country.translations = translations;
+                        country.alpha2Code = match.alpha2Code;
                     } else {
                         country.translations.de = res.json.results[0].formatted_address;
                         country.translations.en = res.json.results[0].formatted_address;
                     }
+
 
                     vote.country = country;
                     vote.distanceInKm = distanceInKm(this.state.country, vote);

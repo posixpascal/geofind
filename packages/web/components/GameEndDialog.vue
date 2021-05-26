@@ -20,7 +20,7 @@
           <span>{{ playerScore.player.displayName }}
             <span v-if="playerScore.rank === 1">👑</span>
           </span>
-          <div>
+          <div class="pl-3">
             {{ playerScore.score }} <small class="text-xl">PTS</small>
           </div>
         </div>

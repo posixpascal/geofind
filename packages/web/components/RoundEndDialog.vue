@@ -17,7 +17,7 @@
                   leave-to-class="opacity-0 scale-70"
       >
         <div
-          class="my-3 py-1 border-b-2 border-gray-400 flex flex-col-reverse sm:flex-row justify-between items-center">
+          :class="`my-3 py-1 border-b-2 border-gray-400 flex flex-col-reverse sm:flex-row justify-between sm:items-center ${vote.hasWon ? 'bg-green-100' : 'bg-red-100'}`">
           <div class="flex">
             <span v-if="vote.country" class="flex">
             <Flag class="mini-flag" size="l" :code="vote.country.alpha2Code"/>&nbsp;
