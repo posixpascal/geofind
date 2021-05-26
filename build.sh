@@ -7,6 +7,8 @@ cd ../server/
 yarn run build
 
 cd ../../
+rm -r packages/server/public/*
+rm -r packages/server/public/.*
 cp -R packages/web/dist/* packages/server/public/
 cp -R packages/web/dist/.* packages/server/public/
 
