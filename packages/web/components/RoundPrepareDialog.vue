@@ -1,7 +1,7 @@
 <template>
   <div class="dialog" v-if="room">
     <h2 class="text-xl sm:text-2xl">{{ $t('t.whereIs') }}...</h2>
-    <h3 class="text-xl sm:text-2xl">
+    <h3 class="text-lg sm:text-xl">
       <Flag class="flag"
             :hasDropShadow="true"
             :hasBorder="true"

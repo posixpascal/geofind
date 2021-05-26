@@ -10,5 +10,5 @@ cd ../../
 rm -r packages/server/public/*
 cp -R packages/web/dist/* packages/server/public/
 
-sudo pm2 restart 0
+sudo su root -c 'pm2 restart 0'
 echo "Build completed"

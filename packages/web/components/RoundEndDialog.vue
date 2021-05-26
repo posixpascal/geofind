@@ -16,25 +16,28 @@
                   leave-class="opacity-100 scale-100"
                   leave-to-class="opacity-0 scale-70"
       >
-        <div class="my-3 py-1 border-b-2 border-gray-400 flex justify-between items-center">
-          <span v-if="vote.country" class="flex">
+        <div
+          class="my-3 py-1 border-b-2 border-gray-400 flex flex-col-reverse sm:flex-row justify-between items-center">
+          <div class="flex">
+            <span v-if="vote.country" class="flex">
             <Flag class="mini-flag" size="l" :code="vote.country.alpha2Code"/>&nbsp;
             {{ vote.country.translations[$i18n.locale] }}
           </span>
-          <span v-else>
+            <span v-else>
             &mdash;
           </span>
+          </div>
           <div class="flex">
             <span v-if="vote.player">
                <Pin :id="vote.player.pin" width="32"/>
             </span>
             <span class="text-xl sm:text-2xl">{{ vote.player.displayName }}</span>
-          </div>
-          <span>
+            <span>
               <span v-if="validVote(vote)">👑</span>
               <span v-else-if="vote.distanceInKm">{{ vote.distanceInKm.toFixed(2) }}km</span>
               <span v-else>&mdash;</span>
           </span>
+          </div>
         </div>
       </transition>
     </div>

@@ -4,7 +4,7 @@
     <h4 class="text-2xl sm:text-3xl pb-3">
       Game finished.
     </h4>
-    <div class="text-xl sm:text-2xl">
+    <div class="text-lg sm:text-2xl">
       <transition v-for="(playerScore, index) in playerScores"
                   :key="playerScore.player.id"
                   enter-active-class="transition-all transition-fastest ease-out-quad"
@@ -21,7 +21,7 @@
             <span v-if="playerScore.rank === 1">👑</span>
           </span>
           <div>
-            {{ playerScore.score }} <small class="text-xl">PINs</small>
+            {{ playerScore.score }} <small class="text-xl">PTS</small>
           </div>
         </div>
       </transition>

@@ -7,8 +7,12 @@ const chance = Chance();
 
 hooks.beforeAuthenticate((provider, $setOnInsert, $set) => {
     // assign default metadata upon registration
-    $setOnInsert.displayName = chance.animal();
-    $setOnInsert.avatarUrl = `https://gravatar.com/avatar/${md5($setOnInsert.displayName)}`;
+    let name = chance.animal();
+    while (name.length > 8){
+        let name = chance.animal();
+    }
+
+    $setOnInsert.displayName = name;
     $setOnInsert.metadata = {
         pin: Math.floor(1 + Math.random() * 8),
         mapStyle: "basic",
