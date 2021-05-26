@@ -92,7 +92,7 @@
     </template>
 
 
-    <div class="counter">{{ room.roundTime }}</div>
+    <div class="counter" v-if="room.roundTime">{{ room.roundTime }}</div>
   </div>
 </template>
 <script lang="ts">
