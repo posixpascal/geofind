@@ -1,7 +1,6 @@
 import {User, verifyToken} from "@colyseus/social";
 import {Client, Delayed, Room, updateLobby} from "colyseus";
 import {COUNTRIES} from "../config/countries";
-import {TRANSLATED_COUNTRIES} from "../config/translatedCountries";
 import {GameMode} from "../GameMode";
 import {CountriesGame} from "../schema/CountriesGame";
 import {Country} from "../schema/Country";
