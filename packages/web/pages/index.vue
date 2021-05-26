@@ -2,7 +2,6 @@
   <div class="container">
     <Logo>
       <template #before>
-        <span style="width: 35px;"></span>
       </template>
       <template #after>
         <span style="width: 35px;"></span>

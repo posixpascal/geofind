@@ -16,7 +16,14 @@ export default {
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: 'Das Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.'}
+      {hid: 'description', name: 'description', content: 'Das Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.'},
+      {
+        hid: 'og:description',
+        property: 'og:description',
+        content:
+          'Das Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.',
+      },
+      {hid: 'og:image', property: 'og:image', content: 'https://geofind.io/social.png'},
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: 'https://geofind.io/icon.png'}
@@ -63,6 +70,11 @@ export default {
 
   tailwindcss: {
     configPath: 'tailwind.config.js',
+  },
+
+ pwa: {
+    name: 'geofind.io',
+    description: 'Das Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.',
   },
 
   manifest: {

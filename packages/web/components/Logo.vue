@@ -1,11 +1,13 @@
 <template>
   <div class="flex justify-start">
-    <div class="">
-      <slot name="before"></slot>
+    <div class="icon">
+      <slot name="before">
+        <div class="pt-2 pl-2 pr-5"><img style="min-width: 96px" width="96px" :src="require('~/assets/images/logo.svg')" class="logo-image relative"/>
+        </div>
+      </slot>
     </div>
     <nuxt-link :to="localePath('/')" class="flex">
-      <div class="pr-4"><img width="96px" :src="require('~/assets/images/logo.svg')" class="logo-image relative"/>
-      </div>
+
       <h1 class="text-4xl sm:text-5xl flex">
         geofind.io
       </h1>
