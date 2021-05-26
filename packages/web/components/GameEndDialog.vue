@@ -15,28 +15,28 @@
       >
         <div class="my-3 border-b-2 border-gray-400 flex justify-between items-center">
           <div class="flex">
-            <span>
+            <span class="inline-block pr-3">
             #{{ playerScore.rank }}
           </span>
-            <span>{{ playerScore.player.displayName }}
+            <span>{{ playerScore.player.displayName }}</span>
             <span v-if="playerScore.rank === 1">👑</span>
-          </span>
           </div>
           <div class="pl-3 flex">
-            {{ playerScore.score }} <small class="text-xl">PINs</small>
+            {{ playerScore.score }}&nbsp;&nbsp;<small class="text-xl">PINs</small>
           </div>
         </div>
       </transition>
     </div>
 
     <Button variant="green" :disabled="!room.isLeader(user)" @click="restart" small>
-      {{ $t('t.restart')}}
+      {{ $t('t.restart') }}
     </Button>
-    <Button variant="blue" :to="`/lobby/${room.id}`" small>{{ $t('t.toLobby')}}</Button>
+    <Button variant="blue" :to="`/lobby/${room.id}`" small>{{ $t('t.toLobby') }}</Button>
 
-    <small class="text-gray-400 block text-center mb-2 w-full" v-if="!room.isLeader(user)">{{ $t('t.onlyLeaderCan')}}</small>
+    <small class="text-gray-400 block text-center mb-2 w-full"
+           v-if="!room.isLeader(user)">{{ $t('t.onlyLeaderCan') }}</small>
     <Button variant="red" to="/" small>
-      {{ $t('t.close')}}
+      {{ $t('t.close') }}
     </Button>
   </div>
 </template>

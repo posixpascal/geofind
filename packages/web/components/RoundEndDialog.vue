@@ -1,7 +1,7 @@
 <template>
   <div class="dialog" v-if="room && show">
     <h4 class="text-2xl sm:text-3xl pb-3 border-b-2 border-gray-400 flex justify-between flex-col w-full">
-      <div>{{ $t("t.round") }} #{{ room.round }} {{ $t('t.of')}} {{ room.maxRounds }}</div>
+      <div>{{ $t("t.round") }} #{{ room.round }} {{ $t('t.of') }} {{ room.maxRounds }}</div>
       <div>
         <Flag class="mini-flag" size="l" :code="room.country.alpha2Code"/>
         {{ room.country.translations[$i18n.locale] }}
@@ -17,12 +17,12 @@
                   leave-to-class="opacity-0 scale-70"
       >
         <div
-          :class="`py-3 border-b-2 border-gray-400 flex flex-col-reverse sm:flex-row justify-between sm:items-center ${vote.hasWon ? 'bg-green-100' : 'bg-red-100'}`">
-          <div class="pl-4 sm:pl-0 flex">
+          :class="`py-3 border-b-2 border-gray-400 flex items-center justify-between sm:items-center ${vote.hasWon ? 'bg-green-100' : 'bg-red-100'}`">
+          <div class="pl-2 sm:pl-0 flex">
             <span v-if="vote.country" class="flex">
             <Flag class="mini-flag" size="l" :code="vote.country.alpha2Code"/>&nbsp;
-            {{ vote.country.translations[$i18n.locale] }}
-          </span>
+              <span class="hidden sm:inline-block">{ vote.country.translations[$i18n.locale] }}</span>
+        </span>
             <span v-else>
             &mdash;
           </span>
@@ -31,7 +31,7 @@
             <span v-if="vote.player">
                <Pin :id="vote.player.pin" width="32"/>
             </span>
-            <span class="text-xl sm:text-2xl pl-2 pr-4">{{ vote.player.displayName }}</span>
+            <span class="inline-block text-xl sm:text-2xl pl-2 pr-4">{{ vote.player.displayName }}</span>
             <span>
               <span v-if="validVote(vote)">👑</span>
               <span v-else-if="vote.distanceInKm">{{ vote.distanceInKm.toFixed(2) }}km</span>

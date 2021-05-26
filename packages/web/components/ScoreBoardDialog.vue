@@ -20,7 +20,7 @@
             {{ playerScore.player.displayName }}
           </span>
           <div class="pl-3 flex">
-            {{ playerScore.score }} <small class="hidden sm:inline-block text-sm">PINs</small>
+            {{ playerScore.score }}&nbsp;&nbsp;<small class="hidden sm:inline-block text-sm">PINs</small>
             <span v-if="playerScore.rank === 1">⭐</span>
           </div>
         </div>
