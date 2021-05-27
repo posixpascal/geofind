@@ -21,7 +21,7 @@
           <div class="pl-2 sm:pl-0 flex">
             <span v-if="vote.country" class="flex">
             <Flag class="mini-flag" size="l" :code="vote.country.alpha2Code"/>&nbsp;
-              <span class="hidden sm:inline-block">{ vote.country.translations[$i18n.locale] }}</span>
+              <span class="hidden sm:inline-block">{{ vote.country.translations[$i18n.locale] }}</span>
         </span>
             <span v-else>
             &mdash;
