@@ -1,16 +1,5 @@
 <template>
   <div class="main-menu">
-    <Logo>
-      <template #before>
-        <nuxt-link :to="localePath('/')">
-          <Icon name="chevron-left"></Icon>
-        </nuxt-link>
-      </template>
-      <template #after>
-        <span style="width: 40px;"></span>
-      </template>
-    </Logo>
-
     <h1 class="mt-5 mb-0">{{ $t('lobbies.title') }}</h1>
 
     <Box v-if="openRooms.length" class="flex flex-col" v-for="openRoom of openRooms" :key="openRoom.roomId">

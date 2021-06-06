@@ -27,6 +27,7 @@ export default class Button extends Vue {
   @Prop({default: false, type: Boolean}) animated!: boolean;
   @Prop({default: false, type: Boolean}) loading!: boolean;
   @Prop({default: false, type: Boolean}) small!: boolean;
+  @Prop({default: false, type: Boolean}) icon!: boolean;
   @Prop({default: false, type: Boolean}) xSmall!: boolean;
   @Prop({default: false, type: Boolean}) disabled!: boolean;
   @Prop({default: false, type: Boolean}) block!: boolean;
@@ -47,7 +48,7 @@ export default class Button extends Vue {
       "loading": this.loading,
       "block": this.block,
       "static": !this.animated,
-      "with-icon": !!this.$slots.icon,
+      "with-icon": !!this.icon,
       "small": this.small,
       "x-small": this.xSmall,
     }
@@ -120,7 +121,6 @@ export default class Button extends Vue {
   font-weight: 300;
   overflow: hidden;
   margin: 30px auto;
-  position: relative;
   text-shadow: 0 2px 3px rgba(0, 0, 0, .4), 0 0 50px rgba(216, 216, 216, .3);
 
   background: linear-gradient(to top, #ccc 0%, #e1e1e1 100%);
@@ -301,6 +301,11 @@ export default class Button extends Vue {
 
   .fancy-button.with-icon {
     padding-left: 30px !important;
+  }
+
+  .fancy-button svg {
+    position: relative;
+    top: -5px !important;
   }
 }
 </style>

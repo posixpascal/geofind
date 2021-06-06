@@ -1,21 +1,11 @@
 <template>
   <div class="main-menu">
-    <Logo>
-      <template #before>
-        <nuxt-link :to="localePath('/')">
-          <Icon name="chevron-left"></Icon>
-        </nuxt-link>
-      </template>
-      <template #after>
-        <span style="width: 40px;"></span>
-      </template>
-    </Logo>
     <h1 class="mt-5 mb-0">{{ $t('multiplayer.title') }}</h1>
 
 
     <GameSettings shade="blue" v-model="settings"/>
 
-    <Button :loading="loading" @click="create" variant="blue">
+    <Button :icon='true' :loading="loading" @click="create" variant="blue">
       <template #icon>🌎</template>
       {{ $t(loading ? 't.loading' : 'multiplayer.cta') }}
     </Button>

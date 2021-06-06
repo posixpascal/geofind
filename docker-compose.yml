@@ -1,13 +1,6 @@
 version: "3.7"
 
 services:
-  geofind:
-    image: posixpascal/geofind
-    container_name: geofind
-    restart: always
-    ports:
-      - 3001:3001
-
   redis:
     image: "redis:alpine"
 
@@ -15,3 +8,9 @@ services:
     image: mongo
     ports:
       - "27017:27017"
+
+  api:
+    image: node:15-alpine
+
+  web:
+    image: node:15-alpine

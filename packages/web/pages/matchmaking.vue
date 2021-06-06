@@ -1,16 +1,5 @@
 <template>
   <div class="main-menu">
-    <Logo>
-      <template #before>
-        <nuxt-link :to="localePath('/')">
-          <Icon name="chevron-left"></Icon>
-        </nuxt-link>
-      </template>
-      <template #after>
-        <span style="width: 40px;"></span>
-      </template>
-    </Logo>
-
     <template v-if="room">
       <h2 class="mt-5">{{ $t("t.players") }}</h2>
       <ul>

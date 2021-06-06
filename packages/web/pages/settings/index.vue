@@ -1,15 +1,5 @@
 <template>
   <div class="main-menu">
-    <Logo>
-      <template #before>
-        <nuxt-link :to="localePath('/')">
-          <Icon name="chevron-left"></Icon>
-        </nuxt-link>
-      </template>
-      <template #after>
-        <span style="width: 50px"></span>
-      </template>
-    </Logo>
     <h1 class="mt-5 mb-0">{{ $t('profile.title') }}</h1>
 
 

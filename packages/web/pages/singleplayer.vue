@@ -1,14 +1,5 @@
 <template>
   <div class="main-menu">
-    <Logo>
-      <template #before>
-        <nuxt-link :to="localePath('/')">
-          <Icon  name="chevron-left"></Icon>
-        </nuxt-link>
-      </template>
-      <template #after>
-      </template>
-    </Logo>
     <h1 class="mt-5 mb-0">{{ $t('singleplayer.title') }}</h1>
 
     <GameSettings v-model="settings"/>

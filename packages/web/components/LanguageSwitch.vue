@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="flex px-4" @click='showPopup = !showPopup' >
       <div>
         <Flag
@@ -19,9 +19,9 @@
       `' @click='setLocale(locale)' v-for="locale in $i18n.locales">
         <Flag
           :hasDropShadow="true"
-          :hasBorder="true"
           :hasBorderRadius="true"
           size="l"
+          class="flag"
           gradient="real-linear"
           :code="(locale.code === 'en' ? 'US' : locale.code.toUpperCase())"/>
         <span>{{ locale.name }}</span>
@@ -50,16 +50,31 @@ export default class LanguageSwitch extends Vue {
   position: relative;
   top: 8px;
 }
-.popup {
-  @apply shadow-lg z-10 right-0 absolute top-12 bg-white border-2 border-gray-200 rounded;
-  min-width: 200px;
-
-}
 
 .iconv {
   position: relative;
-  top: 5px;
+  top: 4px;
 }
+
+@media (max-width: 769px) {
+  .flag {
+    width: 24px;
+  }
+
+  .iconv {
+    top: 2px;
+  }
+
+  .iconv svg {
+    width: 20px;
+  }
+}
+
+.popup {
+  @apply shadow-lg z-10 right-5 absolute top-12 bg-white border-2 border-gray-200 rounded;
+  min-width: 200px;
+}
+
 
 .container {
   @apply relative;

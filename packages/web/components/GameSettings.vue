@@ -24,7 +24,6 @@
     <div class="settings-panel">
       <div class="game-modes flex flex-col items-start justify-start content-start">
         <Checkbox :extra-classes="shade" v-model='settings.directMatchesOnly' :label="$t('settings.directMatchesOnly')" />
-        <Checkbox :extra-classes="shade" v-model='settings.suddenDeath' :label="$t('settings.suddenDeath')" />
         <Checkbox :extra-classes="shade" v-model='settings.borders' :label="$t('settings.borders')" />
         <Checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='settings.public' :label="$t('settings.public')"/>
 
@@ -56,18 +55,31 @@ export default class GameSettings extends Vue {
     {
       name: "capitals",
       image: require("~/assets/gamemodes/capitals.svg"),
-      disabled: true
     },
     {
       name: "sightseeing",
       image: require("~/assets/gamemodes/sightseeing.svg"),
-      disabled: true
     },
     {
       name: "domainhunt",
       image: require("~/assets/gamemodes/domains.svg"),
-      disabled: true
     },
+    {
+      name: "flags",
+      image: require("~/assets/gamemodes/flags.svg"),
+    },
+    {
+      name: "quiz",
+      image: require("~/assets/gamemodes/quiz.svg"),
+    },
+    {
+      name: "speedrun",
+      image: require("~/assets/gamemodes/speedrun.svg"),
+    },
+    {
+      name: "shapes",
+      image: require("~/assets/gamemodes/shapes.svg"),
+    }
   ]
 
   sets = [

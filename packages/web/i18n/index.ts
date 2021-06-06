@@ -10,10 +10,4 @@ import {it} from "./it";
 export const messages = {
   de,
   en,
-  br,
-  es,
-  fr,
-  it,
-  jp,
-  nl
 };

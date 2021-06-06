@@ -11,10 +11,6 @@
           <span class="hidden sm:inline">{{ $t('t.round')}} </span>{{ room.round }} / {{
             room.maxRounds
           }}</span>
-
-        <span v-if="room.mapStyle == 'suddendeath'" class="px-3 text-xl hidden md:inline-block font-lucky">
-            ☠️ SuddenDeath
-        </span>
       </div>
       <span v-if="room && room.mode === 'round_start'">
         <h3 class="pr-3">

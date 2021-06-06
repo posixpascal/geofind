@@ -1,13 +1,8 @@
 <template>
-  <div class="container">
-    <Logo>
-      <template #before>
-      </template>
-      <template #after>
-        <span style="width: 35px;"></span>
-      </template>
-    </Logo>
-    <MainMenu/>
+  <div>
+    <div class="container">
+      <MainMenu/>
+    </div>
   </div>
 </template>
 
@@ -16,8 +11,9 @@ import Vue from 'vue'
 import {Component} from "vue-property-decorator";
 import Logo from "~/components/Logo.vue";
 import MainMenu from "~/components/MainMenu.vue";
+import Navigation from "~/components/Navigation.vue";
 
-@Component({ components: { Logo, MainMenu }})
+@Component({components: {Navigation, MainMenu}})
 export default class IndexPage extends Vue {
 
 }

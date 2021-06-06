@@ -24,7 +24,9 @@ export const de = {
     gameFinished: 'Spiel beendet',
     source: 'Quellcode',
     educationalEdition: 'Lehredition',
-    about: `Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains oder verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.`
+    sponsor: 'Spenden',
+    adfree: 'Werbefrei. Für immer.',
+    about: `Geographie Multiplayer Ratespiel. Finde Länder, Hauptstädte, Sehenswürdigkeiten und Internet-Domains. Verbessere Deinen Wissensstand im Einzelspielermodus oder stelle Dein Können im Online Multiplayer mit bis zu 32 Spielern auf die Probe.`
   },
   mapStyles: {
     title: 'Wähle Deinen Kartenskin',
@@ -47,6 +49,10 @@ export const de = {
       capitals: 'Hauptstädte',
       domainhunt: 'Domainsuche',
       sightseeing: 'Sehenswürdigkeiten',
+      flags: 'Flaggen',
+      quiz: 'Quiz',
+      speedrun: 'Wettrennen',
+      shapes: 'Formen'
     },
     mapSets: {
       earth: 'Weltweit',
@@ -65,14 +71,17 @@ export const de = {
     public: 'Öffentlich',
   },
   singleplayer: {
-    title: 'Einzelspiel',
-    cta: 'Spiel starten'
+    button: 'Lernmodus',
+    title: 'Geographie lernen',
+    cta: 'Jetzt lernen'
   },
   multiplayer: {
+    button: 'Spiel erstellen',
     title: 'Spiel erstellen',
     cta: 'Spiel erstellen'
   },
   matchmaking: {
+    button: 'Zufallsgegner',
     cta: 'Schnelles Spiel',
     title: 'Spiel suchen',
     waitingForPlayers: 'Warte auf Spieler',
@@ -82,11 +91,13 @@ export const de = {
     created: 'Spiel erstellt...'
   },
   profile: {
+    button: 'Einstellungen',
     cta: 'Profil',
     title: 'Profil',
     selectMarker: 'Wähle hier Deinen Lieblingsmarker für das Spiel'
   },
   lobbies: {
+    button: 'Offene Spiele',
     cta: 'Offene Spiele',
     title: 'Offene Spiele',
     join: 'Beitreten',
