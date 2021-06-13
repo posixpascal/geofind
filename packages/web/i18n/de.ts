@@ -1,17 +1,19 @@
 export const de = {
   t: {
     of: 'von',
+    menu: 'Menü',
     save: 'Speichern',
     round: 'Runde',
     change: 'Ändern',
     toLobby: 'Zur Lobby',
     onlyLeaderCan: 'Nur der Lobbyleiter kann neustarten',
     soon: 'Bald',
+    changeLanguage: 'Sprache ändern',
     other: 'Sonstiges',
     loading: 'Lade...',
     madewithlove: 'Gemacht mit ',
     players: 'Spieler',
-    opensource: 'Open Source. Für immer.',
+    opensource: 'Open Source.',
     imprint: 'Impressum',
     privacy: 'Datenschutz',
     pin: 'Map Marker',
@@ -19,6 +21,7 @@ export const de = {
     name: 'Name',
     gameStartsIn: "Spiel startet in ",
     whereIs: 'Suche nach ',
+    islands: 'Mit Inselstaaten',
     restart: 'Neustarten',
     close: 'Schließen',
     gameFinished: 'Spiel beendet',
@@ -65,6 +68,7 @@ export const de = {
     directMatchesOnly: 'Nur direkte Treffer',
     suddenDeath: 'Episches Finale',
     borders: 'Ländergrenzen',
+    noIslands: 'Keine Inseln',
     roundTime: 'Rundenzeit',
     maxRounds: 'Maximale Runden',
     pointsNeeded: 'Punkte zum Sieg',
@@ -104,7 +108,13 @@ export const de = {
     noRoomsFound: 'Keine öffentlichen Spiele gefunden, möchtest Du stattdessen ein eigenes Spiel erstellen?'
   },
   lobby: {
-
+    notReady: 'Ich bin nicht bereit',
+    ready: 'Ich bin bereit',
+    waiting: 'Warte auf Spieler',
+    players: 'Spieler',
+    startGame: 'Spiel starten',
+    inviteTitle: 'Freunde einladen',
+    inviteText: 'Kopiere diesen Link um deine Freunde einzuladen.'
   },
   play: {
 

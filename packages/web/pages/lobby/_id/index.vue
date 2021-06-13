@@ -1,6 +1,6 @@
 <template>
   <div class="main-menu">
-    <Logo>
+    <geo-logo>
       <template #before>
         <div @click="leave()">
           <Icon name="chevron-left"></Icon>
@@ -10,86 +10,82 @@
         <span style="width: 40px;"></span>
 
       </template>
-    </Logo>
+    </geo-logo>
 
 
     <template v-if="room">
       <h1 class="text-2xl sm:text-3xl">#{{ room.id }}</h1>
-      <h2 class="mt-5">Players</h2>
+      <h2 class="mt-5">{{ $t('lobby.players')}}</h2>
       <ul>
         <li class="player-item flex justify-between" v-for="player in room.players">
           <span v-if="player.isReady">✅</span>
           <span v-else>🕖</span>
           <div class="flex">
             <span class="pl-3">{{ player.displayName }}</span>
-            <Pin :id="player.pin" width="24"/>
+            <geo-pin :id="player.pin" width="24"/>
           </div>
           <span @click="editProfile = true">
-            <Icon name="pen" height="20" v-if="player.id === user._id"/>
+            <geo-icon name="pen" height="20" v-if="player.id === user._id"/>
           </span>
         </li>
       </ul>
 
       <template v-if="room.isLeader(user)">
-        <Button v-if="!room.player(user).isReady" small @click.stop="ready" variant="blue">
+        <geo-button v-if="!room.player(user).isReady" small @click.stop="ready" variant="blue">
           <template #icon>🌎</template>
-          I'm ready!
-        </Button>
+          {{ $t('lobby.ready') }}
+        </geo-button>
 
-        <Button v-if="room.player(user).isReady" small @click.stop="unready">
+        <geo-button v-if="room.player(user).isReady" variant="red" small @click.stop="unready">
           <template #icon><span>&nbsp;</span></template>
-          Not ready
-        </Button>
+          {{ $t('lobby.notReady') }}
+        </geo-button>
 
-        <Button small v-if="!allReady()" :loading="true" disabled variant="blue">
+        <geo-button small v-if="!allReady()" :loading="true" disabled variant="blue">
           <template #icon>🕖</template>
-          Waiting
-        </Button>
+          {{ $t('lobby.waiting')}}
+        </geo-button>
 
-        <Button small v-else @click="start" :loading="true" variant="blue">
+        <geo-button small v-else @click="start" :loading="true" variant="blue">
           <template #icon>🌎</template>
-          Start Game
-        </Button>
+          {{ $t('lobby.startGame')}}
+        </geo-button>
       </template>
 
       <template v-else>
-        <Button small v-if="room.player(user).isReady" @click="unready" variant="gray">
+        <geo-button variant="red" small v-if="room.player(user).isReady" @click="unready">
           <template #icon>🕖</template>
-          Not ready
-        </Button>
+          {{ $t('lobby.notReady') }}
+        </geo-button>
 
-        <Button small v-else @click.stop="ready" variant="blue">
+        <geo-button small v-else @click.stop="ready" variant="blue">
           <template #icon>🌎</template>
-          I'm ready!
-        </Button>
+          {{ $t('lobby.ready') }}
+        </geo-button>
       </template>
     </template>
 
-    <h3 class="mt-10">Invite Friends</h3>
-    <Box class="flex flex-col justify-between">
-      Copy this link to invite your friends to this room.
-      <Input class="w-full" readonly v-model="shareLink"/>
-    </Box>
+    <geo-share :link="shareLink" />
 
-    <GameSettingsView  shade='blue' :room="room" v-if="room && !room.isLeader(user)"/>
-    <GameSettings shade='blue' v-model="settings" v-if="settings && room && room.isLeader(user)"/>
+    <geo-game-settings-view  shade='blue' :room="room" v-if="room && !room.isLeader(user)"/>
+    <geo-game-settings shade='blue' v-model="settings" v-if="settings && room && room.isLeader(user)"/>
 
     <div class='dialog-backdrop' v-if="editProfile">
       <div class="dialog-p flex-col">
         <h2 class="flex justify-between items-center">
           Profil
-          <Button x-small @click="saveProfile()" variant="yellow">
+          <geo-button x-small @click="saveProfile()" variant="yellow">
             Speichern
-          </Button>
+          </geo-button>
         </h2>
         <h3 class="mt-10">Name</h3>
         <Box class="flex items-center justify-between">
-          <Input class="w-full" v-model="name" @change="setName()" :placeholder="user.displayName"/>
+          <geo-input class="w-full" v-model="name" @change="setName()" :placeholder="user.displayName"/>
         </Box>
 
         <h3>Marker</h3>
         <Box>
-          <PinSelection :initial="user.metadata.pin" @change="setPin"/>
+          <geo-pin-selection :initial="user.metadata.pin" @change="setPin"/>
         </Box>
       </div>
     </div>
@@ -98,17 +94,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Button from "~/components/Button.vue";
-import Logo from "~/components/Logo.vue";
-import Icon from "~/components/Icon.vue";
-import GameSettings from "~/components/GameSettings.vue";
+import Button from "~/components/button.vue";
+import Logo from "~/components/logo.vue";
+import Icon from "~/components/icon.vue";
 import {Component, Watch} from "vue-property-decorator";
 import {Room} from "~/models";
-import GameSettingsView from "~/components/GameSettingsView.vue";
 
-@Component({
-  components: {Button, Logo, Icon, GameSettings, GameSettingsView}
-})
+@Component
 export default class LobbyPage extends Vue {
   loading = false;
   imReady = false;

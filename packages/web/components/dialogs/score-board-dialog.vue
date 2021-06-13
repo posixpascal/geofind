@@ -1,7 +1,7 @@
 <template>
-  <div class="dialog" v-if="room">
+  <geo-dialog v-if="room">
     <h4 class="text-2xl sm:text-3xl  pb-3">
-      {{ $t("t.round") }} #{{ room.round }} {{ $t('t.of')}} {{ room.maxRounds }}
+      {{ $t("t.round") }} #{{ room.round }} {{ $t('t.of') }} {{ room.maxRounds }}
     </h4>
     <div class="text-2xl sm:text-3xl">
       <transition v-for="(playerScore, index) in playerScores"
@@ -26,14 +26,15 @@
         </div>
       </transition>
     </div>
-  </div>
+  </geo-dialog>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import {Component, Prop} from "vue-property-decorator";
 import {Room} from "~/models";
+import Dialog from "~/components/dialog.vue";
 
-@Component
+@Component({components: {Dialog}})
 export default class ScoreBoardDialog extends Vue {
   @Prop() room!: Room;
 
@@ -75,32 +76,4 @@ export default class ScoreBoardDialog extends Vue {
 }
 </script>
 <style lang="postcss" scoped>
-.dialog {
-  @apply absolute bg-opacity-90 bg-white left-1/2 w-20 z-10 p-5 rounded shadow-2xl;
-  @apply flex content-center justify-center bg-gray-100 bg-opacity-90 text-gray-700 flex-col;
-  font-family: "Luckiest Guy";
-  top: 80px;
-  width: 90%;
-  max-width: 750px;
-  transform: translateX(-50%);
-}
-
-.dialog h2 {
-  @apply text-center text-4xl pt-6;
-}
-
-.dialog h3 {
-  @apply text-center text-5xl mt-5;
-}
-
-.dialog .flag {
-  width: 72px;
-  position: relative;
-  top: 9px;
-}
-
-.dialog .mini-flag {
-  position: relative;
-  top: 2px;
-}
 </style>

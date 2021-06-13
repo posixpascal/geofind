@@ -1,3 +1,5 @@
+import {CapitalsGameRoom} from "./rooms/capitals.game";
+
 require('dotenv').config()
 import {RedisPresence, Server} from "colyseus";
 import {MongooseDriver} from "colyseus/lib/matchmaker/drivers/MongooseDriver";
@@ -18,6 +20,10 @@ const gameServer = new Server({
 
 gameServer
     .define("game_countries", CountriesGameRoom, {mode: "countries"})
+    .sortBy({clients: 1});
+
+gameServer
+    .define("game_capitals", CapitalsGameRoom, {mode: "countries"})
     .sortBy({clients: 1});
 
 gameServer.listen(3001, app.get("hostname"), 30, () => {

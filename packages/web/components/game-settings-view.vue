@@ -36,8 +36,8 @@
 import Vue from "vue";
 import {Component, Emit, Model, Prop, VModel} from "vue-property-decorator";
 import {Room} from "~/models";
-import GameSettingsInput from "~/components/GameSettingsInput.vue";
-import Checkbox from "~/components/Checkbox.vue";
+import GameSettingsInput from "~/components/game-settings-input.vue";
+import Checkbox from "~/components/checkbox.vue";
 
 @Component({
   components: {Checkbox, GameSettingsInput}

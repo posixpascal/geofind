@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" v-if="room">
+  <geo-dialog v-if="room">
     <canvas id="confetti" ref="canvas"></canvas>
     <h4 class="text-2xl sm:text-3xl pb-3">
       {{ $t('t.gameFinished') }}
@@ -38,7 +38,7 @@
     <Button variant="red" to="/" small>
       {{ $t('t.close') }}
     </Button>
-  </div>
+  </geo-dialog>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -112,35 +112,6 @@ export default class GameEndDialog extends Vue {
 }
 </script>
 <style lang="postcss" scoped>
-.dialog {
-  @apply absolute bg-opacity-90 bg-white left-1/2 w-20 z-10 p-5 rounded shadow-2xl;
-  @apply flex content-center justify-center bg-gray-100 bg-opacity-90 text-gray-700 flex-col;
-  font-family: "Luckiest Guy";
-  top: 80px;
-  width: 90%;
-  max-width: 750px;
-  transform: translateX(-50%);
-}
-
-.dialog h2 {
-  @apply text-center text-4xl pt-6;
-}
-
-.dialog h3 {
-  @apply text-center text-5xl mt-5;
-}
-
-.dialog .flag {
-  width: 72px;
-  position: relative;
-  top: 9px;
-}
-
-.dialog .mini-flag {
-  position: relative;
-  top: 2px;
-}
-
 #confetti {
   @apply absolute bottom-0 h-full left-0 right-0;
 }

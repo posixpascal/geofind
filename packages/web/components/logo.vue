@@ -2,8 +2,7 @@
   <div class="flex justify-start">
     <div class="icon">
       <slot name="before">
-        <div class="pt-2 pl-2 pr-5"><img style="min-width: 96px" width="96px" :src="require('~/assets/images/logo.svg')" class="logo-image relative"/>
-        </div>
+        <div v-html="require('~/assets/images/logo.svg?raw')" class="logo-image relative"></div>
       </slot>
     </div>
     <nuxt-link :to="localePath('/')" class="flex">
@@ -13,7 +12,7 @@
       </h1>
     </nuxt-link>
     <div class="icon">
-      <LanguageSwitch/>
+      <geo-language-switch />
     </div>
   </div>
 </template>
@@ -21,13 +20,9 @@
 <script lang="ts">
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
-import AnimatedLetters from "~/components/AnimatedLetters.vue";
-import Button from "~/components/Button.vue";
 
 const {Prop} = require("vue-property-decorator");
-@Component({
-  components: {AnimatedLetters, Button}
-})
+@Component
 export default class Logo extends Vue {
   @Prop({default: false}) backButton!: boolean;
 }
@@ -39,6 +34,7 @@ div {
 
 .logo-image {
   top: -0px;
+  width: 32px !important;
 }
 
 .icon {

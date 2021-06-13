@@ -1,5 +1,5 @@
 <template>
-  <div class="dialog" v-if="room && show">
+  <geo-dialog>
     <h4 class="text-2xl sm:text-3xl pb-3 border-b-2 border-gray-400 flex justify-between flex-col w-full">
       <div>{{ $t("t.round") }} #{{ room.round }} {{ $t('t.of') }} {{ room.maxRounds }}</div>
       <div>
@@ -41,14 +41,16 @@
         </div>
       </transition>
     </div>
-  </div>
+  </geo-dialog>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import {Component, Prop} from "vue-property-decorator";
 import {Room} from "~/models";
-
-@Component
+import Dialog from "~/components/dialog.vue";
+@Component({
+  components: {Dialog}
+})
 export default class RoundEndDialog extends Vue {
   @Prop() room!: Room;
   show: boolean;
@@ -80,32 +82,5 @@ export default class RoundEndDialog extends Vue {
 }
 </script>
 <style lang="postcss" scoped>
-.dialog {
-  @apply absolute bg-opacity-90 bg-white left-1/2 w-20 z-10 p-5 rounded shadow-2xl;
-  @apply flex content-center justify-center bg-gray-100 bg-opacity-90 text-gray-700 flex-col;
-  font-family: "Luckiest Guy";
-  top: 80px;
-  width: 90%;
-  max-width: 750px;
-  transform: translateX(-50%);
-}
 
-.dialog h2 {
-  @apply text-center text-4xl pt-6;
-}
-
-.dialog h3 {
-  @apply text-center text-5xl mt-5;
-}
-
-.dialog .flag {
-  width: 72px;
-  position: relative;
-  top: 9px;
-}
-
-.dialog .mini-flag {
-  position: relative;
-  top: 0px;
-}
 </style>

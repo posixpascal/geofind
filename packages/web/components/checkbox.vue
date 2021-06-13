@@ -1,7 +1,7 @@
 <template>
-  <div class="flex mb-5">
+  <div class="flex mb-6">
     <input :readonly="readonly" v-model="setting" :class="`switch ${extraClasses}`" type="checkbox" />
-    <span class="pl-4 text-2xl font-lucky">{{ label }}</span>
+    <span class="pl-6 text-2xl font-lucky">{{ label }}</span>
   </div>
 </template>
 <script lang="ts">

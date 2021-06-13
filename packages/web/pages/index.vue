@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <MainMenu/>
+      <geo-main-menu/>
     </div>
   </div>
 </template>
@@ -9,11 +9,11 @@
 <script lang="ts">
 import Vue from 'vue'
 import {Component} from "vue-property-decorator";
-import Logo from "~/components/Logo.vue";
-import MainMenu from "~/components/MainMenu.vue";
-import Navigation from "~/components/Navigation.vue";
+import Logo from "~/components/logo.vue";
+import MainMenu from "~/components/main-menu.vue";
+import Navigation from "~/components/navigation.vue";
 
-@Component({components: {Navigation, MainMenu}})
+@Component
 export default class IndexPage extends Vue {
 
 }

@@ -11,7 +11,7 @@
           gradient="real-linear"
           :code="($i18n.locale === 'en' ? 'US' : $i18n.locale.toUpperCase())"/>
       </div>
-      <span class="relative iconv"><Icon height='32' name="chevron-down"></Icon></span>
+      <span class="relative iconv"><geo-icon height='32' name="chevron-down"></geo-icon></span>
     </div>
     <div v-if="showPopup" class="popup">
       <div :class='`hover:bg-gray-100 p-3 pt-2 cursor-pointer border-b-2 border-gray-200

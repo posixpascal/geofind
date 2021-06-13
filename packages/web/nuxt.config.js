@@ -26,7 +26,11 @@ export default {
       {hid: 'og:image', property: 'og:image', content: 'https://geofind.io/social.jpg'},
     ],
     link: [
-      {rel: 'icon', type: 'image/x-icon', href: 'https://geofind.io/icon.png'}
+      {rel: 'icon', type: 'image/x-icon', href: 'https://geofind.io/icon.png'},
+      {
+        rel: 'stylesheet',
+        href: 'https://unpkg.com/leaflet/dist/leaflet.css'
+      }
     ],
     script: [
       {
@@ -54,10 +58,19 @@ export default {
     "~/plugins/flags",
     "~/plugins/api",
     "~/plugins/user",
+    "~/plugins/swiper"
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: {
+  dirs: [
+    {
+      path: '~/components',
+      prefix: 'geo',
+      global: true,
+    },
+  ],
+},
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -66,6 +79,7 @@ export default {
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
     '@nuxtjs/pwa',
+    '@nuxtjs/svg'
   ],
 
   tailwindcss: {

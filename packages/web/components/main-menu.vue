@@ -6,25 +6,25 @@
 
     <Button :icon='true' :to="localePath('/singleplayer')" variant="green" :animated="true">
       <template #icon>
-        <Icon class='text-white' :height="48" name="controller" />
+        <geo-icon class='text-white' :height="48" name="controller" />
       </template>
       {{ $t('singleplayer.button') }}
     </Button>
     <Button :icon='true' :to="localePath('/matchmaking')" variant="red" :animated="true">
       <template #icon>
-        <Icon class='text-white' :height="48" name="cube" />
+        <geo-icon class='text-white' :height="48" name="cube" />
       </template>
       {{ $t('matchmaking.button') }}
     </Button>
     <Button :icon='true' :to="localePath('/multiplayer')" variant="blue" :animated="true">
       <template #icon>
-        <Icon class='text-white' :height="48" name="create" />
+        <geo-icon class='text-white' :height="48" name="create" />
       </template>
       {{ $t('multiplayer.button') }}
     </Button>
     <Button :icon='true' :to="localePath('lobbies')" variant="purple" :animated="true">
       <template #icon>
-        <Icon class='text-white' :height="48" name="public" />
+        <geo-icon class='text-white' :height="48" name="public" />
       </template>
       {{ $t('lobbies.button') }}
     </Button>
@@ -34,10 +34,11 @@
     </Button>-->
     <Button :icon='true' :to="localePath('settings')" variant="yellow" :animated="true">
       <template #icon>
-        <Icon class='text-white' :height="48" name="settings" />
+        <geo-icon class='text-white' :height="48" name="settings" />
       </template>
       {{ $t('profile.button') }}
     </Button>
+
     <!--
     <Button variant="orange" :animated="true">
       <template #icon>🥇</template>
@@ -47,15 +48,14 @@
       <template #icon>⚙️</template>
       ️ Settings
     </Button>-->
-    <Footer/>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
-import Button from "~/components/Button.vue";
+import Button from "~/components/button.vue";
 import {User} from "~/models";
-import Footer from "~/components/Footer.vue";
+import Footer from "~/components/footer.vue";
 
 @Component({
   components: {Button, Footer}
@@ -69,6 +69,7 @@ export default class MainMenu extends Vue {
 <style lang="postcss">
 .main-menu {
   margin: 0 auto;
+  padding-bottom: 80px;
 }
 
 .main-menu svg {

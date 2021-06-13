@@ -1,7 +1,5 @@
 <template>
   <div class="main-menu">
-    <h1 class="mt-5 mb-0">{{ $t('lobbies.title') }}</h1>
-
     <Box v-if="openRooms.length" class="flex flex-col" v-for="openRoom of openRooms" :key="openRoom.roomId">
       <div class="flex justify-between">
         <h2>#{{ openRoom.roomId }}</h2>
@@ -9,7 +7,7 @@
           🕹 {{ openRoom.clients }} / {{ openRoom.maxClients || 32 }}
         </div>
       </div>
-      <OpenRoomSettingsView :room="openRoom" />
+      <geo-open-room-settings-view :room="openRoom" />
       <Button variant="purple" small :to="`/lobby/${openRoom.roomId}`">
         {{ $t('lobbies.join') }}
       </Button>
@@ -25,10 +23,7 @@
 import Vue from 'vue'
 import Component from "vue-class-component";
 import {OpenRoom} from "~/models";
-import OpenRoomSettingsView from "~/components/OpenRoomSettingsView.vue";
-@Component({
-  components: {OpenRoomSettingsView}
-})
+@Component
 export default class LobbiesPage extends Vue {
   timer = null;
 

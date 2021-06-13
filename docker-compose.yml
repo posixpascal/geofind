@@ -1,16 +1,82 @@
 version: "3.7"
 
 services:
-  redis:
-    image: "redis:alpine"
-
-  mongodb:
-    image: mongo
+  proxy:
+    image: traefik:v2.4
+    command: --api.insecure=true --providers.docker --providers.docker.exposedByDefault=true
     ports:
-      - "27017:27017"
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.test`)"
+      - "traefik.http.routers.traefik.entrypoints=http"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefikloadbalancer.server.port=8080"
 
   api:
     image: node:15-alpine
 
   web:
     image: node:15-alpine
+
+  fathom:
+    image: usefathom/fathom:latest
+    environment:
+      - "FATHOM_SERVER_ADDR=9000"
+      - "FATHOM_GZIP=true"
+      - "FATHOM_DEBUG=true"
+      - "FATHOM_DATABASE_DRIVER=postgres"
+      - "FATHOM_DATABASE_NAME=analytics"
+      - "FATHOM_DATABASE_USER=root"
+      - "FATHOM_DATABASE_PASSWORD=root"
+      - "FATHOM_DATABASE_HOST=postgres"
+      - "FATHOM_DATABASE_SSLMODE=disable"
+      - "FATHOM_SECRET=b1400c8b0e930367b81ead3e5196f51cfa48d7b0b50b2999984f0fc25b7dcba2a1b15664230f50ea478fc5a343f76dcf6b03ed4b2f9fecae1059e4e4550c504f"
+    depends_on:
+      - postgres
+      - proxy
+    expose:
+      - 9000
+    restart: always
+
+  postgres:
+    image: 'postgres:13.3-alpine'
+    restart: unless-stopped
+    tty: true
+    expose:
+      - 5432
+    env_file:
+      - ./.env
+    volumes:
+      - './config/postgres/data:/var/lib/pgsql/data'
+    depends_on:
+      - proxy
+
+  redis:
+    image: 'redis'
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    expose:
+      - 6379
+    volumes:
+      - './config/redis/conf:/usr/local/etc/redis'
+    depends_on:
+      - proxy
+
+  mongo:
+    image: mongo
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    volumes:
+      - './config/mongo/data:/data/db'
+    expose:
+      - 27017
+    depends_on:
+      - proxy

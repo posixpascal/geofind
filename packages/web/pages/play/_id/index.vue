@@ -80,11 +80,11 @@
     </GmapMap>
     <template v-if="room">
       <LoadingDialog v-if="room.mode === 'preparing'" :room="room"></LoadingDialog>
-      <GameStartingDialog v-if="room.mode === 'starting'" :room="room"></GameStartingDialog>
-      <RoundPrepareDialog v-if="room.mode === 'round_prepare'" :room="room"></RoundPrepareDialog>
-      <RoundEndDialog v-if="room.mode === 'round_end'" :room="room"></RoundEndDialog>
-      <ScoreBoardDialog v-if="room.mode === 'score_board'" :room="room"></ScoreBoardDialog>
-      <GameEndDialog v-if="room.mode === 'ended'" :room="room"></GameEndDialog>
+      <geo-game-starting-dialog v-if="room.mode === 'starting'" :room="room"></geo-game-starting-dialog>
+      <geo-round-prepare-dialog v-if="room.mode === 'round_prepare'" :room="room"></geo-round-prepare-dialog>
+      <geo-round-end-dialog v-if="room.mode === 'round_end'" :room="room"></geo-round-end-dialog>
+      <geo-score-board-dialog v-if="room.mode === 'score_board'" :room="room"></geo-score-board-dialog>
+      <geo-game-end-dialog v-if="room.mode === 'ended'" :room="room"></geo-game-end-dialog>
     </template>
 
 
@@ -95,13 +95,8 @@
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
 import {Room} from "~/models";
-import LoadingDialog from "~/components/LoadingDialog.vue";
-import RoundPrepareDialog from "~/components/RoundPrepareDialog.vue";
-import GameStartingDialog from "~/components/GameStartingDialog.vue";
-import RoundEndDialog from "~/components/RoundEndDialog.vue";
-import Icon from "~/components/Icon.vue";
-import ScoreBoardDialog from "~/components/ScoreBoardDialog.vue";
-import GameEndDialog from "~/components/GameEndDialog.vue";
+import LoadingDialog from "~/components/loading-dialog.vue";
+import Icon from "~/components/icon.vue";
 import {PINS} from "~/constants/pins";
 import {MAP_STYLES} from "~/constants/mapstyles";
 
@@ -109,11 +104,6 @@ import {MAP_STYLES} from "~/constants/mapstyles";
   components: {
     LoadingDialog,
     Icon,
-    GameStartingDialog,
-    RoundPrepareDialog,
-    RoundEndDialog,
-    ScoreBoardDialog,
-    GameEndDialog
   }
 })
 export default class Index extends Vue {

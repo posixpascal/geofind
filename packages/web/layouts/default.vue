@@ -1,26 +1,32 @@
 <template>
   <div>
-    <Navigation/>
-    <Nuxt />
+    <geo-navigation/>
+    <main>
+      <geo-map-background>
+        <div class="z-10"><Nuxt/></div>
+      </geo-map-background>
+    </main>
+    <geo-footer/>
   </div>
 </template>
 
 <style lang="postcss">
 @import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
-.font-lucky{
+
+.font-lucky {
   position: relative;
   top: 3px;
 }
+
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: 'Source Sans Pro',
+  -apple-system,
+  BlinkMacSystemFont,
+  'Segoe UI',
+  Roboto,
+  'Helvetica Neue',
+  Arial,
+  sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -54,10 +60,12 @@ h1 {
   @apply text-6xl text-center pt-10;
   font-family: 'Luckiest Guy';
 }
+
 h2 {
   @apply text-4xl;
   font-family: 'Luckiest Guy';
 }
+
 h3 {
   @apply text-2xl;
   font-family: 'Luckiest Guy';
@@ -76,9 +84,13 @@ h3 {
   }
 }
 
-@media (min-width: 768px){
+@media (min-width: 768px) {
   .main-menu {
     width: 500px;
   }
+}
+
+main {
+  min-height: calc(100vh - 120px - 185px);
 }
 </style>

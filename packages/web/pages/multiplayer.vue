@@ -1,9 +1,6 @@
 <template>
   <div class="main-menu">
-    <h1 class="mt-5 mb-0">{{ $t('multiplayer.title') }}</h1>
-
-
-    <GameSettings shade="blue" v-model="settings"/>
+    <geo-game-settings shade="blue" v-model="settings"/>
 
     <Button :icon='true' :loading="loading" @click="create" variant="blue">
       <template #icon>🌎</template>
@@ -14,10 +11,10 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Button from "~/components/Button.vue";
-import Logo from "~/components/Logo.vue";
-import Icon from "~/components/Icon.vue";
-import GameSettings from "~/components/GameSettings.vue";
+import Button from "~/components/button.vue";
+import Logo from "~/components/logo.vue";
+import Icon from "~/components/icon.vue";
+import GameSettings from "~/components/game-settings.vue";
 import {Component} from "vue-property-decorator";
 import {Room} from "~/models";
 
@@ -37,6 +34,7 @@ export default class Multiplayer extends Vue {
     pointsNeeded: 10,
     borders: true,
     suddenDeath: true,
+    islands: true,
     public: true
   };
 
