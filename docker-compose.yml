@@ -31,8 +31,11 @@ services:
   tilemill:
     container_name: geo-tiles
     build: ./packages/tileserver/
+    ports:
+      - "20009:20009"
+      - "20008:20008"
     volumes:
-    - './config/tilemill/:/data/tilemill/'
+    - './config/tilemill/data/:/root/Documents/MapBox/'
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.tiles.entrypoints=http"
