@@ -29,6 +29,7 @@ export default class Button extends Vue {
   @Prop({default: false, type: Boolean}) small!: boolean;
   @Prop({default: false, type: Boolean}) icon!: boolean;
   @Prop({default: false, type: Boolean}) xSmall!: boolean;
+  @Prop({default: false, type: Boolean}) xxSmall!: boolean;
   @Prop({default: false, type: Boolean}) disabled!: boolean;
   @Prop({default: false, type: Boolean}) block!: boolean;
 
@@ -51,6 +52,7 @@ export default class Button extends Vue {
       "with-icon": !!this.icon,
       "small": this.small,
       "x-small": this.xSmall,
+      "xx-small": this.xxSmall,
     }
   }
 }
@@ -280,6 +282,13 @@ export default class Button extends Vue {
     font-size: 20px;
     padding-top: 8px;
     margin: 5px auto;
+    text-shadow: 0 2px 3px rgba(0, 0, 0, .2), 0 0 50px rgba(216, 216, 216, .1);
+  }
+
+  &.xx-small {
+    @apply p-2 sm:pt-2.5;
+    font-size: 17px;
+    margin: 3px auto;
     text-shadow: 0 2px 3px rgba(0, 0, 0, .2), 0 0 50px rgba(216, 216, 216, .1);
   }
 

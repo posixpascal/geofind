@@ -1,5 +1,5 @@
 <template>
-  <geo-dialog v-if="room">
+  <Dialog v-if="room">
     <h4 class="text-2xl sm:text-3xl  pb-3">
       {{ $t("t.round") }} #{{ room.round }} {{ $t('t.of') }} {{ room.maxRounds }}
     </h4>
@@ -26,7 +26,7 @@
         </div>
       </transition>
     </div>
-  </geo-dialog>
+  </Dialog>
 </template>
 <script lang="ts">
 import Vue from "vue";

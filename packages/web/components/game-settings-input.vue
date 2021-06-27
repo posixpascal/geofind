@@ -1,6 +1,6 @@
 <template>
   <div class="flex mb-3 items-center w-full">
-    <geo-input :disabled='disabled' style="max-width: 80px" class="text-center bg-gray-50" v-model="setting" />
+    <Input :disabled='disabled' style="max-width: 80px" class="text-center bg-gray-50" v-model="setting" />
     <span class="pl-4 text-2xl font-lucky">{{ label }}</span>
   </div>
 </template>

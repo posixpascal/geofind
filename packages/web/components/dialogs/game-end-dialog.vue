@@ -1,5 +1,5 @@
 <template>
-  <geo-dialog v-if="room">
+  <Dialog v-if="room">
     <canvas id="confetti" ref="canvas"></canvas>
     <h4 class="text-2xl sm:text-3xl pb-3">
       {{ $t('t.gameFinished') }}
@@ -38,7 +38,7 @@
     <Button variant="red" to="/" small>
       {{ $t('t.close') }}
     </Button>
-  </geo-dialog>
+  </Dialog>
 </template>
 <script lang="ts">
 import Vue from "vue";

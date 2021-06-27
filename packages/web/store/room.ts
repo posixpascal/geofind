@@ -104,8 +104,8 @@ export const actions: ActionTree<RoomState, RootState> = {
   async start(context: any, room: any) {
     rooms[room.id].send("start");
   },
-  async updatePlayer(context: any, room: any) {
-    rooms[room.id].send("updatePlayer");
+  async updatePlayer(context: any, {room, name}) {
+    rooms[room.id].send("updatePlayer", {name});
   },
   async updateSettings(context: any, {room, settings}) {
     rooms[room.id].send("updateSettings", settings);

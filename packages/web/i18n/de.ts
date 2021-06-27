@@ -1,6 +1,9 @@
 export const de = {
   t: {
+    shareText: 'Hast du Lust eine Runde Geofind mit mir zu spielen? Klicke auf den Link um online, kostenlos und einfach mitspielen zu können: {link}.',
     of: 'von',
+    copied: 'Link wurde kopiert',
+    thatsYou: 'Das bist du!',
     menu: 'Menü',
     save: 'Speichern',
     round: 'Runde',
@@ -69,6 +72,7 @@ export const de = {
     suddenDeath: 'Episches Finale',
     borders: 'Ländergrenzen',
     noIslands: 'Keine Inseln',
+    islands: 'Mit Inselstaaten',
     roundTime: 'Rundenzeit',
     maxRounds: 'Maximale Runden',
     pointsNeeded: 'Punkte zum Sieg',

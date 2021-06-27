@@ -129,18 +129,8 @@ export class CountriesGameRoom extends CoreGameRoom<CountriesGame> {
             this.reset();
         });
 
-        this.onMessage('updatePlayer', (client) => {
-            console.log('updatePlayer', client);
-            const player = new Player();
-            player.id = client.auth._id.toString();
-            player.playerId = client.sessionId;
-            player.displayName = client.auth.displayName;
-            player.color = client.auth.metadata.pin_color;
-            player.avatarUrl = client.auth.avatarUrl;
-            player.pin = client.auth.metadata.pin;
-            player.isReady = false;
-
-            this.state.players[client.sessionId] = player;
+        this.onMessage('updatePlayer', (client, message) => {
+            this.state.players[client.sessionId].displayName = message.name;
         });
 
         this.onMessage("start", (client) => {

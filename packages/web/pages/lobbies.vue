@@ -7,7 +7,7 @@
           🕹 {{ openRoom.clients }} / {{ openRoom.maxClients || 32 }}
         </div>
       </div>
-      <geo-open-room-settings-view :room="openRoom" />
+      <OpenRoomSettingsView :room="openRoom" />
       <Button variant="purple" small :to="`/lobby/${openRoom.roomId}`">
         {{ $t('lobbies.join') }}
       </Button>
@@ -21,9 +21,13 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Component from "vue-class-component";
+import {Component} from "vue-property-decorator";
 import {OpenRoom} from "~/models";
-@Component
+import OpenRoomSettingsView from "~/components/open-room-settings-view.vue";
+
+@Component({
+  components: {OpenRoomSettingsView}
+})
 export default class LobbiesPage extends Vue {
   timer = null;
 

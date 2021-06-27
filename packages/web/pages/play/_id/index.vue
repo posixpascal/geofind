@@ -4,11 +4,11 @@
       <div>
         <div class="close">
           <nuxt-link to="/">
-            <Icon height="24" width="24" name="close"></Icon>
+            <Icon height="24" width="24" name="close"/>
           </nuxt-link>
         </div>
-        <span class="px-3 text-xl font-lucky" v-if="room.round > 0">
-          <span class="hidden sm:inline">{{ $t('t.round')}} </span>{{ room.round }} / {{
+        <span class="px-3 text-xl font-lucky" v-if="room && room.round > 0">
+          <span class="hidden sm:inline">{{ $t('t.round') }} </span>{{ room.round }} / {{
             room.maxRounds
           }}</span>
       </div>
@@ -20,50 +20,30 @@
         </h3>
       </span>
     </div>
-    <GmapMap
-      v-if="room"
-      ref="map"
-      class="map"
-      :style="{ height: fullHeight }"
-      :center="{lat: 43.489565, lng: -168.7008533}"
-      :zoom="zoom"
-      :options="mapOptions"
-      @click="moveMarker"
-    >
+
+    <l-map :center="[32, -5]"
+           :zoom="3"
+           :options="mapOptions"
+           class='game-map'
+           @click="moveMarker"
+           ref="background">
+      <l-tile-layer :url="tileserver"
+                    :attribution="`&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a>. Tileset is (C) Geofind.IO`"/>
+
+
       <!-- personal marker -->
-      <GmapMarker
+      <l-marker
         :animation="2"
-        v-if="marker"
-        :position="marker.position"
-        @dragend="moveMarker"
-        :clickable="true"
+        v-if="marker.position"
+        :lat-lng="marker.position"
         :draggable='room.mode === "round_start"'
-        :icon="{
-          url: userPin,
-          anchor: { x: pinSizeX, y: pinSize },
-          scaledSize: { height: pinSize, width: pinSize },
-        }"
-      ></GmapMarker>
+      ></l-marker>
 
-      <!-- target marker -->
-      <GmapMarker
-        v-if="targetMarker"
-        :animation="2"
-        :position="targetMarker.position"
-        :clickable="false"
-        :draggable="false"
-        :icon="{
-          anchor: { x: pinSizeX, y: pinSize },
-          scaledSize: { height: pinSize, width: pinSize },
-        }"
-      ></GmapMarker>
-
-      <!-- other player markers -->
-      <GmapMarker
+      <l-marker
         v-if="otherMarkers"
         :animation="2"
         v-for="(otherMarker, index) in otherMarkers"
-        :position="otherMarker"
+        :lat-lng="otherMarker"
         :key="index"
         :clickable="false"
         :draggable="false"
@@ -72,20 +52,19 @@
           anchor: { x: pinSizeX, y: pinSize },
           scaledSize: { height: pinSize, width: pinSize },
         }"
-      ></GmapMarker>
+      ></l-marker>
 
-      <GmapPolyline
+      <l-polyline
         v-if="targetMarker" :path="markerPath" ref="polyline" :options="polylineOptions"
       />
-    </GmapMap>
-    <template v-if="room">
-      <LoadingDialog v-if="room.mode === 'preparing'" :room="room"></LoadingDialog>
-      <geo-game-starting-dialog v-if="room.mode === 'starting'" :room="room"></geo-game-starting-dialog>
-      <geo-round-prepare-dialog v-if="room.mode === 'round_prepare'" :room="room"></geo-round-prepare-dialog>
-      <geo-round-end-dialog v-if="room.mode === 'round_end'" :room="room"></geo-round-end-dialog>
-      <geo-score-board-dialog v-if="room.mode === 'score_board'" :room="room"></geo-score-board-dialog>
-      <geo-game-end-dialog v-if="room.mode === 'ended'" :room="room"></geo-game-end-dialog>
-    </template>
+    </l-map>
+
+    <LoadingDialog v-if="room.mode === 'preparing'" :room="room"></LoadingDialog>
+    <GameStartingDialog v-if="room.mode === 'starting'" :room="room"></GameStartingDialog>
+    <RoundPrepareDialog v-if="room.mode === 'round_prepare'" :room="room"></RoundPrepareDialog>
+    <RoundEndDialog v-if="room.mode === 'round_end'" :room="room"></RoundEndDialog>
+    <ScoreBoardDialog v-if="room.mode === 'score_board'" :room="room"></ScoreBoardDialog>
+    <GameEndDialog v-if="room.mode === 'ended'" :room="room"></GameEndDialog>
 
 
     <div class="counter" v-if="room.roundTime">{{ room.roundTime }}</div>
@@ -95,15 +74,24 @@
 import Vue from "vue";
 import {Component} from "vue-property-decorator";
 import {Room} from "~/models";
-import LoadingDialog from "~/components/loading-dialog.vue";
-import Icon from "~/components/icon.vue";
 import {PINS} from "~/constants/pins";
 import {MAP_STYLES} from "~/constants/mapstyles";
+import LoadingDialog from "~/components/dialogs/loading-dialog.vue";
+import GameEndDialog from "~/components/dialogs/game-end-dialog.vue";
+import ScoreBoardDialog from "~/components/dialogs/score-board-dialog.vue";
+import RoundEndDialog from "~/components/dialogs/round-end-dialog.vue";
+import RoundPrepareDialog from "~/components/dialogs/round-prepare-dialog.vue";
+import GameStartingDialog from "~/components/dialogs/game-starting-dialog.vue";
 
 @Component({
+  layout: 'play',
   components: {
     LoadingDialog,
-    Icon,
+    GameStartingDialog,
+    RoundPrepareDialog,
+    RoundEndDialog,
+    ScoreBoardDialog,
+    GameEndDialog
   }
 })
 export default class Index extends Vue {
@@ -113,6 +101,23 @@ export default class Index extends Vue {
   targetMarker: any = false
   otherMarkers = []
   roundStats = {};
+
+  get tileserver() {
+    return 'http://127.0.0.1:20008/tile/geography-class/{z}/{x}/{y}.png';
+    if (this.room.borders) {
+      return '//{s}.tiles.wmflabs.org/osm-no-labels/{z}/{x}/{y}.png'
+    }
+    return "//{s}.tiles.wmflabs.org/osm-no-labels/{z}/{x}/{y}.png";
+  }
+
+  get mapOptions() {
+    return {
+      zoomControl: false,
+      scrollWheelZoom: false, // disable original zoom function
+      smoothWheelZoom: true,  // enable smooth zoom
+      smoothSensitivity: 1,   // zoom speed. default is 1
+    }
+  }
 
   async created() {
     this.loading = true;
@@ -165,7 +170,7 @@ export default class Index extends Vue {
 
     room.onMessage("othermarkers:place", (event) => {
       this.otherMarkers = [];
-      const otherMarkers = Object.values(event.markers).filter((m:any) => m.player.id !== this.user._id)
+      const otherMarkers = Object.values(event.markers).filter((m: any) => m.player.id !== this.user._id)
       otherMarkers.forEach((marker, index) => {
         setTimeout(() => {
           this.otherMarkers.push(marker)
@@ -220,7 +225,7 @@ export default class Index extends Vue {
     return PINS[this.user.metadata.pin || 1];
   }
 
-  get fullHeight(){
+  get fullHeight() {
     return window.innerHeight + "px";
   }
 
@@ -231,7 +236,7 @@ export default class Index extends Vue {
 
     this.marker = {}
 
-    const vote = {lat: ev.latLng.lat(), lng: ev.latLng.lng()};
+    const vote = {lat: ev.latlng.lat, lng: ev.latlng.lng};
     (this.marker as any).position = vote;
     this.$store.dispatch("room/message", {roomId: this.room.id, action: "vote", payload: vote})
     this.$forceUpdate();
@@ -245,33 +250,7 @@ export default class Index extends Vue {
       geodisic: true,
       icons: [
         {
-          icon: {
-            path: (window as any).google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-          },
           offset: "100%",
-        },
-      ],
-    }
-  }
-
-  get mapOptions() {
-    return {
-      zoomControl: false,
-      mapTypeControl: false,
-      scaleControl: false,
-      streetViewControl: false,
-      rotateControl: false,
-      fullscreenControl: false,
-      disableDefaultUI: true,
-      styles: [
-        ...this.user.mapStyle,
-        ...this.roomStyle,
-        {
-          elementType: "labels",
-          featureType: "all",
-          stylers: [
-            {visibility: "off"},
-          ],
         },
       ],
     }

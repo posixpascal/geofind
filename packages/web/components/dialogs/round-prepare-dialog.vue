@@ -1,8 +1,8 @@
 <template>
-  <geo-dialog v-if="room">
+  <Dialog v-if="room">
     <h2 class="text-xl sm:text-2xl">{{ $t('t.whereIs') }}...</h2>
     <h3 class="text-lg sm:text-xl">
-      <geo-flag class="flag"
+      <Flag class="flag"
             :hasDropShadow="true"
             :hasBorder="true"
             :hasBorderRadius="true"
@@ -13,7 +13,7 @@
       <br/>
       <span class="whitespace-pre-wrap break-all">{{ room.country.translations[$i18n.locale] }}</span>
     </h3>
-  </geo-dialog>
+  </Dialog>
 </template>
 <script lang="ts">
 import Vue from "vue";

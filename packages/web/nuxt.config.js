@@ -62,15 +62,7 @@ export default {
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: {
-  dirs: [
-    {
-      path: '~/components',
-      prefix: 'geo',
-      global: true,
-    },
-  ],
-},
+  components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [

@@ -12,7 +12,7 @@
       </h1>
     </nuxt-link>
     <div class="icon">
-      <geo-language-switch />
+      <LanguageSwitch />
     </div>
   </div>
 </template>

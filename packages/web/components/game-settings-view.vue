@@ -1,36 +1,32 @@
 <template>
-  <Box class="settings-wrapper flex-col" v-if="room && mode && mapSet">
-    <div class="flex mb-5">
-      <div class="settings-panel">
-        <h3>{{ $t('settings.gameMode') }}</h3>
-        <div :class="`game-mode w-half`">
+  <Panel v-if="room && mode && mapSet">
+    <template #title>Gespielt wird</template>
+    <template #content>
+      <div class="flex justify-between mb-5 px-3">
+        <div :class="`game-mode w-half mr-3`">
           <img :src="mode.image"/>
           {{ $t(`settings.gameModes.${mode.name}`) }}
         </div>
-      </div>
-      <div class="settings-panel">
-        <h3>{{ $t('settings.mapSet') }}</h3>
-        <div :class="`game-mode w-half`">
+        <div :class="`game-mode w-half ml-3`">
           <img :src="mapSet.image"/>
           {{ $t(`settings.mapSets.${mapSet.name}`) }}
         </div>
       </div>
-    </div>
+      <div class="settings-panel">
+        <div class="game-modes flex flex-col items-start justify-start content-start">
+          <Checkbox :extra-classes="shade" readonly v-model='room.directMatchesOnly'
+                    :label="$t('settings.directMatchesOnly')"/>
+          <Checkbox :extra-classes="shade" readonly v-model='room.islands' :label="$t('settings.islands')"/>
+          <Checkbox :extra-classes="shade" readonly v-model='room.borders' :label="$t('settings.borders')"/>
+          <Checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='room.public'
+                    :label="$t('settings.public')"/>
 
-    <div class="settings-panel">
-      <div class="game-modes flex flex-col items-start justify-start content-start">
-        <Checkbox :extra-classes="shade" readonly v-model='room.directMatchesOnly' :label="$t('settings.directMatchesOnly')" />
-        <Checkbox :extra-classes="shade" readonly v-model='room.suddenDeath' :label="$t('settings.suddenDeath')" />
-        <Checkbox :extra-classes="shade" readonly v-model='room.borders' :label="$t('settings.borders')" />
-        <Checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='room.public' :label="$t('settings.public')" />
-
-        <GameSettingsInput readonly disabled :value="room.roundTime" :label="$t('settings.roundTime')" />
-        <GameSettingsInput readonly disabled :value="room.maxRounds" :label="$t('settings.maxRounds')" />
-        <GameSettingsInput readonly disabled :value="room.pointsNeeded" :label="$t('settings.pointsNeeded')" />
+          <GameSettingsInput readonly disabled :value="room.roundTime" :label="$t('settings.roundTime')"/>
+          <GameSettingsInput readonly disabled :value="room.pointsNeeded" :label="$t('settings.pointsNeeded')"/>
+        </div>
       </div>
-    </div>
-
-  </Box>
+    </template>
+  </Panel>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -38,9 +34,10 @@ import {Component, Emit, Model, Prop, VModel} from "vue-property-decorator";
 import {Room} from "~/models";
 import GameSettingsInput from "~/components/game-settings-input.vue";
 import Checkbox from "~/components/checkbox.vue";
+import Panel from "~/components/panel.vue";
 
 @Component({
-  components: {Checkbox, GameSettingsInput}
+  components: {Checkbox, GameSettingsInput, Panel}
 })
 export default class GameSettingsView extends Vue {
   @Prop() room!: Room;
@@ -115,13 +112,13 @@ export default class GameSettingsView extends Vue {
 <style scoped lang="postcss">
 
 .settings-wrapper {
-  @apply my-10 flex justify-between;
+  @apply flex justify-between;
   margin-left: -8px;
   margin-right: -8px;
 }
 
 .settings-panel {
-  @apply rounded w-full mx-3 flex flex-col justify-center items-center;
+  @apply rounded w-full mx-3 flex flex-col justify-center items-center mt-0;
 }
 
 .game-modes {

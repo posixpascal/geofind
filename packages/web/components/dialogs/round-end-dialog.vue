@@ -1,5 +1,5 @@
 <template>
-  <geo-dialog>
+  <Dialog>
     <h4 class="text-2xl sm:text-3xl pb-3 border-b-2 border-gray-400 flex justify-between flex-col w-full">
       <div>{{ $t("t.round") }} #{{ room.round }} {{ $t('t.of') }} {{ room.maxRounds }}</div>
       <div>
@@ -41,7 +41,7 @@
         </div>
       </transition>
     </div>
-  </geo-dialog>
+  </Dialog>
 </template>
 <script lang="ts">
 import Vue from "vue";

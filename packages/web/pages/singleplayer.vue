@@ -1,6 +1,6 @@
 <template>
-  <div class="main-menu">
-    <geo-game-settings v-model="settings"/>
+  <div class="main-menu pt-10">
+    <GameSettings v-model="settings"/>
 
     <Button :loading="loading" @click="create" variant="green">
       <template #icon>🌎</template>

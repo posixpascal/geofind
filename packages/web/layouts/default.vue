@@ -1,12 +1,12 @@
 <template>
   <div>
-    <geo-navigation/>
+    <Navigation/>
     <main>
-      <geo-map-background>
+      <MapBackground>
         <div class="z-10"><Nuxt/></div>
-      </geo-map-background>
+      </MapBackground>
     </main>
-    <geo-footer/>
+    <Footer/>
   </div>
 </template>
 
@@ -62,15 +62,11 @@ h1 {
 }
 
 h2 {
-  @apply text-4xl;
   font-family: 'Luckiest Guy';
 }
 
 h3 {
-  @apply text-2xl;
   font-family: 'Luckiest Guy';
-  position: relative;
-  top: 3px;
 }
 
 
@@ -89,6 +85,13 @@ h3 {
     width: 500px;
   }
 }
+
+@media (min-width: 1024px) {
+  .main-menu {
+    width: 720px;
+  }
+}
+
 
 main {
   min-height: calc(100vh - 120px - 185px);

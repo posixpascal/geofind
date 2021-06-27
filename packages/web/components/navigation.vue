@@ -12,31 +12,31 @@
       <ul class="nav-links">
         <li class="hidden sm:flex">
           <nuxt-link class='green' active-class="active" to="/singleplayer">
-            <geo-icon name="school"/>
+            <Icon name="school"/>
             Lernen
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
           <nuxt-link class='blue' active-class="active" to="/multiplayer">
-            <geo-icon name="controller"/>
+            <Icon name="controller"/>
             Spiel erstellen
           </nuxt-link>
         </li>
         <li class="hidden lg:flex">
           <nuxt-link class='red' active-class="active" to="/matchmaking">
-            <geo-icon name="cube"/>
+            <Icon name="cube"/>
             Zufallsgegner
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
           <nuxt-link class='purple' active-class="active" to="/lobbies">
-            <geo-icon name="public"/>
+            <Icon name="public"/>
             Offene Spiele
           </nuxt-link>
         </li>
         <li class="hidden md:flex">
           <nuxt-link class="yellow" active-class="active" to="/settings">
-            <geo-icon name="profile"/>
+            <Icon name="profile"/>
             Profil
           </nuxt-link>
         </li>
@@ -51,25 +51,25 @@
     </nav>
     <div class="rainbow-border"/>
     <div v-if="menu" class="menu-area relative z-20 bg-white-50 pb-4 mx-4">
-      <geo-button @click='menu = false' :icon='true' :to="localePath('/singleplayer')" variant="green" :animated="true">
+      <Button @click='menu = false' :icon='true' :to="localePath('/singleplayer')" variant="green" :animated="true">
         {{ $t('singleplayer.button') }}
-      </geo-button>
-      <geo-button @click='menu = false' :icon='true' :to="localePath('/matchmaking')" variant="red" :animated="true">
+      </Button>
+      <Button @click='menu = false' :icon='true' :to="localePath('/matchmaking')" variant="red" :animated="true">
         {{ $t('matchmaking.button') }}
-      </geo-button>
-      <geo-button @click='menu = false' :icon='true' :to="localePath('/multiplayer')" variant="blue" :animated="true">
+      </Button>
+      <Button @click='menu = false' :icon='true' :to="localePath('/multiplayer')" variant="blue" :animated="true">
         {{ $t('multiplayer.button') }}
-      </geo-button>
-      <geo-button @click='menu = false' :icon='true' :to="localePath('lobbies')" variant="purple" :animated="true">
+      </Button>
+      <Button @click='menu = false' :icon='true' :to="localePath('lobbies')" variant="purple" :animated="true">
         {{ $t('lobbies.button') }}
-      </geo-button>
-      <!--<geo-button to="teachers" variant="blue" :animated="true">
+      </Button>
+      <!--<Button to="teachers" variant="blue" :animated="true">
         <template #icon>👩‍🏫</template>
         Teacher Zone
-      </geo-button>-->
-      <geo-button @click='menu = false' :icon='true' :to="localePath('settings')" variant="yellow" :animated="true">
+      </Button>-->
+      <Button @click='menu = false' :icon='true' :to="localePath('settings')" variant="yellow" :animated="true">
         {{ $t('profile.button') }}
-      </geo-button>
+      </Button>
     </div>
   </div>
 </template>
@@ -98,10 +98,10 @@ export default class Navigation extends Vue {
       case 'multiplayer':
         color = 'bird-blue';
         break;
+    }
 
-        case 'lobbies':
-          color = 'bird-purple';
-          break;
+    if (routeName.includes('lobby-id')){
+      color = 'bird-blue';
     }
 
     this.birdColor = color;
@@ -120,7 +120,7 @@ export default class Navigation extends Vue {
 </script>
 <style lang="postcss" scoped>
 nav {
-  @apply py-3 flex sm:py-4 px-2 sm:px-10 bg-white;
+  @apply py-3 flex sm:py-4 px-2 sm:px-4 bg-white;
   @apply justify-between w-full items-center relative top-0 z-50 shadow;
   backdrop-filter: blur(15px);
 }

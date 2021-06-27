@@ -1,8 +1,8 @@
 <template>
-  <geo-dialog v-if="room">
+  <Dialog v-if="room">
     <h2>{{ $t('t.gameStartsIn') }}</h2>
     <h3>{{ room.gameStartsIn }}</h3>
-  </geo-dialog>
+  </Dialog>
 </template>
 <script lang="ts">
 import Vue from "vue";

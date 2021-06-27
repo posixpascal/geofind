@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="container">
-      <geo-main-menu/>
+      <MainMenu/>
     </div>
   </div>
 </template>
@@ -13,7 +13,9 @@ import Logo from "~/components/logo.vue";
 import MainMenu from "~/components/main-menu.vue";
 import Navigation from "~/components/navigation.vue";
 
-@Component
+@Component({
+  components: {MainMenu}
+})
 export default class IndexPage extends Vue {
 
 }

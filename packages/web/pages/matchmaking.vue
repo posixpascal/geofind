@@ -10,8 +10,8 @@
         </li>
       </ul>
       <h3 class="mt-5">{{ $t("matchmaking.waitingForPlayers") }}</h3>
-      <geo-box>{{ $t("matchmaking.infoBox") }}</geo-box>
-      <geo-game-settings-view :room="room"/>
+      <Box>{{ $t("matchmaking.infoBox") }}</Box>
+      <GameSettingsView :room="room"/>
     </template>
     <Loading v-else>{{ stateMessage }}</Loading>
   </div>
@@ -19,11 +19,15 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import Component from "vue-class-component";
+import {Component} from "vue-property-decorator";
 import {Room} from "~/models";
 import {Watch} from "vue-property-decorator";
+import Box from "~/components/box.vue";
+import GameSettingsView from "~/components/game-settings-view.vue";
 
-@Component
+@Component({
+  components: {Box, GameSettingsView}
+})
 export default class Matchmaking extends Vue {
   state = "search"
   roomId = null;

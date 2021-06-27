@@ -13,7 +13,7 @@ export default class Input extends Vue {
 </script>
 <style lang="postcss" scoped>
 input {
-  @apply rounded shadow-sm outline-none border-transparent focus-within:ring-2;
+  @apply rounded shadow-sm outline-none bg-gray-100 border-transparent focus-within:ring-2;
   @apply focus:ring-yellow-200 focus:border-yellow-300 border-2 focus:ring-2 p-3;
   font-size: 20px;
 }

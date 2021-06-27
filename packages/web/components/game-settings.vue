@@ -53,17 +53,17 @@
         {{ $t('t.other') }}
       </h3>
       <div class="game-modes flex flex-col items-start justify-start content-start">
-        <geo-checkbox :extra-classes="shade" v-model='settings.directMatchesOnly'
+        <Checkbox :extra-classes="shade" v-model='settings.directMatchesOnly'
                       :label="$t('settings.directMatchesOnly')"/>
-        <geo-checkbox :extra-classes="shade" v-model='settings.islands'
+        <Checkbox :extra-classes="shade" v-model='settings.islands'
                       :label="$t('settings.islands')"/>
-        <geo-checkbox :extra-classes="shade" v-model='settings.borders' :label="$t('settings.borders')"/>
-        <geo-checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='settings.public'
+        <Checkbox :extra-classes="shade" v-model='settings.borders' :label="$t('settings.borders')"/>
+        <Checkbox v-if="shade === 'blue'" :extra-classes="shade" v-model='settings.public'
                       :label="$t('settings.public')"/>
 
-        <geo-game-settings-input v-model="settings.roundTime" :label="$t('settings.roundTime')"/>
-        <geo-game-settings-input v-model="settings.maxRounds" :label="$t('settings.maxRounds')"/>
-        <geo-game-settings-input v-model="settings.pointsNeeded" :label="$t('settings.pointsNeeded')"/>
+        <GameSettingsInput v-model="settings.roundTime" :label="$t('settings.roundTime')"/>
+        <GameSettingsInput v-model="settings.maxRounds" :label="$t('settings.maxRounds')"/>
+        <GameSettingsInput v-model="settings.pointsNeeded" :label="$t('settings.pointsNeeded')"/>
       </div>
     </div>
   </div>
@@ -145,7 +145,17 @@ export default class GameSettings extends Vue {
   ]
 
   sliderOptions = {
-    slidesPerView: (window.innerWidth < 768) ? 1 : 2,
+    slidesPerView: 1,
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+        spaceBetweenSlides: 20
+      },
+      1024: {
+        slidesPerView: 3,
+        spaceBetweenSlides: 20
+      },
+    },
     loop: true,
     spaceBetween: 20,
     pagination: {
@@ -158,11 +168,11 @@ export default class GameSettings extends Vue {
     }
   }
 
-  next(swiper){
+  next(swiper) {
     swiper.swiperInstance.slideNext(300);
   }
 
-  prev(swiper){
+  prev(swiper) {
     swiper.swiperInstance.slidePrev(300);
   }
 }
@@ -173,7 +183,6 @@ h3 {
 }
 
 .settings-wrapper {
-  @apply my-10;
 }
 
 .settings-panel {

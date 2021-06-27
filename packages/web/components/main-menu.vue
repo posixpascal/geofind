@@ -6,25 +6,25 @@
 
     <Button :icon='true' :to="localePath('/singleplayer')" variant="green" :animated="true">
       <template #icon>
-        <geo-icon class='text-white' :height="48" name="controller" />
+        <Icon class='text-white' :height="48" name="controller" />
       </template>
       {{ $t('singleplayer.button') }}
     </Button>
     <Button :icon='true' :to="localePath('/matchmaking')" variant="red" :animated="true">
       <template #icon>
-        <geo-icon class='text-white' :height="48" name="cube" />
+        <Icon class='text-white' :height="48" name="cube" />
       </template>
       {{ $t('matchmaking.button') }}
     </Button>
     <Button :icon='true' :to="localePath('/multiplayer')" variant="blue" :animated="true">
       <template #icon>
-        <geo-icon class='text-white' :height="48" name="create" />
+        <Icon class='text-white' :height="48" name="create" />
       </template>
       {{ $t('multiplayer.button') }}
     </Button>
     <Button :icon='true' :to="localePath('lobbies')" variant="purple" :animated="true">
       <template #icon>
-        <geo-icon class='text-white' :height="48" name="public" />
+        <Icon class='text-white' :height="48" name="public" />
       </template>
       {{ $t('lobbies.button') }}
     </Button>
@@ -34,7 +34,7 @@
     </Button>-->
     <Button :icon='true' :to="localePath('settings')" variant="yellow" :animated="true">
       <template #icon>
-        <geo-icon class='text-white' :height="48" name="settings" />
+        <Icon class='text-white' :height="48" name="settings" />
       </template>
       {{ $t('profile.button') }}
     </Button>
