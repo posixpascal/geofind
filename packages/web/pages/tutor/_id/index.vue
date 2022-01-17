@@ -85,19 +85,20 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Watch} from "vue-property-decorator";
+import {Component, Vue, Watch} from "vue-property-decorator";
 import LoadingDialog from "~/components/dialogs/loading-dialog.vue";
 import GameEndDialog from "~/components/dialogs/game-end-dialog.vue";
 import ScoreBoardDialog from "~/components/dialogs/score-board-dialog.vue";
 import RoundPrepareDialog from "~/components/dialogs/round-prepare-dialog.vue";
 import GameStartingDialog from "~/components/dialogs/game-starting-dialog.vue";
-import GamePage from "~/components/game/GamePage.vue";
 import Dialog from "~/components/dialog.vue";
 import TutorDialog from "~/components/dialogs/tutor-dialog.vue";
 import Button from "~/components/button.vue";
 import {LControl, LGeoJson, LPopup, LTooltip} from "vue2-leaflet";
 import Overlay from "~/components/overlay.vue";
 import CountryFlagWithName from "~/components/country-flag-with-name.vue";
+import {icon, Point} from "leaflet";
+import {PINS} from "~/constants/pins";
 
 @Component({
   layout: 'play',
@@ -118,12 +119,72 @@ import CountryFlagWithName from "~/components/country-flag-with-name.vue";
     LGeoJson
   }
 })
-export default class Index extends GamePage {
+export default class Index extends Vue {
   zoom = 3
   started = false;
   loading = false;
   showPopup = false;
   showVoteCorrect = false;
+  room: any;
+
+  marker: { position?: number[] } = {
+  };
+
+  get user() {
+    return this.room.player;
+  }
+
+  get tileserver() {
+    return this.$config.borderedTileServer;
+  }
+
+  get mapOptions() {
+    return {
+      zoomControl: false,
+      scrollWheelZoom: false, // disable original zoom function
+      smoothWheelZoom: true,  // enable smooth zoom
+      smoothSensitivity: 1,   // zoom speed. default is 1
+    }
+  }
+
+  get playerPin() {
+    const factor = 1.5;
+    return icon({
+      iconUrl: PINS[this.room.player.pin],
+      iconSize: [32 * factor, 37 * factor],
+      iconAnchor: [13.4 * factor, 37 * factor]
+    })
+  }
+
+  otherPlayerPin(playerPinIndex) {
+    const factor = 1.5;
+    return icon({
+      iconUrl: PINS[playerPinIndex],
+      iconSize: [32 * factor, 37 * factor],
+      iconAnchor: [13.4 * factor, 37 * factor]
+    })
+  }
+
+  moveMarker(ev: any) {
+    if (!this.canMoveMarker) {
+      return;
+    }
+
+    this.marker = {...this.marker, position: [ev.latlng.lat, ev.latlng.lng]};
+  }
+
+  dragMarker(ev: any) {
+    const {lat, lng} = ev.target.getLatLng();
+    this.marker = {...this.marker, position: [lat, lng]};
+  }
+
+  get pinTooltipOffset(){
+    return new Point(1, -29 * 1.5);
+  }
+
+  get countryTooltipOffset(){
+    return new Point(-15, 0);
+  }
 
   async created() {
     this.loading = true;

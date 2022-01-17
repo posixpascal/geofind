@@ -5,7 +5,7 @@ import { getCountries, getCountryByCode, getRandomCountry } from "../db";
 import { ScoreBoard } from "./schema/ScoreBoardState";
 import { Vote } from "./schema/VoteState";
 import { reverseCoordinates } from "../geocoder";
-import { humanizeDistance } from "@geofind/web/utils/geo";
+import { humanizeDistance } from "../geo";
 
 export class CountryRoom extends Room<CountryRoomState> {
   autoDispose = false;
