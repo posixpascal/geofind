@@ -12,6 +12,14 @@ export const client = new Client({
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
   ssl: true,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      // Ref.: https://github.com/brianc/node-postgres/issues/2009
+      rejectUnauthorized: false,
+    },
+    keepAlive: true,
+  },
 });
 
 export const getCountries = async () => {
