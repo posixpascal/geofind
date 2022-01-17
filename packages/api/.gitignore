@@ -3,4 +3,3 @@ node_modules
 development.env
 lib/
 production.env
-arena.env
