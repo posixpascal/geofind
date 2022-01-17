@@ -90,6 +90,7 @@ import {LControl, LGeoJson, LPolyline, LPopup, LTooltip} from "vue2-leaflet";
 import {icon} from "leaflet";
 import MultiplayerScoreBoardDialog from "~/components/dialogs/multiplayer-score-board-dialog.vue";
 import {states} from '~/constants/states';
+import {VOTE_MESSAGE} from "~/constants/messages";
 
 @Component({
   layout: 'play',
@@ -267,7 +268,7 @@ export default class Index extends GamePage {
       return;
     }
 
-    if (newState.state === this.state.ROUND_END) {
+    if (newState.state === this.states.ROUND_END) {
       if (this.showingAnswer) {
         return;
       }
