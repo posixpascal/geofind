@@ -1,0 +1,3 @@
+[submodule "packages/tileserver"]
+	path = packages/tileserver
+	url = git@github.com:posixpascal/geofind-tiles.git
