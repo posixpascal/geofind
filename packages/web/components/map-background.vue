@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-50 relative">
+  <div class="bg-gray-50 relative" style="min-height: calc(100vh - 300px)">
     <l-map :center="[32, -5]"
            :zoom="3"
            :options="mapOptions"
@@ -66,6 +66,7 @@ export default class MapBackground extends Vue {
   bottom: 0;
   right: 0;
   height: 100%;
+  min-height: 100vh;
   width: 100%;
   opacity: 0.12;
   z-index:0;
