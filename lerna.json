@@ -1,0 +1,14 @@
+{
+  "packages": [
+    "packages/*"
+  ],
+  "useWorkspaces": true,
+  "command": {
+    "version": {
+      "allowBranch": "dev",
+      "message": "chore(release): publish %s"
+    }
+  },
+  "npmClient": "yarn",
+  "version": "0.0.1-alpha.5"
+}

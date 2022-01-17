@@ -1,0 +1,9 @@
+{
+    "extends": "./tsconfig.base.json",
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "baseUrl": ".",
+        "incremental": true
+    },
+    "references": [] // * Any project that is referenced must itself have a `references` array (which may be empty).
+}

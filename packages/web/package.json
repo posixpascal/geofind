@@ -1,0 +1,57 @@
+{
+  "name": "@geofind/web",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": ">= 15"
+  },
+  "scripts": {
+    "start:dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@heroicons/vue": "^1.0.5",
+    "@nuxtjs/auth-next": "^5.0.0-1624817847.21691f1",
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/pwa": "^3.3.5",
+    "@nuxtjs/svg": "^0.1.12",
+    "@types/leaflet": "^1.5.7",
+    "@vuex-orm/core": "^0.36.3",
+    "canvas-confetti": "^1.4.0",
+    "colyseus.js": "^0.14.13",
+    "consola": "*",
+    "core-js": "^3.9.1",
+    "countup.js": "latest",
+    "global": "^4.4.0",
+    "humanize-distance": "^1.0.9",
+    "leaflet": "^1.7.1",
+    "lodash": "^4.17.21",
+    "numeral": "^2.0.6",
+    "nuxt": "^2.15.3",
+    "nuxt-i18n": "^6.22.3",
+    "swiper": "^5.3.7",
+    "ts-loader": "^8.1.0",
+    "vue": "^2",
+    "vue-awesome-swiper": "^4.1.1",
+    "vue-class-component": "^7.2.6",
+    "vue-countup-v2": "^4.0.0",
+    "vue-flagpack": "^1.0.1",
+    "vue-property-decorator": "^9.1.2",
+    "vue-template-compiler": "^2.0.0",
+    "vue2-leaflet": "^2.7.0",
+    "vuex": "^3.6.2",
+    "webpack": "^4.0.0"
+  },
+  "devDependencies": {
+    "@nuxt/types": "^2.15.3",
+    "@nuxt/typescript-build": "^2.1.0",
+    "@nuxtjs/tailwindcss": "^4.0.1",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "postcss": "^8.2.8",
+    "prettier": "^2.2.1",
+    "vue-flagpack": "^1.0.1"
+  }
+}

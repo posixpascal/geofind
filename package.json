@@ -1,0 +1,33 @@
+{
+  "name": "geofind",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">= 15"
+  },
+  "private": true,
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/posixpascal/geofind"
+  },
+  "author": {
+    "name": "Pascal Raszyk",
+    "url": "https://geofind.io"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+  },
+  "dependencies": {
+    "concurrently": "^4.1.1",
+    "tslint": "^5.19.0"
+  },
+  "devDependencies": {
+    "enzyme": "^3.10.0",
+    "jest": "^24.9.0",
+    "lerna": "^4.0.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.5.3"
+  }
+}

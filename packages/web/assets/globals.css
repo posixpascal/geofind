@@ -1,0 +1,37 @@
+:root {
+  --animate-duration: 800ms;
+  --animate-delay: 0.3s;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
+
+.animate__animated.animate__fadeInDown {
+  animation-duration: 0.3s;
+}
+
+.page-enter-active {
+  transition: opacity 0.4s 0.2s;
+}
+
+.page-leave-active {
+  transition: opacity 0.2s;
+}
+
+.page-enter,
+.page-leave-to {
+  opacity: 0;
+}
+
+.layout-enter-active,
+.layout-leave-active {
+  transition: opacity 0.5s;
+}
+.layout-enter,
+.layout-leave-active {
+  opacity: 0;
+}

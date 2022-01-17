@@ -1,0 +1,33 @@
+<template>
+    <Dialog>
+      <h2 class="text-xl sm:text-3xl">{{ $t('t.whereIs') }}</h2>
+      <h3 class="flag-xl text-lg sm:text-xl">
+        <Flag class="flag"
+              :hasDropShadow="true"
+              :hasBorder="true"
+              :hasBorderRadius="true"
+              size="l"
+              gradient="real-linear"
+              :code="country.alpha2code"
+        />
+        <br/>
+        <span class="">{{ country.translations[$i18n.locale].country }}</span>
+      </h3>
+    </Dialog>
+</template>
+<script lang="ts">
+import Vue from "vue";
+import {Component, Prop} from "vue-property-decorator";
+import Dialog from "~/components/dialog.vue";
+
+@Component({name: 'round-prepare-dialog', components: {Dialog}})
+export default class RoundPrepareDialog extends Vue {
+  @Prop() country!: any;
+}
+</script>
+<style lang="postcss">
+.flag-xl .flag {
+  width: 96px !important;
+  height: auto !important;
+}
+</style>
