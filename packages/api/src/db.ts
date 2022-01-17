@@ -5,13 +5,18 @@ import { Country } from "./rooms/schema/CountryState";
 import { Translation } from "./rooms/schema/TranslationState";
 
 const { Client } = require("pg");
+process.env.PGSSLMODE = "require";
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = String(0);
+
 export const client = new Client({
   host: process.env.DB_HOST,
   port: process.env.DB_PORT,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE,
-  ssl: true,
+  ssl: {
+    rejectUnauthorized: true,
+  },
   dialectOptions: {
     ssl: {
       require: true,
