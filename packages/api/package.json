@@ -13,7 +13,7 @@
     "test": "mocha --require ts-node/register test/**_test.ts --exit --timeout 15000"
   },
   "author": "",
-  "license": "UNLICENSED",
+  "license": "GPL-3.0-only",
   "bugs": {
     "url": "https://github.com/colyseus/create-colyseus/issues"
   },
