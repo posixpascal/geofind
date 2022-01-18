@@ -10,7 +10,7 @@
     o.src = t
     o.id = 'fathom-script'
     m.parentNode.insertBefore(o, m)
-  })(document, window, '//analytics.geofind.io/tracker.js', 'fathom')
+  })(document, window, '//s.geofind.io/tracker.js', 'fathom')
   const fathom = (window as any).fathom
   fathom('set', 'siteId', 'VEQCX')
   fathom('trackPageview')

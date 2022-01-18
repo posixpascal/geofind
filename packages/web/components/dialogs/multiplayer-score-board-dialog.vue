@@ -33,10 +33,10 @@
       <div class="flex justify-between relative items-center border-dashed border-b-2 border-gray-300 py-3 px-1">
         <div class="flex items-center">
             <Pin :id="vote.player.pin" width="48" style="min-width: 48px"/>
-            <h5>{{ vote.player.username }}</h5>
+            <h4>{{ vote.player.username }}</h4>
         </div>
         <div
-          :class="['line', animateLine ? 'line-expand' : '', vote.isCorrect ? 'line-success' : '']">
+          :class="['hidden sm-block', 'line', animateLine ? 'line-expand' : '', vote.isCorrect ? 'line-success' : '']">
           <div class="flex">
             <ICountUp
               v-if="(!vote.country || vote.country.id !== room.country.id) && vote.distance > 0 && animateLine"
@@ -48,7 +48,7 @@
             </span>
           </div>
         </div>
-        <div v-if="vote.hasCountry" class="flex items-center justify-center flex-col">
+        <div v-if="vote.hasCountry" class="flex items-center justify-center text-center flex-col">
           <Flag class="flag flag-selected"
                 :hasDropShadow="true"
                 :hasBorder="true"
