@@ -6,9 +6,7 @@ services:
     image: traefik:v2.4
     command: --log.level=DEBUG --api.insecure=true --providers.docker --providers.docker.exposedByDefault=true
     ports:
-      - "80:80"
       - "8080:8080"
-      - "443:443"
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock

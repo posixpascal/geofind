@@ -7,7 +7,7 @@
          @click="moveMarker"
          ref="map">
     <l-tile-layer :url="tileserver"
-                  :attribution="`&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a>. Tileset is (C) Geofind.IO`"/>
+                  :attribution="`&copy; <a href='https://mapbox.com'>MapBox</a>. Geofind.io`"/>
     <l-marker
       v-if="room && room.player && showOwnMarker && marker.position"
       :draggable="canMoveMarker"
@@ -200,7 +200,7 @@ export default class GameMap extends Vue {
   }
 
   get tileserver() {
-    return this.$config.borderedTileServer;
+    return this.room.hasBorders ? this.$config.borderedTileServer : this.$config.borderlessTileServer;
   }
 
   get playerPin() {

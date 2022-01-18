@@ -3,7 +3,7 @@
     <ul class="player-list">
       <li class="flex items-center justify-between" v-for="player in room.players">
         <div class="flex items-center">
-          <Pin :id="player.pin" width="48"/>
+          <Pin :id="player.pin" width="48" style="min-width: 48px"/>
           <div class="pl-3">
             <h3>{{ player.username }}</h3>
             <span class="thatsyou text-gray-400">
@@ -12,7 +12,10 @@
           </div>
         </div>
         <div v-if="player.sessionId === room.sessionId">
-          <Button @click='rename = true' variant="blue" xx-small>Name ändern</Button>
+          <Button @click='rename = true' variant="blue" xx-small>
+            <span class="hidden sm:inline">Name ändern</span>
+            <span class="inline sm:hidden">Profil</span>
+          </Button>
         </div>
         <div v-else-if="player.sessionId === room.creatorId">
           <h2>Raumleiter</h2>
@@ -56,7 +59,7 @@ export default class LobbyPlayers extends Vue {
 }
 
 .player-list li h3 {
-  @apply text-3xl relative;
+  @apply text-xl sm:text-3xl relative;
   top: 12px;
 }
 

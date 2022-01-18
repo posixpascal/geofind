@@ -10,7 +10,7 @@
               gradient="real-linear"
               :code="room.country.alpha2code"
         />
-        <div style="line-height: 5px">
+        <div style="">
           <span class="text-2xl">
             {{ room.country.translations[$i18n.locale].country }}
           </span>

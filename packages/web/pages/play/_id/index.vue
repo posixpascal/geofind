@@ -1,19 +1,19 @@
 <template>
   <div>
     <div :class='`map-wrapper ${room && room.state === states.ROUND_END ? "gray-map" : ""}`'>
-      <GameMap/>
+      <GameMap :room="room"/>
       <template v-if="room">
         <RoundPrepareDialog :country="room.country" v-if="room.country && room.state === states.ROUND_PREPARE"/>
         <MultiplayerScoreBoardDialog :room="room" v-if="room.country && room.state === states.SCOREBOARD"/>
-        <GameEndDialog :room="room" v-if="room.state === 'game_end'"/>
+        <GameEndDialog :room="room" v-if="room.state === states.GAME_END"/>
 
         <Overlay position="bottomright">
           Runde: {{ room.rounds }}
         </Overlay>
-        <Overlay position="bottomcenter" v-if="room.state === 'round_start'" class="pt-15">
+        <Overlay position="bottomcenter" v-if="room.state === states.ROUND_START" class="pt-15">
           <Countdown :initial="room.timer"/>
         </Overlay>
-        <Overlay position="topleft" v-if="room.country && room.state === 'round_start'" animation="animate__flipInY">
+        <Overlay position="topleft" v-if="room.country && room.state === states.ROUND_START" >
           <CountryFlagWithName :country="room.country"
                                :distance-point="marker.position"
                                :hint-level="room.state === states.ROUND_END ? 2 : 0">
@@ -23,7 +23,7 @@
           <ScoreBoardOverlay :room="room"/>
         </Overlay>
 
-        <Overlay :interactive='true' position="topright" animation="animate__fadeIn">
+        <Overlay :interactive='true' position="topright">
           <Button variant='red' xx-small @click="leave" class="ml-10">
             <span class="px-3 text-xl">X</span>
           </Button>

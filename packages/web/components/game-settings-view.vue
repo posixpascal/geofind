@@ -17,7 +17,7 @@
           <Checkbox :extra-classes="shade" readonly v-model='room.hasStrictMatches'
                     :label="$t('settings.directMatchesOnly')"/>
           <Checkbox v-if="false" :extra-classes="shade" readonly v-model='room.hasIslands' :label="$t('settings.islands')"/>
-          <Checkbox v-if="false" :extra-classes="shade" readonly v-model='room.hasBorders' :label="$t('settings.borders')"/>
+          <Checkbox :extra-classes="shade" readonly v-model='room.hasBorders' :label="$t('settings.borders')"/>
           <Checkbox v-if="shade === 'blue'" :extra-classes="shade" readonly v-model='room.isPublic'
                     :label="$t('settings.public')"/>
 
