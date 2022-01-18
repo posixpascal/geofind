@@ -48,6 +48,7 @@
             </span>
           </div>
         </div>
+
         <div v-if="vote.hasCountry" class="flex items-center justify-center text-center flex-col">
           <Flag class="flag flag-selected"
                 :hasDropShadow="true"
