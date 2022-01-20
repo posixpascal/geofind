@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@colyseus/arena": "^0.14.22",
+    "@colyseus/command": "^0.2.1",
     "@colyseus/monitor": "^0.14.20",
     "class-transformer": "^0.5.1",
     "colyseus": "^0.14.20",

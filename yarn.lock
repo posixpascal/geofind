@@ -1865,6 +1865,13 @@
     dotenv "^8.2.0"
     express "^4.16.2"
 
+"@colyseus/command@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@colyseus/command/-/command-0.2.1.tgz#3d287da435e0286f93b164a5985bfff3224901bd"
+  integrity sha512-kwNvJTNDRshuxfcKZyFoO0hpcaUQKTpncl551eLsZr8xgAiu2uyhmuQTcsPYmrDZ1fV8MxcbBlEfu8H+4JtbhA==
+  dependencies:
+    debug "^4.1.1"
+
 "@colyseus/core@^0.14.17", "@colyseus/core@^0.14.20":
   version "0.14.25"
   resolved "https://registry.yarnpkg.com/@colyseus/core/-/core-0.14.25.tgz#2d37fcb2e1a5bc1c77f247dfd8d6cc5ca3a78ab8"

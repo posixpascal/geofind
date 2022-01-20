@@ -25,7 +25,6 @@
     "core-js": "^3.9.1",
     "countup.js": "latest",
     "global": "^4.4.0",
-    "humanize-distance": "^1.0.9",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",

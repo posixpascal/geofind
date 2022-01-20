@@ -1,0 +1,1 @@
+export const ALLOW_RECONNECTION_FOR_SECONDS = 20;
