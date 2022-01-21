@@ -2,66 +2,111 @@
   <Dialog class="scoreboard-dialog">
     <div class="flex mb-10 justify-between items-center">
       <div class="flex items-center pin-title mb-0">
-        <Flag class="flag"
-              :hasDropShadow="true"
-              :hasBorder="true"
-              :hasBorderRadius="true"
-              size="l"
-              gradient="real-linear"
-              :code="room.country.alpha2code"
+        <Flag
+          class="flag"
+          :hasDropShadow="true"
+          :hasBorder="true"
+          :hasBorderRadius="true"
+          size="l"
+          gradient="real-linear"
+          :code="room.country.alpha2code"
         />
         <div style="">
           <span class="text-2xl">
             {{ room.country.translations[$i18n.locale].country }}
           </span>
-          <div class="text-gray-500">{{ room.country.capital }} &bullet; {{ room.country.population }} Einwohner
-            &bullet; {{ room.country.region }}
+          <div class="text-gray-500">
+            {{ room.country.capital }} &bullet;
+            {{ room.country.population }} Einwohner &bullet;
+            {{ room.country.region }}
           </div>
         </div>
       </div>
     </div>
     <div v-if="showScore">
-      <div :class='`flex items-center justify-between pin mp-pin align-middle mb-1 border-dashed border-b-2 border-gray-300 py-3 px-1`' v-for="player in sortedPlayers">
+      <div
+        :class="`flex items-center justify-between pin mp-pin align-middle mb-1 border-dashed border-b-2 border-gray-300 py-3 px-1`"
+        v-for="player in sortedPlayers"
+      >
         <div class="flex items-center">
-          <h4 v-if="room.scoreboard[player.sessionId].points >= maxPoints" class="pr-2">{{ room.scoreboard[player.sessionId].points >= maxPoints ? "👑" : ""}}</h4>
+          <h4
+            v-if="room.scoreboard[player.sessionId].points >= maxPoints"
+            class="pr-2"
+          >
+            {{
+              room.scoreboard[player.sessionId].points >= maxPoints ? '👑' : ''
+            }}
+          </h4>
           <h4 :class="`pr-3`">{{ player.username }}</h4>
         </div>
         <h4>{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
       </div>
     </div>
     <div v-else v-for="vote in votes">
-      <div class="flex justify-between relative items-center border-dashed border-b-2 border-gray-300 py-3 px-1">
+      <div
+        class="
+          flex
+          justify-between
+          relative
+          items-center
+          border-dashed border-b-2 border-gray-300
+          py-3
+          px-1
+        "
+      >
         <div class="flex items-center">
-            <Pin :id="vote.player.pin" width="48" style="min-width: 48px"/>
-            <h4>{{ vote.player.username }}</h4>
+          <Pin :id="vote.player.pin" width="48" style="min-width: 48px" />
+          <h4>{{ vote.player.username }}</h4>
         </div>
         <div
-          :class="['hidden sm-block', 'line', animateLine ? 'line-expand' : '', vote.isCorrect ? 'line-success' : '']">
+          :class="[
+            'hidden sm-block',
+            'line',
+            animateLine ? 'line-expand' : '',
+            vote.isCorrect ? 'line-success' : '',
+          ]"
+        >
           <div class="flex">
             <ICountUp
-              v-if="(!vote.country || vote.country.id !== room.country.id) && vote.distance > 0 && animateLine"
+              v-if="
+                (!vote.country || vote.country.id !== room.country.id) &&
+                vote.distance > 0 &&
+                animateLine
+              "
               :endVal="vote.distance"
               :options="countupOptions"
             />
-            <span class="text-green-400" v-if="vote.isCorrect && vote.country && vote.country.id === room.country.id && animateLine">
-            ✓ TREFFER
+            <span
+              class="text-green-400"
+              v-if="
+                vote.isCorrect &&
+                vote.country &&
+                vote.country.id === room.country.id &&
+                animateLine
+              "
+            >
+              ✓ TREFFER
             </span>
           </div>
         </div>
 
-        <div v-if="vote.hasCountry" class="flex items-center justify-center text-center flex-col">
-          <Flag class="flag flag-selected"
-                :hasDropShadow="true"
-                :hasBorder="true"
-                :hasBorderRadius="true"
-                size="l"
-                gradient="real-linear"
-                :code="vote.country.alpha2code"
+        <div
+          v-if="vote.hasCountry"
+          class="flex items-center justify-center text-center flex-col"
+        >
+          <Flag
+            class="flag flag-selected"
+            :hasDropShadow="true"
+            :hasBorder="true"
+            :hasBorderRadius="true"
+            size="l"
+            gradient="real-linear"
+            :code="vote.country.alpha2code"
           />
           {{ vote.country.translations[$i18n.locale].country }}
         </div>
         <div v-else class="text-center">
-          &mdash;<br/>
+          &mdash;<br />
           Unbekannt
         </div>
       </div>
@@ -69,75 +114,77 @@
   </Dialog>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
-import Dialog from "~/components/dialog.vue";
-import Pin from "~/components/pin.vue";
-import ICountUp from 'vue-countup-v2';
-import Button from "~/components/button.vue";
-import {Room} from "~/models";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import Dialog from '~/components/dialog.vue'
+import Pin from '~/components/pin.vue'
+import ICountUp from 'vue-countup-v2'
+import Button from '~/components/button.vue'
+import { Room } from '~/models'
 
-@Component({components: {Button, Dialog, Pin, ICountUp}})
+@Component({ components: { Button, Dialog, Pin, ICountUp } })
 export default class MultiplayerScoreBoardDialog extends Vue {
-  @Prop() room: Room;
-  @Prop() marker;
+  @Prop() room: Room
+  @Prop() marker
 
-  showVote = false;
-  showCountry = false;
-  showScore = false;
-  animateLine = false;
+  showVote = false
+  showCountry = false
+  showScore = false
+  animateLine = false
 
   created() {
     setTimeout(() => {
-      this.animateLine = true;
-    }, 300);
+      this.animateLine = true
+    }, 300)
 
     setTimeout(() => {
-      this.showScore = true;
-    }, 4000);
+      this.showScore = true
+    }, 4000)
   }
 
-  get maxPoints(){
+  get maxPoints() {
     return Object.values(this.room.scoreboard).reduce((max, player) => {
-      return player.points > max ? player.points : max;
-    }, 0);
+      return player.points > max ? player.points : max
+    }, 0)
   }
 
   get votes() {
-    const players = Object.values(this.room.players);
-    return players.map(player => {
+    const players = Object.values(this.room.players)
+    return players.map((player) => {
       return {
         ...this.room.votes[player.sessionId],
         player,
       }
-    });
+    })
   }
 
-  get sortedPlayers(){
-    if (!this.room.players){
-      return [];
+  get sortedPlayers() {
+    if (!this.room.players) {
+      return []
     }
 
-    const players = Object.values(this.room.players);
-    return players.sort((playerA : any, playerB : any) => {
-      if (!playerA?.sessionId || !playerB?.sessionId){ return 0; }
-      const playerAPts = this.room.scoreboard[playerA.sessionId].points || 0;
-      const playerBPts = this.room.scoreboard[playerB.sessionId].points || 0;
-      if (playerAPts > playerBPts){
-        return -1;
+    const players = Object.values(this.room.players)
+    return players.sort((playerA: any, playerB: any) => {
+      if (!playerA?.sessionId || !playerB?.sessionId) {
+        return 0
+      }
+      const playerAPts = this.room.scoreboard[playerA.sessionId].points || 0
+      const playerBPts = this.room.scoreboard[playerB.sessionId].points || 0
+      if (playerAPts > playerBPts) {
+        return -1
       }
 
-      if (playerBPts > playerAPts){
-        return 1;
+      if (playerBPts > playerAPts) {
+        return 1
       }
 
-      return 0;
-    });
+      return 0
+    })
   }
 
   get countupOptions() {
     return {
-      suffix: this.$i18n.locale === 'us' ? ' mi' : ' km'
+      suffix: this.$i18n.locale === 'us' ? ' mi' : ' km',
     }
   }
 }
@@ -182,7 +229,7 @@ h2 {
 }
 
 .line-success {
-  border-color: #4AB63B;
+  border-color: #4ab63b;
 }
 </style>
 <style>

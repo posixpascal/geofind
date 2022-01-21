@@ -1,37 +1,35 @@
 <template>
   <div>
-    <Navigation/>
+    <Navigation />
     <main>
       <MapBackground>
-        <div class="z-10"><Nuxt/></div>
+        <div class="z-10"><Nuxt /></div>
       </MapBackground>
     </main>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 <script lang="ts">
-import Component, {mixins} from "vue-class-component";
-import {Watch} from "vue-property-decorator";
-import MapBackground from "~/components/map-background.vue";
-import Navigation from "~/components/navigation.vue";
-import Vue from "vue";
+import Component, { mixins } from 'vue-class-component'
+import { Watch } from 'vue-property-decorator'
+import MapBackground from '~/components/map-background.vue'
+import Navigation from '~/components/navigation.vue'
+import Vue from 'vue'
 
 @Component({
-  components: {Navigation, MapBackground}
+  components: { Navigation, MapBackground },
 })
 export default class DefaultLayout extends Vue {
-
-
   @Watch('$route.name')
-  trackAnalytics(){
+  trackAnalytics() {
     const fathom = (window as any).fathom
-    fathom('trackPageview');
-    console.log(fathom);
+    fathom('trackPageview')
+    console.log(fathom)
   }
 }
 </script>
 <style lang="postcss">
-@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap');
 
 .font-lucky {
   position: relative;
@@ -39,14 +37,8 @@ export default class DefaultLayout extends Vue {
 }
 
 html {
-  font-family: 'Source Sans Pro',
-  -apple-system,
-  BlinkMacSystemFont,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  sans-serif;
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -96,7 +88,6 @@ h3 {
   padding-bottom: 7px !important;
 }
 
-
 .main-menu {
   margin: 0 auto;
 }
@@ -118,7 +109,6 @@ h3 {
     width: 720px;
   }
 }
-
 
 main {
   min-height: calc(100vh - 120px - 185px);

@@ -9,15 +9,13 @@
   </Dialog>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
-import Dialog from "~/components/dialog.vue";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import Dialog from '~/components/dialog.vue'
 
 @Component({
-  components: {Dialog}
+  components: { Dialog },
 })
-export default class LoadingDialog extends Vue {
-}
+export default class LoadingDialog extends Vue {}
 </script>
-<style lang="postcss" scoped>
-</style>
+<style lang="postcss" scoped></style>

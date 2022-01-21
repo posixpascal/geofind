@@ -122,30 +122,6 @@ export default {
         code: 'de',
         name: 'Deutsch',
       },
-      {
-        code: 'es',
-        name: 'Spanish',
-      },
-      {
-        code: 'fr',
-        name: 'French',
-      },
-      {
-        code: 'it',
-        name: 'Italian',
-      },
-      {
-        code: 'br',
-        name: 'Brasil',
-      },
-      {
-        code: 'jp',
-        name: 'Japanese',
-      },
-      {
-        code: 'nl',
-        name: 'Dutch',
-      },
     ],
     defaultLocale: 'de',
     vueI18n: {

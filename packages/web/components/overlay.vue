@@ -1,17 +1,24 @@
 <template>
-<div :class="[!interactive ? 'pointer-events-none' : '','animate__animated animate__delay-2s', animation, position]">
-	<slot></slot>
-</div>
+  <div
+    :class="[
+      !interactive ? 'pointer-events-none' : '',
+      'animate__animated animate__delay-2s',
+      animation,
+      position,
+    ]"
+  >
+    <slot></slot>
+  </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class Overlay extends Vue {
-  @Prop() position;
-  @Prop() interactive;
-  @Prop({ type: String }) animation;
+  @Prop() position
+  @Prop() interactive
+  @Prop({ type: String }) animation
 }
 </script>
 <style lang="css">

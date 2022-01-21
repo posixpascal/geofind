@@ -2,7 +2,7 @@
   <Dialog class="scoreboard-dialog">
     <div class="flex mb-10 justify-between items-center">
       <h2 class="flex items-center pin-title mb-0">
-        <Pin :id="$auth.user.pin" width="32" height="32"/>
+        <Pin :id="$auth.user.pin" width="32" height="32" />
         <template v-if="userVote && userVote.country.id === country.id">
           <span>Dein Ergebnis</span>
         </template>
@@ -17,17 +17,22 @@
         &nbsp;&nbsp;&raquo;&nbsp;&nbsp;
       </Button>
     </div>
-    <hr/>
+    <hr />
     <template v-if="userVote">
       <div class="flex justify-between relative items-center">
         <div>
-          <transition :duration="1000"
-                      enter-active-class="transition-all transition-fastest ease-out-quad"
-                      enter-class="opacity-0 scale-70"
-                      enter-to-class="opacity-100 scale-100"
-                      leave-class="opacity-100 scale-100"
-                      leave-to-class="opacity-0 scale-70">
-            <div class='flex items-center flag-container' v-if="showVote && userVote">
+          <transition
+            :duration="1000"
+            enter-active-class="transition-all transition-fastest ease-out-quad"
+            enter-class="opacity-0 scale-70"
+            enter-to-class="opacity-100 scale-100"
+            leave-class="opacity-100 scale-100"
+            leave-to-class="opacity-0 scale-70"
+          >
+            <div
+              class="flex items-center flag-container"
+              v-if="showVote && userVote"
+            >
               <Flag
                 :hasDropShadow="true"
                 :hasBorder="true"
@@ -39,15 +44,28 @@
             </div>
           </transition>
         </div>
-        <div :class="['line', animateLine ? 'line-expand' : '', userVote.country.id === country.id ? 'line-success' : '']">
+        <div
+          :class="[
+            'line',
+            animateLine ? 'line-expand' : '',
+            userVote.country.id === country.id ? 'line-success' : '',
+          ]"
+        >
           <div class="flex">
             <ICountUp
-              v-if="userVote.country.id !== country.id && distanceToTarget > 0 && animateLine"
+              v-if="
+                userVote.country.id !== country.id &&
+                distanceToTarget > 0 &&
+                animateLine
+              "
               :endVal="distanceToTarget"
               :options="countupOptions"
             />
-            <span  class="text-green-400" v-if="userVote.country.id === country.id  && animateLine">
-            ✓ TREFFER
+            <span
+              class="text-green-400"
+              v-if="userVote.country.id === country.id && animateLine"
+            >
+              ✓ TREFFER
             </span>
           </div>
         </div>
@@ -56,9 +74,10 @@
           enter-class="opacity-0 scale-70"
           enter-to-class="opacity-100 scale-100"
           leave-class="opacity-100 scale-100"
-          leave-to-class="opacity-0 scale-70">
+          leave-to-class="opacity-0 scale-70"
+        >
           <div v-show="showCountry">
-            <div class='flex items-center flag-container'>
+            <div class="flex items-center flag-container">
               <Flag
                 :hasDropShadow="true"
                 :hasBorder="true"
@@ -77,73 +96,79 @@
           enter-class="opacity-0 scale-70"
           enter-to-class="opacity-100 scale-100"
           leave-class="opacity-100 scale-100"
-          leave-to-class="opacity-0 scale-70">
-          <div v-show="showVote">{{ userVote.country.translations[$i18n.locale] }}</div>
+          leave-to-class="opacity-0 scale-70"
+        >
+          <div v-show="showVote">
+            {{ userVote.country.translations[$i18n.locale] }}
+          </div>
         </transition>
         <transition
           enter-active-class="transition-all transition-fastest ease-out-quad"
           enter-class="opacity-0 scale-70"
           enter-to-class="opacity-100 scale-100"
           leave-class="opacity-100 scale-100"
-          leave-to-class="opacity-0 scale-70">
-          <div v-show="showCountry">{{ country.translations[$i18n.locale] }}</div>
+          leave-to-class="opacity-0 scale-70"
+        >
+          <div v-show="showCountry">
+            {{ country.translations[$i18n.locale] }}
+          </div>
         </transition>
       </div>
     </template>
   </Dialog>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
-import Dialog from "~/components/dialog.vue";
-import Pin from "~/components/pin.vue";
-import ICountUp from 'vue-countup-v2';
-import Button from "~/components/button.vue";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import Dialog from '~/components/dialog.vue'
+import Pin from '~/components/pin.vue'
+import ICountUp from 'vue-countup-v2'
+import Button from '~/components/button.vue'
 
-@Component({components: {Button, Dialog, Pin, ICountUp}})
+@Component({ components: { Button, Dialog, Pin, ICountUp } })
 export default class ScoreBoardDialog extends Vue {
-  @Prop() country: any;
-  @Prop() userVote: any;
-  @Prop() marker;
-  @Prop() tutor;
+  @Prop() country: any
+  @Prop() userVote: any
+  @Prop() marker
+  @Prop() tutor
 
-  showVote = false;
-  showCountry = false;
-  animateLine = false;
+  showVote = false
+  showCountry = false
+  animateLine = false
 
   async skip() {
-   // await this.$socket.emit('tutor/nextRound', {id: this.tutor.id});
+    // await this.$socket.emit('tutor/nextRound', {id: this.tutor.id});
   }
 
   created() {
     setTimeout(() => {
-      this.showVote = true;
-    }, 1000);
+      this.showVote = true
+    }, 1000)
 
     setTimeout(() => {
-      this.showCountry = true;
+      this.showCountry = true
     }, 2000)
 
     setTimeout(() => {
-      this.animateLine = true;
-    }, 3000);
+      this.animateLine = true
+    }, 3000)
 
-    console.log(this.country, this.userVote, this.marker);
+    console.log(this.country, this.userVote, this.marker)
   }
 
   get distanceToTarget() {
     if (!this.country) {
-      return 0;
+      return 0
     }
     if (!this.userVote) {
-      return 0;
+      return 0
     }
     //return this.country.distanceToPoint(this.marker.position, true)
   }
 
   get countupOptions() {
     return {
-      suffix: this.$i18n.locale === 'us' ? ' mi' : ' km'
+      suffix: this.$i18n.locale === 'us' ? ' mi' : ' km',
     }
   }
 }
@@ -188,7 +213,7 @@ h2 {
 }
 
 .line-success {
-  border-color: #4AB63B;
+  border-color: #4ab63b;
 }
 </style>
 <style>

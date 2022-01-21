@@ -9,7 +9,8 @@
     "start:dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "fmt": "prettier --write ."
   },
   "dependencies": {
     "@heroicons/vue": "^1.0.5",
@@ -27,6 +28,7 @@
     "global": "^4.4.0",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.21",
+    "mapbox-gl": "^2.6.1",
     "numeral": "^2.0.6",
     "nuxt": "^2.15.3",
     "nuxt-i18n": "^6.22.3",

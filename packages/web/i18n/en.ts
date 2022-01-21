@@ -24,7 +24,8 @@ export const en = {
     gameFinished: 'game finished',
     source: 'source code',
     educationalEdition: 'teaching edition',
-    about: 'Geography multiplayer guessing game. Find countries, capitals, landmarks and internet domains. Improve your knowledge level in single player mode or put your skills to the test in online multiplayer with up to 32 players.',
+    about:
+      'Geography multiplayer guessing game. Find countries, capitals, landmarks and internet domains. Improve your knowledge level in single player mode or put your skills to the test in online multiplayer with up to 32 players.',
   },
   mapStyles: {
     title: 'Choose your map skin',
@@ -50,7 +51,7 @@ export const en = {
       flags: 'flags',
       quiz: 'quiz',
       speedrun: 'race',
-      shapes: 'shapes'
+      shapes: 'shapes',
     },
     mapSets: {
       earth: 'Worldwide',
@@ -58,7 +59,7 @@ export const en = {
       america: 'America',
       asia: 'Asia',
       europe: 'Europe',
-      oceania: 'Oceania'
+      oceania: 'Oceania',
     },
     directMatchesOnly: 'Direct matches only',
     suddenDeath: 'Epic Finale',
@@ -66,46 +67,48 @@ export const en = {
     roundTime: 'Round time',
     maxRounds: 'Maximum rounds',
     pointsNeeded: 'Points to win',
-    public: 'Public'
+    public: 'Public',
   },
   singleplayer: {
     button: 'Learning Mode',
     title: 'Singleplayer',
-    cta: 'start game'
+    cta: 'start game',
   },
   multiplayer: {
     button: 'create game',
     title: 'create game',
-    cta: 'create game'
+    cta: 'create game',
   },
   matchmaking: {
     button: 'Quick Match',
     cta: 'Quick match',
     title: 'Search for game',
     waitingForPlayers: 'Wait for player',
-    infoBox: 'Be patient for a moment. Players who are also looking for a game will be matched with you. The game will start automatically.',
+    infoBox:
+      'Be patient for a moment. Players who are also looking for a game will be matched with you. The game will start automatically.',
     searching: 'Searching for games...',
     found: 'Game found...',
-    created: 'Game created...'
+    created: 'Game created...',
   },
   profile: {
     button: 'Settings',
     cta: 'profile',
     title: 'Profile',
-    selectMarker: 'Select your favorite marker for the game here'
+    selectMarker: 'Select your favorite marker for the game here',
   },
   lobbies: {
     button: 'Open Games',
     cta: 'Open Games',
     title: 'Open Games',
     join: 'Join',
-    noRoomsFound: 'No public games found, would you like to create your own game instead?'
+    noRoomsFound:
+      'No public games found, would you like to create your own game instead?',
   },
   lobby: {},
   play: {},
   dialogs: {
     roundPrepare: {},
     roundEnd: {},
-    scoreboard: {}
+    scoreboard: {},
   },
 }

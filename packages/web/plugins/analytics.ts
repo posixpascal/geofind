@@ -1,4 +1,8 @@
 ;(window as any).onNuxtReady(() => {
+  if (process.env.NODE_ENV === 'development') {
+    ;(window as any).fathom = () => {}
+    return
+  }
   ;(function (f, a, t, h, o, m) {
     a[h] =
       a[h] ||

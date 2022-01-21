@@ -1,18 +1,15 @@
 <template>
-  <div class="flex flex-wrap scorecard">
-    Scorecard
-  </div>
+  <div class="flex flex-wrap scorecard">Scorecard</div>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
 
 @Component
 export default class ScoreCard extends Vue {
-  async created(){
+  async created() {
     await this.$store.dispatch('user/fetch', {})
   }
 }
 </script>
-<style lang="postcss" scoped>
-</style>
+<style lang="postcss" scoped></style>

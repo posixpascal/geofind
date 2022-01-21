@@ -1,27 +1,48 @@
 <template>
   <div class="main-menu pt-0">
-    <Button :icon='true' v-if="false" :to="localePath('/tutor')" variant="green" :animated="true">
+    <Button
+      :icon="true"
+      v-if="false"
+      :to="localePath('/tutor')"
+      variant="green"
+      :animated="true"
+    >
       <template #icon>
-        <Icon class='text-white' :height="48" name="controller" />
+        <Icon class="text-white" :height="48" name="controller" />
       </template>
       {{ $t('singleplayer.button') }}
     </Button>
 
-    <Button :icon='true' :to="localePath('/multiplayer')" variant="blue" :animated="true">
+    <Button
+      :icon="true"
+      :to="localePath('/multiplayer')"
+      variant="blue"
+      :animated="true"
+    >
       <template #icon>
-        <Icon class='text-white' :height="48" name="create" />
+        <Icon class="text-white" :height="48" name="create" />
       </template>
       {{ $t('multiplayer.button') }}
     </Button>
-    <Button :icon='true' :to="localePath('lobbies')" variant="purple" :animated="true">
+    <Button
+      :icon="true"
+      :to="localePath('lobbies')"
+      variant="purple"
+      :animated="true"
+    >
       <template #icon>
-        <Icon class='text-white' :height="48" name="public" />
+        <Icon class="text-white" :height="48" name="public" />
       </template>
       {{ $t('lobbies.button') }}
     </Button>
-    <Button :icon='true' :to="localePath('/matchmaking')" variant="red" :animated="true">
+    <Button
+      :icon="true"
+      :to="localePath('/matchmaking')"
+      variant="red"
+      :animated="true"
+    >
       <template #icon>
-        <Icon class='text-white' :height="48" name="cube" />
+        <Icon class="text-white" :height="48" name="cube" />
       </template>
       {{ $t('matchmaking.button') }}
     </Button>
@@ -30,9 +51,14 @@
       <template #icon>👩‍🏫</template>
       Teacher Zone
     </Button>-->
-    <Button :icon='true' :to="localePath('profile')" variant="yellow" :animated="true">
+    <Button
+      :icon="true"
+      :to="localePath('profile')"
+      variant="yellow"
+      :animated="true"
+    >
       <template #icon>
-        <Icon class='text-white' :height="48" name="profile" />
+        <Icon class="text-white" :height="48" name="profile" />
       </template>
       {{ $t('profile.button') }}
     </Button>
@@ -49,16 +75,15 @@
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component} from "vue-property-decorator";
-import Button from "~/components/button.vue";
-import Footer from "~/components/footer.vue";
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+import Button from '~/components/button.vue'
+import Footer from '~/components/footer.vue'
 
 @Component({
-  components: {Button, Footer}
+  components: { Button, Footer },
 })
-export default class MainMenu extends Vue {
-}
+export default class MainMenu extends Vue {}
 </script>
 <style lang="postcss">
 .main-menu {

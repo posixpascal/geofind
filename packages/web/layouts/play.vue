@@ -1,22 +1,21 @@
 <template>
   <div>
     <main>
-      <Nuxt/>
+      <Nuxt />
     </main>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import Component, {mixins} from "vue-class-component";
+import Vue from 'vue'
+import Component, { mixins } from 'vue-class-component'
 
 @Component({})
-export default class PlayLayout extends Vue  {
-  mounted(){
-  }
+export default class PlayLayout extends Vue {
+  mounted() {}
 }
 </script>
 <style lang="postcss">
-@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap');
 
 .font-lucky {
   position: relative;
@@ -24,14 +23,8 @@ export default class PlayLayout extends Vue  {
 }
 
 html {
-  font-family: 'Source Sans Pro',
-  -apple-system,
-  BlinkMacSystemFont,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  sans-serif;
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -70,10 +63,12 @@ h2 {
   font-family: 'Luckiest Guy';
 }
 
-h3, h4, h5, h6 {
+h3,
+h4,
+h5,
+h6 {
   font-family: 'Luckiest Guy';
 }
-
 
 .main-menu {
   margin: 0 auto;
@@ -97,7 +92,6 @@ h3, h4, h5, h6 {
   }
 }
 
-
 main {
   min-height: calc(100vh - 120px - 185px);
 }
@@ -111,6 +105,6 @@ main {
   right: 0;
   height: 100%;
   width: 100%;
-  z-index:0;
+  z-index: 0;
 }
 </style>

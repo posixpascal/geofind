@@ -1,18 +1,24 @@
 <template>
   <div>
     <ul class="player-list">
-      <li class="flex items-center justify-between" v-for="player in room.players">
+      <li
+        class="flex items-center justify-between"
+        v-for="player in room.players"
+      >
         <div class="flex items-center">
-          <Pin :id="player.pin" width="48" style="min-width: 48px"/>
+          <Pin :id="player.pin" width="48" style="min-width: 48px" />
           <div class="pl-3">
             <h3>{{ player.username }}</h3>
             <span class="thatsyou text-gray-400">
-              <template v-if="player.sessionId === room.sessionId">{{ $t('t.thatsYou') }}</template>&nbsp;
+              <template v-if="player.sessionId === room.sessionId">{{
+                $t('t.thatsYou')
+              }}</template
+              >&nbsp;
             </span>
           </div>
         </div>
         <div v-if="player.sessionId === room.sessionId">
-          <Button @click='rename = true' variant="blue" xx-small>
+          <Button @click="rename = true" variant="blue" xx-small>
             <span class="hidden sm:inline">Name ändern</span>
             <span class="inline sm:hidden">Profil</span>
           </Button>
@@ -22,36 +28,40 @@
         </div>
       </li>
     </ul>
-    <RenameDialog @close='update' :player="room.player" :room="room" v-show="rename" />
+    <RenameDialog
+      @close="update"
+      :player="room.player"
+      :room="room"
+      v-show="rename"
+    />
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import {Component} from "vue-property-decorator";
-import {Prop} from "vue-property-decorator";
-import RenameDialog from "~/components/rename-dialog.vue";
-import {Room} from "~/models";
+import Vue from 'vue'
+import { Component } from 'vue-property-decorator'
+import { Prop } from 'vue-property-decorator'
+import RenameDialog from '~/components/rename-dialog.vue'
+import { Room } from '~/models'
 
 @Component({
-  components: {RenameDialog}
+  components: { RenameDialog },
 })
 export default class LobbyPlayers extends Vue {
-  @Prop() room: Room;
+  @Prop() room: Room
 
-  rename = false;
+  rename = false
 
   get session() {
-    return this.$colyseus;
+    return this.$colyseus
   }
 
-  async update(){
-    this.rename = false;
+  async update() {
+    this.rename = false
   }
 }
 </script>
 <style lang="postcss" scoped>
 .player-list {
-
 }
 
 .player-list li {

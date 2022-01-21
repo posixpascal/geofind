@@ -1,11 +1,11 @@
-"use strict";
+'use strict'
 
-import { DataType, Sequelize } from "sequelize-typescript";
-import { QueryInterface } from "sequelize";
+import { DataType, Sequelize } from 'sequelize-typescript'
+import { QueryInterface } from 'sequelize'
 
 module.exports = {
   up: async (queryInterface: QueryInterface, sequelize: typeof Sequelize) => {
-    await queryInterface.createTable("countries", {
+    await queryInterface.createTable('countries', {
       id: {
         type: DataType.UUID,
         defaultValue: DataType.UUIDV4,
@@ -49,6 +49,9 @@ module.exports = {
       translations: {
         type: DataType.JSON,
       },
+      translated_capitals: {
+        type: DataType.JSON,
+      },
       currencies: {
         type: DataType.JSON,
       },
@@ -59,14 +62,14 @@ module.exports = {
         type: DataType.GEOMETRY,
       },
       shape: {
-        type: DataType.GEOGRAPHY,
+        type: DataType.GEOMETRY,
       },
       updatedat: DataType.DATE,
       createdat: DataType.DATE,
-    });
+    })
   },
 
   down: async (queryInterface: QueryInterface, sequelize: typeof Sequelize) => {
-    await queryInterface.dropTable("countries");
+    await queryInterface.dropTable('countries')
   },
-};
+}

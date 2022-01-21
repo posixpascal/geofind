@@ -1,6 +1,5 @@
 <template>
   <div class="panel">
-
     <h3 :class="`text-center ${back ? 'justify-between' : 'justify-center'}`">
       <div class="back-button" v-if="back">
         <nuxt-link :to="back">
@@ -10,24 +9,24 @@
       <slot name="title"></slot>
       <div></div>
     </h3>
-      <div class="panel-content">
-        <div class="flex flex-col w-full">
-          <slot name="content"></slot>
-        </div>
+    <div class="panel-content">
+      <div class="flex flex-col w-full">
+        <slot name="content"></slot>
       </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import Component from "vue-class-component";
-import {Prop} from "vue-property-decorator";
-import Icon from "~/components/icon.vue";
+import Vue from 'vue'
+import Component from 'vue-class-component'
+import { Prop } from 'vue-property-decorator'
+import Icon from '~/components/icon.vue'
 
 @Component({
-  components: {Icon}
+  components: { Icon },
 })
 export default class Panel extends Vue {
-  @Prop() back : any;
+  @Prop() back: any
 }
 </script>
 <style lang="postcss" scoped>

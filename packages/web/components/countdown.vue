@@ -1,27 +1,27 @@
 <template>
-  <h1>{{ count && count > 0 ? count : "" }}</h1>
+  <h1>{{ count && count > 0 ? count : '' }}</h1>
 </template>
 <script lang="ts">
-import {Prop} from "vue-property-decorator";
-import Component from "vue-class-component";
-import Vue from 'vue';
+import { Prop } from 'vue-property-decorator'
+import Component from 'vue-class-component'
+import Vue from 'vue'
 
 @Component
 export default class Countdown extends Vue {
   @Prop() initial
 
   count = null
-  timer = null;
+  timer = null
 
-  mounted(){
-    this.count = this.initial;
+  mounted() {
+    this.count = this.initial
     this.timer = setInterval(() => {
-      this.count -= 1;
-    }, 1000);
+      this.count -= 1
+    }, 1000)
   }
 
-  beforeDestroy(){
-    return clearInterval(this.timer);
+  beforeDestroy() {
+    return clearInterval(this.timer)
   }
 }
 </script>

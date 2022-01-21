@@ -1,25 +1,29 @@
 <template>
   <div :class="`flex mb-6 ${readonly ? 'pointer-events-none' : ''}`">
-    <input :readonly="readonly" v-model="setting" :class="`switch ${extraClasses}`" type="checkbox" />
+    <input
+      :readonly="readonly"
+      v-model="setting"
+      :class="`switch ${extraClasses}`"
+      type="checkbox"
+    />
     <span class="pl-6 text-2xl font-lucky">{{ label }}</span>
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop, VModel} from "vue-property-decorator";
+import Vue from 'vue'
+import { Component, Prop, VModel } from 'vue-property-decorator'
 
 @Component
 export default class Checkbox extends Vue {
-  @VModel() setting;
-  @Prop({type: String, default: ''}) label;
-  @Prop({type: String, default: ''}) extraClasses;
-  @Prop({type: Boolean, default: false}) readonly;
-
+  @VModel() setting
+  @Prop({ type: String, default: '' }) label
+  @Prop({ type: String, default: '' }) extraClasses
+  @Prop({ type: Boolean, default: false }) readonly
 }
 </script>
 
 <style lang="postcss">
-.switch[type="checkbox"] {
+.switch[type='checkbox'] {
   @apply bg-gray-50 border-none;
   position: relative;
   width: 70px;
@@ -33,7 +37,7 @@ export default class Checkbox extends Vue {
   cursor: pointer;
 }
 
-.switch[type="checkbox"]::before {
+.switch[type='checkbox']::before {
   content: '';
   position: absolute;
   width: 35px;
@@ -47,16 +51,15 @@ export default class Checkbox extends Vue {
   transform: scale(0.9);
 }
 
-.switch:checked[type="checkbox"] {
+.switch:checked[type='checkbox'] {
   @apply bg-green-400;
 }
 
-.switch.blue:checked[type="checkbox"] {
+.switch.blue:checked[type='checkbox'] {
   @apply bg-blue-400;
 }
 
-
-.switch:checked[type="checkbox"]::before {
+.switch:checked[type='checkbox']::before {
   left: 35px;
 }
 
@@ -65,7 +68,7 @@ export default class Checkbox extends Vue {
   background-size: 28px !important;
 }
 
-input[readonly]{
+input[readonly] {
   pointer-events: none;
 }
 </style>

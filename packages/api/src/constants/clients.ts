@@ -1,8 +1,8 @@
 export interface ConnectOptions {
-  username: string;
+  username: string
 }
 
 export interface UserSettings {
-  username: string;
-  pin: number;
+  username: string
+  pin: number
 }

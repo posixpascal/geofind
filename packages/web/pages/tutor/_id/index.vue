@@ -1,21 +1,34 @@
 <template>
   <div>
-    <l-map :center="[32, -5]"
-           :zoom="1"
-           :options="mapOptions"
-           class='game-map'
-           @click="moveMarker"
-           @ready="showMap"
-           ref="map">
-      <l-tile-layer :url="tileserver"
-                    :attribution="`&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> | Tiles &copy; Geofind.io | &copy; @posixpascal`"/>
+    <l-map
+      :center="[32, -5]"
+      :zoom="1"
+      :options="mapOptions"
+      class="game-map"
+      @click="moveMarker"
+      @ready="showMap"
+      ref="map"
+    >
+      <l-tile-layer
+        :url="tileserver"
+        :attribution="`&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> | Tiles &copy; Geofind.io | &copy; @posixpascal`"
+      />
 
-      <l-geo-json v-if='tutor && tutor.state === states.ROUND_END' :geojson="tutor.country.shape"></l-geo-json>
+      <l-geo-json
+        v-if="tutor && tutor.state === states.ROUND_END"
+        :geojson="tutor.country.shape"
+      ></l-geo-json>
       <l-marker
-        v-if='tutor && tutor.state === states.ROUND_END && tutor.country.latlng'
+        v-if="tutor && tutor.state === states.ROUND_END && tutor.country.latlng"
         :lat-lng="convertLatLng(tutor.country.latlng.coordinates)"
       >
-        <l-tooltip :options="{ offset: countryTooltipOffset, permanent: true, direction: 'top'}">
+        <l-tooltip
+          :options="{
+            offset: countryTooltipOffset,
+            permanent: true,
+            direction: 'top',
+          }"
+        >
           <div class="country-tooltip">
             <span :data-random="Math.random()"></span>
             <CountryFlagWithName :country="tutor.country">
@@ -30,75 +43,91 @@
         :lat-lng="marker.position"
         :icon="playerPin"
       >
-        <l-tooltip :options="{ offset: pinTooltipOffset, permanent: true, direction: 'top'}">
+        <l-tooltip
+          :options="{
+            offset: pinTooltipOffset,
+            permanent: true,
+            direction: 'top',
+          }"
+        >
           <div class="country-tooltip">
             <span :data-random="Math.random()"></span>
-            <CountryFlagWithName v-if='userVote && userVote.country' :country="userVote.country" flag-size="m">
+            <CountryFlagWithName
+              v-if="userVote && userVote.country"
+              :country="userVote.country"
+              flag-size="m"
+            >
             </CountryFlagWithName>
-            <div v-else>
-              Loading...
-            </div>
+            <div v-else>Loading...</div>
           </div>
         </l-tooltip>
       </l-marker>
     </l-map>
 
     <template v-if="user">
-      <TutorDialog v-if="!user.seenTutor" @close="startTutor"/>
+      <TutorDialog v-if="!user.seenTutor" @close="startTutor" />
     </template>
 
     <template v-if="tutor">
-      <RoundPrepareDialog :country="tutor.country" v-if="tutor.country && tutor.state === states.ROUND_PREPARE"/>
+      <RoundPrepareDialog
+        :country="tutor.country"
+        v-if="tutor.country && tutor.state === states.ROUND_PREPARE"
+      />
       <ScoreBoardDialog
         :tutor="tutor"
-        :marker='marker'
+        :marker="marker"
         :user-vote="userVote"
         :country="tutor.country"
-        v-if="tutor.country && tutor.state === states.SCOREBOARD"/>
+        v-if="tutor.country && tutor.state === states.SCOREBOARD"
+      />
     </template>
 
     <template v-if="tutor && tutor.country">
-      <Overlay position="bottomleft" v-if="tutor.state === states.ROUND_START" animation="animate__flipInY">
-        <CountryFlagWithName :hint-level="tutor.hintLevel" :country="tutor.country" :distance-point="marker.position">
+      <Overlay
+        position="bottomleft"
+        v-if="tutor.state === states.ROUND_START"
+        animation="animate__flipInY"
+      >
+        <CountryFlagWithName
+          :hint-level="tutor.hintLevel"
+          :country="tutor.country"
+          :distance-point="marker.position"
+        >
         </CountryFlagWithName>
       </Overlay>
     </template>
 
     <Overlay position="topleft" animation="animate__fadeIn">
-      <Button variant='red' xx-small @click="leave" class="mr-3">
+      <Button variant="red" xx-small @click="leave" class="mr-3">
         <span class="px-3 text-xl">X</span>
       </Button>
-      <Button variant='purple' xx-small class="mr-3" @click="help">
+      <Button variant="purple" xx-small class="mr-3" @click="help">
         <span class="px-3 text-xl">?</span>
       </Button>
 
-      <Button variant='purple' xx-small @click="skip">
-        <span class="px-3 text-xl">
-          &raquo;
-        </span>
+      <Button variant="purple" xx-small @click="skip">
+        <span class="px-3 text-xl"> &raquo; </span>
       </Button>
     </Overlay>
 
-    <Overlay position="topright" v-if="tutor">
-
-    </Overlay>
+    <Overlay position="topright" v-if="tutor"> </Overlay>
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue, Watch} from "vue-property-decorator";
-import LoadingDialog from "~/components/dialogs/loading-dialog.vue";
-import GameEndDialog from "~/components/dialogs/game-end-dialog.vue";
-import ScoreBoardDialog from "~/components/dialogs/score-board-dialog.vue";
-import RoundPrepareDialog from "~/components/dialogs/round-prepare-dialog.vue";
-import GameStartingDialog from "~/components/dialogs/game-starting-dialog.vue";
-import Dialog from "~/components/dialog.vue";
-import TutorDialog from "~/components/dialogs/tutor-dialog.vue";
-import Button from "~/components/button.vue";
-import {LControl, LGeoJson, LPopup, LTooltip} from "vue2-leaflet";
-import Overlay from "~/components/overlay.vue";
-import CountryFlagWithName from "~/components/country-flag-with-name.vue";
-import {icon, Point} from "leaflet";
-import {PINS} from "~/constants/pins";
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import LoadingDialog from '~/components/dialogs/loading-dialog.vue'
+import GameEndDialog from '~/components/dialogs/game-end-dialog.vue'
+import ScoreBoardDialog from '~/components/dialogs/score-board-dialog.vue'
+import RoundPrepareDialog from '~/components/dialogs/round-prepare-dialog.vue'
+import GameStartingDialog from '~/components/dialogs/game-starting-dialog.vue'
+import Dialog from '~/components/dialog.vue'
+import TutorDialog from '~/components/dialogs/tutor-dialog.vue'
+import Button from '~/components/button.vue'
+import { LControl, LGeoJson, LPopup, LTooltip } from 'vue2-leaflet'
+import Overlay from '~/components/overlay.vue'
+import CountryFlagWithName from '~/components/country-flag-with-name.vue'
+import { icon, Point } from 'leaflet'
+import { PINS } from '~/constants/pins'
 
 @Component({
   layout: 'play',
@@ -116,90 +145,89 @@ import {PINS} from "~/constants/pins";
     LControl,
     LTooltip,
     LPopup,
-    LGeoJson
-  }
+    LGeoJson,
+  },
 })
 export default class Index extends Vue {
   zoom = 3
-  started = false;
-  loading = false;
-  showPopup = false;
-  showVoteCorrect = false;
-  room: any;
+  started = false
+  loading = false
+  showPopup = false
+  showVoteCorrect = false
+  room: any
 
-  marker: { position?: number[] } = {
-  };
+  marker: { position?: number[] } = {}
 
   get user() {
-    return this.room.player;
+    return this.room.player
   }
 
   get tileserver() {
-    return this.$config.borderedTileServer;
+    return this.$config.borderedTileServer
   }
 
   get mapOptions() {
     return {
       zoomControl: false,
       scrollWheelZoom: false, // disable original zoom function
-      smoothWheelZoom: true,  // enable smooth zoom
-      smoothSensitivity: 1,   // zoom speed. default is 1
+      smoothWheelZoom: true, // enable smooth zoom
+      smoothSensitivity: 1, // zoom speed. default is 1
     }
   }
 
   get playerPin() {
-    const factor = 1.5;
+    const factor = 1.5
     return icon({
       iconUrl: PINS[this.room.player.pin],
       iconSize: [32 * factor, 37 * factor],
-      iconAnchor: [13.4 * factor, 37 * factor]
+      iconAnchor: [13.4 * factor, 37 * factor],
     })
   }
 
   otherPlayerPin(playerPinIndex) {
-    const factor = 1.5;
+    const factor = 1.5
     return icon({
       iconUrl: PINS[playerPinIndex],
       iconSize: [32 * factor, 37 * factor],
-      iconAnchor: [13.4 * factor, 37 * factor]
+      iconAnchor: [13.4 * factor, 37 * factor],
     })
   }
 
   moveMarker(ev: any) {
     if (!this.canMoveMarker) {
-      return;
+      return
     }
 
-    this.marker = {...this.marker, position: [ev.latlng.lat, ev.latlng.lng]};
+    this.marker = { ...this.marker, position: [ev.latlng.lat, ev.latlng.lng] }
   }
 
   dragMarker(ev: any) {
-    const {lat, lng} = ev.target.getLatLng();
-    this.marker = {...this.marker, position: [lat, lng]};
+    const { lat, lng } = ev.target.getLatLng()
+    this.marker = { ...this.marker, position: [lat, lng] }
   }
 
-  get pinTooltipOffset(){
-    return new Point(1, -29 * 1.5);
+  get pinTooltipOffset() {
+    return new Point(1, -29 * 1.5)
   }
 
-  get countryTooltipOffset(){
-    return new Point(-15, 0);
+  get countryTooltipOffset() {
+    return new Point(-15, 0)
   }
 
   async created() {
-    this.loading = true;
+    this.loading = true
     //this.$socket.on('tutor/correctVote', this.correctVote);
   }
 
-  beforeDestroy(){
+  beforeDestroy() {
     //this.$socket.off('tutor/correctVote');
   }
 
-  correctVote(){
-    this.showVoteCorrect = true;
+  correctVote() {
+    this.showVoteCorrect = true
     setTimeout(() => {
-      this.showVoteCorrect = false;
-    }, 3000);
+      this.showVoteCorrect = false
+    }, 3000)
   }
 
   leave() {
@@ -207,103 +235,102 @@ export default class Index extends Vue {
   }
 
   async start() {
-    this.started = true;
-    await this.$pub('tutor/play', {id: this.tutorId});
+    this.started = true
+    await this.$pub('tutor/play', { id: this.tutorId })
   }
 
   async help() {
-    await this.$pub('tutor/help', {id: this.tutorId});
+    await this.$pub('tutor/help', { id: this.tutorId })
   }
 
   async skip() {
-   if (this.tutor.state === this.states.ROUND_START) {
-     return this.$pub('tutor/skip', {id: this.tutorId});
-   }
-    return this.$pub('tutor/nextRound', {id: this.tutorId});
+    if (this.tutor.state === this.states.ROUND_START) {
+      return this.$pub('tutor/skip', { id: this.tutorId })
+    }
+    return this.$pub('tutor/nextRound', { id: this.tutorId })
   }
 
-  @Watch('$auth.user', {deep: true, immediate: true})
-  async startTutor() {
-  }
+  @Watch('$auth.user', { deep: true, immediate: true })
+  async startTutor() {}
 
   @Watch('marker')
   async vote(newPosition, oldPosition) {
     if (!this.canMoveMarker) {
-      return;
+      return
     }
 
-    this.showPopup = false;
+    this.showPopup = false
 
     // Use different geographical encoding by switching lng and lat.
     const [lng, lat] = this.marker.position
-    const position = [lng, lat];
+    const position = [lng, lat]
 
-    await this.$pub('tutor/vote', {id: this.tutorId, position});
-    this.showPopup = true;
+    await this.$pub('tutor/vote', { id: this.tutorId, position })
+    this.showPopup = true
   }
 
   // TODO: Refactor this.
   @Watch('tutor.state', { deep: true })
-  async tutorStateChanged(newState){
-    if (newState === this.states.ROUND_PREPARE){
-      this.showMap();
+  async tutorStateChanged(newState) {
+    if (newState === this.states.ROUND_PREPARE) {
+      this.showMap()
     }
-    if (newState === this.states.ROUND_END){
-      if (!this.tutor.country?.latlng?.coordinates){
-        await this.$store.dispatch('country/discover', this.tutor.countryId);
+    if (newState === this.states.ROUND_END) {
+      if (!this.tutor.country?.latlng?.coordinates) {
+        await this.$store.dispatch('country/discover', this.tutor.countryId)
         setTimeout(() => {
-          this.showAnswer();
-        }, 200);
-        return;
+          this.showAnswer()
+        }, 200)
+        return
       }
-      if (!this.userVote){
+      if (!this.userVote) {
         setTimeout(async () => {
-          await this.$pub('tutor/nextRound', {id: this.tutor.id});
-        }, 4000);
+          await this.$pub('tutor/nextRound', { id: this.tutor.id })
+        }, 4000)
       }
-     this.showAnswer();
+      this.showAnswer()
     }
   }
 
-  showAnswer(){
-    const map = (this.$refs.map as any).mapObject;
+  showAnswer() {
+    const map = (this.$refs.map as any).mapObject
     map.flyToBounds(this.tutor.country.bounds, {
       animate: true,
       duration: 2,
       maxZoom: 8,
-      padding: {x: 20, y: 20}
-    });
+      padding: { x: 20, y: 20 },
+    })
   }
 
-  showMap(){
-    const map = (this.$refs.map as any).mapObject;
+  showMap() {
+    const map = (this.$refs.map as any).mapObject
     map.flyTo([32, -5], 2.5, {
       animate: true,
-      duration: 3
-    });
+      duration: 3,
+    })
   }
 
-  convertLatLng(coordinates){
-    if (!this.$refs.map){
-      return;
+  convertLatLng(coordinates) {
+    if (!this.$refs.map) {
+      return
     }
 
-    const [lat, lng] = coordinates;
-    if (!lat || !lng){
-      return;
+    const [lat, lng] = coordinates
+    if (!lat || !lng) {
+      return
     }
-    return (window as any).L.Projection.LonLat.unproject({x: lat, y: lng})
+    return (window as any).L.Projection.LonLat.unproject({ x: lat, y: lng })
   }
 
   get tutorId() {
-    return this.$route.params.id;
+    return this.$route.params.id
   }
 
-  get tutor() :any {
-    return {};
+  get tutor(): any {
+    return {}
   }
 
-  get states() : any {
+  get states(): any {
     return {}
   }
 
@@ -312,7 +339,7 @@ export default class Index extends Vue {
   }
 
   get canMoveMarker() {
-    return !!this.tutor ;
+    return !!this.tutor
   }
 }
 </script>
@@ -353,7 +380,6 @@ html {
   justify-content: center;
   align-items: center;
 }
-
 
 .counter {
   @apply font-lucky text-6xl sm:text-9xl fixed bottom-0 opacity-40 z-20 flex content-end;

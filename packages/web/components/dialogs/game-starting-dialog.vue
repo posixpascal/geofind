@@ -5,16 +5,15 @@
   </Dialog>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop} from "vue-property-decorator";
-import {Room} from "~/models";
-import Dialog from "~/components/dialog.vue";
+import Vue from 'vue'
+import { Component, Prop } from 'vue-property-decorator'
+import { Room } from '~/models'
+import Dialog from '~/components/dialog.vue'
 @Component({
-  components: {Dialog}
+  components: { Dialog },
 })
 export default class GameStartingDialog extends Vue {
-  @Prop() room!: Room;
+  @Prop() room!: Room
 }
 </script>
-<style lang="postcss" scoped>
-</style>
+<style lang="postcss" scoped></style>

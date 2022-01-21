@@ -3,27 +3,29 @@
     <Panel>
       <template #title>Wo bin ich hier?</template>
       <template #content>
-        Willkommen auf Geofind.io! Einem Online Multiplayer Geographie Ratespiel für Dich und Deine Freunde.
-        Auf Geofind musst du dein Geographie-Wissen zur Probe stellen, finde Länder und Städte auf der ganzen Welt und messe dich gegen deine Freunde.
-        <br/>
-        <br/>
-        <Button to="/multiplayer" xx-small variant="blue">Alles klar, los gehts!</Button>
+        Willkommen auf Geofind.io! Einem Online Multiplayer Geographie Ratespiel
+        für Dich und Deine Freunde. Auf Geofind musst du dein Geographie-Wissen
+        zur Probe stellen, finde Länder und Städte auf der ganzen Welt und messe
+        dich gegen deine Freunde.
+        <br />
+        <br />
+        <Button to="/multiplayer" xx-small variant="blue"
+          >Alles klar, los gehts!</Button
+        >
       </template>
     </Panel>
   </div>
 </template>
 <script lang="ts">
-import {Component} from "vue-property-decorator";
-import {Vue} from "vue-property-decorator";
-import Panel from "~/components/panel.vue";
-import Button from "~/components/button.vue";
+import { Component } from 'vue-property-decorator'
+import { Vue } from 'vue-property-decorator'
+import Panel from '~/components/panel.vue'
+import Button from '~/components/button.vue'
 
 @Component({
-  components: {Button, Panel}
+  components: { Button, Panel },
 })
-export default class ImprintPage extends Vue {
-
-}
+export default class ImprintPage extends Vue {}
 </script>
 <style lang="postcss" scoped>
 h2 {

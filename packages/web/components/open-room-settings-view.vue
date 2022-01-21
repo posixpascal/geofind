@@ -4,107 +4,116 @@
       <div class="w-full sm:w-1/2 sm:mr-5">
         <h5>Spielmodi</h5>
         <div :class="`game-mode w-half`">
-          <div v-html="mode.image"/>
+          <div v-html="mode.image" />
           {{ mode.name }}
         </div>
       </div>
       <div class="w-full sm:w-1/2 sm:ml-5">
         <h5>Kartenset</h5>
         <div :class="`game-mode w-half`">
-          <div v-html="mapSet.image"/>
+          <div v-html="mapSet.image" />
           {{ mapSet.name }}
         </div>
       </div>
     </div>
     <div class="hidden sm:block">
       <div class="game-modes mt-3">
-        <GameSettingsInput readonly disabled :value="game.roundTime" label="Rundenzeit"/>
-        <GameSettingsInput readonly disabled :value="game.maxPoints" label="Punkte zum Sieg"/>
+        <GameSettingsInput
+          readonly
+          disabled
+          :value="game.roundTime"
+          label="Rundenzeit"
+        />
+        <GameSettingsInput
+          readonly
+          disabled
+          :value="game.maxPoints"
+          label="Punkte zum Sieg"
+        />
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Emit, Model, Prop, VModel} from "vue-property-decorator";
+import Vue from 'vue'
+import { Component, Emit, Model, Prop, VModel } from 'vue-property-decorator'
 
 @Component
 export default class OpengameSettingsView extends Vue {
-  @Prop() game!: any;
+  @Prop() game!: any
 
   get mode() {
-    return this.modes.find(m => m.name === this.game.room);
+    return this.modes.find((m) => m.name === this.game.room)
   }
 
   get mapSet() {
-    return this.maps.find(m => m.name === this.game.map);
+    return this.maps.find((m) => m.name === this.game.map)
   }
 
   modes = [
     {
-      name: "countries",
-      image: require("~/assets/gamemodes/countries.svg?raw")
+      name: 'countries',
+      image: require('~/assets/gamemodes/countries.svg?raw'),
     },
     {
-      name: "capitals",
-      image: require("~/assets/gamemodes/capitals.svg?raw"),
+      name: 'capitals',
+      image: require('~/assets/gamemodes/capitals.svg?raw'),
     },
     {
-      name: "sightseeing",
-      image: require("~/assets/gamemodes/sightseeing.svg?raw"),
+      name: 'sightseeing',
+      image: require('~/assets/gamemodes/sightseeing.svg?raw'),
     },
     {
-      name: "domainhunt",
-      image: require("~/assets/gamemodes/domains.svg?raw"),
+      name: 'domainhunt',
+      image: require('~/assets/gamemodes/domains.svg?raw'),
     },
     {
-      name: "flags",
-      image: require("~/assets/gamemodes/flags.svg?raw"),
+      name: 'flags',
+      image: require('~/assets/gamemodes/flags.svg?raw'),
     },
     {
-      name: "quiz",
-      image: require("~/assets/gamemodes/quiz.svg?raw"),
+      name: 'quiz',
+      image: require('~/assets/gamemodes/quiz.svg?raw'),
     },
     {
-      name: "speedrun",
-      image: require("~/assets/gamemodes/speedrun.svg?raw"),
+      name: 'speedrun',
+      image: require('~/assets/gamemodes/speedrun.svg?raw'),
     },
     {
-      name: "shapes",
-      image: require("~/assets/gamemodes/shapes.svg?raw"),
-    }
+      name: 'shapes',
+      image: require('~/assets/gamemodes/shapes.svg?raw'),
+    },
   ]
 
   maps = [
     {
-      name: "earth",
-      image: require("~/assets/mapsets/earth.svg?raw")
+      name: 'earth',
+      image: require('~/assets/mapsets/earth.svg?raw'),
     },
     {
-      name: "africa",
-      image: require("~/assets/mapsets/africa.svg?raw"),
+      name: 'africa',
+      image: require('~/assets/mapsets/africa.svg?raw'),
     },
     {
-      name: "america",
-      image: require("~/assets/mapsets/america.svg?raw"),
+      name: 'america',
+      image: require('~/assets/mapsets/america.svg?raw'),
     },
     {
-      name: "asia",
-      image: require("~/assets/mapsets/asia.svg?raw"),
+      name: 'asia',
+      image: require('~/assets/mapsets/asia.svg?raw'),
     },
     {
-      name: "europe",
-      image: require("~/assets/mapsets/europe.svg?raw"),
+      name: 'europe',
+      image: require('~/assets/mapsets/europe.svg?raw'),
     },
     {
-      name: "oceania",
-      image: require("~/assets/mapsets/islands.svg?raw"),
+      name: 'oceania',
+      image: require('~/assets/mapsets/islands.svg?raw'),
     },
   ]
 }
 </script>
 <style scoped lang="postcss">
-
 .settings-wrapper {
   @apply my-10 flex justify-between;
   margin-left: -8px;

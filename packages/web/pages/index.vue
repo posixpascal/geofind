@@ -2,25 +2,24 @@
   <div>
     <div class="container">
       <GuestNameIndicator />
-      <MainMenu/>
+      <MainMenu />
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
-import {Component} from "vue-property-decorator";
-import Logo from "~/components/logo.vue";
-import MainMenu from "~/components/main-menu.vue";
-import Navigation from "~/components/navigation.vue";
-import Pin from "~/components/pin.vue";
-import GuestNameIndicator from "~/components/guest-name-indicator.vue";
+import { Component } from 'vue-property-decorator'
+import Logo from '~/components/logo.vue'
+import MainMenu from '~/components/main-menu.vue'
+import Navigation from '~/components/navigation.vue'
+import Pin from '~/components/pin.vue'
+import GuestNameIndicator from '~/components/guest-name-indicator.vue'
 
 @Component({
-  components: {Pin, MainMenu, GuestNameIndicator}
+  components: { Pin, MainMenu, GuestNameIndicator },
 })
-export default class IndexPage extends Vue {
-}
+export default class IndexPage extends Vue {}
 </script>
 
 <style>
@@ -30,15 +29,8 @@ export default class IndexPage extends Vue {
 }
 
 .title {
-  font-family: 'Quicksand',
-  'Source Sans Pro',
-  -apple-system,
-  BlinkMacSystemFont,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  sans-serif;
+  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;

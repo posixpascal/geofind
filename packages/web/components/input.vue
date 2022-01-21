@@ -1,22 +1,25 @@
 <template>
-  <input v-model="input"
-         :disabled='readonly'
-         type="text"
-         @input="$emit('change', input)"
-         :class="`font-lucky input ${readonly ? 'readonly' : ''} ${error ? 'error-input' : ''} ${success ? 'success-input' : ''}`"
-         v-bind="$attrs"
+  <input
+    v-model="input"
+    :disabled="readonly"
+    type="text"
+    @input="$emit('change', input)"
+    :class="`font-lucky input ${readonly ? 'readonly' : ''} ${
+      error ? 'error-input' : ''
+    } ${success ? 'success-input' : ''}`"
+    v-bind="$attrs"
   />
 </template>
 <script lang="ts">
-import Vue from "vue";
-import {Component, Prop, VModel} from "vue-property-decorator";
+import Vue from 'vue'
+import { Component, Prop, VModel } from 'vue-property-decorator'
 
 @Component
 export default class Input extends Vue {
   @VModel() input
-  @Prop({default: false}) readonly;
-  @Prop({ default: false }) error;
-  @Prop({ default: false }) success;
+  @Prop({ default: false }) readonly
+  @Prop({ default: false }) error
+  @Prop({ default: false }) success
 }
 </script>
 <style lang="postcss" scoped>
@@ -26,7 +29,7 @@ input {
   font-size: 20px;
 }
 
-input[readonly]{
+input[readonly] {
   pointer-events: none;
 }
 
@@ -37,5 +40,4 @@ input[readonly]{
 .success-input {
   @apply ring-green-200 ring-2 border-green-300 mb-1;
 }
-
 </style>

@@ -1,25 +1,25 @@
 <template>
   <div>
-    <Navigation/>
+    <Navigation />
     <main>
-        <div class="z-10"><Nuxt/></div>
+      <div class="z-10"><Nuxt /></div>
     </main>
-    <Footer/>
+    <Footer />
   </div>
 </template>
 <script lang="ts">
-import Vue from 'vue';
-import Component, {mixins} from "vue-class-component";
+import Vue from 'vue'
+import Component, { mixins } from 'vue-class-component'
 
 @Component({})
-export default class DefaultLayout extends Vue  {
-  mounted(){
-    const token = localStorage.getItem('auth');
+export default class DefaultLayout extends Vue {
+  mounted() {
+    const token = localStorage.getItem('auth')
   }
 }
 </script>
 <style lang="postcss">
-@import url("https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap');
 
 .font-lucky {
   position: relative;
@@ -27,14 +27,8 @@ export default class DefaultLayout extends Vue  {
 }
 
 html {
-  font-family: 'Source Sans Pro',
-  -apple-system,
-  BlinkMacSystemFont,
-  'Segoe UI',
-  Roboto,
-  'Helvetica Neue',
-  Arial,
-  sans-serif;
+  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -84,7 +78,6 @@ h3 {
   padding-bottom: 7px !important;
 }
 
-
 .main-menu {
   margin: 0 auto;
 }
@@ -106,7 +99,6 @@ h3 {
     width: 720px;
   }
 }
-
 
 main {
   min-height: calc(100vh - 120px - 185px);
