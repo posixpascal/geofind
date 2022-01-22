@@ -125,6 +125,7 @@ export const en = {
     cta: 'create game',
   },
   matchmaking: {
+    searchingPlayers: 'Looking for players...',
     button: 'Quick Match',
     cta: 'Quick match',
     title: 'Search for game',
@@ -151,9 +152,11 @@ export const en = {
     button: 'Open Games',
     cta: 'Open Games',
     title: 'Open Games',
-    join: 'Join',
-    noRoomsFound:
+    join: 'Join Game',
+    noRoomsFound1:
       'No public games found, would you like to create your own game instead?',
+    noRoomsFound2:
+      "This page updates automatically. If you're waiting for a friend, just wait a moment and their game will appear here.",
   },
   lobby: {
     notReady: "I'm not ready",

@@ -1,6 +1,6 @@
 <template>
   <div class="main-menu">
-    <Loading>{{ stateMessage }}</Loading>
+    <Loading>{{ $t('t.searchingForPlayers') }}</Loading>
   </div>
 </template>
 
@@ -15,7 +15,6 @@ import Loading from '~/components/loading.vue'
   components: { Box, Loading, GameSettingsView },
 })
 export default class Matchmaking extends Vue {
-  stateMessage = 'Suche nach Spieler...'
   timer = null
 
   created() {
@@ -31,7 +30,7 @@ export default class Matchmaking extends Vue {
       .then((rooms) => {
         if (rooms.length) {
           clearInterval(this.timer)
-          this.$router.push('/lobby/' + rooms[0].roomId)
+          this.$router.push(this.localePath('/lobby/' + rooms[0].roomId))
         }
       })
       .catch((e) => {

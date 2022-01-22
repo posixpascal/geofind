@@ -73,7 +73,7 @@ export default class Share extends Vue {
   }
 
   get shareTags() {
-    return encodeURIComponent('geography,onlinegames,geofind,geohunt,freegames')
+    return encodeURIComponent('geography,onlinegames,geofind,geohunt,io')
   }
 
   share() {

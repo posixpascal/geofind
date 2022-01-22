@@ -15,7 +15,7 @@
               class="hidden md:flex ml-3"
               variant="purple"
               x-small
-              :to="`/lobby/${game.roomId}`"
+              :to="localePath(`/lobby/${game.roomId}`)"
             >
               {{ $t('lobbies.join') }}
             </Button>
@@ -25,17 +25,17 @@
       <template #content>
         <div class="flex justify-between"></div>
         <OpenRoomSettingsView :game="game.metadata" />
-        <Button variant="purple" small :to="`/lobby/${game.id}`">
+        <Button variant="purple" small :to="localePath(`/lobby/${game.id}`)">
           {{ $t('lobbies.join') }}
         </Button>
       </template>
     </Panel>
     <Panel class="text-center" back="/">
-      <template #title> Offene Spiele </template>
+      <template #title>{{ $t('lobbies.title') }}</template>
       <template #content>
         <p>{{ $t('lobbies.noRoomsFound1') }}</p>
         <p class="mt-5">{{ $t('lobbies.noRoomsFound2') }}</p>
-        <Button to="/multiplayer" variant="purple" small>{{
+        <Button :to="localePath('/multiplayer')" variant="purple" small>{{
           $t('multiplayer.cta')
         }}</Button>
       </template>

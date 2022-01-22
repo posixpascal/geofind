@@ -4,6 +4,7 @@ export const de = {
     generic: 'Da ist uns ein Fehler unterlaufen :(',
   },
   t: {
+    searchingPlayers: 'Suche nach Spielern...',
     wePlay: 'Wir spielen',
     copyLinkAndGo:
       'Einfach den Link hier kopieren und an deine Freunde schicken.',
@@ -161,9 +162,9 @@ export const de = {
     'Southern Africa': 'Südamerika',
   },
   lobbies: {
+    title: ' Offene Spiele ',
     button: 'Offene Spiele',
     cta: 'Offene Spiele',
-    title: 'Offene Spiele',
     join: 'Beitreten',
     noRoomsFound2:
       'Nichts passendes gefunden? Du kannst jederzeit ein eigenes Spiel erstellen.',

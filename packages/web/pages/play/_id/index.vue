@@ -115,7 +115,7 @@ export default class Index extends Vue {
     }
 
     if (this.room.phase === 'lobby') {
-      this.$router.push('/lobby/' + this.room.roomId)
+      this.$router.push(this.localePath('/lobby/' + this.room.roomId))
     }
   }
 
@@ -132,7 +132,7 @@ export default class Index extends Vue {
   }
 
   leave() {
-    this.$router.push('/')
+    this.$router.push(this.localePath('/'))
   }
 
 
