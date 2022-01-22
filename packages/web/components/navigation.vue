@@ -7,38 +7,38 @@
           v-html="require('~/assets/images/logo.svg?raw')"
           :class="`logo-image relative ${birdColor}`"
         ></nuxt-link>
-        <nuxt-link to="/">
+        <nuxt-link :to="localePath('/')">
           <h1>geofind.io</h1>
           <p class="hidden sm:inline-block">{{ $t('t.catchPhrase')}}</p>
         </nuxt-link>
       </div>
       <ul class="nav-links">
         <li class="hidden sm:flex" v-if="false">
-          <nuxt-link class="green" active-class="active" to="/tutor">
+          <nuxt-link class="green" active-class="active" :to="localePath('/tutor')">
             <Icon name="school" />
             {{ $t('singleplayer.button') }}
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
-          <nuxt-link class="blue" active-class="active" to="/multiplayer">
+          <nuxt-link class="blue" active-class="active" :to="localePath('/multiplayer')">
             <Icon name="controller" />
             {{ $t('multiplayer.button') }}
           </nuxt-link>
         </li>
         <li class="hidden lg:flex">
-          <nuxt-link class="red" active-class="active" to="/matchmaking">
+          <nuxt-link class="red" active-class="active" :to="localePath('/matchmaking')">
             <Icon name="cube" />
             {{ $t('matchmaking.button') }}
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
-          <nuxt-link class="purple" active-class="active" to="/lobbies">
+          <nuxt-link class="purple" active-class="active" :to="localePath('/lobbies')">
             <Icon name="public" />
             {{ $t('lobbies.button') }}
           </nuxt-link>
         </li>
         <li class="hidden md:flex">
-          <nuxt-link class="yellow" active-class="active" to="/profile">
+          <nuxt-link class="yellow" active-class="active" :to="localePath('/profile')">
             <Icon name="profile" />
             {{ $t('profile.button') }}
           </nuxt-link>

@@ -29,7 +29,7 @@
     <small class="text-gray-400 block text-center mb-2 w-full">{{
       $t('t.onlyLeaderCan')
     }}</small>
-    <Button variant="red" to="/" small> Startseite </Button>
+    <Button variant="red" :to="localePath('/')" small> Startseite </Button>
   </Dialog>
 </template>
 <script lang="ts">
