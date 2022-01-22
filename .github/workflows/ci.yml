@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:10.10
+        image: postgres
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ''
@@ -24,7 +24,7 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install
       - run: yarn workspace @geofind/api build
-      - run: pg_restore --dbname geofind --host=127.0.0.1 --port=5432 --username=postgres ./config/dumps/db.dump
+      - run: pg_restore --dbname geofind --host=localhost --port=5432 --username=postgres ./config/dumps/db.dump
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: 67126294d2dca1578a26d1d9d843edcb99e8bb1c78d729e7f5887254475f077b
@@ -34,7 +34,7 @@ jobs:
           DB_PASSWORD: root
           DB_PORT: 5432
           DB_DATABASE: geofind
-          DB_HOST: 127.0.0.1
+          DB_HOST: localhost
         with:
           coverageCommand: yarn workspace @geofind/api coverage
 

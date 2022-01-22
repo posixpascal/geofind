@@ -123,6 +123,11 @@ export default {
         name: 'Deutsch',
       },
     ],
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root', // recommended
+    },
     defaultLocale: 'de',
     vueI18n: {
       fallbackLocale: 'de',
