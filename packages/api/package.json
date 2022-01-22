@@ -13,7 +13,8 @@
     "test": "mocha --require ts-node/register test/**_test.ts --exit --timeout 15000",
     "coverage": "nyc mocha --require ts-node/register test/**_test.ts --exit --timeout 15000 && nyc report --reporter=html",
     "coverage:open": "open coverage/index.html",
-    "fmt": "prettier --write ./src"
+    "fmt": "prettier --write ./src",
+    "import:db": "bash scripts/import-db.sh"
   },
   "author": "",
   "license": "GPL-3.0-only",

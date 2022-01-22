@@ -1,0 +1,43 @@
+name: build
+on:
+  push:
+    branches:
+      - master
+jobs:
+  coverage:
+    name: coverage
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:10.10
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: root
+          POSTGRES_DB: geofind
+        ports:
+          - 5432/tcp
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - uses: actions/checkout@master
+      - uses: actions/setup-node@master
+        with:
+          node-version: '12'
+      - run: npm install -g yarn
+      - run: yarn install
+      - run: yarn workspace @geofind/api build
+      - run: yarn workspace @geofind/api db:import
+      - uses: paambaati/codeclimate-action@v2.2.4
+        env:
+          CC_TEST_REPORTER_ID: 67126294d2dca1578a26d1d9d843edcb99e8bb1c78d729e7f5887254475f077b
+          NODE_ENV: production
+          PORT: 3000
+          DB_USER: postgres
+          DB_PASSWORD: root
+          DB_PORT: {{ job.coverage.postgres.ports[5432] }}
+          DB_DATABASE: geofind
+          DB_HOST: postgres
+
+        with:
+          coverageCommand: yarn workspace @geofind/api coverage
+
