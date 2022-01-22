@@ -5,18 +5,18 @@
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s;
+  transition: opacity 0.2s;
 }
 .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
   opacity: 0;
 }
 
 .animate__animated.animate__fadeInDown {
-  animation-duration: 0.3s;
+  animation-duration: 0.2s;
 }
 
 .page-enter-active {
-  transition: opacity 0.4s 0.2s;
+  transition: opacity 0.2s;
 }
 
 .page-leave-active {
@@ -30,7 +30,7 @@
 
 .layout-enter-active,
 .layout-leave-active {
-  transition: opacity 0.5s;
+  transition: opacity 0.2s;
 }
 .layout-enter,
 .layout-leave-active {

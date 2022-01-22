@@ -48,24 +48,6 @@ export default {
         rel: 'stylesheet',
         href: 'https://unpkg.com/swiper@7/swiper-bundle.min.css',
       },
-      {
-        rel: 'stylesheet',
-        href: 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
-      },
-    ],
-    script: [
-      {
-        type: 'module',
-        src: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/plugins/CSSPlugin.min.js',
-      },
-      {
-        type: 'module',
-        src: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/easing/EasePack.min.js',
-      },
-      {
-        type: 'module',
-        src: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenLite.min.js',
-      },
     ],
   },
 
@@ -148,6 +130,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    splitChunks: {
+      layouts: true,
+      pages: true,
+      commons: true,
+    },
     extend(config) {},
   },
 
