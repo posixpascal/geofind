@@ -11,7 +11,7 @@
             <h3>{{ player.username }}</h3>
             <span class="thatsyou text-gray-400">
               <template v-if="player.sessionId === room.sessionId">{{
-                $t('t.thatsYou')
+                $t('lobby.thatsYou')
               }}</template
               >&nbsp;
             </span>
@@ -19,12 +19,12 @@
         </div>
         <div v-if="player.sessionId === room.sessionId">
           <Button @click="rename = true" variant="blue" xx-small>
-            <span class="hidden sm:inline">Name ändern</span>
-            <span class="inline sm:hidden">Profil</span>
+            <span class="hidden sm:inline">{{ $t('lobby.changeName') }}</span>
+            <span class="inline sm:hidden">$t('lobby.profile')</span>
           </Button>
         </div>
         <div v-else-if="player.sessionId === room.creatorId">
-          <h2>Raumleiter</h2>
+          <h2>{{ $t('lobby.roomLeader')}}</h2>
         </div>
       </li>
     </ul>

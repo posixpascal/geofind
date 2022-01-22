@@ -25,6 +25,12 @@ jobs:
       - run: yarn install
       - run: yarn workspace @geofind/api build
       - run: yarn workspace @geofind/api db:import
+        env:
+          DB_USER: postgres
+          DB_PASSWORD: root
+          DB_PORT: 5432
+          DB_DATABASE: geofind
+          DB_HOST: postgres
       - uses: paambaati/codeclimate-action@v3.0.0
         env:
           CC_TEST_REPORTER_ID: 67126294d2dca1578a26d1d9d843edcb99e8bb1c78d729e7f5887254475f077b

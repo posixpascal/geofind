@@ -105,7 +105,21 @@ export const en = {
     noRoomsFound:
       'No public games found, would you like to create your own game instead?',
   },
-  lobby: {},
+  lobby: {
+    notReady: "I'm not ready",
+    ready: "I'm ready",
+    waiting: 'Waiting for players',
+    players: 'Players',
+    startGame: 'Start Game',
+    inviteTitle: 'Invite Friends',
+    inviteText: 'Copy this text to invite friends.',
+    inviteCopied: 'Link copied',
+    thatsYou: 'Thats you!',
+    changeName: 'Change Name',
+    profile: 'Profile',
+    onlyRoomLeaderCanStart: 'Only the room creator can start the game.',
+    roomLeader: 'Creator',
+  },
   play: {},
   dialogs: {
     roundPrepare: {},

@@ -2,7 +2,7 @@
   <div class="main-menu">
     <template v-if="room">
       <h1 class="text-sm mb-5 sm:text-xl sm:mb-3 text-left">
-        <span class="text-gray-600">Raum: {{ room.roomId }}</span>
+        <span class="text-gray-600">{{ $t('t.room') }}: {{ room.roomId }}</span>
       </h1>
       <Panel>
         <template #title>{{ $t('lobby.players') }}</template>
@@ -19,7 +19,7 @@
             {{ $t('lobby.startGame') }}
           </Button>
           <div v-else class="pt-5 text-center">
-            <h2>Nur der Raumleiter kann das Spiel starten.</h2>
+            <h2>{{ $t('lobby.onlyRoomLeaderCanStart') }}</h2>
           </div>
         </template>
       </Panel>
