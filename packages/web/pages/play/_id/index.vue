@@ -24,7 +24,7 @@
           class="pt-15"
         >
           <h1 v-if="room.room === 'speedrun'">{{ room.roundSecondsElapsed.toFixed(1) }}</h1>
-          <Countdown v-else :initial="room.timer" />
+          <Countdown :room="room" v-else :initial="room.timer" />
         </Overlay>
         <Overlay :room="room"
           position="topleft"

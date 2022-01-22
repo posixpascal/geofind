@@ -39,10 +39,14 @@ export class CountryRoom extends Room<CountryRoomState> {
         isPublic: options.isPublic,
         hasStrictMatches: options.hasStrictMatches,
         phase: LOBBY_PHASE,
+        roundSecondsElapsed: 0,
       })
     )
 
     this.registerMessageHandlers()
+    this.clock.setInterval(() => {
+      this.state.roundSecondsElapsed += 0.1
+    }, 100)
 
     this.dispatcher.dispatch(new OnUpdateMetadataCommand())
     await this.setPrivate(!this.state.isPublic)

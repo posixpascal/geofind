@@ -20,7 +20,7 @@
         <div v-if="player.sessionId === room.sessionId">
           <Button @click="rename = true" variant="blue" xx-small>
             <span class="hidden sm:inline">{{ $t('lobby.changeName') }}</span>
-            <span class="inline sm:hidden">$t('lobby.profile')</span>
+            <span class="inline sm:hidden">{{ $t('lobby.profile') }}</span>
           </Button>
         </div>
         <div v-else-if="player.sessionId === room.creatorId">
