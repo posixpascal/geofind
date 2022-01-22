@@ -86,7 +86,7 @@ export default class GameMap extends Vue {
       return
     }
 
-    const [lng, lat] = coordinates
+    const [lat, lng] = coordinates
 
     if (!lat || !lng) {
       return
@@ -175,7 +175,7 @@ export default class GameMap extends Vue {
     }
 
     // Use different geographical encoding by switching lng and lat.
-    const [lng, lat] = this.marker.position
+    const [lat, lng] = this.marker.position
     const position = [lng, lat]
 
     await this.$store.dispatch('room/message', {
@@ -192,6 +192,7 @@ export default class GameMap extends Vue {
     if (!this.canMoveMarker) {
       return
     }
+
     this.marker = { ...this.marker, position: [ev.latlng.lat, ev.latlng.lng] }
   }
 
@@ -215,7 +216,7 @@ export default class GameMap extends Vue {
   }
 
   get tileserver() {
-    return this.room.hasBorders
+    return this.room && this.room.hasBorders
       ? this.$config.borderedTileServer
       : this.$config.borderlessTileServer
   }
