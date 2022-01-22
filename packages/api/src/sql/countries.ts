@@ -54,7 +54,7 @@ export const INSERT_NEW_COUNTRY = `INSERT INTO countries (
     `
 
 export const FIND_COUNTRY_BY_LATLNG = `
-SELECT *, array_agg(countries.id ORDER BY countries.id) as area_list
+SELECT *, ST_X(latlng::geometry) as lat, ST_Y(latlng::geometry) as lng, ST_AsGeoJSON(shape) as shape, array_agg(countries.id ORDER BY countries.id) as area_list
 FROM countries
 WHERE ST_Contains(shape, ST_SetSRID(ST_MakePoint($1, $2), 4326))
 GROUP BY countries.id

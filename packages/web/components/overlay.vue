@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      room.hasBorders ? '' : 'text-white',
+      room && !room.hasBorders ? 'text-white' : '',
       !interactive ? 'pointer-events-none' : '',
       position,
     ]"

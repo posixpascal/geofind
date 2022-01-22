@@ -120,6 +120,18 @@
         </template>
         {{ $t('profile.button') }}
       </Button>
+      <Button
+        @click="menu = false"
+        :icon="true"
+        :to="localePath('achievements')"
+        variant="orange"
+        :animated="true"
+      >
+        <template #icon>
+          <Icon class="text-white" :height="48" name="school" />
+        </template>
+        {{ $t('achievements.button') }}
+      </Button>
     </div>
   </div>
 </template>

@@ -5,6 +5,8 @@ interface Vote {
   lng: number
   sessionId?: string
   player?: any
+  isCorrect: boolean
+  country: any
 }
 
 interface Player {

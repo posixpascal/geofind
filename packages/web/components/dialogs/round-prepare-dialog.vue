@@ -1,7 +1,7 @@
 <template>
   <Dialog>
     <h2 class="text-xl sm:text-3xl">{{ $t('t.whereIs') }}</h2>
-    <h3 class="flag-xl text-lg sm:text-xl" v-if="room.room === 'countries' || room.room === 'speedrun'">
+    <h3 class="flag-xl text-lg sm:text-xl" v-if="country && (room.room === 'countries' || room.room === 'speedrun')">
       <Flag
         class="flag"
         :hasDropShadow="true"
@@ -9,13 +9,13 @@
         :hasBorderRadius="true"
         size="l"
         gradient="real-linear"
-        :code="country.alpha2code"
+        :code="country.alpha2code === 'GB' ? 'UK' : country.alpha2code"
       />
       <br />
       <span  class="">{{ country.translations[$i18n.locale].country }}</span>
     </h3>
     <h3 class="flag-xl text-xl sm:text-3xl" v-else-if="room.room === 'capitals'">
-      <div v-if="country.translatedcapitals[$i18n.locale]">
+      <div v-if="country && country.translatedcapitals[$i18n.locale]">
         {{ country.translatedcapitals[$i18n.locale] }}
       </div>
       <div v-else>
@@ -30,7 +30,7 @@
         :hasBorderRadius="true"
         size="l"
         gradient="real-linear"
-        :code="country.alpha2code"
+        :code="country.alpha2code === 'GB' ? 'UK' : country.alpha2code"
       />
     </h3>
   </Dialog>

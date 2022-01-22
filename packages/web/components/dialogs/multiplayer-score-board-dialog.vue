@@ -9,7 +9,7 @@
           :hasBorderRadius="true"
           size="l"
           gradient="real-linear"
-          :code="room.country.alpha2code"
+          :code="room.country.alpha2code === 'GB' ? 'UK' : room.country.alpha2code"
         />
         <div style="">
           <span class="text-2xl">
@@ -113,11 +113,11 @@
             :hasBorderRadius="true"
             size="l"
             gradient="real-linear"
-            :code="vote.country.alpha2code"
+            :code="vote.country.alpha2code === 'GB' ? 'UK' : vote.country.alpha2code"
           />
           {{ vote.country.translations[$i18n.locale].country }}
         </div>
-        <div v-else class="text-center">
+        <div v-else class="text-center block w-auto">
           &mdash;<br />
          🌊🐠
         </div>
@@ -128,12 +128,13 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Prop } from 'vue-property-decorator'
+import {Component, Prop, Watch} from 'vue-property-decorator'
 import Dialog from '~/components/dialog.vue'
 import Pin from '~/components/pin.vue'
 import ICountUp from 'vue-countup-v2'
 import Button from '~/components/button.vue'
 import { Room } from '~/models'
+import {addDoc, collection, getDocs} from "firebase/firestore";
 
 @Component({ components: { Button, Dialog, Pin, ICountUp } })
 export default class MultiplayerScoreBoardDialog extends Vue {
@@ -163,6 +164,36 @@ export default class MultiplayerScoreBoardDialog extends Vue {
     setTimeout(() => {
       this.showScore = true
     }, 4000)
+  }
+
+  @Watch('vote.country.id', { immediate: true })
+  async addVote(){
+    const vote = this.room.votes[this.room.sessionId];
+    if (!vote.isCorrect || !this.$store.state.auth.user || !vote.country) {
+      return
+    }
+
+    const $firestore = (window.$nuxt as any).$firestore
+    const path = `users/${(this.$store.state.auth.user as any).uid}/countries`
+
+    const querySnapshot = await getDocs(collection($firestore, path))
+    let hasSeenCountry = false
+    querySnapshot.forEach((doc) => {
+      const {code} = doc.data();
+      if (code && code === vote.country.alpha2code){
+        hasSeenCountry = true;
+      }
+    })
+
+    if (hasSeenCountry) {
+      return
+    }
+
+    const docRef = await addDoc(collection($firestore, path), {
+      latlng: [vote.country.lat, vote.country.lng],
+      code: vote.country.alpha2code,
+      createdAt: +new Date(),
+    })
   }
 
   get maxPoints() {

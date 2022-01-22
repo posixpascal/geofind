@@ -39,7 +39,7 @@
                 :hasBorderRadius="true"
                 size="l"
                 gradient="real-linear"
-                :code="userVote.country.alpha2Code"
+                :code="userVote.alpha2code === 'GB' ? 'UK' : userVote.alpha2code"
               />
             </div>
           </transition>
@@ -84,7 +84,7 @@
                 :hasBorderRadius="true"
                 size="l"
                 gradient="real-linear"
-                :code="country.alpha2Code"
+                :code="country.alpha2code === 'GB' ? 'UK' : country.alpha2code"
               />
             </div>
           </div>

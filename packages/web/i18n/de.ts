@@ -114,7 +114,14 @@ export const de = {
     found: 'Spiel gefunden...',
     created: 'Spiel erstellt...',
   },
+  achievements: {
+    button: 'Erfolge',
+    title: 'Deine Erfolge',
+    description:
+      'Hier siehst du auf einen Blick welche Länder du bereits entdeckt hast',
+  },
   profile: {
+    register: 'Anmelden',
     button: 'Profil',
     cta: 'Profil',
     title: 'Profil',

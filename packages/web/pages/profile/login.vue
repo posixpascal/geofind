@@ -1,12 +1,22 @@
 <template>
-  <div>
-    <div id="login"></div>
-  </div>
+  <main class="pt-20">
+    <div class="container">
+      <Panel :back="localePath('/profile')">
+        <template #title>{{ $t('profile.register')}}</template>
+        <template #content>
+          <div id="login"></div>
+        </template>
+      </Panel>
+    </div>
+  </main>
 </template>
 <script lang="ts">
-import { Vue, Component } from "vue-property-decorator";
+import {Component, Vue} from "vue-property-decorator";
+import Panel from "~/components/panel.vue";
+
 @Component({
-head: {
+  components: {Panel},
+  head: {
     script: [
       {
         src: 'https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.js'
@@ -15,7 +25,7 @@ head: {
     link: [
       {
         rel: 'stylesheet',
-href: 'https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.css'
+        href: 'https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.css'
       }
     ]
   }
@@ -23,28 +33,56 @@ href: 'https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.css'
 export default class LoginPage extends Vue {
   ui;
 
-  async created(){
+  get firebaseui() {
+    return (window as any).firebaseui;
+  }
+
+  async mounted() {
     if (!(window as any).firebaseui) {
       await this.scriptAvailable();
     }
 
-    this.ui.start('#login', {
-      signInOptions: [
-        this.firebase.auth.EmailAuthProvider.PROVIDER_ID
-      ],
-    });
+    this.renderFirebase()
   }
 
-  get firebase(){
+  renderFirebase(){
+    if (this.ui){
+      this.ui.delete();
+    }
+
+    this.ui = this.firebaseui.auth.AuthUI.getInstance() || new this.firebaseui.auth.AuthUI(this.firebase.auth());
+    this.ui.start('#login', this.uiConfig)
+  }
+
+  get uiConfig() {
+    return {
+      signInSuccessUrl: '/profile',
+      signInOptions: [
+        this.firebase.auth.EmailAuthProvider.PROVIDER_ID,
+        this.firebase.auth.GithubAuthProvider.PROVIDER_ID,
+        this.firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+        this.firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+      ],
+      // tosUrl and privacyPolicyUrl accept either url string or a callback
+      // function.
+      // Terms of service url/callback.
+      tosUrl: '/tos',
+      // Privacy policy url/callback.
+      privacyPolicyUrl: function () {
+        window.location.assign('/privacypolicy');
+      }
+    }
+  }
+
+  get firebase() {
     return (window as any).firebase;
   }
 
-  async scriptAvailable(){
+  async scriptAvailable() {
     return new Promise((resolve, reject) => {
       let interval = setInterval(() => {
-        if ((window as any).firebaseui){
+        if ((window as any).firebaseui) {
           clearInterval(interval);
-          this.ui = new (window as any).firebaseui.auth.AuthUI(this.firebase.auth());
           this.$nextTick(() => resolve(true));
         }
       }, 10);

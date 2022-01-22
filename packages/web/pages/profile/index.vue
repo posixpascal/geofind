@@ -1,5 +1,8 @@
 <template>
   <div class="main-menu pt-10">
+    <Button v-if='!user' variant="orange" :to="localePath('/profile/login')" small>
+      {{ $t('profile.register') }}
+    </Button>
     <Panel back="/">
       <template #title>
         {{ $t('profile.title') }}
@@ -59,6 +62,11 @@ export default class SettingsPage extends Vue {
     this.name = localStorage.getItem('username')
     this.pin = parseInt(localStorage.getItem('pin'))
   }
+
+  get user(){
+    return this.$store.state.auth.user;
+  }
+
   setName($event) {
     localStorage.username = this.name
   }

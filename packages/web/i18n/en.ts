@@ -135,7 +135,11 @@ export const en = {
     found: 'Game found...',
     created: 'Game created...',
   },
+  achievements: {
+    button: 'Achievements',
+  },
   profile: {
+    register: 'Sign in',
     button: 'Settings',
     cta: 'profile',
     title: 'Profile',

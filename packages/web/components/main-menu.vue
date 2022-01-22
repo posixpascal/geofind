@@ -63,6 +63,18 @@
       {{ $t('profile.button') }}
     </Button>
 
+    <Button
+      :icon="true"
+      :to="localePath('achievements')"
+      variant="orange"
+      :animated="true"
+    >
+      <template #icon>
+        <Icon class="text-white" :height="48" name="award" />
+      </template>
+      {{ $t('achievements.button') }}
+    </Button>
+
     <!--
     <Button variant="orange" :animated="true">
       <template #icon>🥇</template>
