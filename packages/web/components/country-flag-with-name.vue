@@ -13,7 +13,7 @@
       </div>
       <div v-if="room.room == 'capitals'">
         <h4 v-if="country.translatedcapitals[$i18n.locale]">
-          {{ country.translatedcapitals[$i18n.locale] }}
+          {{  $i18n.locale === 'en' ? country.capital : country.translatedcapitals[$i18n.locale] }}
         </h4>
         <h4 v-else>
           {{ country.capital }}
@@ -21,7 +21,7 @@
       </div>
       <div v-if="room.room == 'countries' || room.room == 'speedrun'">
         <h4 v-if="country.translations[$i18n.locale]">
-          {{ country.translations[$i18n.locale].country }}
+          {{  $i18n.locale === 'en' ? country.name : country.translations[$i18n.locale].country }}
         </h4>
 
         <template v-if="hintLevel >= 1">

@@ -13,7 +13,7 @@
         />
         <div style="">
           <span class="text-2xl flex-col sm:flex-row">
-            {{ room.country.translations[$i18n.locale].country }}
+            {{ $i18n.locale === 'en' ? country.country : room.country.translations[$i18n.locale].country }}
             <span class="text-gray-500">
             <span class="hidden sm:inline">&mdash; </span> 🏢 {{ room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital }}
             </span>
@@ -115,7 +115,7 @@
             gradient="real-linear"
             :code="vote.country.alpha2code === 'GB' ? 'UK' : vote.country.alpha2code"
           />
-          {{ vote.country.translations[$i18n.locale].country }}
+          {{  $i18n.locale === 'en' ? vote.country.name : vote.country.translations[$i18n.locale].country }}
         </div>
         <div v-else class="text-center block w-auto">
           &mdash;<br />
