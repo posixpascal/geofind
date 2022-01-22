@@ -14,8 +14,6 @@ jobs:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: root
           POSTGRES_DB: geofind
-        ports:
-          - 5432/tcp
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
     steps:
@@ -34,7 +32,7 @@ jobs:
           PORT: 3000
           DB_USER: postgres
           DB_PASSWORD: root
-          DB_PORT: {{ job.coverage.postgres.ports[5432] }}
+          DB_PORT: 5432
           DB_DATABASE: geofind
           DB_HOST: postgres
 
