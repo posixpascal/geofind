@@ -2,6 +2,7 @@ export const de = {
   t: {
     room: 'Raum',
     catchPhrase: 'Das Geographie Spiel',
+    match: 'Treffer',
     shareText:
       'Spiel eine Runde GeoFind mit mir! Keine App, kein Download. Einfach & kostenlos mitspielen: {link}',
     of: 'von',

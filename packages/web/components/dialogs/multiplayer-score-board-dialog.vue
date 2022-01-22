@@ -16,9 +16,9 @@
             {{ room.country.translations[$i18n.locale].country }}
           </span>
           <div class="text-gray-500">
-            {{ room.country.translated_capitals[$i18n.locale] ? room.country.translated_capitals[$i18n.locale] : room.country.capital }} &bullet;
-            {{ formatNumber(room.country.population, 1) }} {{$t('t.citizen')}} &bullet;
-            {{ $t(`subregion.${room.country.subregion}`) }}
+            🏢 {{ room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital }} &bullet;
+            👥 {{ formatNumber(room.country.population, 1) }} {{$t('t.citizen')}} &bullet;
+            📍 {{ $t(`subregion.${room.country.subregion}`) }}
           </div>
         </div>
       </div>
@@ -85,7 +85,7 @@
                 animateLine
               "
             >
-              ✓ TREFFER
+              ✓ {{$t('t.match')}}
             </span>
           </div>
         </div>
@@ -107,7 +107,7 @@
         </div>
         <div v-else class="text-center">
           &mdash;<br />
-          Unbekannt
+         🌊🐠
         </div>
       </div>
     </div>

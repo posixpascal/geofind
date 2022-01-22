@@ -3,6 +3,7 @@ export const en = {
     catchPhrase: 'The Geography Game',
     of: 'from',
     save: 'save',
+    match: 'Match!',
     round: 'round',
     room: 'Room',
     change: 'Change',
