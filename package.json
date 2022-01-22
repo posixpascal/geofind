@@ -20,6 +20,7 @@
   "scripts": {},
   "dependencies": {
     "concurrently": "^4.1.1",
+    "firebase": "^9.6.4",
     "tslint": "^5.19.0"
   },
   "devDependencies": {

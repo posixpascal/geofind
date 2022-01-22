@@ -58,43 +58,6 @@ export class OnRoomSettingsCommand extends Command<
       this.state.map = settings.map
     }
 
-    if ('room' in settings && this.state.room !== settings.room) {
-      switch (settings.room) {
-        case 'speedrun':
-          this.room.setState(
-            new SpeedrunRoomState({
-              room: settings.room,
-              map: this.state.map,
-              hasBorders: this.state.hasBorders,
-              maxPoints: parseInt(this.state.maxPoints, 10) || 10,
-              roundTime: parseInt(this.state.roundTime, 10) || 15,
-              hasIslands: this.state.hasIslands,
-              isPublic: this.state.isPublic,
-              hasStrictMatches: this.state.hasStrictMatches,
-              phase: LOBBY_PHASE,
-              roundSecondsElapsed: 0,
-            })
-          )
-          break
-        default:
-          this.room.setState(
-            new CountryRoomState({
-              room: settings.room,
-              map: this.state.map,
-              hasBorders: this.state.hasBorders,
-              maxPoints: parseInt(options.maxPoints, 10) || 10,
-              roundTime: parseInt(this.state.roundTime, 10) || 15,
-              hasIslands: this.state.this.state,
-              isPublic: this.state.isPublic,
-              hasStrictMatches: this.state.hasStrictMatches,
-              phase: LOBBY_PHASE,
-              state: ROUND_PREPARE_STATE,
-              roundSecondsElapsed: 0,
-            })
-          )
-      }
-    }
-
     this.room.dispatcher.dispatch(new OnUpdateMetadataCommand())
   }
 }
