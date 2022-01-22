@@ -41,6 +41,7 @@ jobs:
           DB_PORT: 5432
           DB_DATABASE: geofind
           DB_HOST: localhost
+          NO_SSL: 1
         with:
           coverageCommand: yarn workspace @geofind/api coverage
 

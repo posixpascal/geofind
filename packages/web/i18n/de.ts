@@ -3,6 +3,7 @@ export const de = {
     room: 'Raum',
     catchPhrase: 'Das Geographie Spiel',
     match: 'Treffer',
+    citizen: 'Bewohner',
     shareText:
       'Spiel eine Runde GeoFind mit mir! Keine App, kein Download. Einfach & kostenlos mitspielen: {link}',
     of: 'von',
@@ -112,7 +113,6 @@ export const de = {
     selectMarker: 'Wähle hier Deinen Lieblingsmarker für das Spiel',
     nameDescription: 'Du kannst deinen Namen jederzeit ändern',
     pinDescription: 'Klicke auf einen Marker um ihn zu verwenden.',
-    citizen: 'Bewohner',
   },
   region: {
     Europe: 'Europa',

@@ -14,10 +14,12 @@
         <div style="">
           <span class="text-2xl">
             {{ room.country.translations[$i18n.locale].country }}
+            <span class="text-gray-500">
+            &mdash; 🏢 {{ room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital }}
+            </span>
           </span>
           <div class="text-gray-500">
-            🏢 {{ room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital }} &bullet;
-            👥 {{ formatNumber(room.country.population, 1) }} {{$t('t.citizen')}} &bullet;
+            👥 {{ formatNumber(room.country.population, 1) }} {{$t('t.citizen')}} &mdash;
             📍 {{ $t(`subregion.${room.country.subregion}`) }}
           </div>
         </div>
