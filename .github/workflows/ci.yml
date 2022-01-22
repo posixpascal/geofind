@@ -43,5 +43,6 @@ jobs:
           DB_HOST: localhost
           NO_SSL: 1
         with:
-          coverageCommand: yarn workspace @geofind/api coverage
+          workingDirectory: ./packages/api
+          coverageCommand: yarn run coverage
 
