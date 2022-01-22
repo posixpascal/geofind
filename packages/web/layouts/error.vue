@@ -1,10 +1,10 @@
 <template>
   <div>
-    <main>
-        <div class="z-10">
+    <main class="flex justify-center">
+        <div class="z-10 max-w-lg flex justify-center items-center flex-col">
           <h1 v-if="error.statusCode === 404">{{$t('error.notfound')}}</h1>
           <h1 v-else>{{$t('error.generic')}}</h1>
-          <h2><NuxtLink to="/">{{$t('t.gohome')}}</NuxtLink></h2>
+          <h1><Button variant="blue" :to="localePath('/')">{{$t('t.gohome')}}</Button></h1>
         </div>
     </main>
   </div>
@@ -15,9 +15,10 @@ import { Watch } from 'vue-property-decorator'
 import MapBackground from '~/components/map-background.vue'
 import Navigation from '~/components/navigation.vue'
 import Vue from 'vue'
+import Button from "~/components/button.vue";
 
 @Component({
-  components: { Navigation, MapBackground },
+  components: {Button, Navigation, MapBackground },
     props: ['error'],
     layout: 'error'
   })
