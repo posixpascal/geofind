@@ -79,7 +79,7 @@ export const actions: ActionTree<RoomState, RootState> = {
       await context.dispatch('subscribe', room)
     } catch (e) {
       console.info(e)
-      await this.$router.push('/?err=roomNotFound')
+      await this.$router.push(window.$nuxt.localePath('/?err=roomNotFound'))
     }
   },
   async leave(context: any, roomName) {

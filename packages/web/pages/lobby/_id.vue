@@ -101,7 +101,7 @@ export default class LobbyPage extends Vue {
     }
 
     if (this.room.phase === 'play') {
-      this.$router.push('/play/' + this.room.roomId)
+      this.$router.push(this.localePath('/play/' + this.room.roomId))
     }
   }
 
