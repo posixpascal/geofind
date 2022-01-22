@@ -26,7 +26,7 @@
     <Overlay :interactive="true" position="topleft">
       <div class="flex flex-col text-left justify-start">
         <h1 class="text-left m-0 p-0">{{ $t('achievements.title') }}</h1>
-        <h1 class="text-xl m-0 p-0">{{ $t('achievements.description') }}</h1>
+        <h1 class="text-lg sm:text-xl text-left m-0 p-0">{{ $t('achievements.description') }}</h1>
       </div>
     </Overlay>
     <Overlay :interactive="true" position="topright">

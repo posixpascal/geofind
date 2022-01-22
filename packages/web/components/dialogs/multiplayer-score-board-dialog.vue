@@ -72,7 +72,7 @@
         </div>
         <div
           :class="[
-            'hidden sm-block',
+            'hidden sm:flex',
             'line',
             animateLine ? 'line-expand' : '',
             vote.isCorrect ? 'line-success' : '',
@@ -278,7 +278,6 @@ h2 {
   border-top: 4px dashed #888;
   margin: 0 10px 0;
   transition: width ease-in-out 2s;
-  display: flex;
   justify-content: center;
 }
 

@@ -1,14 +1,14 @@
 <template>
-  <main class="pt-20">
-    <div class="container">
+  <div class="container">
+    <main class="pt-0">
       <Panel :back="localePath('/profile')">
-        <template #title>{{ $t('profile.register')}}</template>
+        <template #title>{{ $t('profile.register') }}</template>
         <template #content>
           <div id="login"></div>
         </template>
       </Panel>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
 <script lang="ts">
 import {Component, Vue} from "vue-property-decorator";
@@ -45,8 +45,8 @@ export default class LoginPage extends Vue {
     this.renderFirebase()
   }
 
-  renderFirebase(){
-    if (this.ui){
+  renderFirebase() {
+    if (this.ui) {
       this.ui.delete();
     }
 
