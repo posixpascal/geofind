@@ -132,11 +132,11 @@ describe('testing country room', () => {
 
     // send incorrect vote.
     await client1.send(ROOM_VOTE, {
-      position: [room.state.country.lat, 0],
+      position: [room.state.country.lng, 0],
     })
     await dispatcher.dispatch(new OnVoteCommand(), {
       client: client1 as any,
-      latlng: [room.state.country.lat, 0],
+      latlng: [room.state.country.lng, 0],
     })
     await room.waitForNextPatch()
     if (room.state.votes.get(client1.sessionId).isCorrect) {

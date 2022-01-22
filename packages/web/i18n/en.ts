@@ -1,5 +1,11 @@
 export const en = {
+  error: {
+    notfound: '404 - Page not found.',
+    generic:
+      "Oh no. Something went terribly wrong. We're sorry for your inconvenience. :(",
+  },
   t: {
+    gohome: 'Home',
     catchPhrase: 'The Geography Game',
     of: 'from',
     save: 'save',

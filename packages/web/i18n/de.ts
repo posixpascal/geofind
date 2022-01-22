@@ -1,5 +1,10 @@
 export const de = {
+  error: {
+    notfound: 'Seite nicht gefunden',
+    generic: 'Da ist uns ein Fehler unterlaufen :(',
+  },
   t: {
+    gohome: 'Zur Startseite',
     room: 'Raum',
     catchPhrase: 'Das Geographie Spiel',
     match: 'Treffer',
