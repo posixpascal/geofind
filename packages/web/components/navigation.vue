@@ -1,5 +1,5 @@
 <template>
-  <div class="sticky top-0 z-20 bg-white">
+  <div class="sticky top-0 z-20 nav-bar">
     <nav>
       <div class="main-typo flex items-center">
         <nuxt-link
@@ -177,6 +177,8 @@ nav {
 .menu-area {
   height: calc(100vh - 80px);
 }
+
+
 
 .rainbow-border {
   background: linear-gradient(
@@ -391,5 +393,10 @@ nav img {
 
 .logo-image.bird-red svg .bird-stroke {
   @apply fill-current text-gray-800;
+}
+
+.nav-bar {
+  background: rgba(255,255,255,.6) !important;
+  backdrop-filter: blur(15px);
 }
 </style>

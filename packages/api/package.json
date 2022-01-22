@@ -10,7 +10,7 @@
     "loadtest": "colyseus-loadtest loadtest/example.ts --room my_room --numClients 2",
     "build": "npm run clean && tsc && cp package.json ./lib && cp arena.env ./lib",
     "clean": "rm -rf lib/",
-    "test": "mocha --require ts-node/register test/**_test.ts --exit --timeout 15000",
+    "test": "nyc mocha --require ts-node/register test/**_test.ts --exit --timeout 15000",
     "coverage": "yarn run test && nyc report --reporter=lcov",
     "coverage:html": "yarn run test && nyc report --reporter=html",
     "coverage:open": "open coverage/index.html",

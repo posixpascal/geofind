@@ -1,16 +1,12 @@
 <template>
   <div>
-    <Navigation />
     <main>
-      <MapBackground>
         <div class="z-10">
           <h1 v-if="error.statusCode === 404">Page not found</h1>
           <h1 v-else>An error occurred</h1>
           <NuxtLink to="/">Home page</NuxtLink>
         </div>
-      </MapBackground>
     </main>
-    <Footer />
   </div>
 </template>
 <script lang="ts">
