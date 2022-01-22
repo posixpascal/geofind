@@ -4,6 +4,7 @@ import { Translation } from '../rooms/schema/TranslationState'
 export const row2country = (data: Partial<Country>) => {
   const country = new Country({
     id: data.id,
+    name: data.name,
     alpha2code: data.alpha2code,
     alpha3code: data.alpha3code,
     capital: data.capital,

@@ -12,7 +12,9 @@
         :code="country.alpha2code === 'GB' ? 'UK' : country.alpha2code"
       />
       <br />
-      <span class="">{{ $i18n.locale === 'en' ? country.name : country.translations[$i18n.locale].country }}</span>
+      <span class="" v-if="country.translations[$i18n.locale]">{{country.translations[$i18n.locale].country }}</span>
+      <span class="" v-else>{{country.name }}</span>
+
     </h3>
     <h3 class="flag-xl text-xl sm:text-3xl" v-else-if="room.room === 'capitals'">
       <div v-if="country && country.translatedcapitals[$i18n.locale]">

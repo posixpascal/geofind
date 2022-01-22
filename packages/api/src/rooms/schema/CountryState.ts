@@ -4,6 +4,7 @@ import { Translation } from './TranslationState'
 
 export class Country extends Schema {
   @type('string') id: string
+  @type('string') name: string
   @type('string') alpha2code: string
   @type('string') alpha3code: string
   @type('string') capital: string
