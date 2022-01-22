@@ -117,12 +117,15 @@ import { Component, Watch } from 'vue-property-decorator'
 @Component
 export default class Navigation extends Vue {
   menu = false
-  birdColor = null
+  birdColor = "bird-yellow border-yellow";
 
   @Watch('$route', { immediate: true })
   setBirdColor() {
+    if (!this.$router.currentRoute.name){
+      return 'bird-yellow border-yellow';
+    }
     const routeName = this.$router.currentRoute.name.split('___')[0]
-    let color = 'bird-yellow border-yellow'
+    let color;
 
     switch (routeName) {
       case 'index':
@@ -142,6 +145,8 @@ export default class Navigation extends Vue {
       case 'matchmaking':
         color = 'bird-red border-red'
         break
+      default:
+        color = 'bird-yellow border-yellow';
     }
 
     if (routeName.includes('lobby-id')) {
@@ -155,8 +160,6 @@ export default class Navigation extends Vue {
     this.menu = !this.menu
     document.querySelector('html').scrollTop = 0
   }
-
-  getBirdColor() {}
 }
 </script>
 <style lang="postcss" scoped>
