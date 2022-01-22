@@ -22,12 +22,6 @@ import SellContact from '~/components/sell/sell-contact.vue'
   layout: 'product',
 })
 export default class TeachersPage extends Vue {
-  get background() {
-    const image = require('~/assets/images/together.jpg')
-    console.log(image)
-    return image
-  }
-
   get bannerStyle() {
     return {
       'background-image': `url(${this.background})`,
