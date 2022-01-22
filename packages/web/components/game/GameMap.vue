@@ -46,7 +46,7 @@
       :color="pinColor"
     ></l-polyline>
 
-    <l-geo-json v-if="room && room.state === states.ROUND_END" :geojson="room.shape"></l-geo-json>
+    <l-geo-json v-if="room && room.state === states.ROUND_END && geojson" :geojson="geojson"></l-geo-json>
 
     <l-marker
       v-if="room && room.state === states.ROUND_END && room.country.lat"
@@ -78,6 +78,16 @@ export default class GameMap extends Vue {
   @Prop() room: Room
 
   pinSet = false
+
+  geojson = false;
+  @Watch('room.country', {deep: true, immediate: true})
+  setGeoJSON(){
+    if (this.room && this.room.country && this.room.country.shape){
+      this.geojson = JSON.parse(this.room.country.shape);
+    } else {
+      this.geojson = false;
+    }
+  }
 
   get inRoundEnd() {
     return this.room && this.room.state === this.states.ROUND_END

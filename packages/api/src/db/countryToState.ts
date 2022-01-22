@@ -15,7 +15,7 @@ export const row2country = (data: Partial<Country>) => {
     lat: data.lat,
     lng: data.lng,
     borders: data.borders,
-    shape: JSON.stringify(data.shape),
+    shape: data.shape,
   })
 
   for (const languageCode in data.translations) {

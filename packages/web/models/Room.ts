@@ -42,7 +42,6 @@ export class Room extends Model {
   public scoreboard!: Record<string, Scoreboard>
   public roundResult!: any
   public gameResult!: any
-  public shape!: any
 
   static fields() {
     return {
@@ -67,7 +66,6 @@ export class Room extends Model {
       hasBorders: this.boolean(false),
       country: this.attr(null),
       scoreboard: this.attr(null),
-      shape: this.attr(null),
     }
   }
 

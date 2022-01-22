@@ -1,5 +1,5 @@
 export const FIND_COUNTRY_QUERY = `
-    SELECT *, ST_X(latlng::geometry) as lat, ST_Y(latlng::geometry) as lng FROM countries 
+    SELECT *, ST_X(latlng::geometry) as lat, ST_Y(latlng::geometry) as lng, ST_AsGeoJSON(shape) as shape FROM countries 
         WHERE NOT id = ANY($1)
         AND region = ANY($2)
         AND subregion = ANY($3)
@@ -8,7 +8,7 @@ export const FIND_COUNTRY_QUERY = `
   `
 
 export const FIND_COUNTRY_BY_CODE = `
-    SELECT *, ST_X(latlng::geometry) as lat, ST_Y(latlng::geometry) as lng FROM countries 
+    SELECT *, ST_X(latlng::geometry) as lat, ST_Y(latlng::geometry) as lng, ST_AsGeoJSON(shape) as shape FROM countries 
         WHERE alpha2code = $1
         ORDER BY random()
         LIMIT 1
