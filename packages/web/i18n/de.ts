@@ -1,5 +1,6 @@
 export const de = {
   t: {
+    catchPhrase: 'Das Geographie Spiel',
     shareText:
       'Spiel eine Runde GeoFind mit mir! Keine App, kein Download. Einfach & kostenlos mitspielen: {link}',
     of: 'von',

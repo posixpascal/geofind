@@ -9,38 +9,38 @@
         ></nuxt-link>
         <nuxt-link to="/">
           <h1>geofind.io</h1>
-          <p class="hidden sm:inline-block">Das Geographie Spiel</p>
+          <p class="hidden sm:inline-block">{{ $t('t.catchPhrase')}}</p>
         </nuxt-link>
       </div>
       <ul class="nav-links">
         <li class="hidden sm:flex" v-if="false">
           <nuxt-link class="green" active-class="active" to="/tutor">
             <Icon name="school" />
-            Lernen
+            {{ $t('singleplayer.button') }}
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
           <nuxt-link class="blue" active-class="active" to="/multiplayer">
             <Icon name="controller" />
-            Spiel erstellen
+            {{ $t('multiplayer.button') }}
           </nuxt-link>
         </li>
         <li class="hidden lg:flex">
           <nuxt-link class="red" active-class="active" to="/matchmaking">
             <Icon name="cube" />
-            Zufallsgegner
+            {{ $t('matchmaking.button') }}
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
           <nuxt-link class="purple" active-class="active" to="/lobbies">
             <Icon name="public" />
-            Offene Spiele
+            {{ $t('lobbies.button') }}
           </nuxt-link>
         </li>
         <li class="hidden md:flex">
           <nuxt-link class="yellow" active-class="active" to="/profile">
             <Icon name="profile" />
-            Profil
+            {{ $t('profile.button') }}
           </nuxt-link>
         </li>
       </ul>

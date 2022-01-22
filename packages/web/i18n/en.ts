@@ -1,5 +1,6 @@
 export const en = {
   t: {
+    catchPhrase: 'The Geography Game',
     of: 'from',
     save: 'save',
     round: 'round',
