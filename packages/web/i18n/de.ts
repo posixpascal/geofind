@@ -111,6 +111,7 @@ export const de = {
     selectMarker: 'Wähle hier Deinen Lieblingsmarker für das Spiel',
     nameDescription: 'Du kannst deinen Namen jederzeit ändern',
     pinDescription: 'Klicke auf einen Marker um ihn zu verwenden.',
+    citizen: 'Bewohner',
   },
   lobbies: {
     button: 'Offene Spiele',

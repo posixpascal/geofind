@@ -29,6 +29,7 @@ jobs:
       - run: yarn workspace @geofind/api build
       - run: |
           echo "localhost:5432:geofind:postgres:root" > ~/.pgpass
+          chmod 600 ~/.pgpass
           pg_restore --dbname geofind --host=localhost --port=5432 --username=postgres ./config/dumps/db.dump
       - uses: paambaati/codeclimate-action@v3.0.0
         env:

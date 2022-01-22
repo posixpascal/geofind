@@ -72,6 +72,7 @@ export const en = {
     maxRounds: 'Maximum rounds',
     pointsNeeded: 'Points to win',
     public: 'Public',
+    citizen: 'Citizen',
   },
   singleplayer: {
     button: 'Learning Mode',
