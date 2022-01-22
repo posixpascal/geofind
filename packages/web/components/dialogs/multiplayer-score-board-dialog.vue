@@ -12,10 +12,10 @@
           :code="room.country.alpha2code === 'GB' ? 'UK' : room.country.alpha2code"
         />
         <div style="">
-          <span class="text-2xl">
+          <span class="text-2xl flex-col sm:flex-row">
             {{ room.country.translations[$i18n.locale].country }}
             <span class="text-gray-500">
-            &mdash; 🏢 {{ room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital }}
+            <span class="hidden sm:inline">&mdash; </span> 🏢 {{ room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital }}
             </span>
           </span>
           <div class="text-gray-500">
@@ -310,11 +310,16 @@ h2 {
 
 .scoreboard-dialog .flag img {
   width: 64px !important;
+  min-width: 64px!important;
   height: 46px !important;
+  min-height: 46px!important;
 }
 
 .scoreboard-dialog .flag-selected img {
   width: 32px !important;
   height: 23px !important;
+  min-width: 64px!important;
+  min-height: 46px!important;
+
 }
 </style>

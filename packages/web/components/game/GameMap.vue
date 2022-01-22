@@ -194,7 +194,7 @@ export default class GameMap extends Vue {
 
   showMap() {
     const map = (this.$refs.map as any).mapObject
-    map.flyTo([32, -5], 3, {
+    map.flyTo([32, -5], (window.innerWidth <= 780) ? 1 : 3, {
       animate: true,
       duration: 0.2,
     })
