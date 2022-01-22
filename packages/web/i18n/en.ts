@@ -5,6 +5,7 @@ export const en = {
       "Oh no. Something went terribly wrong. We're sorry for your inconvenience. :(",
   },
   t: {
+    copyLinkAndGo: 'Copy the link below and share it with your friends.',
     gohome: 'Home',
     catchPhrase: 'The Geography Game',
     of: 'from',

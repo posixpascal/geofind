@@ -2,6 +2,7 @@
   <l-map
     :center="[32, -5]"
     :zoom="3"
+    :max-zoom="8"
     :options="mapOptions"
     :class="`game-map`"
     @click="moveMarker"
@@ -180,8 +181,23 @@ export default class GameMap extends Vue {
     }
   }
 
+  @Watch('room.state')
+  async vote(newState) {
+    if (newState === states.ROUND_END){
+      this.showMap();
+    }
+  }
+
+  showMap() {
+    const map = (this.$refs.map as any).mapObject
+    map.flyTo([32, -5], 3, {
+      animate: true,
+      duration: 1,
+    })
+  }
+
   @Watch('marker')
-  async vote(newPosition, oldPosition) {
+  async setMarker(newPosition, oldPosition) {
     if (!this.canMoveMarker) {
       return
     }

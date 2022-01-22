@@ -69,6 +69,10 @@ yarn workspace @geofind/web start:dev
 
 This project depends on a PostgreSQL with PostGIS extension. A database dump is located in this repo under `config/dumps` for your convenience.
 
+### 🗺 Tileserver
+
+The frontend expects 2 URLs to a tileserver (see: `./packages/web/.env.example`). You may specify your own tileserver but it's not necessary for the application to start.
+
 ## 🤝 Contribution
 
 Contribution is very much appreciated and every pull request will be considered for merging into master. 

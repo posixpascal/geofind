@@ -2,15 +2,17 @@
   <Panel class="mt-10">
     <template #title>{{ $t('lobby.inviteTitle') }}</template>
     <template #content>
-      <div class="inline-flex w-full">
+      <div class="inline-flex text-center flex-col w-full">
+        {{ $t('t.copyLinkAndGo') }}
         <input
           type="text"
           :value="msg"
-          :class="`font-lucky input w-full bg-gray-100 rounded px-6 py-4 text-xl`"
+          disabled
+          :class="`font-lucky text-center input w-full bg-gray-100 rounded px-6 py-4 text-xl`"
         />
       </div>
 
-      <div class="pt-6 pb-3 flex justify-evenly">
+      <div class="pt-6 pb-3 flex justify-evenly share-box">
         <a target="_blank" :href="`https://api.whatsapp.com/send?text=${text}`">
           <img
             width="32"
@@ -30,13 +32,13 @@
           target="_blank"
           :href="`https://twitter.com/share?text=${text}&via=${referrer}&hashtags=${shareTags}`"
         >
-          <img width="32" :src="require(`~/assets/images/share/twitter.svg`)" />
+          <img width="32" :src="require(`~/assets/images/share/twitter.svg`)"/>
         </a>
         <button v-if="canShare" @click="share">
-          <img width="32" :src="require(`~/assets/images/share/share.svg`)" />
+          <img width="32" :src="require(`~/assets/images/share/share.svg`)"/>
         </button>
         <button @click="copy">
-          <img width="32" :src="require(`~/assets/images/share/link.svg`)" />
+          <img width="32" :src="require(`~/assets/images/share/link.svg`)"/>
         </button>
       </div>
     </template>
@@ -45,14 +47,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import { Prop } from 'vue-property-decorator'
+import {Prop} from 'vue-property-decorator'
 import Panel from '~/components/panel.vue'
 
 @Component({
-  components: { Panel },
+  components: {Panel},
 })
 export default class Share extends Vue {
-  @Prop({ type: String, required: true }) link
+  @Prop({type: String, required: true}) link
 
   public msg = ''
 
@@ -62,7 +64,7 @@ export default class Share extends Vue {
 
   get text() {
     return encodeURIComponent(
-      this.$i18n.t('t.shareText', { link: this.link }).toString()
+      this.$i18n.t('t.shareText', {link: this.link}).toString()
     )
   }
 
@@ -104,3 +106,12 @@ export default class Share extends Vue {
   }
 }
 </script>
+<style lang="postcss">
+.share-box img {
+  transition: ease-in-out 0.2s;
+}
+
+.share-box img:hover {
+  transform: scale(1.1);
+}
+</style>

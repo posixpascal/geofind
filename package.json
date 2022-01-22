@@ -17,8 +17,7 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {
-  },
+  "scripts": {},
   "dependencies": {
     "concurrently": "^4.1.1",
     "tslint": "^5.19.0"

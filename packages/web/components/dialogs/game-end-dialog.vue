@@ -113,5 +113,6 @@ export default class GameEndDialog extends Vue {
 <style lang="postcss" scoped>
 #confetti {
   @apply absolute bottom-0 h-full left-0 right-0;
+  pointer-events: none;
 }
 </style>

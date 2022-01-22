@@ -4,6 +4,8 @@ export const de = {
     generic: 'Da ist uns ein Fehler unterlaufen :(',
   },
   t: {
+    copyLinkAndGo:
+      'Einfach den Link hier kopieren und an deine Freunde schicken.',
     gohome: 'Zur Startseite',
     room: 'Raum',
     catchPhrase: 'Das Geographie Spiel',

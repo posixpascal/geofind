@@ -74,7 +74,23 @@
         variant="blue"
         :animated="true"
       >
+        <template #icon>
+          <Icon class="text-white" :height="48" name="create" />
+        </template>
         {{ $t('multiplayer.button') }}
+      </Button>
+
+      <Button
+        @click="menu = false"
+        :icon="true"
+        :to="localePath('lobbies')"
+        variant="purple"
+        :animated="true"
+      >
+        <template #icon>
+          <Icon class="text-white" :height="48" name="public" />
+        </template>
+        {{ $t('lobbies.button') }}
       </Button>
       <Button
         @click="menu = false"
@@ -83,16 +99,10 @@
         variant="red"
         :animated="true"
       >
+        <template #icon>
+          <Icon class="text-white" :height="48" name="cube" />
+        </template>
         {{ $t('matchmaking.button') }}
-      </Button>
-      <Button
-        @click="menu = false"
-        :icon="true"
-        :to="localePath('lobbies')"
-        variant="purple"
-        :animated="true"
-      >
-        {{ $t('lobbies.button') }}
       </Button>
       <!--<Button to="teachers" variant="blue" :animated="true">
         <template #icon>👩‍🏫</template>
@@ -105,6 +115,9 @@
         variant="yellow"
         :animated="true"
       >
+        <template #icon>
+          <Icon class="text-white" :height="48" name="profile" />
+        </template>
         {{ $t('profile.button') }}
       </Button>
     </div>
@@ -398,5 +411,11 @@ nav img {
 .nav-bar {
   background: rgba(255,255,255,.6) !important;
   backdrop-filter: blur(15px);
+}
+
+.menu-area .fancy-button svg {
+  width: 37px !important;
+  position: relative;
+  margin-top: 5px;
 }
 </style>

@@ -133,51 +133,6 @@ export default class Index extends Vue {
     this.$router.push('/')
   }
 
-  showingAnswer = false
-
-  @Watch('room.state', { immediate: true, deep: true })
-  async gameStateChanged(newState) {
-    if (!newState || !this.$refs.map) {
-      return
-    }
-
-    if (newState.state === this.states.ROUND_PREPARE) {
-      this.showMap()
-      return
-    }
-
-    if (newState.state === this.states.ROUND_END) {
-      if (this.showingAnswer) {
-        return
-      }
-      this.showingAnswer = true
-      this.showAnswer()
-      return
-    }
-
-    this.showingAnswer = false
-    this.showMapOverview = false
-  }
-
-  showMap() {
-    this.showBounds = false
-    const map = (this.$refs.map as any).mapObject
-    map.flyTo([32, -5], 2.5, {
-      animate: true,
-      duration: 1,
-    })
-
-    setTimeout(() => {
-      this.showBounds = true
-    }, 1000)
-  }
-
-  showAnswer() {
-    this.showBounds = true
-    const map = (this.$refs.map as any).mapObject
-    this.showMap()
-    this.showMapOverview = true
-  }
 
   beforeDestroy() {
     return clearInterval(this.timer)
