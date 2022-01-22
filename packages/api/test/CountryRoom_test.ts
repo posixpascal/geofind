@@ -112,7 +112,8 @@ describe('testing country room', () => {
     await room.waitForNextPatch()
     const dispatcher = new Dispatcher(room)
     await dispatcher.dispatch(new OnPrepareRoundCommand())
-    assert.equal(room.state.state, ROUND_START_STATE)
+    await room.waitForNextPatch()
+    assert.equal(room.state.state, ROUND_PREPARE_STATE)
     await room.waitForNextPatch()
     assert.equal(
       room.state.country.id !== undefined,
@@ -180,6 +181,7 @@ describe('testing country room', () => {
 
     await room.waitForNextPatch()
     await dispatcher.dispatch(new OnPrepareRoundCommand())
+    await room.waitForNextPatch()
     assert.equal(room.state.rounds, 2)
   })
 })

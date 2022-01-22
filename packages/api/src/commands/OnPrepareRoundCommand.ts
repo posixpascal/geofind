@@ -12,7 +12,7 @@ export class OnPrepareRoundCommand extends Command<CountryRoom, {}> {
       this.state,
       this.state.blacklist.toArray()
     )
-
+    this.state.rounds += 1
     this.state.roundSecondsElapsed = -2.5
 
     this.state.blacklist.push(this.state.country.id)
