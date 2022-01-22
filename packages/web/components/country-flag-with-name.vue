@@ -23,6 +23,9 @@
         <h4 v-if="country.translations[$i18n.locale]">
           {{  $i18n.locale === 'en' ? country.name : country.translations[$i18n.locale].country }}
         </h4>
+        <h4 v-else>
+         {{ country.name }}
+        </h4>
 
         <template v-if="hintLevel >= 1">
           <h5
