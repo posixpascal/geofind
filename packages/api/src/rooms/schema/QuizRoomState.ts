@@ -4,7 +4,7 @@ import { Vote } from './VoteState'
 import { Country } from './CountryState'
 import { ScoreBoard } from './ScoreBoardState'
 
-export class CountryRoomState extends Schema {
+export class QuizRoomState extends Schema {
   @type({ map: Player }) players = new MapSchema<Player>()
   @type({ map: Vote }) votes = new MapSchema<Vote>()
   @type({ map: ScoreBoard }) scoreboard = new MapSchema<ScoreBoard>()
@@ -24,5 +24,4 @@ export class CountryRoomState extends Schema {
   @type('boolean') hasBorders: boolean
   @type('boolean') hasIslands: boolean
   @type('boolean') isPublic: boolean
-  @type('float32') roundSecondsElapsed: number
 }

@@ -4,6 +4,7 @@ export const de = {
     generic: 'Da ist uns ein Fehler unterlaufen :(',
   },
   t: {
+    wePlay: 'Wir spielen',
     copyLinkAndGo:
       'Einfach den Link hier kopieren und an deine Freunde schicken.',
     gohome: 'Zur Startseite',

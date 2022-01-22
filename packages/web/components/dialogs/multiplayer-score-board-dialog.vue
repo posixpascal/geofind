@@ -25,6 +25,16 @@
         </div>
       </div>
     </div>
+    <template v-if="room.room === 'speedrun'">
+      <div class="text-center" v-if="winner && winner.player">
+        <div class="flex items-center justify-center">
+          <Pin :id="winner.player.pin" width="48" style="min-width: 48px" />
+          <h2>{{ winner.player.username }}</h2>
+        </div>
+        <h2 class="text-center">{{winner.time.toFixed(2)}} sec.</h2>
+      </div>
+    </template>
+    <template v-else>
     <div v-if="showScore">
       <div
         :class="`flex items-center justify-between pin mp-pin align-middle mb-1 border-dashed border-b-2 border-gray-300 py-3 px-1`"
@@ -113,6 +123,7 @@
         </div>
       </div>
     </div>
+    </template>
   </Dialog>
 </template>
 <script lang="ts">
@@ -133,6 +144,16 @@ export default class MultiplayerScoreBoardDialog extends Vue {
   showCountry = false
   showScore = false
   animateLine = false
+
+  get winner(){
+    const votes = Object.values(this.room.votes)
+    const vote = votes.find((vote: any) => {
+      return vote.isCorrect;
+    });
+    if (!vote){ return false; }
+    vote.player = this.room.players[vote.sessionId];
+    return vote;
+  }
 
   created() {
     setTimeout(() => {

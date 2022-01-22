@@ -8,6 +8,8 @@ import { CountryRoom } from './rooms/CountryRoom'
 import { RedisPresence } from 'colyseus'
 import basicAuth from 'express-basic-auth'
 import { client } from './db/client'
+import { QuizRoom } from './rooms/QuizRoom'
+import { SpeedrunRoom } from './rooms/SpeedrunRoom'
 
 const basicAuthMiddleware = basicAuth({
   // list of users and passwords
@@ -30,6 +32,10 @@ export default Arena({
      * Define your room handlers:
      */
     gameServer.define('countries', CountryRoom)
+    gameServer.define('capitals', CountryRoom)
+    gameServer.define('flags', CountryRoom)
+    gameServer.define('quizroom', QuizRoom)
+    gameServer.define('speedrun', SpeedrunRoom)
   },
 
   initializeExpress: (app) => {

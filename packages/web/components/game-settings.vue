@@ -149,10 +149,7 @@ export default class GameSettings extends Vue {
   @Prop({ default: () => [] }) excludedGames!: string[]
 
   get availableGames() {
-    this.excludedGames = this.games
-      .filter((n) => n.name !== 'countries')
-      .map((n) => n.name)
-    const games = this.games.filter((g) => !this.excludedGames.includes(g.name))
+    const games = this.games;
     return games
   }
 
@@ -162,33 +159,22 @@ export default class GameSettings extends Vue {
       image: require('~/assets/gamemodes/countries.svg?raw'),
     },
     {
-      name: 'capitals',
-      image: require('~/assets/gamemodes/capitals.svg?raw'),
-    },
-    {
-      name: 'sightseeing',
-      image: require('~/assets/gamemodes/sightseeing.svg?raw'),
-    },
-    {
-      name: 'domainhunt',
-      image: require('~/assets/gamemodes/domains.svg?raw'),
-    },
-    {
       name: 'flags',
       image: require('~/assets/gamemodes/flags.svg?raw'),
-    },
-    {
-      name: 'quiz',
-      image: require('~/assets/gamemodes/quiz.svg?raw'),
     },
     {
       name: 'speedrun',
       image: require('~/assets/gamemodes/speedrun.svg?raw'),
     },
     {
-      name: 'shapes',
-      image: require('~/assets/gamemodes/shapes.svg?raw'),
+      name: 'capitals',
+      image: require('~/assets/gamemodes/capitals.svg?raw'),
     },
+   /* {
+      name: 'quiz',
+      image: require('~/assets/gamemodes/quiz.svg?raw'),
+    },*/
+
   ]
 
   maps = [

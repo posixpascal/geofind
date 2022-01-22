@@ -2,9 +2,13 @@ import { Client, Room } from 'colyseus'
 import { Dispatcher } from '@colyseus/command'
 import { CountryRoomState } from './schema/CountryRoomState'
 import { OnJoinCommand } from '../commands/OnJoinCommand'
+import { OnPrepareRoundCommand } from '../commands/OnPrepareRoundCommand'
+import { OnStartRoundCommand } from '../commands/OnStartRoundCommand'
 import { OnVoteCommand } from '../commands/OnVoteCommand'
+import { OnEndRoundCommand } from '../commands/OnEndRoundCommand'
+import { OnScoreboardCommand } from '../commands/OnScoreboardCommand'
 import { OnLeaveCommand } from '../commands/OnLeaveCommand'
-import { LOBBY_PHASE } from '../constants/game'
+import { GAME_END_STATE, LOBBY_PHASE } from '../constants/game'
 import { OnRoomStartCommand } from '../commands/OnRoomStartCommand'
 import { OnRoomSettingsCommand } from '../commands/OnRoomSettingsCommand'
 import { OnLobbyCommand } from '../commands/OnLobbyCommand'
@@ -20,16 +24,17 @@ import {
   ROOM_VOTE,
   USER_UPDATE,
 } from '../constants/messages'
+import { QuizRoomState } from './schema/QuizRoomState'
 
-export class CountryRoom extends Room<CountryRoomState> {
+export class QuizRoom extends Room<QuizRoomState> {
   dispatcher = new Dispatcher(this)
   autoDispose = false
-  roundTimer = false
+
   async onCreate(options: any) {
     this.clock.start()
 
     this.setState(
-      new CountryRoomState({
+      new QuizRoomState({
         room: options.room,
         map: options.map,
         hasBorders: options.hasBorders,

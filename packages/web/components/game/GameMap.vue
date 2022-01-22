@@ -21,11 +21,11 @@
     >
     </l-marker>
 
-    <template v-if="inRoundEnd">
+    <template v-if="inRoundEnd || (room && room.room === 'speedrun')">
       <template v-for="vote in gameVotes">
         <l-marker
           v-if="vote.lat"
-          :lat-lng="[vote.lat, vote.lng]"
+          :lat-lng="[vote.lng, vote.lat]"
           :icon="vote.pin"
         >
           <l-tooltip
@@ -34,15 +34,15 @@
           ></l-tooltip>
         </l-marker>
         <l-polyline
-          v-if="vote.lat"
-          :lat-lngs="getPolyline([vote.lat, vote.lng])"
+          v-if="room.room !== 'speedrun' && room.country && room.country.lat && vote.lng && vote.lat"
+          :lat-lngs="getPolyline([vote.lng, vote.lat])"
           :color="vote.color"
         ></l-polyline>
       </template>
     </template>
 
     <l-polyline
-      v-if="room && room.state === states.ROUND_END && marker.position"
+  v-if="room && room.country && room.country.lat && room.state === states.ROUND_END && marker.position && marker.position[0] && marker.position[1]"
       :lat-lngs="getPolyline(marker.position)"
       :color="pinColor"
     ></l-polyline>
@@ -150,6 +150,10 @@ export default class GameMap extends Vue {
     if (!this.room.state) {
       return []
     }
+
+    if (!this.room.country || !this.room.country.lat) {
+      return []
+    }
     return [
       position,
       this.convertLatLng([this.room.country.lat, this.room.country.lng]),
@@ -174,10 +178,10 @@ export default class GameMap extends Vue {
 
     if (this.room.votes[this.room.player.sessionId]) {
       this.pinSet = true
-      this.marker.position = [
-        this.room.votes[this.room.player.sessionId].lat,
-        this.room.votes[this.room.player.sessionId].lng,
-      ]
+      // this.marker.position = [
+      //   this.room.votes[this.room.player.sessionId].lat,
+      //   this.room.votes[this.room.player.sessionId].lng,
+      // ]
     }
   }
 

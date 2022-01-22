@@ -9,4 +9,6 @@ export class Vote extends Schema {
   @type('float64') distance: number
   @type('boolean') isCorrect: boolean
   @type('boolean') hasCountry: boolean
+  @type('float32') time: number
+  @type('string') sessionId: string
 }

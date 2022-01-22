@@ -21,9 +21,9 @@ export class OnStartRoundCommand extends Command<CountryRoom, {}> {
       if (this.state.timer > 0) this.state.timer -= 1
     }, 1000)
 
-    this.clock.setTimeout(() => {
+    this.room.roundTimer = this.clock.setTimeout(() => {
       countdown.clear()
       this.room.dispatcher.dispatch(new OnEndRoundCommand())
-    }, this.state.roundTime * 1000)
+    }, this.state.roundTime * 1000) as any
   }
 }

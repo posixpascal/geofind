@@ -1,9 +1,8 @@
 <template>
   <div
     :class="[
+      room.hasBorders ? '' : 'text-white',
       !interactive ? 'pointer-events-none' : '',
-      'animate__animated animate__delay-2s',
-      animation,
       position,
     ]"
   >
@@ -17,11 +16,14 @@ import { Component, Prop } from 'vue-property-decorator'
 @Component
 export default class Overlay extends Vue {
   @Prop() position
+  @Prop() room;
   @Prop() interactive
   @Prop({ type: String }) animation
 }
 </script>
-<style lang="css">
+<style lang="postcss">
+.overlay {
+}
 .topcenter {
   text-align: center;
   width: auto;

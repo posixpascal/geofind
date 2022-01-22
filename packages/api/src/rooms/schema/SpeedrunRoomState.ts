@@ -4,7 +4,7 @@ import { Vote } from './VoteState'
 import { Country } from './CountryState'
 import { ScoreBoard } from './ScoreBoardState'
 
-export class CountryRoomState extends Schema {
+export class SpeedrunRoomState extends Schema {
   @type({ map: Player }) players = new MapSchema<Player>()
   @type({ map: Vote }) votes = new MapSchema<Vote>()
   @type({ map: ScoreBoard }) scoreboard = new MapSchema<ScoreBoard>()

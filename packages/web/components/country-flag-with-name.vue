@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="flex text-lg sm:text-xl" v-if="country">
-      <div :class="`flag-${flagSize} mr-5 flex items-center`">
-        <Flag
+      <div :class="`flag-${flagSize} mr-5 flex items-center ${room.room === 'flags' ? 'flag-xxl' : ''}`">
+        <Flag v-if="room.room === 'countries' || room.room === 'flags' || room.room === 'speedrun'"
           :hasDropShadow="true"
           :hasBorder="true"
           :hasBorderRadius="true"
@@ -11,22 +11,18 @@
           :code="country.alpha2code"
         />
       </div>
-      <div>
+      <div v-if="room.room == 'capitals'">
+        <h4 v-if="country.translatedcapitals[$i18n.locale]">
+          {{ country.translatedcapitals[$i18n.locale] }}
+        </h4>
+        <h4 v-else>
+          {{ country.capital }}
+        </h4>
+      </div>
+      <div v-if="room.room == 'countries' || room.room == 'speedrun'">
         <h4 v-if="country.translations[$i18n.locale]">
           {{ country.translations[$i18n.locale].country }}
         </h4>
-
-        <template v-if="distancePoint && hintLevel >= 6">
-          <h5
-            class="
-              text-opacity-90 text-gray-600
-              animate__animated animate__fadeInDown
-            "
-          >
-            Vom Marker entfernt:
-            {{ country.distanceToPoint(distancePoint) }}
-          </h5>
-        </template>
 
         <template v-if="hintLevel >= 1">
           <h5
@@ -108,12 +104,14 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Prop, Watch } from 'vue-property-decorator'
+import {Room} from "~/models";
 
 declare const Flag: any
 
 @Component
 export default class CountryFlagWithName extends Vue {
   @Prop() country: any
+  @Prop() room: Room;
   @Prop({ default: 'l' }) flagSize: string
   @Prop({ default: 0 }) hintLevel: number
   @Prop({ default: false }) distancePoint: any
@@ -129,6 +127,11 @@ export default class CountryFlagWithName extends Vue {
 <style lang="postcss">
 .flag-l .flag {
   width: 64px !important;
+  height: auto !important;
+}
+
+.flag-xxl .flag {
+  width: 164px !important;
   height: auto !important;
 }
 </style>

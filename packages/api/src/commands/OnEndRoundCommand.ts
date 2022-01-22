@@ -2,6 +2,7 @@ import { Command } from '@colyseus/command'
 import { CountryRoom } from '../rooms/CountryRoom'
 import { OnScoreboardCommand } from './OnScoreboardCommand'
 import { ROUND_END_STATE } from '../constants/game'
+import { OnPrepareRoundCommand } from './OnPrepareRoundCommand'
 
 export class OnEndRoundCommand extends Command<CountryRoom, {}> {
   async execute(payload: this['payload']) {
@@ -28,6 +29,11 @@ export class OnEndRoundCommand extends Command<CountryRoom, {}> {
           this.state.votes.get(key).isCorrect = true
         }
       })
+    }
+
+    if (this.state.room === 'speedrun') {
+      this.room.dispatcher.dispatch(new OnScoreboardCommand())
+      return
     }
 
     // check scoreboard

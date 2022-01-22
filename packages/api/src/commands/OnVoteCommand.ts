@@ -4,6 +4,7 @@ import { Command } from '@colyseus/command'
 import { CountryRoom } from '../rooms/CountryRoom'
 import { Client } from 'colyseus'
 import { getCountryByLatLng } from '../db/getCountryByLatLng'
+import { OnEndRoundCommand } from './OnEndRoundCommand'
 
 export class OnVoteCommand extends Command<
   CountryRoom,
@@ -33,6 +34,16 @@ export class OnVoteCommand extends Command<
       this.state.country.lng,
     ])
 
+    vote.time = this.state.roundSecondsElapsed
+    vote.sessionId = client.sessionId
     this.state.votes.set(client.sessionId, vote)
+
+    // forcefully end round
+    if (vote.isCorrect && this.state.room === 'speedrun') {
+      if (this.room.roundTimer) {
+        ;(this.room.roundTimer as any).clear()
+      }
+      this.room.dispatcher.dispatch(new OnEndRoundCommand())
+    }
   }
 }

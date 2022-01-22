@@ -14,6 +14,7 @@
 <strong>geofind.io</strong> is a multiplayer geographical guessing game 
 written exclusively in TypeScript featuring different game modes, custom markers, fine-tuned settings and lots of other features.
 
+
 [Play now!](https://geofind.io)
 </p>
 

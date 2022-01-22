@@ -9,6 +9,7 @@
       <template v-if="room">
         <RoundPrepareDialog
           :country="room.country"
+          :room="room"
           v-if="room.country && room.state === states.ROUND_PREPARE"
         />
         <MultiplayerScoreBoardDialog
@@ -17,30 +18,31 @@
         />
         <GameEndDialog :room="room" v-if="room.state === states.GAME_END" />
 
-        <Overlay position="bottomright"> Runde: {{ room.rounds }} </Overlay>
-        <Overlay
+        <Overlay :room="room"
           position="bottomcenter"
           v-if="room.state === states.ROUND_START"
           class="pt-15"
         >
-          <Countdown :initial="room.timer" />
+          <h1 v-if="room.room === 'speedrun'">{{ room.roundSecondsElapsed.toFixed(1) }}</h1>
+          <Countdown v-else :initial="room.timer" />
         </Overlay>
-        <Overlay
+        <Overlay :room="room"
           position="topleft"
           v-if="room.country && room.state === states.ROUND_START"
         >
           <CountryFlagWithName
+            :room="room"
             :country="room.country"
             :distance-point="marker.position"
             :hint-level="room.state === states.ROUND_END ? 2 : 0"
           >
           </CountryFlagWithName>
         </Overlay>
-        <Overlay position="bottomleft">
+        <Overlay :room="room" position="bottomleft">
           <ScoreBoardOverlay :room="room" />
         </Overlay>
 
-        <Overlay :interactive="true" position="topright">
+        <Overlay :room="room" :interactive="true" position="topright">
           <Button variant="red" xx-small @click="leave" class="ml-10">
             <span class="px-3 text-xl">X</span>
           </Button>

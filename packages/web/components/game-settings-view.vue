@@ -1,6 +1,6 @@
 <template>
   <Panel v-if="room">
-    <template #title>Wir spielen</template>
+    <template #title>{{ $t('t.wePlay')}}</template>
     <template #content>
       <div
         class="flex flex-col sm:flex-row justify-between mb-5 md:px-3"

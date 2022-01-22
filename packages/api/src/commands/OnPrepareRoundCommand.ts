@@ -13,10 +13,13 @@ export class OnPrepareRoundCommand extends Command<CountryRoom, {}> {
       this.state.blacklist.toArray()
     )
 
+    this.state.roundSecondsElapsed = 0
+
     this.state.blacklist.push(this.state.country.id)
 
-    return this.clock.setTimeout(() => {
-      this.room.dispatcher.dispatch(new OnStartRoundCommand())
+    this.clock.setTimeout(async () => {
+      console.log(this.room.roomId, 'start round')
+      await this.room.dispatcher.dispatch(new OnStartRoundCommand())
     }, 2500)
   }
 }
