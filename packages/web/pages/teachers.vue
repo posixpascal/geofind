@@ -22,15 +22,6 @@ import SellContact from '~/components/sell/sell-contact.vue'
   layout: 'product',
 })
 export default class TeachersPage extends Vue {
-  get bannerStyle() {
-    return {
-      'background-image': `url(${this.background})`,
-    }
-  }
-
-  get germany() {
-    return 'DE'
-  }
 }
 </script>
 <style lang="postcss" scoped>
