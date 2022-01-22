@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres
+        image: postgres:10.10
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: ''

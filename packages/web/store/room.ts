@@ -34,7 +34,7 @@ export const actions: ActionTree<RoomState, RootState> = {
     localStorage.setItem('roomSession' + room.id, room.sessionId)
     await Room.insertFromColyseus(room)
     await context.dispatch('subscribe', room)
-    await this.$router.push('/lobby/' + room.id)
+    await this.$router.push(window.$nuxt.localePath('/lobby/' + room.id))
   },
   async subscribe(context: any, room) {
     const { id, sessionId } = room
