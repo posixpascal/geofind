@@ -12,7 +12,7 @@ jobs:
         image: postgres:10.10
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: root
+          POSTGRES_PASSWORD: ''
           POSTGRES_DB: geofind
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
 
@@ -24,7 +24,7 @@ jobs:
       - run: npm install -g yarn
       - run: yarn install
       - run: yarn workspace @geofind/api build
-      - run: yarn workspace @geofind/api db:import
+      - run: pg_restore --dbname geofind2 --host=postgres --port=5432 --username=postgres ./config/dumps/db.dump
         env:
           DB_USER: postgres
           DB_PASSWORD: root
