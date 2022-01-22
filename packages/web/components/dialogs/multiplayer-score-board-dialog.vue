@@ -16,9 +16,9 @@
             {{ room.country.translations[$i18n.locale].country }}
           </span>
           <div class="text-gray-500">
-            {{ room.country.capital }} &bullet;
+            {{ room.country.translated_capitals[$i18n.locale] ? room.country.translated_capitals[$i18n.locale] : room.country.capital }} &bullet;
             {{ formatNumber(room.country.population, 1) }} {{$t('t.citizen')}} &bullet;
-            {{ room.country.region }}
+            {{ $t(`subregion.${room.country.subregion}`) }}
           </div>
         </div>
       </div>

@@ -12,6 +12,7 @@ export class Country extends Schema {
   @type('number') population: number
   @type('number') area: number
   @type({ map: Translation }) translations = new MapSchema<Translation>()
+  @type({ map: Translation }) translatedcapitals = new MapSchema<Translation>()
 
   @type(['string']) topleveldomain = new ArraySchema<string>()
   @type('string') shape: string

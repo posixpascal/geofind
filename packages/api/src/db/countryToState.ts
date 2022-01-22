@@ -12,6 +12,8 @@ export const row2country = (data: Partial<Country>) => {
     population: data.population,
     area: data.area,
     topleveldomain: data.topleveldomain,
+    // TODO: add correct typing once country is finalized.
+    translatedcapitals: (data as any).translated_capitals,
     lat: data.lat,
     lng: data.lng,
     borders: data.borders,
