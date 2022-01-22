@@ -12,7 +12,9 @@ export const en = {
     loading: 'Loading...',
     madewithlove: 'Made with ',
     players: 'Players',
-    opensource: 'Open source. Forever.',
+    opensource: 'Open source.',
+    adfree: 'Forever.',
+    sponsor: 'Donate',
     imprint: 'Imprint',
     privacy: 'Privacy Policy',
     pin: 'map marker',
@@ -23,7 +25,7 @@ export const en = {
     restart: 'Restart',
     close: 'Close',
     gameFinished: 'game finished',
-    source: 'source code',
+    source: 'Source Code',
     educationalEdition: 'teaching edition',
     about:
       'Geography multiplayer guessing game. Find countries, capitals, landmarks and internet domains. Improve your knowledge level in single player mode or put your skills to the test in online multiplayer with up to 32 players.',
@@ -96,6 +98,8 @@ export const en = {
     cta: 'profile',
     title: 'Profile',
     selectMarker: 'Select your favorite marker for the game here',
+    nameDescription: 'You can change your name anytime.',
+    pinDescription: 'Select your favorite marker for the game here',
   },
   lobbies: {
     button: 'Open Games',

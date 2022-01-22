@@ -6,7 +6,7 @@
       </template>
       <template #content>
         <h3 class="mt-10">{{ $t('t.name') }}</h3>
-        <p class="mb-3 text-center">Du kannst deinen Namen jederzeit ändern</p>
+        <p class="mb-3 text-center"> {{ $t('profile.nameDescription') }}</p>
         <Box class="flex items-center justify-between">
           <Input
             class="w-full bg-white"
@@ -18,7 +18,7 @@
 
         <h3 class="pb-0">{{ $t('t.pin') }}</h3>
         <p class="mb-3 text-center">
-          Klicke auf einen Marker um ihn zu verwenden.
+          {{ $t('profile.pinDescription') }}
         </p>
         <Box
           class="
