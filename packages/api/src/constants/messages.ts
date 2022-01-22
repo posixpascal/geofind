@@ -4,3 +4,12 @@ export const ROOM_LOBBY = 'room/lobby'
 export const ROOM_SETTINGS = 'room/settings'
 export const ROOM_VOTE = 'room/vote'
 export const ROOM_START = 'room/start'
+
+export const messages = {
+  USER_UPDATE,
+  ROOM_RESTART,
+  ROOM_LOBBY,
+  ROOM_SETTINGS,
+  ROOM_VOTE,
+  ROOM_START,
+}

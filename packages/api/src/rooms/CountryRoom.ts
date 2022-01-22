@@ -32,18 +32,21 @@ export class CountryRoom extends Room<CountryRoomState> {
   async onCreate(options: any) {
     this.clock.start()
 
-    this.setState(new CountryRoomState())
-    this.registerMessageHandlers()
+    this.setState(
+      new CountryRoomState({
+        room: options.room,
+        map: options.map,
+        hasBorders: options.hasBorders,
+        maxPoints: parseInt(options.maxPoints, 10) || 10,
+        roundTime: parseInt(options.roundTime, 10) || 15,
+        hasIslands: options.hasIslands,
+        isPublic: options.isPublic,
+        hasStrictMatches: options.hasStrictMatches,
+        phase: LOBBY_PHASE,
+      })
+    )
 
-    this.state.room = options.room
-    this.state.map = options.map
-    this.state.hasBorders = options.hasBorders
-    this.state.maxPoints = parseInt(options.maxPoints, 10)
-    this.state.roundTime = parseInt(options.roundTime, 10)
-    this.state.hasIslands = options.hasIslands
-    this.state.isPublic = options.isPublic
-    this.state.hasStrictMatches = options.hasStrictMatches
-    this.state.phase = LOBBY_PHASE
+    this.registerMessageHandlers()
 
     this.dispatcher.dispatch(new OnUpdateMetadataCommand())
     await this.setPrivate(!this.state.isPublic)
@@ -61,26 +64,6 @@ export class CountryRoom extends Room<CountryRoomState> {
   }
 
   onDispose() {}
-
-  async prepareRound() {
-    this.dispatcher.dispatch(new OnPrepareRoundCommand())
-  }
-
-  async startRound() {
-    this.dispatcher.dispatch(new OnStartRoundCommand())
-  }
-
-  async endRound() {
-    this.dispatcher.dispatch(new OnEndRoundCommand())
-  }
-
-  async scoreboard() {
-    this.dispatcher.dispatch(new OnScoreboardCommand())
-  }
-
-  async gameEnd() {
-    this.state.state = GAME_END_STATE
-  }
 
   registerMessageHandlers() {
     this.onMessage(USER_UPDATE, (client, message) => {

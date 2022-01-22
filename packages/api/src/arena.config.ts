@@ -30,8 +30,6 @@ export default Arena({
      * Define your room handlers:
      */
     gameServer.define('countries', CountryRoom)
-    await client.connect()
-    //console.log(await seed());
   },
 
   initializeExpress: (app) => {
@@ -50,9 +48,7 @@ export default Arena({
     app.use('/colyseus', basicAuthMiddleware, monitor())
   },
 
-  beforeListen: () => {
-    /**
-     * Before before gameServer.listen() is called.
-     */
+  beforeListen: async () => {
+    await client.connect()
   },
 })

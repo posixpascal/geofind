@@ -52,3 +52,11 @@ export const INSERT_NEW_COUNTRY = `INSERT INTO countries (
         $17
       ) RETURNING *
     `
+
+export const FIND_COUNTRY_BY_LATLNG = `
+SELECT *, array_agg(countries.id ORDER BY countries.id) as area_list
+FROM countries
+WHERE ST_Contains(shape, ST_SetSRID(ST_MakePoint($1, $2), 4326))
+GROUP BY countries.id
+ORDER BY countries.id; 
+`

@@ -9,12 +9,13 @@ import {
 import { FIND_COUNTRY_QUERY } from '../sql/countries'
 
 export const getRandomCountry = async (
-  state: CountryRoomState,
+  state: Partial<CountryRoomState>,
   excluded = []
 ) => {
+  const { map, hasIslands } = state
   const { rows } = await client.query(FIND_COUNTRY_QUERY, [
     excluded,
-    REGIONS[state.map],
+    REGIONS[map || 'earth'],
     state.hasIslands ? SUBREGIONS : SUBREGIONS_EXCLUDING_ISLANDS,
   ])
 

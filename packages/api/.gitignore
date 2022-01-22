@@ -3,3 +3,5 @@ node_modules
 development.env
 lib/
 production.env
+./.nyc_output
+./coverage
