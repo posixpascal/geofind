@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:10.10
+        image: postgis/postgis:10-2.5
         ports:
           # Maps tcp port 5432 on service container to the host
           - 5432:5432

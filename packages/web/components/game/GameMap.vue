@@ -46,6 +46,8 @@
       :color="pinColor"
     ></l-polyline>
 
+    <l-geo-json v-if="room && room.state === states.ROUND_END" :geojson="room.shape"></l-geo-json>
+
     <l-marker
       v-if="room && room.state === states.ROUND_END && room.country.lat"
       :lat-lng="convertLatLng([room.country.lat, room.country.lng])"
