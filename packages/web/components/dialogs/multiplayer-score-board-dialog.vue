@@ -13,13 +13,18 @@
         />
         <div style="">
           <span class="text-2xl flex-col sm:flex-row">
-            {{ $i18n.locale === 'en' ? country.country : room.country.translations[$i18n.locale].country }}
+              <span class="" v-if="room.country.translations[$i18n.locale]">{{
+                  room.country.translations[$i18n.locale].country
+                }}</span>
+              <span class="" v-else>{{ room.country.name }}</span>
             <span class="text-gray-500">
-            <span class="hidden sm:inline">&mdash; </span> 🏢 {{ room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital }}
+            <span class="hidden sm:inline">&mdash; </span> 🏢 {{
+                room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital
+              }}
             </span>
           </span>
           <div class="text-gray-500">
-            👥 {{ formatNumber(room.country.population, 1) }} {{$t('t.citizen')}} &mdash;
+            👥 {{ formatNumber(room.country.population, 1) }} {{ $t('t.citizen') }} &mdash;
             📍 {{ $t(`subregion.${room.country.subregion}`) }}
           </div>
         </div>
@@ -28,35 +33,35 @@
     <template v-if="room.room === 'speedrun'">
       <div class="text-center" v-if="winner && winner.player">
         <div class="flex items-center justify-center">
-          <Pin :id="winner.player.pin" width="48" style="min-width: 48px" />
+          <Pin :id="winner.player.pin" width="48" style="min-width: 48px"/>
           <h2>{{ winner.player.username }}</h2>
         </div>
-        <h2 class="text-center">{{winner.time.toFixed(2)}} sec.</h2>
+        <h2 class="text-center">{{ winner.time.toFixed(2) }} sec.</h2>
       </div>
     </template>
     <template v-else>
-    <div v-if="showScore">
-      <div
-        :class="`flex items-center justify-between pin mp-pin align-middle mb-1 border-dashed border-b-2 border-gray-300 py-3 px-1`"
-        v-for="player in sortedPlayers"
-      >
-        <div class="flex items-center">
-          <h4
-            v-if="room.scoreboard[player.sessionId].points >= maxPoints"
-            class="pr-2"
-          >
-            {{
-              room.scoreboard[player.sessionId].points >= maxPoints ? '👑' : ''
-            }}
-          </h4>
-          <h4 :class="`pr-3`">{{ player.username }}</h4>
+      <div v-if="showScore">
+        <div
+          :class="`flex items-center justify-between pin mp-pin align-middle mb-1 border-dashed border-b-2 border-gray-300 py-3 px-1`"
+          v-for="player in sortedPlayers"
+        >
+          <div class="flex items-center">
+            <h4
+              v-if="room.scoreboard[player.sessionId].points >= maxPoints"
+              class="pr-2"
+            >
+              {{
+                room.scoreboard[player.sessionId].points >= maxPoints ? '👑' : ''
+              }}
+            </h4>
+            <h4 :class="`pr-3`">{{ player.username }}</h4>
+          </div>
+          <h4>{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
         </div>
-        <h4>{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
       </div>
-    </div>
-    <div v-else v-for="vote in votes">
-      <div
-        class="
+      <div v-else v-for="vote in votes">
+        <div
+          class="
           flex
           justify-between
           relative
@@ -65,64 +70,67 @@
           py-3
           px-1
         "
-      >
-        <div class="flex items-center">
-          <Pin :id="vote.player.pin" width="48" style="min-width: 48px" />
-          <h4>{{ vote.player.username }}</h4>
-        </div>
-        <div
-          :class="[
+        >
+          <div class="flex items-center">
+            <Pin :id="vote.player.pin" width="48" style="min-width: 48px"/>
+            <h4>{{ vote.player.username }}</h4>
+          </div>
+          <div
+            :class="[
             'hidden sm:flex',
             'line',
             animateLine ? 'line-expand' : '',
             vote.isCorrect ? 'line-success' : '',
           ]"
-        >
-          <div class="flex">
-            <ICountUp
-              v-if="
+          >
+            <div class="flex">
+              <ICountUp
+                v-if="
                 (!vote.country || vote.country.id !== room.country.id) &&
                 vote.distance > 0 &&
                 animateLine
               "
-              :endVal="vote.distance"
-              :options="countupOptions"
-            />
-            <span
-              class="text-green-400"
-              v-if="
+                :endVal="vote.distance"
+                :options="countupOptions"
+              />
+              <span
+                class="text-green-400"
+                v-if="
                 vote.isCorrect &&
                 vote.country &&
                 vote.country.id === room.country.id &&
                 animateLine
               "
-            >
-              ✓ {{$t('t.match')}}
+              >
+              ✓ {{ $t('t.match') }}
             </span>
+            </div>
+          </div>
+
+          <div
+            v-if="vote.hasCountry"
+            class="flex items-center justify-center text-center flex-col"
+          >
+            <Flag
+              class="flag flag-selected"
+              :hasDropShadow="true"
+              :hasBorder="true"
+              :hasBorderRadius="true"
+              size="l"
+              gradient="real-linear"
+              :code="vote.country.alpha2code === 'GB' ? 'UK' : vote.country.alpha2code"
+            />
+            <span class="" v-if="vote.country.translations[$i18n.locale]">{{
+                vote.country.translations[$i18n.locale].country
+              }}</span>
+            <span class="" v-else>{{ vote.country.name }}</span>
+          </div>
+          <div v-else class="text-center block w-auto">
+            &mdash;<br/>
+            🌊🐠
           </div>
         </div>
-
-        <div
-          v-if="vote.hasCountry"
-          class="flex items-center justify-center text-center flex-col"
-        >
-          <Flag
-            class="flag flag-selected"
-            :hasDropShadow="true"
-            :hasBorder="true"
-            :hasBorderRadius="true"
-            size="l"
-            gradient="real-linear"
-            :code="vote.country.alpha2code === 'GB' ? 'UK' : vote.country.alpha2code"
-          />
-          {{  $i18n.locale === 'en' ? vote.country.name : vote.country.translations[$i18n.locale].country }}
-        </div>
-        <div v-else class="text-center block w-auto">
-          &mdash;<br />
-         🌊🐠
-        </div>
       </div>
-    </div>
     </template>
   </Dialog>
 </template>
@@ -133,10 +141,10 @@ import Dialog from '~/components/dialog.vue'
 import Pin from '~/components/pin.vue'
 import ICountUp from 'vue-countup-v2'
 import Button from '~/components/button.vue'
-import { Room } from '~/models'
+import {Room} from '~/models'
 import {addDoc, collection, getDocs} from "firebase/firestore";
 
-@Component({ components: { Button, Dialog, Pin, ICountUp } })
+@Component({components: {Button, Dialog, Pin, ICountUp}})
 export default class MultiplayerScoreBoardDialog extends Vue {
   @Prop() room: Room
   @Prop() marker
@@ -146,12 +154,14 @@ export default class MultiplayerScoreBoardDialog extends Vue {
   showScore = false
   animateLine = false
 
-  get winner(){
+  get winner() {
     const votes = Object.values(this.room.votes)
     const vote = votes.find((vote: any) => {
       return vote.isCorrect;
     });
-    if (!vote){ return false; }
+    if (!vote) {
+      return false;
+    }
     vote.player = this.room.players[vote.sessionId];
     return vote;
   }
@@ -166,8 +176,8 @@ export default class MultiplayerScoreBoardDialog extends Vue {
     }, 4000)
   }
 
-  @Watch('vote.country.id', { immediate: true })
-  async addVote(){
+  @Watch('vote.country.id', {immediate: true})
+  async addVote() {
     const vote = this.room.votes[this.room.sessionId];
     if (!vote.isCorrect || !this.$store.state.auth.user || !vote.country) {
       return
@@ -180,7 +190,7 @@ export default class MultiplayerScoreBoardDialog extends Vue {
     let hasSeenCountry = false
     querySnapshot.forEach((doc) => {
       const {code} = doc.data();
-      if (code && code === vote.country.alpha2code){
+      if (code && code === vote.country.alpha2code) {
         hasSeenCountry = true;
       }
     })
@@ -242,21 +252,21 @@ export default class MultiplayerScoreBoardDialog extends Vue {
     }
   }
 
-  formatNumber(num, digits){
-      const lookup = [
-        { value: 1, symbol: "" },
-        { value: 1e3, symbol: "k" },
-        { value: 1e6, symbol: "M" },
-        { value: 1e9, symbol: "G" },
-        { value: 1e12, symbol: "T" },
-        { value: 1e15, symbol: "P" },
-        { value: 1e18, symbol: "E" }
-      ];
-      const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-      var item = lookup.slice().reverse().find(function(item) {
-        return num >= item.value;
-      });
-      return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+  formatNumber(num, digits) {
+    const lookup = [
+      {value: 1, symbol: ""},
+      {value: 1e3, symbol: "k"},
+      {value: 1e6, symbol: "M"},
+      {value: 1e9, symbol: "G"},
+      {value: 1e12, symbol: "T"},
+      {value: 1e15, symbol: "P"},
+      {value: 1e18, symbol: "E"}
+    ];
+    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
+    var item = lookup.slice().reverse().find(function (item) {
+      return num >= item.value;
+    });
+    return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
   }
 }
 </script>
@@ -310,16 +320,16 @@ h2 {
 
 .scoreboard-dialog .flag img {
   width: 64px !important;
-  min-width: 64px!important;
+  min-width: 64px !important;
   height: 46px !important;
-  min-height: 46px!important;
+  min-height: 46px !important;
 }
 
 .scoreboard-dialog .flag-selected img {
   width: 32px !important;
   height: 23px !important;
-  min-width: 64px!important;
-  min-height: 46px!important;
+  min-width: 64px !important;
+  min-height: 46px !important;
 
 }
 </style>
