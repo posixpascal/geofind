@@ -126,7 +126,6 @@
             <span class="" v-else>{{ vote.country.name }}</span>
           </div>
           <div v-else class="text-center block w-auto">
-            &mdash;<br/>
             🌊🐠
           </div>
         </div>

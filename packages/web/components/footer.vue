@@ -7,7 +7,7 @@
     <small class="block mb-5">
       {{ $t('t.madewithlove') }}
       <span class="text-red-600">&hearts;</span>.
-      <a href="//github.com/posixpascal/geofind.io" target="_blank"
+      <a href="//github.com/posixpascal/geofind" target="_blank"
         >{{ $t('t.opensource') }}
       </a>
       {{ $t('t.adfree') }}
