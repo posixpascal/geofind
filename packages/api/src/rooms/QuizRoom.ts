@@ -1,6 +1,6 @@
 import { Client, Room } from 'colyseus'
 import { Dispatcher } from '@colyseus/command'
-import { CountryRoomState } from './schema/CountryRoomState'
+import { CountryRoomState } from './schema/game_modes/CountryRoomState'
 import { OnJoinCommand } from '../commands/OnJoinCommand'
 import { OnPrepareRoundCommand } from '../commands/OnPrepareRoundCommand'
 import { OnStartRoundCommand } from '../commands/OnStartRoundCommand'
@@ -24,7 +24,7 @@ import {
   ROOM_VOTE,
   USER_UPDATE,
 } from '../constants/messages'
-import { QuizRoomState } from './schema/QuizRoomState'
+import { QuizRoomState } from './schema/game_modes/QuizRoomState'
 
 export class QuizRoom extends Room<QuizRoomState> {
   dispatcher = new Dispatcher(this)

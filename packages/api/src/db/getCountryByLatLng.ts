@@ -1,6 +1,6 @@
-import { row2country } from './countryToState'
+import { countryFactory } from './countryFactory'
 import { client } from './client'
-import { FIND_COUNTRY_BY_CODE, FIND_COUNTRY_BY_LATLNG } from '../sql/countries'
+import { FIND_COUNTRY_BY_CODE, FIND_COUNTRY_BY_LATLNG } from './query/countries'
 
 export const getCountryByLatLng = async ([lat, long]) => {
   const res = await client.query(FIND_COUNTRY_BY_LATLNG, [lat, long])
@@ -8,5 +8,5 @@ export const getCountryByLatLng = async ([lat, long]) => {
     return false
   }
 
-  return row2country(res.rows[0])
+  return countryFactory(res.rows[0])
 }

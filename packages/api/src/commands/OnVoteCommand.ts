@@ -1,4 +1,4 @@
-import { Vote } from '../rooms/schema/VoteState'
+import { Vote } from '../rooms/schema/entities/VoteState'
 import distanceBetween from '../functions/distanceBetween'
 import { Command } from '@colyseus/command'
 import { CountryRoom } from '../rooms/CountryRoom'

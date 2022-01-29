@@ -1,8 +1,8 @@
 <template>
   <transition name="fade">
-    <div class="dialog-backdrop pt-10 mb-10 overflow-auto" v-if="show">
+    <div :class="`dialog-backdrop pt-10 mb-10 overflow-auto`" v-if="show">
       <transition :duration="1000" name="slide">
-        <div class="dialog">
+        <div :class="`dialog ${classes}`">
           <slot></slot>
         </div>
       </transition>
@@ -16,6 +16,7 @@ import Vue from 'vue'
 @Component
 export default class Dialog extends Vue {
   @Prop({ default: true }) show
+  @Prop({ default: true }) classes;
 }
 </script>
 <style lang="postcss">
@@ -41,8 +42,8 @@ export default class Dialog extends Vue {
 }
 
 .dialog {
-  @apply absolute bg-opacity-90 bg-white left-1/2 w-20 z-10 p-5 rounded shadow-2xl lg:mt-20;
-  @apply flex content-center justify-center bg-gray-100 bg-opacity-90 text-gray-700 flex-col;
+  @apply absolute left-1/2 w-20 z-10 p-5 rounded shadow-2xl lg:mt-20;
+  @apply flex content-center justify-center text-gray-700 flex-col;
   font-family: 'Luckiest Guy';
   top: 20px;
   width: 90%;

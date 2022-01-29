@@ -24,7 +24,7 @@ export default class Checkbox extends Vue {
 
 <style lang="postcss">
 .switch[type='checkbox'] {
-  @apply bg-gray-50 border-none;
+  @apply bg-gray-50 dark:bg-gray-800 border-none;
   position: relative;
   width: 70px;
   min-width: 70px;

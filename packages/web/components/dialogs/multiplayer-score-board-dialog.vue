@@ -1,5 +1,5 @@
 <template>
-  <Dialog class="scoreboard-dialog">
+  <Dialog classes="bg-white dark:bg-gray-800" class="scoreboard-dialog">
     <div class="flex mb-10 justify-between items-center">
       <div class="flex items-center pin-title mb-0">
         <Flag
@@ -12,18 +12,18 @@
           :code="room.country.alpha2code === 'GB' ? 'UK' : room.country.alpha2code"
         />
         <div style="">
-          <span class="text-2xl flex-col sm:flex-row">
+          <span class="text-2xl flex-col sm:flex-row dark:text-gray-100">
               <span class="" v-if="room.country.translations[$i18n.locale]">{{
                   room.country.translations[$i18n.locale].country
                 }}</span>
               <span class="" v-else>{{ room.country.name }}</span>
-            <span class="text-gray-500">
+            <span class="text-gray-500 dark:text-gray-300">
             <span class="hidden sm:inline">&mdash; </span> 🏢 {{
                 room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital
               }}
             </span>
           </span>
-          <div class="text-gray-500">
+          <div class="text-gray-500 dark:text-gray-300">
             👥 {{ formatNumber(room.country.population, 1) }} {{ $t('t.citizen') }} &mdash;
             📍 {{ $t(`subregion.${room.country.subregion}`) }}
           </div>
@@ -32,9 +32,9 @@
     </div>
     <template v-if="room.room === 'speedrun'">
       <div class="text-center" v-if="winner && winner.player">
-        <div class="flex items-center justify-center">
+        <div class="flex items-center justify-center dark:text-gray-300">
           <Pin :id="winner.player.pin" width="48" style="min-width: 48px"/>
-          <h2>{{ winner.player.username }}</h2>
+          <h2 class="dark:text-gray-300">{{ winner.player.username }}</h2>
         </div>
         <h2 class="text-center">{{ winner.time.toFixed(2) }} sec.</h2>
       </div>
@@ -54,9 +54,9 @@
                 room.scoreboard[player.sessionId].points >= maxPoints ? '👑' : ''
               }}
             </h4>
-            <h4 :class="`pr-3`">{{ player.username }}</h4>
+            <h4 :class="`pr-3 dark:text-gray-300`">{{ player.username }}</h4>
           </div>
-          <h4>{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
+          <h4 class="dark:text-gray-300">{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
         </div>
       </div>
       <div v-else v-for="vote in votes">
@@ -73,7 +73,7 @@
         >
           <div class="flex items-center">
             <Pin :id="vote.player.pin" width="48" style="min-width: 48px"/>
-            <h4>{{ vote.player.username }}</h4>
+            <h4 class="dark:text-gray-300">{{ vote.player.username }}</h4>
           </div>
           <div
             :class="[
@@ -126,7 +126,7 @@
             <span class="" v-else>{{ vote.country.name }}</span>
           </div>
           <div v-else class="text-center block w-auto">
-            🌊🐠
+            🌊
           </div>
         </div>
       </div>
@@ -178,6 +178,7 @@ export default class MultiplayerScoreBoardDialog extends Vue {
   @Watch('vote.country.id', {immediate: true})
   async addVote() {
     const vote = this.room.votes[this.room.sessionId];
+    if (!vote){ return; }
     if (!vote.isCorrect || !this.$store.state.auth.user || !vote.country) {
       return
     }

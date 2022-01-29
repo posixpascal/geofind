@@ -133,7 +133,7 @@ export default class OpengameSettingsView extends Vue {
 }
 
 .game-mode {
-  @apply justify-center items-center flex flex-col bg-gray-200 rounded p-5 text-center cursor-pointer;
+  @apply justify-center items-center flex flex-col bg-gray-200 dark:bg-gray-800 dark:text-gray-200 rounded p-5 text-center cursor-pointer;
   width: 100% !important;
   margin-bottom: 8px;
   margin-top: 8px;

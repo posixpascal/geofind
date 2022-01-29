@@ -1,7 +1,7 @@
 import fs from 'fs/promises'
 import { randomUUID } from 'crypto'
 import { client } from './client'
-import { INSERT_NEW_COUNTRY } from '../sql/countries'
+import { INSERT_NEW_COUNTRY } from './query/countries'
 
 export const seed = async () => {
   const countriesData = await fs.readFile('./src/data/countries.json', 'utf-8')

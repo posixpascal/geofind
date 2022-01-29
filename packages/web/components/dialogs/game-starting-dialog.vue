@@ -1,5 +1,5 @@
 <template>
-  <Dialog v-if="room">
+  <Dialog  classes="bg-white dark:bg-gray-800" v-if="room">
     <h2>{{ $t('t.gameStartsIn') }}</h2>
     <h3>{{ room.gameStartsIn }}</h3>
   </Dialog>

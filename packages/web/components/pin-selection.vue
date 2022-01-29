@@ -46,6 +46,6 @@ export default class PinSelection extends Vue {
 }
 
 .pin-wrapper.active {
-  @apply bg-white  rounded-xl shadow-sm;
+  @apply bg-white  rounded-xl shadow-sm dark:bg-gray-600;
 }
 </style>

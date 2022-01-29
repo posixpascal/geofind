@@ -10,7 +10,7 @@
         <div class="flex items-center w-full px-5 justify-between">
           {{ game.roomId }}
           <div class="flex items-center">
-            🕹 {{ game.clients }}
+            🕹 {{ game.clients > 0 ? game.clients : 0 }}
             <Button
               class="hidden md:flex ml-3"
               variant="purple"
@@ -25,7 +25,7 @@
       <template #content>
         <div class="flex justify-between"></div>
         <OpenRoomSettingsView :game="game.metadata" />
-        <Button variant="purple" small :to="localePath(`/lobby/${game.id}`)">
+        <Button variant="purple" small :to="localePath(`/lobby/${game.roomId}`)">
           {{ $t('lobbies.join') }}
         </Button>
       </template>

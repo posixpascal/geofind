@@ -1,5 +1,5 @@
 <template>
-  <Dialog :show="show">
+  <Dialog :show="show" classes="bg-transparent">
     <Panel>
       <template #title>
         <div
@@ -30,7 +30,7 @@
             items-stretch
           "
         >
-          <div class="flex justify-center py-3">
+          <div class="flex justify-center py-3" style="max-height: 380px; overflow: auto;">
             <PinSelection :initial="player.pin" @change="setPin" />
           </div>
         </Box>

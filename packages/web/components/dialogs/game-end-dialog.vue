@@ -1,11 +1,11 @@
 <template>
-  <Dialog>
+  <Dialog  classes="bg-white dark:bg-gray-800">
     <canvas id="confetti" ref="canvas"></canvas>
     <h4 class="text-2xl sm:text-3xl pb-3">
       {{ $t('t.gameFinished') }}
     </h4>
 
-    <h2 class="text-center" v-if="winner">
+    <h2 class="text-center dark:text-gray-300" v-if="winner">
       👑 {{ winner.username }}
       <span v-if="winnerPoints">| {{ winnerPoints }}</span>
     </h2>

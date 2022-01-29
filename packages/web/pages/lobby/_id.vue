@@ -2,7 +2,7 @@
   <div class="main-menu">
     <template v-if="room">
       <h1 class="text-sm mb-5 sm:text-xl sm:mb-3 text-left">
-        <span class="text-gray-600">{{ $t('t.room') }}: {{ room.roomId }}</span>
+        <span class="text-gray-600 dark:text-gray-300">{{ $t('t.room') }}: {{ room.roomId }}</span>
       </h1>
       <Panel>
         <template #title>{{ $t('lobby.players') }}</template>

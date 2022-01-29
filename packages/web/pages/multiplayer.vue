@@ -10,7 +10,7 @@
       {{ $t(loading ? 't.loading' : 'multiplayer.cta') }}
     </Button>
 
-    <hr class="mb-10 mt-10" />
+    <hr class="mb-10 mt-10 dark:border-gray-600" />
 
     <GameSettings
       shade="blue"

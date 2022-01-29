@@ -18,16 +18,18 @@ export const humanizeDistance = (pointA, pointB, unitless = false) => {
     unit: 'km',
     smallUnit: 'm',
     factor: 1000,
-    smallBorder: 0,
+    smallBorder: 0.1,
   }
 
   if (unitless) {
     return result.distance
   }
+  console.log(result)
 
   if (result.distance >= result.smallBorder) {
     return `${numeral(result.distance).format('0.0')} ${result.unit}`
   }
+
   let distance = result.distance * result.factor
   if (distance < 40) return `< 50 ${result.smallUnit}`
 

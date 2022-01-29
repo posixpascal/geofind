@@ -1,7 +1,7 @@
-import { Country } from '../rooms/schema/CountryState'
-import { Translation } from '../rooms/schema/TranslationState'
+import { Country } from '../rooms/schema/entities/CountryState'
+import { Translation } from '../rooms/schema/entities/TranslationState'
 
-export const row2country = (data: Partial<Country>) => {
+export const countryFactory = (data: Partial<Country>) => {
   const country = new Country({
     id: data.id,
     name: data.name,

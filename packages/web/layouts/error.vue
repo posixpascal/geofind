@@ -1,27 +1,29 @@
 <template>
   <div>
     <main class="flex justify-center">
-        <div class="z-10 max-w-lg flex justify-center items-center flex-col">
-          <h1 v-if="error.statusCode === 404">{{$t('error.notfound')}}</h1>
-          <h1 v-else>{{$t('error.generic')}}</h1>
-          <h1><Button variant="blue" :to="localePath('/')">{{$t('t.gohome')}}</Button></h1>
-        </div>
+      <div class="z-10 max-w-lg flex justify-center items-center flex-col dark:text-gray-200">
+        <h1 class="dark:text-gray-200" v-if="error.statusCode === 404">{{ $t('error.notfound') }}</h1>
+        <h1 class="dark:text-gray-200" v-else>{{ $t('error.generic') }}</h1>
+        <h1 class="dark:text-gray-200">
+          <Button variant="blue" :to="localePath('/')">{{ $t('t.gohome') }}</Button>
+        </h1>
+      </div>
     </main>
   </div>
 </template>
 <script lang="ts">
-import Component, { mixins } from 'vue-class-component'
-import { Watch } from 'vue-property-decorator'
+import Component from 'vue-class-component'
+import {Watch} from 'vue-property-decorator'
 import MapBackground from '~/components/map-background.vue'
 import Navigation from '~/components/navigation.vue'
 import Vue from 'vue'
 import Button from "~/components/button.vue";
 
 @Component({
-  components: {Button, Navigation, MapBackground },
-    props: ['error'],
-    layout: 'error'
-  })
+  components: {Button, Navigation, MapBackground},
+  props: ['error'],
+  layout: 'error'
+})
 export default class DefaultLayout extends Vue {
   @Watch('$route.name')
   trackAnalytics() {
@@ -41,7 +43,7 @@ export default class DefaultLayout extends Vue {
 
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+  Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;

@@ -18,7 +18,7 @@
     </div>
     <div v-if="showPopup" class="popup">
       <div
-        :class="`hover:bg-gray-100 p-3 pt-2 cursor-pointer border-b-2 border-gray-200
+        :class="`hover:bg-gray-100 p-3 pt-2 cursor-pointer border-b-2  dark:border-gray-800 border-gray-200
       ${$i18n.locale === locale.code ? 'bg-gray-200' : ''}
       `"
         @click="setLocale(locale)"

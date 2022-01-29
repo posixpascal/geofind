@@ -3,7 +3,7 @@ import { ColyseusTestServer, boot } from '@colyseus/testing'
 
 // import your "arena.config.ts" file here.
 import appConfig from '../src/arena.config'
-import { CountryRoomState } from '../src/rooms/schema/CountryRoomState'
+import { CountryRoomState } from '../src/rooms/schema/game_modes/CountryRoomState'
 import { LOBBY_PHASE, PLAY_PHASE } from '@geofind/web/constants/phases'
 import {
   ROOM_LOBBY,
@@ -27,12 +27,15 @@ import { OnEndRoundCommand } from '../src/commands/OnEndRoundCommand'
 import { OnScoreboardCommand } from '../src/commands/OnScoreboardCommand'
 import { messages } from '../src/constants/messages'
 import { OnStartRoundCommand } from '../src/commands/OnStartRoundCommand'
+import { client } from '../src/db/client'
 
 describe('testing country room', () => {
   let colyseus: ColyseusTestServer
 
   before(async () => (colyseus = await boot(appConfig)))
-  after(async () => colyseus.shutdown())
+  after(async () => {
+    colyseus.shutdown()
+  })
 
   beforeEach(async () => await colyseus.cleanup())
 
@@ -183,5 +186,38 @@ describe('testing country room', () => {
     await dispatcher.dispatch(new OnPrepareRoundCommand())
     await room.waitForNextPatch()
     assert.equal(room.state.rounds, 2)
+  })
+
+  it('connecting into a room', async () => {
+    const room = await colyseus.createRoom<CountryRoomState>('countries')
+    const client1 = await colyseus.connectTo(room)
+    await room.waitForNextPatch()
+    const dispatcher = new Dispatcher(room)
+    await dispatcher.dispatch(new OnPrepareRoundCommand())
+    client1.send(ROOM_SETTINGS, {
+      map: 'europe',
+      roundTime: 1,
+      hasStrictMatches: false,
+    })
+    await room.waitForNextPatch()
+    assert.equal(room.state.state, ROUND_PREPARE_STATE)
+    await room.waitForNextPatch()
+    assert.equal(
+      room.state.country.id !== undefined,
+      true,
+      'country is not null'
+    )
+    // send incorrect vote.
+    await client1.send(ROOM_VOTE, {
+      position: [room.state.country.lng, 0],
+    })
+    await dispatcher.dispatch(new OnVoteCommand(), {
+      client: client1 as any,
+      latlng: [room.state.country.lng, 0],
+    })
+    await dispatcher.dispatch(new OnEndRoundCommand())
+
+    // user should get a point
+    assert.equal(room.state.scoreboard.get(client1.sessionId).points, 1)
   })
 })

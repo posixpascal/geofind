@@ -31,11 +31,11 @@ export default class Panel extends Vue {
 </script>
 <style lang="postcss" scoped>
 h3 {
-  @apply flex pb-3 mt-5 text-2xl md:text-4xl border-b-2 border-gray-100 w-full text-gray-700;
+  @apply flex pb-3 mt-5 text-2xl md:text-4xl border-b border-gray-100 w-full text-gray-700 dark:text-gray-200 dark:border-gray-800;
 }
 
 .panel-content h3 {
-  @apply justify-center;
+  @apply justify-center dark:text-gray-200;
 }
 
 .back-button {
@@ -45,7 +45,7 @@ h3 {
 }
 
 .panel {
-  @apply bg-white rounded flex justify-center items-center w-full flex-col mb-10 shadow-lg;
+  @apply bg-white dark:bg-gray-700 dark:text-gray-200 rounded flex justify-center items-center w-full flex-col mb-10 shadow-lg;
 }
 
 .panel-content {

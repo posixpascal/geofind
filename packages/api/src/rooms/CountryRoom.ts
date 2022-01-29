@@ -1,6 +1,6 @@
 import { Client, Room } from 'colyseus'
 import { Dispatcher } from '@colyseus/command'
-import { CountryRoomState } from './schema/CountryRoomState'
+import { CountryRoomState } from './schema/game_modes/CountryRoomState'
 import { OnJoinCommand } from '../commands/OnJoinCommand'
 import { OnVoteCommand } from '../commands/OnVoteCommand'
 import { OnLeaveCommand } from '../commands/OnLeaveCommand'

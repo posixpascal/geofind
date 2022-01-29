@@ -3,9 +3,9 @@ import { CountryRoom } from '../rooms/CountryRoom'
 import { Client } from 'colyseus'
 import { RoomSettings } from '../constants/room'
 import { OnUpdateMetadataCommand } from './OnUpdateMetadataCommand'
-import { SpeedrunRoomState } from '../rooms/schema/SpeedrunRoomState'
+import { SpeedrunRoomState } from '../rooms/schema/game_modes/SpeedrunRoomState'
 import { LOBBY_PHASE, ROUND_PREPARE_STATE } from '../constants/game'
-import { CountryRoomState } from '../rooms/schema/CountryRoomState'
+import { CountryRoomState } from '../rooms/schema/game_modes/CountryRoomState'
 
 export class OnRoomSettingsCommand extends Command<
   CountryRoom,
@@ -37,7 +37,7 @@ export class OnRoomSettingsCommand extends Command<
       this.state.hasIslands = settings.hasIslands
     }
 
-    if ('hasBorders' in settings && settings.hasBorders) {
+    if ('hasBorders' in settings) {
       this.state.hasBorders = settings.hasBorders
     }
 

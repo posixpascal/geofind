@@ -1,6 +1,6 @@
 <template>
   <div class="sticky top-0 z-20 nav-bar">
-    <nav>
+    <nav class="bg-white dark:bg-gray-800">
       <div class="main-typo flex items-center">
         <nuxt-link
           to="/"
@@ -9,37 +9,37 @@
         ></nuxt-link>
         <nuxt-link :to="localePath('/')">
           <h1>geofind.io</h1>
-          <p class="hidden sm:inline-block">{{ $t('t.catchPhrase')}}</p>
+          <p class="hidden sm:inline-block dark:text-gray-200">{{ $t('t.catchPhrase') }}</p>
         </nuxt-link>
       </div>
       <ul class="nav-links">
         <li class="hidden sm:flex" v-if="false">
           <nuxt-link class="green" active-class="active" :to="localePath('/tutor')">
-            <Icon name="school" />
+            <Icon name="school"/>
             {{ $t('singleplayer.button') }}
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
           <nuxt-link class="blue" active-class="active" :to="localePath('/multiplayer')">
-            <Icon name="controller" />
+            <Icon name="controller"/>
             {{ $t('multiplayer.button') }}
           </nuxt-link>
         </li>
         <li class="hidden lg:flex">
           <nuxt-link class="red" active-class="active" :to="localePath('/matchmaking')">
-            <Icon name="cube" />
+            <Icon name="cube"/>
             {{ $t('matchmaking.button') }}
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
           <nuxt-link class="purple" active-class="active" :to="localePath('/lobbies')">
-            <Icon name="public" />
+            <Icon name="public"/>
             {{ $t('lobbies.button') }}
           </nuxt-link>
         </li>
         <li class="hidden md:flex">
           <nuxt-link class="yellow" active-class="active" :to="localePath('/profile')">
-            <Icon name="profile" />
+            <Icon name="profile"/>
             {{ $t('profile.button') }}
           </nuxt-link>
         </li>
@@ -55,98 +55,100 @@
         </button>
       </div>
     </nav>
-    <div :class="`rainbow-border ${birdColor}`" />
-    <div v-if="menu" class="menu-area relative z-20 bg-white-50 pb-4 mx-4">
-      <Button
-        @click="menu = false"
-        :icon="true"
-        :to="localePath('/tutor')"
-        v-if="false"
-        variant="green"
-        :animated="true"
-      >
-        {{ $t('singleplayer.button') }}
-      </Button>
-      <Button
-        @click="menu = false"
-        :icon="true"
-        :to="localePath('/multiplayer')"
-        variant="blue"
-        :animated="true"
-      >
-        <template #icon>
-          <Icon class="text-white" :height="48" name="create" />
-        </template>
-        {{ $t('multiplayer.button') }}
-      </Button>
+    <div :class="`rainbow-border ${birdColor}`"/>
+    <div v-if="menu" class="menu-area relative z-20 bg-white-50 dark:bg-gray-800 pb-4">
+      <div class="p-4">
+        <Button
+          @click="menu = false"
+          :icon="true"
+          :to="localePath('/tutor')"
+          v-if="false"
+          variant="green"
+          :animated="true"
+        >
+          {{ $t('singleplayer.button') }}
+        </Button>
+        <Button
+          @click="menu = false"
+          :icon="true"
+          :to="localePath('/multiplayer')"
+          variant="blue"
+          :animated="true"
+        >
+          <template #icon>
+            <Icon class="text-white" :height="48" name="create"/>
+          </template>
+          {{ $t('multiplayer.button') }}
+        </Button>
 
-      <Button
-        @click="menu = false"
-        :icon="true"
-        :to="localePath('lobbies')"
-        variant="purple"
-        :animated="true"
-      >
-        <template #icon>
-          <Icon class="text-white" :height="48" name="public" />
-        </template>
-        {{ $t('lobbies.button') }}
-      </Button>
-      <Button
-        @click="menu = false"
-        :icon="true"
-        :to="localePath('/matchmaking')"
-        variant="red"
-        :animated="true"
-      >
-        <template #icon>
-          <Icon class="text-white" :height="48" name="cube" />
-        </template>
-        {{ $t('matchmaking.button') }}
-      </Button>
-      <!--<Button to="teachers" variant="blue" :animated="true">
-        <template #icon>👩‍🏫</template>
-        Teacher Zone
-      </Button>-->
-      <Button
-        @click="menu = false"
-        :icon="true"
-        :to="localePath('profile')"
-        variant="yellow"
-        :animated="true"
-      >
-        <template #icon>
-          <Icon class="text-white" :height="48" name="profile" />
-        </template>
-        {{ $t('profile.button') }}
-      </Button>
-      <Button
-        @click="menu = false"
-        :icon="true"
-        :to="localePath('achievements')"
-        variant="orange"
-        :animated="true"
-      >
-        <template #icon>
-          <Icon class="text-white" :height="48" name="school" />
-        </template>
-        {{ $t('achievements.button') }}
-      </Button>
+        <Button
+          @click="menu = false"
+          :icon="true"
+          :to="localePath('lobbies')"
+          variant="purple"
+          :animated="true"
+        >
+          <template #icon>
+            <Icon class="text-white" :height="48" name="public"/>
+          </template>
+          {{ $t('lobbies.button') }}
+        </Button>
+        <Button
+          @click="menu = false"
+          :icon="true"
+          :to="localePath('/matchmaking')"
+          variant="red"
+          :animated="true"
+        >
+          <template #icon>
+            <Icon class="text-white" :height="48" name="cube"/>
+          </template>
+          {{ $t('matchmaking.button') }}
+        </Button>
+        <!--<Button to="teachers" variant="blue" :animated="true">
+          <template #icon>👩‍🏫</template>
+          Teacher Zone
+        </Button>-->
+        <Button
+          @click="menu = false"
+          :icon="true"
+          :to="localePath('profile')"
+          variant="yellow"
+          :animated="true"
+        >
+          <template #icon>
+            <Icon class="text-white" :height="48" name="profile"/>
+          </template>
+          {{ $t('profile.button') }}
+        </Button>
+        <Button
+          @click="menu = false"
+          :icon="true"
+          :to="localePath('achievements')"
+          variant="orange"
+          :animated="true"
+        >
+          <template #icon>
+            <Icon class="text-white" :height="48" name="school"/>
+          </template>
+          {{ $t('achievements.button') }}
+        </Button>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { Component, Watch } from 'vue-property-decorator'
+import {Component, Watch} from 'vue-property-decorator'
 
 @Component
 export default class Navigation extends Vue {
   menu = false
   birdColor = "bird-yellow border-yellow";
 
-  @Watch('$route', { immediate: true })
+  @Watch('$route', {immediate: true})
   setBirdColor() {
-    if (!this.$router.currentRoute.name){
+    if (!this.$router.currentRoute.name) {
       return 'bird-yellow border-yellow';
     }
     const routeName = this.$router.currentRoute.name.split('___')[0]
@@ -189,20 +191,19 @@ export default class Navigation extends Vue {
 </script>
 <style lang="postcss" scoped>
 nav {
-  @apply py-3 flex sm:py-4 px-2 sm:px-4 bg-white;
+  @apply py-3 flex sm:py-4 px-2 sm:px-4;
   @apply justify-between w-full items-center relative top-0 z-50 shadow;
   backdrop-filter: blur(15px);
 }
 
 .menu {
-  @apply flex justify-center flex-col items-center mt-2 pr-4 focus:outline-none;
+  @apply flex justify-center flex-col items-center mt-2 pr-4 focus:outline-none dark:text-gray-200;
   font-size: 14px;
 }
 
 .menu-area {
   height: calc(100vh - 80px);
 }
-
 
 
 .rainbow-border {
@@ -249,7 +250,7 @@ nav p {
 }
 
 nav h1 {
-  @apply relative text-2xl flex sm:hidden md:flex  md:text-4xl;
+  @apply relative text-2xl flex sm:hidden md:flex  md:text-4xl dark:text-gray-200;;
   position: relative;
   top: -8px;
   line-height: 0px;
@@ -281,6 +282,7 @@ nav img {
 }
 
 .nav-links li a {
+  @apply dark:text-gray-200;
   text-transform: uppercase;
   display: flex;
   flex-direction: column;
@@ -289,7 +291,6 @@ nav img {
 }
 
 .nav-links li a:hover {
-  text-shadow: 1px 1px 0 #fff;
 }
 
 .nav-links li a.yellow:hover,
@@ -421,7 +422,7 @@ nav img {
 }
 
 .nav-bar {
-  background: rgba(255,255,255,.6) !important;
+  @apply bg-opacity-60;
   backdrop-filter: blur(15px);
 }
 

@@ -1,6 +1,6 @@
 <template>
-  <Dialog>
-    <h2 class="text-xl sm:text-3xl">{{ $t('t.whereIs') }}</h2>
+  <Dialog classes="bg-white dark:bg-gray-800">
+    <h2 class="text-xl sm:text-3xl dark:text-gray-300">{{ $t('t.whereIs') }}</h2>
     <h3 class="flag-xl text-lg sm:text-xl" v-if="country && (room.room === 'countries' || room.room === 'speedrun')">
       <Flag
         class="flag"
@@ -12,11 +12,11 @@
         :code="country.alpha2code === 'GB' ? 'UK' : country.alpha2code"
       />
       <br />
-      <span class="" v-if="country.translations[$i18n.locale]">{{country.translations[$i18n.locale].country }}</span>
-      <span class="" v-else>{{country.name }}</span>
+      <span class="dark:text-gray-300" v-if="country.translations[$i18n.locale]">{{country.translations[$i18n.locale].country }}</span>
+      <span class="dark:text-gray-300" v-else>{{country.name }}</span>
 
     </h3>
-    <h3 class="flag-xl text-xl sm:text-3xl" v-else-if="room.room === 'capitals'">
+    <h3 class="flag-xl text-xl sm:text-3xl dark:text-gray-100" v-else-if="room.room === 'capitals'">
       <div v-if="country && country.translatedcapitals[$i18n.locale]">
         {{  $i18n.locale === 'en' ? country.capital : country.translatedcapitals[$i18n.locale] }}
       </div>

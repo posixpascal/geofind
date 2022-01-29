@@ -65,7 +65,7 @@ export default class LobbyPlayers extends Vue {
 }
 
 .player-list li {
-  @apply border-dashed border-b-2 border-gray-100 py-3 px-1;
+  @apply border-dashed border-b-2  dark:border-gray-800 border-gray-100 py-3 px-1;
 }
 
 .player-list li h3 {

@@ -1,10 +1,10 @@
 import { Schema, Context, type, MapSchema, ArraySchema } from '@colyseus/schema'
-import { Player } from './PlayerState'
-import { Vote } from './VoteState'
-import { Country } from './CountryState'
-import { ScoreBoard } from './ScoreBoardState'
+import { Player } from '../entities/PlayerState'
+import { Vote } from '../entities/VoteState'
+import { Country } from '../entities/CountryState'
+import { ScoreBoard } from '../entities/ScoreBoardState'
 
-export class SpeedrunRoomState extends Schema {
+export class CountryRoomState extends Schema {
   @type({ map: Player }) players = new MapSchema<Player>()
   @type({ map: Vote }) votes = new MapSchema<Vote>()
   @type({ map: ScoreBoard }) scoreboard = new MapSchema<ScoreBoard>()

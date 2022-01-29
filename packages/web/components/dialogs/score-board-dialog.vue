@@ -1,5 +1,5 @@
 <template>
-  <Dialog class="scoreboard-dialog">
+  <Dialog  classes="bg-white dark:bg-gray-800" class="scoreboard-dialog">
     <div class="flex mb-10 justify-between items-center">
       <h2 class="flex items-center pin-title mb-0">
         <Pin :id="$auth.user.pin" width="32" height="32" />

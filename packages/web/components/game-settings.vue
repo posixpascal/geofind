@@ -273,14 +273,14 @@ export default class GameSettings extends Vue {
 </script>
 <style scoped lang="postcss">
 h3 {
-  @apply pb-3 mt-5 text-4xl border-b-2 border-gray-100 w-full text-gray-700;
+  @apply pb-3 mt-5 text-4xl border-b border-gray-100 dark:border-gray-800 w-full text-gray-700;
 }
 
 .settings-wrapper {
 }
 
 .settings-panel {
-  @apply bg-white rounded flex justify-center items-center w-full flex-col mb-10 shadow-lg;
+  @apply bg-white dark:bg-gray-700 rounded flex justify-center items-center w-full flex-col mb-10 shadow-lg;
 }
 
 .game-modes {
@@ -289,6 +289,7 @@ h3 {
 
 .game-mode {
   @apply justify-center items-center flex flex-col bg-gray-200 rounded p-5 text-center cursor-pointer font-lucky;
+  @apply dark:bg-gray-600 dark:text-white;
   width: 100%;
   height: 130px;
   margin-bottom: 8px;
@@ -304,7 +305,7 @@ h3 {
 }
 
 .game-mode.blue {
-  @apply hover:bg-blue-100;
+  @apply hover:bg-blue-100 dark:hover:bg-blue-700;
 }
 
 .game-mode.blue.active {
@@ -347,7 +348,7 @@ h3 {
 }
 
 .game-mode:not(.active) {
-  color: #111;
+  @apply text-gray-300 dark:text-gray-200;
 }
 
 .game-mode:not(.active) svg *:not(.ignored) {

@@ -53,7 +53,7 @@ export default class Footer extends Vue {}
 </script>
 <style lang="postcss" scoped>
 footer {
-  @apply px-3 pt-7 pb-10 bg-white text-center text-gray-600 relative;
+  @apply px-3 pt-7 pb-10 bg-white text-center text-gray-600 relative dark:bg-gray-700 dark:text-gray-200;
 }
 
 footer::after {
@@ -95,6 +95,6 @@ footer::after {
 }
 
 .logo-stroked svg * {
-  fill: #999;
+  @apply fill-current text-gray-400 dark:text-gray-200;
 }
 </style>

@@ -1,12 +1,12 @@
-import { row2country } from './countryToState'
+import { countryFactory } from './countryFactory'
 import { client } from './client'
-import { CountryRoomState } from '../rooms/schema/CountryRoomState'
+import { CountryRoomState } from '../rooms/schema/game_modes/CountryRoomState'
 import {
   REGIONS,
   SUBREGIONS,
   SUBREGIONS_EXCLUDING_ISLANDS,
 } from '../constants/world'
-import { FIND_COUNTRY_QUERY } from '../sql/countries'
+import { FIND_COUNTRY_QUERY } from './query/countries'
 
 export const getRandomCountry = async (
   state: Partial<CountryRoomState>,
@@ -24,5 +24,5 @@ export const getRandomCountry = async (
     return await getRandomCountry(state, [])
   }
 
-  return row2country(rows[0])
+  return countryFactory(rows[0])
 }

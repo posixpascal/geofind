@@ -1,8 +1,8 @@
 import { Command } from '@colyseus/command'
-import { Player } from '../rooms/schema/PlayerState'
+import { Player } from '../rooms/schema/entities/PlayerState'
 import { CountryRoom } from '../rooms/CountryRoom'
 import { Client } from 'colyseus'
-import { ScoreBoard } from '../rooms/schema/ScoreBoardState'
+import { ScoreBoard } from '../rooms/schema/entities/ScoreBoardState'
 import { ConnectOptions } from '../constants/clients'
 
 export class OnJoinCommand extends Command<

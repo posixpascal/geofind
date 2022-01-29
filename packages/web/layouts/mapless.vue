@@ -74,7 +74,6 @@ h3 {
 }
 
 .panel > h3 {
-  border-bottom: 2px solid #f1f1f1;
   padding-bottom: 7px !important;
 }
 

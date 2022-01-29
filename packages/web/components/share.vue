@@ -8,7 +8,7 @@
           type="text"
           :value="msg"
           disabled
-          :class="`font-lucky text-center input w-full bg-gray-100 rounded px-6 py-4 text-xl`"
+          :class="`font-lucky text-center input w-full bg-gray-100 dark:text-white dark:bg-gray-800 rounded px-6 py-4 text-xl`"
         />
       </div>
 
