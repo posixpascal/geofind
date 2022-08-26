@@ -348,7 +348,7 @@ h3 {
 }
 
 .game-mode:not(.active) {
-  @apply text-gray-300 dark:text-gray-200;
+  @apply text-gray-600 dark:text-gray-200;
 }
 
 .game-mode:not(.active) svg *:not(.ignored) {
