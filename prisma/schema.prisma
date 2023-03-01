@@ -1,0 +1,264 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = "native"
+
+  // preview features to enable if not on v4:
+  previewFeatures = ["extendedIndexes", "improvedQueryRaw"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Country {
+  id String @id @default(cuid())
+
+  region    String
+  subregion String
+
+  nameCommon         String
+  nameOfficial       String
+  nameNativeCommon   String
+  nameNativeOfficial String
+
+  isoAlpha2  String @unique
+  isoAlpha3  String @unique
+  isoNumeric String @unique
+
+  capitalName   String
+  capitalLatLng Unsupported("geometry(Point, 4326)")
+
+  continent  String
+  population Int
+  ariaInKm   Int
+
+  coatOfArmsPng    String?
+  coatOfArmsVector String?
+  flagEmoji        String?
+
+  isIndependent Boolean
+  isUnMember    Boolean
+
+  status String // Like "official-assigned". Consult RestCountries API Docs
+
+  altSpellings Json
+  translations Json
+  borders      Json
+  tlds         Json
+  languages    Json
+  currencies   Json
+  timezones    Json
+  car          Json
+  wikiDataQID  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  latLng Unsupported("geometry(Point, 4326)")
+  shape  Unsupported("geometry")?
+  Vote   Vote[]
+
+  @@index([latLng], name: "country_idx", type: Gist)
+  @@index([capitalLatLng], name: "capital_idx", type: Gist)
+}
+
+
+// Necessary for Next auth
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String        @id @default(cuid())
+  name          String?
+  email         String?       @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  
+  pin String?
+  color String?
+   
+  games      Game[]
+  gameSessions GameSession[]
+  users      UsersOnAchievements[]
+  activities ActivityLog[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  @@unique([identifier, token])
+}
+
+
+
+
+model Pin {
+ id String @id @default(cuid())
+
+ key String
+ hasColor Boolean
+ hasAnimation Boolean
+}
+
+model Game {
+  id String @id @default(cuid())
+
+  gameSessions GameSession[]
+
+  creator   User   @relation(fields: [creatorId], references: [id])
+  creatorId String
+
+  tag String @default("")
+
+  mode  GameMode  @default(WORLD)
+  speed GameSpeed @default(DEFAULT)
+  state GameState @default(LOBBY)
+
+  maps Json
+  isTutorial        Boolean @default(false)
+  isPublic          Boolean
+  hasDirectMatches  Boolean
+  hasCountryBorders Boolean
+  hasIslands        Boolean
+
+  Vote              Vote[]
+}
+
+model GameSession {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  game   Game   @relation(fields: [gameId], references: [id])
+  gameId String
+
+  score Int
+  votes Vote[]
+
+  isReady Boolean @default(false)
+
+  state          GameSessionState
+  lastActivityAt DateTime     @updatedAt
+
+  @@unique([gameId, userId])
+}
+
+model Vote {
+  id String @id @default(cuid())
+
+  gameSession   GameSession @relation(fields: [gameSessionId], references: [id])
+  gameSessionId String
+
+  game   Game   @relation(fields: [gameId], references: [id])
+  gameId String
+
+  country   Country? @relation(fields: [countryId], references: [id])
+  countryId String?
+
+  lat Float
+  lng Float
+
+  isCorrect Boolean
+}
+
+model Achievement {
+  id         String @id @default(cuid())
+  name       String
+  experience Int
+
+  users UsersOnAchievements[]
+}
+
+model UsersOnAchievements {
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  achievementId String
+
+  awardedAt DateTime @default(now())
+
+  @@id([userId, achievementId])
+}
+
+model ActivityLog {
+  id String @id @default(cuid())
+
+  actor   User   @relation(fields: [actorId], references: [id])
+  actorId String
+
+  name     String
+  subject  Json
+  metadata Json
+}
+
+
+enum GameSpeed {
+  DEFAULT
+  SLOW
+  FAST
+  BLITZ
+}
+
+enum GameSessionState {
+  CONNECTED
+  DISCONNECTED
+}
+
+enum GameState {
+  LOBBY
+  ROUND_START
+  ROUND_END
+  SCOREBOARD
+  FINISHED
+  PAUSED
+}
+
+enum GameMode {
+  WORLD
+  ANIMALS
+  FLAGS
+  COUNTRIES
+  CAPITALS
+}
+
+enum GameMap {
+  WORLD
+  GLOBE
+  EUROPE
+  AFRICA
+  ASIA
+  OCEANIA
+  NORTH_AMERICA
+  SOUTH_AMERICA
+}

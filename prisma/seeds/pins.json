@@ -1,0 +1,12 @@
+[
+  {
+    "key": "default",
+    "hasColor": true,
+    "hasAnimation": false
+  },
+  {
+    "key": "pin",
+    "hasColor": true,
+    "hasAnimation": false
+  }
+]

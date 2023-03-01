@@ -1,0 +1,22 @@
+<component name="ProjectCodeStyleConfiguration">
+  <code_scheme name="Project" version="173">
+    <JSCodeStyleSettings version="0">
+      <option name="ALIGN_VAR_STATEMENTS" value="2" />
+      <option name="ENFORCE_TRAILING_COMMA" value="WhenMultiline" />
+    </JSCodeStyleSettings>
+    <PHPCodeStyleSettings>
+      <option name="COMMA_AFTER_LAST_ARRAY_ELEMENT" value="true" />
+      <option name="LOWER_CASE_BOOLEAN_CONST" value="true" />
+      <option name="LOWER_CASE_NULL_CONST" value="true" />
+      <option name="ELSE_IF_STYLE" value="SEPARATE" />
+      <option name="FORCE_SHORT_DECLARATION_ARRAY_STYLE" value="true" />
+    </PHPCodeStyleSettings>
+    <ScalaCodeStyleSettings>
+      <option name="MULTILINE_STRING_CLOSING_QUOTES_ON_NEW_LINE" value="true" />
+    </ScalaCodeStyleSettings>
+    <codeStyleSettings language="JavaScript">
+      <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true" />
+      <option name="PARENTHESES_EXPRESSION_LPAREN_WRAP" value="true" />
+    </codeStyleSettings>
+  </code_scheme>
+</component>

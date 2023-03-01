@@ -1,0 +1,42 @@
+{
+  "tags": {
+    "singleplayer": "Einzelspieler",
+    "multiplayer": "Mehrspieler",
+    "competitive": "Wettbewerb",
+    "profile": "Profil",
+    "other": "Sonstiges"
+  },
+  "multiplayer_create": {
+    "title": "Spiel erstellen",
+    "content": "Du bestimmst die Regeln. Eröffne einen Raum und spiele mit deinen Freunden"
+  },
+  "multiplayer_join": {
+    "title": "Spiel beitreten",
+    "content": "Finde offene Spiele oder spiele gegen deine Freunde. Kein Account notwendig ✌️"
+  },
+
+  "feedback": {
+    "title": "Feedback",
+    "content": "Schlage eine Verbesserung vor oder hinterlasse ein paar liebe Worte. Jede E-mail wird gelesen"
+  },
+  "singleplayer": {
+    "title": "Lernen",
+    "content": "Spiele eine entspannte Runde in unserem Lernmodus und verbessere deine Kenntnisse"
+  },
+  "competitive_ladder": {
+    "title": "Rangliste",
+    "content": "Messe dich in der Geofind Rangliste und spiele im Wettbewerb gegen andere Spieler"
+  },
+  "competitive_timetrial": {
+    "title": "Gegen die Zeit",
+    "content": "In diesem Modus musst du soviele Länder wie möglich finden für ein ganz neues Spielerlebnis"
+  },
+  "achievements": {
+    "title": "Erfolge",
+    "content": "In Geofind gibt es viele versteckte Belohnungen, hier erhältst du einen Überblick"
+  },
+  "pins": {
+    "title": "Stecknadeln",
+    "content": "Verpasse deiner Stecknadel einen eigenen Stil oder schalte neue Pins frei"
+  }
+}
