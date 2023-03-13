@@ -1,4 +1,4 @@
-import {aliasMutation, aliasQuery} from '../utils/graphql-test-utils';
+import {aliasMutation, aliasQuery} from '../../utils/graphql-test-utils';
 
 context('Login Tests', () => {
     beforeEach(() => {

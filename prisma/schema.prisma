@@ -6,7 +6,7 @@ generator client {
   binaryTargets = "native"
 
   // preview features to enable if not on v4:
-  previewFeatures = ["extendedIndexes", "improvedQueryRaw"]
+  previewFeatures = ["clientExtensions"]
 }
 
 datasource db {
@@ -20,6 +20,7 @@ model Country {
   region    String
   subregion String
 
+  areaInMiles        Int    @default(0)
   nameCommon         String
   nameOfficial       String
   nameNativeCommon   String
@@ -30,7 +31,7 @@ model Country {
   isoNumeric String @unique
 
   capitalName   String
-  capitalLatLng Unsupported("geometry(Point, 4326)")
+  capitalLatLng Unsupported("geometry")
 
   continent  String
   population Int
@@ -58,14 +59,17 @@ model Country {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  latLng Unsupported("geometry(Point, 4326)")
-  shape  Unsupported("geometry")?
-  Vote   Vote[]
+  latLng           Unsupported("geometry")
+  shape            Unsupported("geometry")?
+  Vote             Vote[]
+  SinglePlayerGame SinglePlayerGame[]
+  spottedBy        CountrySpotted[]
+  facts            CountryFact[]
+  animals          CountryAnimal[]
 
   @@index([latLng], name: "country_idx", type: Gist)
   @@index([capitalLatLng], name: "capital_idx", type: Gist)
 }
-
 
 // Necessary for Next auth
 model Account {
@@ -82,6 +86,7 @@ model Account {
   id_token          String?
   session_state     String?
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
 
@@ -94,39 +99,110 @@ model Session {
 }
 
 model User {
-  id            String        @id @default(cuid())
+  id            String    @id @default(cuid())
   name          String?
-  email         String?       @unique
+  email         String?   @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  
-  pin String?
-  color String?
-   
-  games      Game[]
-  gameSessions GameSession[]
-  users      UsersOnAchievements[]
-  activities ActivityLog[]
+
+  pin        String?
+  color      String?
+  experience Int     @default(0)
+
+  games             Game[]
+  gameSessions      GameSession[]
+  users             UsersOnAchievements[]
+  activities        ActivityLog[]
+  singlePlayerGames SinglePlayerGame[]
+  spottedCountries  CountrySpotted[]
 }
 
 model VerificationToken {
   identifier String
   token      String   @unique
   expires    DateTime
+
   @@unique([identifier, token])
 }
 
-
-
-
 model Pin {
- id String @id @default(cuid())
+  id String @id @default(cuid())
 
- key String
- hasColor Boolean
- hasAnimation Boolean
+  key          String
+  hasColor     Boolean
+  hasAnimation Boolean
+}
+
+model SinglePlayerGame {
+  id String @id @default(cuid())
+
+  creator   User   @relation(fields: [creatorId], references: [id])
+  creatorId String
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  roundNumber    Int        @default(1)
+  roundState     RoundState @default(PREPARED)
+  maxTrials      Int        @default(3)
+  trialsForRound Int        @default(0)
+}
+
+model CountrySpotted {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  firstFoundAt DateTime?
+  lastFoundAt  DateTime?
+
+  timesFound  Int
+  timesFailed Int
+}
+
+model CountryFact {
+  id String @id @default(cuid())
+
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
+
+  description String?
+  source String?
+  language String?
+
+  isAIGenerated Boolean @default(false)
+
+  flagged      Boolean @default(false)
+  flaggedCount Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CountryAnimal {
+  id          String  @id @default(cuid())
+  name        String?
+  description String?
+  source String?
+  language String?
+
+  country     Country @relation(fields: [countryId], references: [id])
+  countryId   String
+
+
+  isAIGenerated Boolean @default(false)
+
+  flagged      Boolean @default(false)
+  flaggedCount Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Game {
@@ -143,14 +219,14 @@ model Game {
   speed GameSpeed @default(DEFAULT)
   state GameState @default(LOBBY)
 
-  maps Json
+  maps              Json
   isTutorial        Boolean @default(false)
   isPublic          Boolean
   hasDirectMatches  Boolean
   hasCountryBorders Boolean
   hasIslands        Boolean
 
-  Vote              Vote[]
+  Vote Vote[]
 }
 
 model GameSession {
@@ -168,7 +244,7 @@ model GameSession {
   isReady Boolean @default(false)
 
   state          GameSessionState
-  lastActivityAt DateTime     @updatedAt
+  lastActivityAt DateTime         @updatedAt
 
   @@unique([gameId, userId])
 }
@@ -222,6 +298,14 @@ model ActivityLog {
   metadata Json
 }
 
+enum RoundState {
+  PREPARED
+  STARTED
+  ENDED
+
+  SUCCESS
+  FAILURE
+}
 
 enum GameSpeed {
   DEFAULT

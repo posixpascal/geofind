@@ -1,22 +1,21 @@
-
-import { NextApiRequest, NextApiResponse } from 'next';
-import { unstable_getServerSession as getServerSession } from 'next-auth/next';
-import { authOptions as nextAuthOptions } from './auth/[...nextauth]';
+import { NextApiRequest, NextApiResponse } from "next";
+import { unstable_getServerSession as getServerSession } from "next-auth/next";
+import { authOptions as nextAuthOptions } from "./auth/[...nextauth]";
 
 const restricted = async (req: NextApiRequest, res: NextApiResponse) => {
-    const session = await getServerSession(req, res, nextAuthOptions);
+  const session = await getServerSession(req, res, nextAuthOptions);
 
-    if (session) {
-        res.send({
-            content:
-                'This is protected content. You can access this content because you are signed in.',
-        });
-    } else {
-        res.send({
-            error:
-                'You must be signed in to view the protected content on this page.',
-        });
-    }
+  if (session) {
+    res.send({
+      content:
+        "This is protected content. You can access this content because you are signed in.",
+    });
+  } else {
+    res.send({
+      error:
+        "You must be signed in to view the protected content on this page.",
+    });
+  }
 };
 
 export default restricted;

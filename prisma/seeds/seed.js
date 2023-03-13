@@ -1,4 +1,4 @@
-const {v4: uuid} = require('uuid');
+const cuid = require('cuid');
 const fs = require('fs/promises');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -19,8 +19,6 @@ const logHead = (title) => {
     console.log('');
     console.info("---\t\t\t[" + title + "]\t\t\t---")
 }
-
-
 const psqlJSON = (object) => {
     return `'${JSON.stringify(object).replace(/[\u007F-\uFFFF]/g, function(chr) {
         return "\\u" + ("0000" + chr.charCodeAt(0).toString(16)).substr(-4)
@@ -34,6 +32,7 @@ const psqlString = (str) => {
 const first = (record) => record[Object.keys(record)[0]];
 
 const seed = async () => {
+
     logHead("Connect Database");
     await prisma.$connect();
     console.log("✅ Database connected");
@@ -105,7 +104,7 @@ const seed = async () => {
                                    "updatedAt",
                                    "createdAt")
             VALUES (
-                    '${uuid()}',
+                    '${cuid()}',
                     ${psqlJSON(country.altSpellings)},
                     ${country.area},
                     ST_GeomFromText('POINT(${country.capitalInfo.latlng[0]} ${country.capitalInfo.latlng[1]})', 4326),
@@ -147,7 +146,6 @@ const seed = async () => {
 
         console.log("✅ ", country.name.official, '/', country.subregion, '(' + country.population + " Citizen)");
     }
-
     logHead("Importing Pins");
     const pins = JSON.parse(await fs.readFile("./prisma/seeds/pins.json"));
     for await (const pin of pins){
@@ -159,6 +157,155 @@ const seed = async () => {
             }
         });
     }
+
+    logHead("Loading Facts");
+    const factsDe = JSON.parse(await fs.readFile('./prisma/seeds/facts-de.json', 'utf-8'));
+    const factsEn = JSON.parse(await fs.readFile('./prisma/seeds/facts-en.json', 'utf-8'));
+
+
+    for await (const [countryCode, facts] of Object.entries(factsDe)){
+        const country = await prisma.country.findFirst({
+            select: {
+                id: true,
+            },
+            where: {
+                isoAlpha3: countryCode
+            }
+        });
+
+        if (!country){
+            console.error("Could not find matching country for code: ", countryCode);
+            return;
+        }
+
+        for await (const fact of facts) {
+            if (!fact.description){
+                continue;
+            }
+            await prisma.countryFact.create({
+                data: {
+                    countryId: country.id,
+                    description: fact.description,
+                    language: 'de',
+                    source: fact.source,
+                    isAIGenerated: true,
+                }
+            });
+            console.log("✅ Imported ", fact.description);
+        }
+    }
+
+    for await (const [country, facts] of Object.entries(factsEn)){
+        const country = await prisma.country.findFirst({
+            select: {
+                id: true,
+            },
+            where: {
+                isoAlpha3: countryCode
+            }
+        });
+
+        if (!country){
+            console.error("Could not find matching country for code: ", countryCode);
+            return;
+        }
+
+        for await (const fact of facts) {
+            if (!fact.description){
+                continue;
+            }
+            await prisma.countryFact.create({
+                data: {
+                    countryId: country.id,
+                    description: fact.description,
+                    language: 'en',
+                    source: fact.source,
+                    isAIGenerated: true,
+                }
+            });
+            console.log("✅ Imported ", fact.description);
+        }
+    }
+
+    logHead("Facts imported! :)")
+
+
+
+
+    logHead("Loading Animals");
+    const animalsDe = JSON.parse(await fs.readFile('./prisma/seeds/animals-de.json', 'utf-8'));
+    const animalsEn = JSON.parse(await fs.readFile('./prisma/seeds/animals-en.json', 'utf-8'));
+
+
+    for await (const [countryCode, animals] of Object.entries(animalsDe)){
+        const country = await prisma.country.findFirst({
+            select: {
+                id: true,
+            },
+            where: {
+                isoAlpha3: countryCode
+            }
+        });
+
+        if (!country){
+            console.error("Could not find matching country for code: ", countryCode);
+            return;
+        }
+
+        let a = animals.length === 1 ? animals[0] : animals; // Sometimes wrapped in [].
+        for await (const animal of a) {
+            if (!animal.name){
+                continue;
+            }
+            await prisma.countryAnimal.create({
+                data: {
+                    countryId: country.id,
+                    name: animal.name,
+                    description: animal.description,
+                    language: 'de',
+                    source: animal.source,
+                    isAIGenerated: true,
+                }
+            });
+            console.log("✅ Imported ", animal.name);
+        }
+    }
+
+    for await (const [countryCode, animals] of Object.entries(animalsEn)){
+        const country = await prisma.country.findFirst({
+            select: {
+                id: true,
+            },
+            where: {
+                isoAlpha3: countryCode
+            }
+        });
+
+        if (!country){
+            console.error("Could not find matching country for code: ", countryCode);
+            return;
+        }
+
+        let a = animals.length === 1 ? animals[0] : animals; // Sometimes wrapped in [].
+        for await (const animal of a) {
+            if (!animal.name){
+                continue;
+            }
+            await prisma.countryAnimal.create({
+                data: {
+                    countryId: country.id,
+                    name: animal.name,
+                    description: animal.description,
+                    language: 'en',
+                    source: animal.source,
+                    isAIGenerated: true,
+                }
+            });
+            console.log("✅ Imported ", animal.name);
+        }
+    }
+
+    logHead("Animals imported! :)")
 }
 
 
@@ -168,5 +315,4 @@ seed().then(async () => {
 }).catch(async (e) => {
     console.error(e);
     await prisma.$disconnect();
-    process.exit(1);
 })

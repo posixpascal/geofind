@@ -1,0 +1,8 @@
+{
+  "experiences": {
+    "COUNTRY_HIT": "{{emoji}} {{name}} gefunden",
+    "FIRST_TRY_HIT": "⭐Nur 1 Versuch!",
+    "FAST_HIT": "🔥Schnell gefunden!",
+    "SECOND_TRY_HIT": "💪Nur 2 Versuche!"
+  }
+}
