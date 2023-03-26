@@ -66,6 +66,7 @@ model Country {
   spottedBy        CountrySpotted[]
   facts            CountryFact[]
   animals          CountryAnimal[]
+  MultiPlayerGame  MultiPlayerGame[]
 
   @@index([latLng], name: "country_idx", type: Gist)
   @@index([capitalLatLng], name: "capital_idx", type: Gist)
@@ -109,7 +110,10 @@ model User {
 
   pin        String?
   color      String?
-  experience Int     @default(0)
+  experience Int      @default(0)
+  joinedAt   DateTime @default(now())
+
+  isGuest Boolean @default(false)
 
   games             Game[]
   gameSessions      GameSession[]
@@ -117,6 +121,61 @@ model User {
   activities        ActivityLog[]
   singlePlayerGames SinglePlayerGame[]
   spottedCountries  CountrySpotted[]
+  multiPlayerGames   MultiPlayerGame[]
+  settings Settings?
+
+  followedBy Follows[] @relation("following")
+  following  Follows[] @relation("follower")
+
+  feedbacks Feedback[]
+  feedbackVotes FeedbackVote[]
+}
+
+model Follows {
+  follower    User   @relation("follower", fields: [followerId], references: [id])
+  followerId  String
+  following   User   @relation("following", fields: [followingId], references: [id])
+  followingId String
+
+  @@id([followerId, followingId])
+}
+
+model Settings {
+    id            String    @id @default(cuid())
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String @unique
+
+    enableAnimations Boolean @default(true)
+    enableLowPowerMode Boolean @default(false)
+    enablePrivacyMode Boolean @default(false)
+    enableFriends Boolean @default(true)
+    enableExperience Boolean @default(true)
+    enableDarkMode Boolean @default(false)
+    enableAds Boolean @default(false)
+}
+
+model Feedback {
+    id            String    @id @default(cuid())
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    isPublic Boolean @default(false)
+    isSolved Boolean @default(false)
+    mood String
+    votes FeedbackVote[]
+    message String @db.Text
+}
+
+model FeedbackVote {
+    id            String    @id @default(cuid())
+
+    user   User   @relation(fields: [userId], references: [id])
+    userId String
+
+    feedback Feedback @relation(fields: [feedbackId], references: [id])
+    feedbackId String
 }
 
 model VerificationToken {
@@ -150,6 +209,33 @@ model SinglePlayerGame {
   trialsForRound Int        @default(0)
 }
 
+model MultiPlayerGame {
+  id       String @id @default(cuid())
+  roomCode String
+
+  creator   User   @relation(fields: [creatorId], references: [id])
+  creatorId String
+
+  country   Country? @relation(fields: [countryId], references: [id])
+  countryId String?
+
+  roundNumber Int @default(1)
+  roundTime   Int @default(30)
+
+  gameState GameState @default(LOBBY)
+  gameMode  GameMode  @default(WORLD)
+  gameMap   GameMap   @default(WORLD)
+
+  roundState RoundState @default(PREPARED)
+
+  isPublic        Boolean @default(false)
+  firstSpotWins   Boolean @default(false) // First to find the country wins the round
+  onlyDirectSpots Boolean @default(false) // Never give points for "closest" guess
+
+  settings   Json?
+  continents Json?
+}
+
 model CountrySpotted {
   id String @id @default(cuid())
 
@@ -173,13 +259,13 @@ model CountryFact {
   countryId String
 
   description String?
-  source String?
-  language String?
+  source      String?
+  language    String?
 
   isAIGenerated Boolean @default(false)
 
   flagged      Boolean @default(false)
-  flaggedCount Int @default(0)
+  flaggedCount Int     @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -189,17 +275,16 @@ model CountryAnimal {
   id          String  @id @default(cuid())
   name        String?
   description String?
-  source String?
-  language String?
+  source      String?
+  language    String?
 
-  country     Country @relation(fields: [countryId], references: [id])
-  countryId   String
-
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
 
   isAIGenerated Boolean @default(false)
 
   flagged      Boolean @default(false)
-  flaggedCount Int @default(0)
+  flaggedCount Int     @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -268,9 +353,14 @@ model Vote {
 }
 
 model Achievement {
-  id         String @id @default(cuid())
-  name       String
-  experience Int
+  id               String @id @default(cuid())
+  name             String
+  experienceOnGain Int    @default(200)
+
+  medal AchievementMedal @default(RIBBON)
+  type  AchievementType  @default(CONTINENTS)
+
+  metadata Json?
 
   users UsersOnAchievements[]
 }
@@ -307,6 +397,27 @@ enum RoundState {
   FAILURE
 }
 
+enum AchievementType {
+  CONTINENTS // For finding countries on a continent
+  FANATIC // For visiting daily
+  COMPETITIVE // For playing ladder games
+  SOCIAL // For friends
+  MISSES // Miss by an inch, miss by > 8000
+}
+
+enum GameState {
+  LOBBY
+  PLAYING
+  ENDED
+  CLOSED
+}
+
+enum AchievementMedal {
+  GEM
+  CROWN
+  RIBBON
+}
+
 enum GameSpeed {
   DEFAULT
   SLOW
@@ -319,21 +430,14 @@ enum GameSessionState {
   DISCONNECTED
 }
 
-enum GameState {
-  LOBBY
-  ROUND_START
-  ROUND_END
-  SCOREBOARD
-  FINISHED
-  PAUSED
-}
-
 enum GameMode {
   WORLD
   ANIMALS
   FLAGS
   COUNTRIES
   CAPITALS
+  TIMETRIAL
+  BATTLEROYALE
 }
 
 enum GameMap {

@@ -45,13 +45,13 @@ export const useMarker: UseMarkerFunction = ({ map }) => {
       pin.remove();
       map.off("click", handleClick);
     };
-  }, [map]);
+  }, [setMarker, map, setLngLat]);
 
   useEffect(() => {
-    if (marker){
-      setLngLat(marker.getLngLat);
+    if (marker) {
+      setLngLat(marker.getLngLat());
     }
-  }, [])
+  }, [marker, setLngLat]);
 
   return { marker, lngLat };
 };

@@ -40,7 +40,22 @@ export const countriesRouter = router({
 
       return countrySpotted.timesFound;
     }),
+  facts: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().cuid(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      const facts = await prisma.countryFact.findMany({
+        where: {
+          countryId: id,
+        },
+      });
 
+      return facts;
+    }),
   random: publicProcedure
     .input(
       z.object({

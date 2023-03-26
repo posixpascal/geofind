@@ -1,20 +1,16 @@
-import { RoundState } from "@prisma/client";
+import { CountryFact, RoundState } from "@prisma/client";
 import { SinglePlayerState } from "@/state/singleplayer";
 import {
   SINGLEPLAYER_END_TIME,
   SINGLEPLAYER_PREPARE_TIME,
 } from "@/server/constants/timings";
 import { trpc } from "@/utils/trpc";
-import {
-  LngLat,
-  LngLatBounds,
-  LngLatLike,
-  Map,
-  Marker,
-  Popup,
-} from "maplibre-gl";
+import { LngLat, LngLatBounds, Map, Marker, Popup } from "maplibre-gl";
 import { useEffect } from "react";
 import cuid from "cuid";
+import { useRecoilState } from "recoil";
+import { factsState } from "@/state/facts";
+import { COUNTRY_LABELS, createMapStyle } from "@/hooks/createMapStyle";
 
 const animateLineOn = (
   map: Map,
@@ -36,8 +32,6 @@ const animateLineOn = (
       },
     ],
   };
-
-  console.log(lineJson);
 
   map.addSource(`line-${id}`, {
     type: "geojson",
@@ -62,20 +56,25 @@ const animateLineOn = (
   return {
     coordinates: lineJson.features[0].geometry.coordinates,
     deleteLine: () => {
-      map.removeSource(`line-${id}`);
       map.removeLayer(`line-animation-${id}`);
+      map.removeSource(`line-${id}`);
     },
   };
 };
+
+let newPins: (Marker | Popup)[] = [];
+let newLines: any = [];
 
 export const useSinglePlayer = (
   marker: Marker | null,
   game: SinglePlayerState,
   map: Map | null
 ) => {
+  const [facts, setFacts] = useRecoilState(factsState);
   const start = trpc.singleplayer.start.useMutation();
   const prepare = trpc.singleplayer.prepare.useMutation();
   const solve = trpc.singleplayer.solve.useMutation();
+  const fetchFacts = trpc.countries.facts.useMutation();
 
   useEffect(() => {
     if (!marker || !game) {
@@ -84,6 +83,15 @@ export const useSinglePlayer = (
 
     const handleRoundState = async () => {
       if (game.roundState === RoundState.PREPARED) {
+        if (map?.isStyleLoaded()) {
+          map!.removeLayer(COUNTRY_LABELS.id);
+        }
+        newPins.forEach((pin) => pin.remove());
+        newLines.forEach((line: any) => line.deleteLine());
+        newPins = [];
+        newLines = [];
+
+        setFacts([]);
         map!.zoomTo(2, {
           duration: 800,
         });
@@ -96,22 +104,30 @@ export const useSinglePlayer = (
       }
 
       if (game.roundState === RoundState.ENDED) {
+        fetchFacts.mutate(
+          {
+            id: game.countryId!,
+          },
+          {
+            onSuccess(data: CountryFact[]) {
+              setFacts(data);
+            },
+          }
+        );
+
         const result: any = await solve.mutateAsync({
           id: game.id!,
           vote: marker.getLngLat(),
         });
 
-        const newPins: (Marker | Popup)[] = [];
-
-        const newLines: any = [];
         for await (const target of result.target) {
           // Drop a marker
           const pin = new Marker({
+            scale: 0.8,
             color: "#000",
           }).setLngLat([target.lng, target.lat]);
           pin.addTo(map!);
           newPins.push(pin);
-
           newLines.push(
             animateLineOn(map!, {
               from: marker.getLngLat(),
@@ -129,20 +145,22 @@ export const useSinglePlayer = (
 
         map!.fitBounds(bounds, {
           padding: {
-            left: 20,
-            right: 20,
+            left: 40,
+            right: 40,
             top: 160,
             bottom: 100,
           },
         });
 
         setTimeout(() => {
-          newPins.forEach((pin) => pin.remove());
-          newLines.forEach((line: any) => line.deleteLine());
-          prepare.mutateAsync({
-            id: game.id!,
-          });
-        }, SINGLEPLAYER_END_TIME);
+          map!.addLayer(COUNTRY_LABELS as any);
+        }, 500);
+        // TODO: allow automatic skip
+        // setTimeout(() => {
+        //     prepare.mutateAsync({
+        //         id: game.id!,
+        //     });
+        // }, SINGLEPLAYER_END_TIME);
       }
 
       return () => {};

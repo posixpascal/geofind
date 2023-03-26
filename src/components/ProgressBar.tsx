@@ -11,7 +11,7 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   current,
   total,
 }) => {
-  const percentage = (100 * Math.max(1, current - start)) / (total - start);
+  const percentage = (100 * Math.max(0, current - start)) / (total - start);
   const { w } = useSpring({
     from: { w: 0 },
     w: percentage,

@@ -1,0 +1,190 @@
+[
+  {
+    "name": "all",
+    "type": "CONTINENTS",
+    "experienceOnGain": 5000,
+    "medal": "GEM",
+    "metadata": {
+      "continent": "all"
+    }
+  },
+
+  {
+    "name": "africa",
+    "type": "CONTINENTS",
+    "experienceOnGain": 2000,
+    "medal": "CROWN",
+    "metadata": {
+      "continent": "africa"
+    }
+  },
+
+  {
+    "name": "europe",
+    "type": "CONTINENTS",
+    "experienceOnGain": 2000,
+    "medal": "CROWN",
+    "metadata": {
+      "continent": "europe"
+    }
+  },
+
+  {
+    "name": "asia",
+    "type": "CONTINENTS",
+    "experienceOnGain": 2000,
+    "medal": "CROWN",
+    "metadata": {
+      "continent": "asia"
+    }
+  },
+
+  {
+    "name": "oceania",
+    "type": "CONTINENTS",
+    "experienceOnGain": 2000,
+    "medal": "CROWN",
+    "metadata": {
+      "continent": "oceania"
+    }
+  },
+
+  {
+    "name": "southamerica",
+    "type": "CONTINENTS",
+    "experienceOnGain": 2000,
+    "medal": "CROWN",
+    "metadata": {
+      "continent": "southamerica"
+    }
+  },
+
+  {
+    "name": "northamerica",
+    "type": "CONTINENTS",
+    "experienceOnGain": 2000,
+    "medal": "CROWN",
+    "metadata": {
+      "continent": "northamerica"
+    }
+  },
+
+  {
+    "name": "days",
+    "type": "FANATIC",
+    "experienceOnGain": 500,
+    "medal": "RIBBON",
+    "metadata": {
+      "days": 3
+    }
+  },
+
+  {
+    "name": "week",
+    "type": "FANATIC",
+    "experienceOnGain": 1000,
+    "medal": "CROWN",
+    "metadata": {
+      "days": 7
+    }
+  },
+
+  {
+    "name": "month",
+    "type": "FANATIC",
+    "experienceOnGain": 2000,
+    "medal": "GEM",
+    "metadata": {
+      "days": 30
+    }
+  },
+
+  {
+    "name": "master",
+    "type": "COMPETITIVE",
+    "experienceOnGain": 500,
+    "medal": "RIBBON",
+    "metadata": {
+      "games": 3
+    }
+  },
+
+  {
+    "name": "champion",
+    "type": "COMPETITIVE",
+    "experienceOnGain": 5000,
+    "medal": "CROWN",
+    "metadata": {
+      "games": 50
+    }
+  },
+
+  {
+    "name": "unstoppable",
+    "type": "COMPETITIVE",
+    "experienceOnGain": 10000,
+    "medal": "GEM",
+    "metadata": {
+      "games": 100
+    }
+  },
+
+
+  {
+    "name": "off-by-one",
+    "type": "MISSES",
+    "experienceOnGain": 500,
+    "medal": "RIBBON",
+    "metadata": {
+      "condition": "less",
+      "distance": 1000
+    }
+  },
+
+  {
+    "name": "over-9000",
+    "type": "MISSES",
+    "experienceOnGain": 500,
+    "medal": "RIBBON",
+    "metadata": {
+      "condition": "more",
+      "distance": 9000
+    }
+  },
+  {
+    "name": "five-in-a-row",
+    "type": "MISSES",
+    "experienceOnGain": 500,
+    "medal": "RIBBON",
+    "metadata": {
+      "amount": 5
+    }
+  },
+  {
+    "name": "share-the-pain",
+    "type": "SOCIAL",
+    "experienceOnGain": 500,
+    "medal": "RIBBON",
+    "metadata": {
+      "amount": 5
+    }
+  },
+  {
+    "name": "popular",
+    "type": "SOCIAL",
+    "experienceOnGain": 500,
+    "medal": "CROWN",
+    "metadata": {
+      "amount": 10
+    }
+  },
+  {
+    "name": "community",
+    "type": "SOCIAL",
+    "experienceOnGain": 500,
+    "medal": "GEM",
+    "metadata": {
+      "amount": 50
+    }
+  }
+]

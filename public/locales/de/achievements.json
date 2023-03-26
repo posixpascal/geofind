@@ -1,0 +1,99 @@
+{
+  "groups": {
+    "CONTINENTS": "Länder der Welt",
+    "FANATIC": "Du und Geofind",
+    "COMPETITIVE": "Herausforderungen",
+    "MISSES": "Fehler passieren",
+    "SOCIAL": "Mit Freunden"
+  },
+  "CONTINENTS": {
+    "all": {
+      "title": "Geograph",
+      "description": "Finde alle Länder mindestens 1x um diesen Erfolg freizuschalten."
+    },
+    "africa": {
+      "title": "Länder in Afrika",
+      "description": "Finde alle Länder in Afrika mindestens 1x um diesen Erfolg freizuschalten"
+    },
+    "europe": {
+      "title": "Länder in Europa",
+      "description": "Finde alle Länder in Europa mindestens 1x um diesen Erfolg freizuschalten"
+    },
+    "asia": {
+      "title": "Länder in Asien",
+      "description": "Finde alle Länder in Asien mindestens 1x um diesen Erfolg freizuschalten"
+    },
+    "oceania": {
+      "title": "Länder in Ozeanien",
+      "description": "Finde alle Länder in Ozeanien mindestens 1x um diesen Erfolg freizuschalten"
+    },
+    "southamerica": {
+      "title": "Länder in Südamerika",
+      "description": "Finde alle Länder in Südamerika mindestens 1x um diesen Erfolg freizuschalten"
+    },
+    "northamerica": {
+      "title": "Länder in Nordamerika",
+      "description": "Finde alle Länder in Nordamerika mindestens 1x um diesen Erfolg freizuschalten"
+    }
+  },
+
+  "FANATIC": {
+    "days": {
+      "title": "Gern gesehener Gast",
+      "description": "Besuche Geofind an 3 aufeinander folgenden Tagen um diesen Erfolg freizuschalten"
+    },
+    "week": {
+      "title": "Forscher",
+      "description": "Besuche Geofind an 7 aufeinander folgenden Tagen um diesen Erfolg freizuschalten"
+    },
+    "month": {
+      "title": "Fanatisch",
+      "description": "Besuche Geofind an 30 aufeinander folgenden Tagen um diesen Erfolg freizuschalten"
+    }
+  },
+
+  "COMPETITIVE": {
+    "master": {
+      "title": "Meister",
+      "description": "Spiele 3 Ranglisten Spiele"
+    },
+    "champion": {
+      "title": "Meister",
+      "description": "Spiele 50 Ranglisten Spiele"
+    },
+    "unstoppable": {
+      "title": "Meister",
+      "description": "Spiele 100 Ranglisten Spiele"
+    }
+  },
+
+  "MISSES": {
+    "off-by-one": {
+      "title": "Nur ein paar Zentimeter",
+      "description": "Verfehle ein Land um weniger als einen Kilometer"
+    },
+    "over-9000": {
+      "title": "Über 9000",
+      "description": "Verfehle ein Land um mehr als 9000 Kilometer"
+    },
+    "five-in-a-row": {
+      "title": "Strike",
+      "description": "Verfehle 5 Länder hintereinander"
+    }
+  },
+
+  "SOCIAL": {
+    "share-the-pain": {
+      "title": "Geteiltes Leid ist...",
+      "description": "Lade 5 Freunde zu einem Geofind Spiel ein"
+    },
+    "popular": {
+      "title": "Berühmt",
+      "description": "Lade 50 Spieler zu einem Geofind Spiel ein"
+    },
+    "community": {
+      "title": "Community",
+      "description": "Lade 100 Spieler zu einem Geofind Spiel ein"
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Feedback",
+  "content": "Wir freuen uns über dein Feedback und nehmen es sehr ernst. Jeder Vorschlag zählt und wir sind bereit, ihn umzusetzen. Du kannst auch für dein favorisiertes Feedback abstimmen oder dein eigenes schreiben.",
+  "feedback": "Euer Feedback",
+  "filter": {
+    "title": "Sortieren",
+    "recent": "Neueste zuerst",
+    "solved": "Gelöstes Feedback",
+    "mostVotes": "Am besten bewertet"
+  }
+}

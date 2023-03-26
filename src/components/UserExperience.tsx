@@ -14,16 +14,41 @@ import {
 } from "@react-spring/web";
 import { Experience } from "@/server/constants/exp";
 import { ExperienceListItem } from "./ExperienceListItem";
+import { LevelUp } from "./LevelUp";
+import { useRecoilState } from "recoil";
+import { singlePlayerState } from "@/state/singleplayer";
+import { RoundState } from "@prisma/client";
+import {UserAvatar} from "@/components/UserAvatar";
 
 const LEVEL_UP_ANIMATION_DURATION = 4000;
+const TRAIL_HEIGHT = 45;
 export const UserExperience = () => {
+  const [singlePlayer] = useRecoilState(singlePlayerState);
   const { user } = useCurrentUser();
-  //const [levelUp, setLevelUp] = useState(false);
+  const [levelUp, setLevelUp] = useState(false);
   const [trail, setTrail] = useState<Experience[]>([]);
   const [experience, setExperience] = useState(0);
 
+  const innerWidth = typeof window !== "undefined" ? window.innerWidth : 300;
+  const innerHeight = typeof window !== "undefined" ? window.innerHeight : 300;
+
+  useEffect(() => {
+    if (singlePlayer.roundState === RoundState.PREPARED) {
+      setLevelUp(false);
+      setTrail([]);
+    }
+  }, [singlePlayer]);
+
   trpc.session.experience.useSubscription(void 0, {
     onData(data) {
+      if (
+        (window as any).oldExperience &&
+        expLevel((window as any).oldExperience) !== expLevel(data.total)
+      ) {
+        setLevelUp(true);
+      }
+
+      (window as any).oldExperience = data.total;
       setExperience(data.total);
       setTrail(data.trail);
     },
@@ -49,12 +74,41 @@ export const UserExperience = () => {
   }, [trail]);
 
   const springApi = useSpringRef();
-  const { background, height } = useSpring({
+  const { background, opacity, left, top, width, height } = useSpring({
     ref: springApi,
-    from: { background: "white", height: 75 },
+    from: {
+      opacity: 1,
+      background: "white",
+      height: 75,
+      left: 20,
+      top: innerHeight - 75 - 25,
+      width: 300,
+    },
     to: {
       scale: trail.length ? 1 : 1,
-      height: trail.length ? 75 + trail.length * 30 : 75,
+      opacity: levelUp ? 0 : 1,
+      height: levelUp
+        ? 400
+        : trail.length
+        ? 75 + trail.length * TRAIL_HEIGHT
+        : 75,
+      left: levelUp ? innerWidth / 2 - 125 : 20,
+      top: levelUp
+        ? innerHeight / 2 - 200
+        : innerHeight - 100 - trail.length * TRAIL_HEIGHT,
+      width: levelUp ? 350 : 300,
+    },
+  });
+
+  const levelUpApi = useSpringRef();
+  const { scale: levelUpScale } = useSpring({
+    ref: levelUpApi,
+    from: {
+      height: 0,
+      scale: 0,
+    },
+    to: {
+      scale: levelUp ? 1 : 0,
     },
   });
 
@@ -62,16 +116,18 @@ export const UserExperience = () => {
   const transition = useTransition(trail.length ? trail : [], {
     ref: transApi,
     trail: 400 / trail.length,
-    from: { opacity: 0, scale: 0 },
-    enter: { opacity: 1, scale: 1 },
-    leave: { opacity: 0, scale: 0 },
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
   });
 
   // This will orchestrate the two animations above, comment the last arg and it creates a sequence
-  useChain(trail.length ? [springApi, transApi] : [transApi, springApi], [
-    0,
-    trail.length ? 0.1 : 0.6,
-  ]);
+  useChain(
+    trail.length
+      ? [springApi, transApi, levelUpApi]
+      : [levelUpApi, transApi, springApi],
+    [levelUp ? 0 : 0.4, levelUp ? 1.2 : 0.6, trail.length ? 0.1 : 0.6]
+  );
 
   if (!user.data) {
     return <div></div>;
@@ -81,43 +137,54 @@ export const UserExperience = () => {
     <div>
       <animated.div
         className={
-          "shadow-lg bg-white bg-opacity-60 backdrop-blur absolute z-10 bottom-5 left-5 flex-col flex rounded-xl p-3"
+          "overflow-hidden shadow-lg bg-white dark:bg-slate-900 dark:text-slate-200 bg-opacity-60 backdrop-blur absolute z-10 bottom-5 left-5 flex-col flex rounded-xl"
         }
         style={{
           height,
+          width,
+          left,
+          top,
         }}
       >
-        <div className={"flex gap-4"}>
-          {user.data?.isLoggedIn ? (
-            <Image
-              alt={user.data.name!}
-              height={48}
-              width={48}
-              className="rounded-full"
-              src={user.data?.image!}
-            />
-          ) : (
-            <Avatar
-              size={48}
-              variant={"beam"}
-              name={user.data?.name ?? "guest"}
-            />
-          )}
-          <div>
-            <strong>Lvl. {expLevel(experience)}</strong>
-            <span className={"text-xs pl-2"}>
-              Noch {nextExpLevelAt - experience} Exp
-            </span>
-            <div>
-              <ProgressBar
-                start={expForLevel}
-                current={experience}
-                total={nextExpLevelAt}
-              />
-            </div>
+        <animated.div
+          style={{
+            opacity,
+            height: opacity.interpolate((x) => `${100 * x}%`),
+            scale: opacity.interpolate((x) => `${x}`),
+          }}
+        >
+          <div className={"flex p-3 gap-4"}>
+            <UserAvatar width={48} height={48} />
+            <animated.div style={{ opacity }}>
+              <strong>Lvl. {expLevel(experience)}</strong>
+              <span className={"text-xs pl-2"}>
+                Noch {nextExpLevelAt - experience} Exp
+              </span>
+              <div>
+                <ProgressBar
+                  start={expForLevel}
+                  current={experience}
+                  total={nextExpLevelAt}
+                />
+              </div>
+            </animated.div>
           </div>
-        </div>
-        <div className={"flex flex-col py-2 pb-4"}>
+        </animated.div>
+        <animated.div
+          style={{
+            transformOrigin: "bottom left",
+            opacity: levelUpScale.interpolate((x) => `${x}`),
+            height: levelUpScale.interpolate((x) => `${100 * x}%`),
+          }}
+        >
+          <LevelUp
+            visible={levelUp}
+            experience={experience}
+            width={350}
+            height={400}
+          />
+        </animated.div>
+        <div className={"flex flex-col px-5 pb-5"}>
           {transition((style, item) => (
             <animated.div style={{ ...style }}>
               <ExperienceListItem type={item} />

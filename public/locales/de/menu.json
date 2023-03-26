@@ -4,7 +4,12 @@
     "multiplayer": "Mehrspieler",
     "competitive": "Wettbewerb",
     "profile": "Profil",
-    "other": "Sonstiges"
+    "other": "Sonstiges",
+    "school": "Schule"
+  },
+  "school": {
+    "title": "Geografie an Schulen",
+    "content": "Wir haben ein intuitives und sicheres Lernangebot für Schulklassen entwickelt. Lesen Sie hier mehr."
   },
   "multiplayer_create": {
     "title": "Spiel erstellen",
@@ -14,7 +19,14 @@
     "title": "Spiel beitreten",
     "content": "Finde offene Spiele oder spiele gegen deine Freunde. Kein Account notwendig ✌️"
   },
-
+  "profile": {
+    "title": "Dein Profil",
+    "content": "Vervollständige dein Profil, füge Freunde hinzu oder bearbeite deine Stecknadeln"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "content": "Hier kannst du Geofind genau auf dich abstimmen. Farben, Animationen und vieles mehr"
+  },
   "feedback": {
     "title": "Feedback",
     "content": "Schlage eine Verbesserung vor oder hinterlasse ein paar liebe Worte. Jede E-mail wird gelesen"

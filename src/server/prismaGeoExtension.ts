@@ -26,7 +26,7 @@ export const geoPrisma = prisma.$extends({
       async withLngLat(id: string) {
         logger.info({
           event: "QueryCountryWithLatLng",
-          data: {countryId: id},
+          data: { countryId: id },
         });
 
         const country = await prisma.$queryRaw(
@@ -42,14 +42,16 @@ export const geoPrisma = prisma.$extends({
       async within(lngLat: LngLat): Promise<Country[]> {
         logger.info({
           event: "QueryCountryWithinLatLng",
-          data: {lngLat},
+          data: { lngLat },
         });
 
         const countriesWithin = await prisma.$queryRaw(
           Prisma.sql`
                         SELECT id, "nameCommon", "flagEmoji", ST_X("Country"."latLng"::geometry) as lat, ST_Y("Country"."latLng"::geometry) as lng
                         FROM public."Country"
-                        WHERE ST_Contains("Country".shape, ST_SetSRID(ST_MakePoint(${String(lngLat.lng)}::numeric, ${String(lngLat.lat)}::numeric), 0))
+                        WHERE ST_Contains("Country".shape, ST_SetSRID(ST_MakePoint(${String(
+                          lngLat.lng
+                        )}::numeric, ${String(lngLat.lat)}::numeric), 0))
                         GROUP BY "Country".id
                         ORDER BY "Country".id; 
                     `

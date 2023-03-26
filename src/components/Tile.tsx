@@ -1,5 +1,6 @@
-import { animated, useSpring } from "@react-spring/web";
-import React, { ReactNode, useState } from "react";
+import { animated, to, useSpring } from "@react-spring/web";
+import React, { ReactNode, useRef } from "react";
+import { useGesture } from "@use-gesture/react";
 
 interface TileProps {
   title: ReactNode;
@@ -7,7 +8,13 @@ interface TileProps {
   icon: ReactNode;
   tag?: ReactNode;
   loading?: boolean;
+  children?: ReactNode;
+  interactive?: boolean;
 }
+
+const calcX = (y: number, ly: number) =>
+  -(y - ly - window.innerHeight / 2) / 20;
+const calcY = (x: number, lx: number) => (x - lx - window.innerWidth / 2) / 20;
 
 export const Tile: React.FC<TileProps> = ({
   title,
@@ -15,60 +22,47 @@ export const Tile: React.FC<TileProps> = ({
   content,
   icon,
   loading,
+  children = [],
+    interactive = true,
 }) => {
-  const [hover, setHover] = useState(false);
-  let interpolation = 0;
-  let duration = 50;
-
-  if (hover) {
-    interpolation = 1;
-  }
-
-  if (loading) {
-    interpolation = 2;
-    duration = 200;
-  }
-
-  const { x } = useSpring({
-    from: { x: 0 },
-    x: interpolation,
-    config: { duration },
-  });
+  const target = useRef();
+  const [{ scale, shadow }, api] = useSpring(() => ({
+    scale: 1,
+    shadow: 0,
+    config: {
+      mass: 2,
+    },
+  }));
 
   return (
     <animated.div
+      ref={target}
+      onMouseEnter={() => interactive && api({ scale: 1.1, shadow: 15 })}
+      onMouseLeave={() => interactive && api({ scale: 1.0, shadow: 0 })}
       style={{
-        zIndex: loading ? 10 : 0,
-        transform: x
-          .interpolate({
-            range: [0, 1, 2],
-            output: [1, 1.1, 30],
-          })
-          .interpolate((x) => `scale(${x})`),
-        filter: x
-          .interpolate({
-            range: [0, 1, 2],
-            output: [0, 0, 26],
-          })
-          .interpolate((x) => `blur(${x}px`),
+        boxShadow: to(
+          [shadow],
+          (s) => `${s / 2}px ${s / 2}px ${s}px #00000020`
+        ),
+        scale: to([scale], (s) => s),
       }}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-      className="bg-white text-left relative rounded-xl shadow-lg p-4
-      cursor-pointer transition duration-300 hover:shadow-2xl motion-reduce:transition-none
+      className="h-full bg-white text-left relative rounded-xl p-4
+      cursor-pointer hover:shadow-2xl motion-reduce:transition-none
+      dark:bg-slate-900 dark:text-slate-200
       focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-3"
     >
       <div className={"flex gap-2"}>
-        <div className={"flex flex-col grow-1 w-full"}>
-          <div className={"text-2xl font-bold"}>{title}</div>
+        <div className={"flex flex-col justify-between grow-1 w-full"}>
+          <div className={"text-2xl font-black"}>{title}</div>
           <div>
-            {content}
+            <span className={'text-lg text-gray-600 dark:text-slate-400'}>{content}</span>
 
             {tag && <div className="-mx-0 mt-2">{tag}</div>}
           </div>
+          {children}
         </div>
 
-        <div className={"flex justify-start"}>{icon}</div>
+        <div className={"flex text-6xl justify-start"}>{icon}</div>
       </div>
     </animated.div>
   );

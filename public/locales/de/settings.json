@@ -1,0 +1,34 @@
+{
+  "title": "Einstellungen",
+  "description": "Hier hast Du volle Kontrolle über Dein Geofind :)",
+  "animations": {
+    "emoji": "✨",
+    "title": "Animationen aktivieren",
+    "description": "Geofind mit tollen Animationen verwenden"
+  },
+  "lowpower": {
+    "emoji": "🔋",
+    "title": "Low-Power Modus",
+    "description": "Geofind so batterieschonend wie möglich einsetzen"
+  },
+  "friends": {
+    "emoji": "👯‍♀️",
+    "title": "Freunde aktivieren",
+    "description": "Möchtest Du das Freundesystem von Geofind benutzen?"
+  },
+  "experience": {
+    "emoji": "👑",
+    "title": "Erfahrungspunkte aktivieren",
+    "description": "Möchtest Du das Erfahrungspunkte-System von Geofind benutzen?"
+  },
+  "ads": {
+    "emoji": "😱",
+    "title": "Werbung anzeigen",
+    "description": "Damit hilfst Du uns die Serverkosten zu decken."
+  },
+  "darkmode": {
+    "emoji": "🌑",
+    "title": "Dunkelmodus",
+    "description": "Geofind im Dark-Mode spielen"
+  }
+}

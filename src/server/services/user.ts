@@ -1,6 +1,9 @@
 import { prisma } from "@/server/prisma";
 import ee from "@/server/eventEmitter";
-import { EXPERIENCE_UPDATED } from "@/server/constants/events";
+import {
+  ACHIEVEMENT_AWARDED,
+  EXPERIENCE_UPDATED,
+} from "@/server/constants/events";
 import { Experience, ExperienceValue } from "@/server/constants/exp";
 
 export const recordSpottedCountry = async (
@@ -59,4 +62,22 @@ export const grantExperience = async (
   });
 
   ee.emit(EXPERIENCE_UPDATED, experiences);
+};
+
+export const grantAchievementExperience = async (
+  userId: string,
+  amount: number = 0
+) => {
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      experience: {
+        increment: amount,
+      },
+    },
+  });
+
+  ee.emit(EXPERIENCE_UPDATED, [ACHIEVEMENT_AWARDED]);
 };

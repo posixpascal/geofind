@@ -14,6 +14,8 @@ import { RoundPreparedDialog } from "@/components/RoundPreparedDialog";
 import { UserExperience } from "@/components/UserExperience";
 import { useSinglePlayer } from "@/hooks/useSinglePlayer";
 import { TriesIndicator } from "@/components/TriesIndicator";
+import { factsState } from "@/state/facts";
+import { FactsIndicator } from "@/components/FactsIndicator";
 
 export default function Singleplayer() {
   const router = useRouter();
@@ -25,7 +27,7 @@ export default function Singleplayer() {
     return () => {
       setSinglePlayer({});
     };
-  }, []);
+  }, [setSinglePlayer]);
 
   const { marker } = useMarker({ map });
   useSinglePlayer(marker, singlePlayer, map);
@@ -47,6 +49,7 @@ export default function Singleplayer() {
       <RoundPreparedDialog state={singlePlayer.roundState} />
       <UserExperience />
       <TriesIndicator />
+      <FactsIndicator />
     </Map>
   );
 }

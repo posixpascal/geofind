@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/geofind.iml" filepath="$PROJECT_DIR$/.idea/geofind.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../marketing/tiktok/video-tiktok.iml" filepath="$PROJECT_DIR$/../marketing/tiktok/video-tiktok.iml" />
     </modules>
   </component>
 </project>

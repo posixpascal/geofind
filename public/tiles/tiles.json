@@ -20,15 +20,6 @@
     "description": "",
     "vector_layers": [
         {
-            "id": "geolines",
-            "fields": {
-                "name": "String"
-            },
-            "maxzoom": 4,
-            "minzoom": 0,
-            "description": "geographic lines"
-        },
-        {
             "id": "centroids",
             "fields": {
                 "NAME": "String",

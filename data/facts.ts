@@ -39,7 +39,7 @@ const question = (countryName: string, language) => {
     }
 
     if (language === 'Deutsch'){
-        return `Bitte gib mir ${amountFacts} Fakten über das Land "${countryName}" als eine JSON Liste. Bitte ein Attribut namens "description" einführen welches jedes Ding beschreibt und ein Attribut namens "wikipedia" mit einem Direktlink zum Wikipedia Artikel. Die Werte der JSON Attribute müssen Deutsch sein. JSON bitte in Tripple Backticks (\`\`\`) schreiben`
+        return `Gib mir ${amountFacts} Fakten über das Land "${countryName}" als eine JSON Liste. Bitte ein Attribut namens "description" einführen welches jedes Ding beschreibt und ein Attribut namens "wikipedia" mit einem Direktlink zum Wikipedia Artikel. Die Werte der JSON Attribute müssen Deutsch sein. JSON bitte in Tripple Backticks (\`\`\`) schreiben`
     }
 }
 

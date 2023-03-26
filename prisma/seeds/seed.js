@@ -2,7 +2,6 @@ const cuid = require('cuid');
 const fs = require('fs/promises');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
-
 const blacklist = [
     'Antarctica', // TODO: No latlng at the moment for this :(,
     'Kosovo', // TODO: incomplete dataset
@@ -178,7 +177,9 @@ const seed = async () => {
             return;
         }
 
-        for await (const fact of facts) {
+        let f = facts.length === 1 ? facts[0] : facts; // Sometimes wrapped in [].
+
+        for await (const fact of f) {
             if (!fact.description){
                 continue;
             }
@@ -306,6 +307,23 @@ const seed = async () => {
     }
 
     logHead("Animals imported! :)")
+    const achievements = JSON.parse(await fs.readFile('./prisma/seeds/achievements.json', 'utf-8'));
+
+    for await (const achievement of achievements){
+            await prisma.achievement.create({
+                data: {
+                    name: achievement.name,
+                    experienceOnGain: achievement.experienceOnGain,
+                    medal: achievement.medal,
+                    type: achievement.type,
+                    metadata: achievement.metadata,
+                }
+            });
+            console.log("✅ Imported ", achievement.name);
+    }
+
+    logHead("Importing Achievements");
+
 }
 
 
