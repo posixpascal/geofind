@@ -33,9 +33,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({onSubmit, loading}) =
 
     return <form onSubmit={submit} action="#" className="relative">
         <div
-            className="overflow-hidden rounded-lg shadow-sm ring-2 ring-inset ring-gray-300
-            focus-within:ring-2 focus-within:ring-orange-600  dark:ring-slate-600
-            dark:bg-slate-700">
+            className="overflow-hidden rounded-lg shadow-sm ">
             <label htmlFor="comment" className="sr-only">
                 Add your comment
             </label>
@@ -45,7 +43,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({onSubmit, loading}) =
                 id="comment"
                 value={message}
                 onChange={(ev) => setMessage(ev.target.value)}
-                className="block w-full resize-none border-0 bg-transparent text-gray-900
+                className="block bg-white w-full resize-none border-0 bg-transparent text-gray-900
                 dark:text-slate-200
                 placeholder:text-gray-400 focus:ring-0 sm:py-1.5 sm:text-sm sm:leading-6 lg:text-xl
                 lg:py-4 lg:px-5 mb-20"
@@ -53,7 +51,7 @@ export const FeedbackForm: React.FC<FeedbackFormProps> = ({onSubmit, loading}) =
             />
         </div>
 
-        <div className="absolute bg-gray-100 m-0.5 rounded-b-lg border-t border-gray-200 inset-x-0 bottom-0 flex justify-between py-3 px-5
+        <div className="absolute bg-gray-100 rounded-b-lg border-t border-gray-200 inset-x-0 bottom-0 flex justify-between py-3 px-5
             dark:bg-slate-800 dark:border-slate-600
         ">
             <div className="flex items-center space-x-5">

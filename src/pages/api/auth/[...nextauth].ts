@@ -7,7 +7,17 @@ import jwt from "jsonwebtoken";
 import cuid from "cuid";
 import {randomName} from "@/utils/generators";
 
-const adapter = PrismaAdapter(prisma);
+const adapter = {
+    ...PrismaAdapter(prisma),
+    createUser: (data: any) => {
+        return prisma.user.create({
+            data: {
+                ...data,
+                friendCode: 1000 + Math.round(Math.random() * 8999)
+            }
+        });
+    }
+}
 // Prisma adapter for NextAuth, optional and can be removed
 export const authOptions = {
     session: {
@@ -39,7 +49,8 @@ export const authOptions = {
                 session.user.id = user.id;
                 session.user.experience = user.experience;
             }
-            if (session.user && token){
+
+            if (session.user && token) {
                 session.user.id = token.sub;
             }
             return session;

@@ -6,7 +6,7 @@ import { prisma } from "@/server/prisma";
 import ee from "@/server/eventEmitter";
 import { EXPERIENCE_UPDATED } from "@/server/constants/events";
 import { Experience } from "@/server/constants/exp";
-import {Settings} from "@prisma/client";
+import {Settings, User} from "@prisma/client";
 
 export const sessionRouter = router({
   experience: protectedProcedure.subscription(({ ctx }) => {
@@ -20,11 +20,12 @@ export const sessionRouter = router({
             id: ctx.session.user.id,
           },
         });
-
-        emit.next({
-          total: user!.experience,
-          trail,
-        });
+        if (user) {
+          emit.next({
+            total: user!.experience,
+            trail,
+          });
+        }
       };
 
       onUpdated([]);
@@ -35,7 +36,7 @@ export const sessionRouter = router({
       };
     });
   }),
-  user: publicProcedure.query(async ({ ctx }) => {
+  user: publicProcedure.query(async ({ ctx }): Promise<null | Partial<Pick<User, "id" | "friendCode" | "color" | "name" | "pin" | "isGuest" | "image" | "email" | "joinedAt" | "experience">> & {isLoggedIn: boolean}> => {
     if (ctx.session && ctx.session!.user) {
       const user = await prisma.user.findUnique({
         where: {
@@ -48,6 +49,7 @@ export const sessionRouter = router({
           isGuest: true,
           joinedAt: true,
           experience: true,
+          friendCode: true
         },
       });
       return {
@@ -56,7 +58,7 @@ export const sessionRouter = router({
         isLoggedIn: true,
       };
     } else {
-      return null
+      return null;
     }
   }),
   login: publicProcedure

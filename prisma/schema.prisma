@@ -67,6 +67,7 @@ model Country {
   facts            CountryFact[]
   animals          CountryAnimal[]
   MultiPlayerGame  MultiPlayerGame[]
+  MultiPlayerVote  MultiPlayerVote[]
 
   @@index([latLng], name: "country_idx", type: Gist)
   @@index([capitalLatLng], name: "capital_idx", type: Gist)
@@ -113,22 +114,36 @@ model User {
   experience Int      @default(0)
   joinedAt   DateTime @default(now())
 
+  friendCode Int @default(0)
   isGuest Boolean @default(false)
 
-  games             Game[]
-  gameSessions      GameSession[]
-  users             UsersOnAchievements[]
-  activities        ActivityLog[]
-  singlePlayerGames SinglePlayerGame[]
-  spottedCountries  CountrySpotted[]
-  multiPlayerGames   MultiPlayerGame[]
-  settings Settings?
+  games               Game[]
+  gameSessions        GameSession[]
+  users               UsersOnAchievements[]
+  activities          ActivityLog[]
+  singlePlayerGames   SinglePlayerGame[]
+  spottedCountries    CountrySpotted[]
+  multiPlayerGames    MultiPlayerGame[]
+  multiPlayerSessions MultiPlayerSession[]
+  settings            Settings?
 
   followedBy Follows[] @relation("following")
   following  Follows[] @relation("follower")
 
-  feedbacks Feedback[]
+  feedbacks     Feedback[]
   feedbackVotes FeedbackVote[]
+  dailyExperiences DailyExperience[]
+}
+
+model DailyExperience {
+    id String @id @default(cuid())
+
+   user    User   @relation(fields: [userId], references: [id])
+   userId  String
+
+   experience Int
+   createdAt DateTime @default(now())
+   updatedAt DateTime @updatedAt
 }
 
 model Follows {
@@ -141,41 +156,42 @@ model Follows {
 }
 
 model Settings {
-    id            String    @id @default(cuid())
+  id String @id @default(cuid())
 
-    user   User   @relation(fields: [userId], references: [id])
-    userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+  userId String @unique
 
-    enableAnimations Boolean @default(true)
-    enableLowPowerMode Boolean @default(false)
-    enablePrivacyMode Boolean @default(false)
-    enableFriends Boolean @default(true)
-    enableExperience Boolean @default(true)
-    enableDarkMode Boolean @default(false)
-    enableAds Boolean @default(false)
+  enableAnimations   Boolean @default(true)
+  enableLowPowerMode Boolean @default(false)
+  enablePrivacyMode  Boolean @default(false)
+  enableFriends      Boolean @default(true)
+  enableExperience   Boolean @default(true)
+  enableAds          Boolean @default(false)
+
+  colorPalette String @default("main")
 }
 
 model Feedback {
-    id            String    @id @default(cuid())
+  id String @id @default(cuid())
 
-    user   User   @relation(fields: [userId], references: [id])
-    userId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
-    isPublic Boolean @default(false)
-    isSolved Boolean @default(false)
-    mood String
-    votes FeedbackVote[]
-    message String @db.Text
+  isPublic Boolean        @default(false)
+  isSolved Boolean        @default(false)
+  mood     String
+  votes    FeedbackVote[]
+  message  String         @db.Text
 }
 
 model FeedbackVote {
-    id            String    @id @default(cuid())
+  id String @id @default(cuid())
 
-    user   User   @relation(fields: [userId], references: [id])
-    userId String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
-    feedback Feedback @relation(fields: [feedbackId], references: [id])
-    feedbackId String
+  feedback   Feedback @relation(fields: [feedbackId], references: [id])
+  feedbackId String
 }
 
 model VerificationToken {
@@ -211,7 +227,7 @@ model SinglePlayerGame {
 
 model MultiPlayerGame {
   id       String @id @default(cuid())
-  roomCode String
+  roomCode String @unique
 
   creator   User   @relation(fields: [creatorId], references: [id])
   creatorId String
@@ -234,6 +250,46 @@ model MultiPlayerGame {
 
   settings   Json?
   continents Json?
+
+  sessions        MultiPlayerSession[]
+  MultiPlayerVote MultiPlayerVote[]
+}
+
+model MultiPlayerSession {
+  id String @id @default(cuid())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  multiPlayerGame   MultiPlayerGame @relation(fields: [multiPlayerGameId], references: [id])
+  multiPlayerGameId String
+
+  score Int
+  votes MultiPlayerVote[]
+
+  isReady Boolean @default(false)
+
+  state GameSessionState
+
+  @@unique([multiPlayerGameId, userId])
+}
+
+model MultiPlayerVote {
+  id String @id @default(cuid())
+
+  multiPlayerSession   MultiPlayerSession @relation(fields: [multiPlayerSessionId], references: [id])
+  multiPlayerSessionId String
+
+  multiPlayerGame   MultiPlayerGame @relation(fields: [multiPlayerGameId], references: [id])
+  multiPlayerGameId String
+
+  country   Country? @relation(fields: [countryId], references: [id])
+  countryId String?
+
+  lat Float
+  lng Float
+
+  isCorrect Boolean
 }
 
 model CountrySpotted {

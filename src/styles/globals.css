@@ -2,9 +2,153 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
-  #map,
-  .maplibregl-canvas {
-    cursor: crosshair;
-  }
+    /**
+      Palettes
+
+      rgb regex: rgb\((.+),(.+),(.+)\)
+     */
+    main[class='main'], html[class='main'] {
+        --color-card: 254 246 228;
+        --color-card-headline: 0 24 88;
+        --color-card-paragraph: 23 44 102;
+        --color-headline: 0 24 88;
+        --color-paragraph: 23 44 102;
+        --color-background: 243 210 193;
+        --color-main: 243 210 193;
+        --color-button: 245 130 174;
+        --color-action: 0 24 88;
+        --color-tertiary: 245 130 174;
+        --color-secondary: 139 211 221;
+    }
+
+    main[class='brown'], html[class='brown'] {
+        --color-card: 85 66 61;
+        --color-card-headline: 255 255 254;
+        --color-card-paragraph: 255 243 236;
+
+        --color-headline: 255 255 254;
+        --color-paragraph: 255 243 236;
+        --color-background: 39 28 25;
+        --color-main: 255 243 236;
+        --color-button: 255 192 173;
+        --color-action: 39 28 25;
+        --color-secondary: 255 192 173;
+        --color-tertiary: 150 86 161;
+    }
+
+    main[class='mint'], html[class='mint'] {
+        --color-card: 255 255 254;
+        --color-card-headline: 51 39 42;
+        --color-card-paragraph: 89 74 78;
+
+        --color-headline: 51 39 42;
+        --color-paragraph: 89 74 78;
+        --color-background: 250 238 231;
+        --color-main: 255 255 254;
+        --color-button: 255 139 167;
+        --color-action: 51 39 42;
+        --color-tertiary: 195 240 202;
+        --color-secondary: 255 198 199;
+    }
+
+    main[class='yellow'], html[class='yellow'] {
+        --color-card: 255 255 254;
+        --color-card-headline: 39 35 67;
+        --color-card-paragraph: 45 51 74;
+
+        --color-headline: 39 35 67;
+        --color-paragraph: 45 51 74;
+        --color-background: 227 246 245;
+        --color-main: 255 255 254;
+        --color-button: 255 216 3;
+        --color-action: 39 35 67;
+        --color-tertiary: 186 232 232;
+        --color-secondary: 227 246 245;
+    }
+
+    main[class='darkorange'], html[class='darkorange'] {
+        --color-card: 255 255 254;
+        --color-card-headline: 15 14 23;
+        --color-card-paragraph: 46 47 62;
+        --color-headline: 255 255 254;
+        --color-paragraph: 167 169 190;
+        --color-background: 15 14 23;
+        --color-main: 255 255 254;
+        --color-button: 255 137 6;
+        --color-action: 255 255 254;
+        --color-tertiary: 229 49 112;
+        --color-secondary: 242 95 76;
+    }
+
+    main[class='purple'], html[class='purple'] {
+        --color-card: 255 255 254;
+        --color-card-headline: 35 41 70;
+        --color-card-paragraph: 35 41 70;
+        --color-headline: 35 41 70;
+        --color-paragraph: 35 41 70;
+        --color-background: 212 216 240;
+        --color-main: 184 193 236;
+        --color-button: 238 187 195;
+        --color-action: 35 41 70;
+        --color-tertiary: 238 187 195;
+        --color-secondary: 255 255 254;
+    }
+
+    main[class='pine'], html[class='pine'] {
+        --color-card: 0 70 67;
+        --color-card-headline: 255 255 254;
+        --color-card-paragraph: 171 209 198;
+        --color-headline: 0 30 29;
+        --color-paragraph: 15 52 51;
+        --color-background: 171 209 198;
+        --color-main: 232 228 230;
+        --color-button: 249 188 96;
+        --color-action: 0 30 29;
+        --color-tertiary: 225 97 98;
+        --color-secondary: 171 209 198;
+    }
+
+    main[class='asphalt'], html[class='asphalt'] {
+        --color-card: 239 240 243;
+        --color-card-headline: 13 13 13;
+        --color-card-paragraph: 42 42 42;
+        --color-headline: 13 13 13;
+        --color-paragraph: 42 42 42;
+        --color-background: 255 255 254;
+        --color-main: 239 240 243;
+        --color-button: 255 142 60;
+        --color-action: 13 13 13;
+        --color-tertiary: 217 55 110;
+        --color-secondary: 255 255 254;
+    }
+
+    main[class='pink'], html[class='pink'] {
+        --color-card: 22 22 26;
+        --color-card-headline: 255 255 254;
+        --color-card-paragraph: 148 161 178;
+        --color-headline: 255 255 254;
+        --color-paragraph: 148 161 178;
+        --color-background: 36 38 41;
+        --color-main: 249 248 252;
+        --color-button: 14 23 44;
+        --color-action: 127 90 240;
+        --color-tertiary: 44 182 125;
+        --color-secondary: 114 117 126;
+    }
+
+    .theme-transition {
+        transition: color ease-in-out 0.3s, background-color ease-in-out 0.3s;
+    }
+
+    #map,
+    .maplibregl-canvas {
+        cursor: crosshair;
+    }
+
+
+    section [data-page-header]:not(:first-child) {
+        margin-top: 4rem;
+    }
 }

@@ -3,26 +3,42 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {useTranslation} from "next-i18next";
 import {Switch} from "@headlessui/react";
 import {trpc} from "@/utils/trpc";
-import {LoadingSpinner} from "@/components/LoadingSpinner";
 import React, {useEffect, useMemo, useState} from "react";
-import {animated, useTransition} from "@react-spring/web";
-import { Settings } from "@prisma/client";
+import {animated, useSpringRef, useTransition} from "@react-spring/web";
+import {PageHeader} from "@/components/PageHeader";
+import {useLocalStorage} from "react-use";
+import {DEFAULT_SETTINGS, Layout} from "@/components/Layout";
+import {COLOR_PALETTES, ColorPaletteKey} from "@/server/constants/colorPalette";
+import {ColorSwatch} from "@/components/ColorSwatch";
+import {Clickable} from "@/components/Clickable";
+import {Settings} from "@prisma/client";
+import {SettingsKey} from "@/server/constants/settings";
+import { Container } from "@/components/Container";
+import {useRecoilState} from "recoil";
+import {settingsState} from "@/state/settings";
+
+
 
 export default function ProfileSettingsPage() {
     const {t} = useTranslation('settings');
+    const [settings, setSettings] = useRecoilState<Partial<Settings>>(settingsState);
     const userSettings = trpc.settings.list.useQuery();
-    const updateSetting = trpc.settings.update.useMutation();
-    const [ready, setReady] = useState(false);
-    const [settings, setSettings] = useState<Settings>({
-        enableAnimations: true,
-        enableLowPowerMode: false,
-        enableFriends: true,
-        enableExperience: true,
-        enableDarkMode: false,
-        enableAds: false,
+    const updateSetting = trpc.settings.update.useMutation({
+        onMutate(result){
+            setSettings({
+                ...settings,
+                [result.key]: result.value
+            });
+        },
     });
+    const [ready, setReady] = useState(false);
 
-    const allSettings = useMemo(() => [
+    const allSettings : {
+        key: SettingsKey,
+        emoji: string,
+        name: string,
+        description: string
+    }[] = useMemo(() => [
         {
             key: 'enableAnimations',
             emoji: t('animations.emoji'),
@@ -53,81 +69,79 @@ export default function ProfileSettingsPage() {
             name: t("ads.title"),
             description: t("ads.description")
         },
-        {
-            key: 'enableDarkMode',
-            emoji: t('darkmode.emoji'),
-            name: t("darkmode.title"),
-            description: t("darkmode.description")
-        }
     ], []);
 
     useEffect(() => {
-        if (!userSettings.data) {
-            return;
-        }
-
         setSettings({
             ...userSettings.data
         });
+    }, [userSettings.data])
 
-        setReady(true);
-    }, [setSettings, userSettings.data])
-
-    const toggleSetting = (key: string, v: any) => {
-        setSettings((settings) => {
-            updateSetting.mutate({
-                key,
-                value: v
-            });
-
-            return {
-                ...settings,
-                [key]: v
-            }
-        });
+    const toggleSetting = (key: string, value: string|boolean) => {
+        updateSetting.mutate({
+            key,
+            value: value
+        })
     }
 
-    const transition = useTransition(userSettings.data ? allSettings : [], {
+    const animation = useSpringRef();
+    const [transition, api] = useTransition(allSettings.length ? allSettings : [], () => ({
+        ref: animation,
         trail: 400 / allSettings.length,
         from: {opacity: 0, scale: 0},
         enter: {opacity: 1, scale: 1},
         leave: {opacity: 0, scale: 0},
-    });
+    }));
 
+    const colorSchemeAnimation = useSpringRef();
+    const [colorSchemeTransition] = useTransition<ColorPaletteKey, any>(Object.keys(COLOR_PALETTES) as ColorPaletteKey[], () => ({
+        ref: colorSchemeAnimation,
+        trail: 400 / allSettings.length,
+        from: {opacity: 0, scale: 0},
+        enter: {opacity: 1, scale: 1},
+        leave: {opacity: 0, scale: 0},
+    }));
 
-    if (!ready || !userSettings.isSuccess || userSettings.isLoading) {
-        return <LoadingSpinner/>;
+    useEffect(() => {
+        animation.start();
+        colorSchemeAnimation.start();
+    }, [allSettings])
+
+    if (!settings){
+        return <></>
     }
 
     return (
-        <div>
-            <div className={'bg-white dark:bg-slate-900 dark:text-slate-200 p-5 rounded-xl'}>
-                <h3 className={'font-black text-2xl'}>{t('title')}</h3>
-                <h3 className={'text-gray-600 dark:text-slate-400'}>{t('description')}</h3>
-
-            </div>
-            <div className={'grid grid-cols-2 mt-5 gap-8'}>
+        <Container>
+            <PageHeader
+                title={t('title')}
+                description={t('description')}
+            />
+            <div className={'grid grid-cols-1 md:grid-cols-2 mt-5 gap-8'}>
                 {transition((style, setting) => (
-                    <animated.div style={{...style}} key={setting.name}
-                                  className={'bg-white dark:bg-slate-900 dark:text-slate-200 flex items-center justify-between rounded-xl p-5'}>
-                        <div className={'min-w-[60px] text-5xl'}>
+                    <animated.div style={{...style}} key={setting.key}
+                                  className={'bg-card will-change-transform theme-transition flex items-center justify-between rounded-xl p-5'}>
+                        <div className={'min-w-[60px] text-card-headline text-5xl'}>
                             {setting.emoji}
                         </div>
-                        <div className={'flex-grow whitespace-pre-wrap break-all'}>
+                        <div className={'flex-grow whitespace-pre-wrap text-card-paragraph'}>
                             <h3 className={'text-xl font-black'}>{setting.name}</h3>
                             <p>
                                 {setting.description}
                             </p>
                         </div>
-                        <div>
+                        <div className={'items-center flex gap-2 ml-4'}>
+                            <span className={'text-card-paragraph'}>
+                                {settings[setting.key] ? "An" : "Aus"}
+                            </span>
                             <Switch
-                                defaultChecked={settings[setting.key]}
-                                onChange={(e) => toggleSetting(setting.key, e)}
+                                defaultChecked={!!settings[setting.key]}
+                                onClick={(e) => toggleSetting(setting.key,  !settings[setting.key])}
                                 className={`
-                                    ${settings[setting.key] ? 'bg-orange-600' : 'bg-gray-200'}
+                                    ${settings[setting.key] ? 'bg-tertiary' : 'bg-background'}
                                     relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 
                                     border-transparent transition-colors duration-200 ease-in-out focus:outline-none 
-                                    focus:ring-2 focus:ring-orange-600 focus:ring-offset-2`}
+                                    focus:ring-2 focus:ring-button focus:ring-offset-2`}
                             >
                                 <span className="sr-only">Use setting</span>
                                 <span
@@ -142,9 +156,32 @@ export default function ProfileSettingsPage() {
                     </animated.div>
                 ))}
             </div>
-        </div>
+
+
+            <PageHeader
+                title={t('colorSchemeTitle')}
+                description={t('colorSchemeDescription')}
+            />
+            <div className={'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-5 gap-8'}>
+                {colorSchemeTransition((style, colorPaletteKey: ColorPaletteKey) => (
+                    <Clickable key={colorPaletteKey} onClick={() => toggleSetting('colorPalette', colorPaletteKey)}>
+                    <animated.div
+                                  style={{...style, background: COLOR_PALETTES[colorPaletteKey].background}}
+                                  className={`flex items-center justify-between rounded-xl p-5 relative`}>
+                        <ColorSwatch color={COLOR_PALETTES[colorPaletteKey].button}/>
+                        <ColorSwatch color={COLOR_PALETTES[colorPaletteKey].tertiary}/>
+                        <ColorSwatch color={COLOR_PALETTES[colorPaletteKey].secondary}/>
+                        <ColorSwatch color={COLOR_PALETTES[colorPaletteKey].paragraph}/>
+                        <ColorSwatch color={COLOR_PALETTES[colorPaletteKey].headline}/>
+                        {settings?.colorPalette === colorPaletteKey && <span className={'absolute -top-2 -right-2'}>✅</span>}
+                    </animated.div>
+                    </Clickable>
+                ))}
+            </div>
+        </Container>
     );
 }
+
 
 export const getServerSideProps = async ({
                                              locale,

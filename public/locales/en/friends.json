@@ -1,0 +1,8 @@
+{
+  "add": {
+    "title": "Add Friends",
+    "description": "Some Description"
+  },
+  "name": "Name",
+  "friendCode": "Friend Code"
+}

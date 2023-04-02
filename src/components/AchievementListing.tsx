@@ -19,6 +19,7 @@ export const AchievementListing: React.FC<AchievementGroupProps> = ({
   const { t } = useTranslation("achievements");
   const progress = trpc.achievements.progress.useQuery({
     achievement: achievement.id,
+  }, {
   });
 
   const iconForType = {

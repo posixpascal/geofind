@@ -6,6 +6,7 @@ import { animated, useSpringRef, useTransition } from "@react-spring/web";
 import { ExperienceListItem } from "@/components/ExperienceListItem";
 import { useIntersection } from "react-use";
 import { Headline } from "./Headline";
+import {PageHeader} from "@/components/PageHeader";
 
 interface AchievementGroupProps {
   type: AchievementType;
@@ -28,8 +29,8 @@ export const AchievementGroup: React.FC<AchievementGroupProps> = ({
   const minHeight = Math.ceil(achievements.length / 3) * 180 + "px";
 
   return (
-    <div className={"pb-8 mt-8"}>
-      <Headline size={'h2'}>{t("groups." + type)}</Headline>
+    <>
+      <PageHeader title={t('groups.' + type)} description={''} />
       <div className={"grid grid-cols-3 gap-6"} style={{ minHeight }}>
         {transition((style, achievement) => (
           <animated.div style={{ ...style }}>
@@ -40,6 +41,6 @@ export const AchievementGroup: React.FC<AchievementGroupProps> = ({
           </animated.div>
         ))}
       </div>
-    </div>
+    </>
   );
 };

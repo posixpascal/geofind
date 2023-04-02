@@ -1,0 +1,11 @@
+{
+  "edit": {
+    "title": "Profil bearbeiten",
+    "description": "Hier kannst Du dein Profil vervollständigen. Diese Daten können von anderen Nutzern gesehen werden wenn dein Profil öffentlich ist. Gebe nicht zu viele Daten preis."
+  },
+  "saveAccount": "Fortschritte speichern",
+  "loggedInAsGuest": "Du bist derzeit noch als Gast angemeldet",
+  "joined": "Geofind Mitglied seit {{at}} ❤️",
+  "username": "Benutzername",
+  "email": "E-mail"
+}

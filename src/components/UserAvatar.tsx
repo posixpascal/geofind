@@ -34,7 +34,7 @@ export const UserAvatar : React.FC<UserAvatarProps> = ({height, width, user }) =
             )}
         </div>;
     } else {
-        return <div className={'z-10 rounded-full overflow-hidden'}>
+        return <div className={'z-10 rounded-full overflow-hidden will-change-transform '}>
             {(currentUser.data?.isLoggedIn && currentUser.data?.image) ? (
                 <Image
                     alt={currentUser.data.name!}

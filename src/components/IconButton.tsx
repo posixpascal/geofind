@@ -14,6 +14,7 @@ interface IconButtonProps {
     size?: ButtonSize;
     onClick?: MouseEventHandler;
     loading?: boolean;
+    full?: false
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -21,12 +22,13 @@ export const IconButton: React.FC<IconButtonProps> = ({
                                                           children,
                                                           variant = "primary",
                                                           size = "md",
+    full = false,
                                                           loading = false,
                                                       }) => {
     const variants: Record<ButtonVariant, string> = {
         negative: "hover:bg-red-300 bg-red-200 dark:bg-red-900 dark:text-red-200",
         positive: "hover:bg-green-300 bg-green-200 dark:bg-green-900 dark:text-green-200",
-        primary: "hover:bg-orange-300 bg-orange-200 dark:bg-orange-900 dark:fill-orange-200 dark:text-orange-200",
+        primary: "bg-tertiary text-headline fill-headline",
         secondary: "hover:bg-yellow-300 bg-yellow-200",
         plain: "",
     };
@@ -43,7 +45,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
     return (
         <button
             onClick={onClick}
-            className={`flex items-center text-lg gap-2  rounded-xl font-bold cursor-pointer transition ${variantClasses} ${sizeClasses}`}
+            className={`theme-transition flex items-center text-lg gap-2  rounded-xl font-bold cursor-pointer transition ${variantClasses} ${sizeClasses} ${full ? 'w-full text-center justify-center' : ''}`}
         >
             {children}
         </button>

@@ -13,10 +13,13 @@ import {signIn, signOut} from "next-auth/react";
 import {useTranslation} from "next-i18next";
 import {useCurrentUser} from "@/hooks/useCurrentUser";
 import {trpc} from "@/utils/trpc";
+import {Settings} from "@prisma/client";
+import {settingsState} from "@/state/settings";
 
 interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = ({}) => {
+  const [settings, setSettings] = useRecoilState<Partial<Settings>>(settingsState);
   const [singlePlayer] = useRecoilState(singlePlayerState);
   const { route, back, push } = useRouter();
 
@@ -57,7 +60,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
       //     .interpolate((x) => `translateY(${x}px)`),
       // }}
       className={
-        "flex p-2 px-5 rounded-xl backdrop-blur bg-opacity-50 z-20 bg-orange-100 dark:bg-slate-900 dark:text-slate-300 w-full justify-between"
+        "flex p-2 px-5 rounded-b-xl shadow-xl theme-transition backdrop-blur z-20 bg-card text-card-headline w-full justify-between"
       }
     >
       <div className={"flex items-center gap-3"}>
@@ -84,7 +87,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
           </div>
 
           <div className={"gap-1 flex text-sm md:text-md"}>
-            {user.data && (
+            {(settings.enableExperience && user.data) && (
                 <div className={"flex"}>Lvl. {expLevel(experience)}</div>
             )}
             <div className={"flex"}></div>

@@ -7,14 +7,20 @@ import {format} from "date-fns";
 import {IconButton} from "@/components/IconButton";
 import React from "react";
 import {trpc} from "@/utils/trpc";
-import {AchievementMedal} from "@prisma/client";
+import {AchievementMedal, Settings} from "@prisma/client";
 import {animated, useSpring} from "@react-spring/web";
 import {FriendList} from "@/components/FriendList";
 import {ExperienceList} from "@/components/ExperienceList";
 import {ProfileForm} from "@/components/ProfileForm";
+import {useTranslation} from "next-i18next";
+import {useRecoilState} from "recoil";
+import {settingsState} from "@/state/settings";
 
 export default function ProfilePage() {
+    const [settings, setSettings] = useRecoilState<Partial<Settings>>(settingsState);
+
     const {user} = useCurrentUser();
+    const {t} = useTranslation('profile');
     const achievements = trpc.achievements.medals.useQuery();
     const {scale, opacity} = useSpring({
         from: {scale: 0, opacity: 0},
@@ -44,14 +50,20 @@ export default function ProfilePage() {
     return (
         <div className={'flex flex-col gap-8'}>
             <animated.div style={{scale, opacity}}
-                          className={'bg-white dark:bg-slate-900 dark:text-slate-200 flex gap-8 items-center justify-between rounded-xl p-5'}>
+                          className={'bg-card text-card-paragraph flex gap-8 items-center justify-between rounded-xl p-5'}>
                 <div className={'flex gap-8 items-center'}>
                     <UserAvatar width={96} height={96}/>
                     <div className={'flex flex-col gap-1'}>
-                        <h2 className={'text-4xl font-black'}>
+                        <h2 className={'text-4xl font-black flex items-center gap-4 text-card-headline'}>
                             {user.data!.name!}
+                            {settings.enableFriends && <><span>
+                                &bull;
+                            </span>
+                            <span className={''}>
+                                {user.data!.friendCode}
+                            </span></>}
                         </h2>
-                        <p className={'text-2xl text-gray-500 flex gap-8'}>
+                        <p className={'text-2xl flex gap-8'}>
                             <span>
                                 {achievements.data![AchievementMedal.RIBBON]} 🎀
                             </span>
@@ -62,36 +74,37 @@ export default function ProfilePage() {
                                 {achievements.data![AchievementMedal.GEM]} 💎
                             </span>
                         </p>
-                        <p className={'text-xl text-gray-500'}>
-                            Joined {format(user.data.joinedAt!, "dd.MM.yyyy")}
+                        <p className={'text-xl'}>
+                            {t('joined', { at: format(user.data.joinedAt!, "dd.MM.yyyy") })}
                         </p>
                     </div>
                 </div>
                 <div className={'flex flex-col items-end text-right text-sm'}>
                     <IconButton>
-                        Create Account
+                        {t('saveAccount')}
                     </IconButton>
-                    <p className={'text-gray-500'}>
-                        You&apos;re logged in as a guest.
-                    </p>
+                    {user.data.isGuest && <p className={'text-card-paragraph'}>
+                        {t('loggedInAsGuest')}
+                    </p>}
                 </div>
             </animated.div>
             <div className={'grid grid-cols-3 gap-8'}>
                 <animated.div style={{opacity: opacityBig, scale: scaleBig}}
-                              className={'col-span-2 bg-white dark:bg-slate-900 dark:text-slate-200 rounded-xl p-5'}>
+                              className={'col-span-2 bg-card rounded-xl p-5'}>
                     <ProfileForm />
                 </animated.div>
                 <div className={'flex flex-col gap-4'}>
-                    <animated.div style={{opacity: opacitySmall, scale: scaleSmall}}>
-                        <div className={' bg-white dark:bg-slate-900 dark:text-slate-200 rounded-xl p-5'}>
+                    {settings.enableFriends && <animated.div style={{opacity: opacitySmall, scale: scaleSmall}}>
+                        <div className={'bg-card rounded-xl p-5'}>
                             <FriendList/>
                         </div>
-                    </animated.div>
+                    </animated.div>}
+                    {settings.enableExperience &&
                     <animated.div style={{opacity: opacitySmall, scale: scaleSmall}}>
-                        <div className={' bg-white dark:bg-slate-900 dark:text-slate-200 rounded-xl p-5'}>
+                        <div className={'bg-card rounded-xl p-5'}>
                             <ExperienceList/>
                         </div>
-                    </animated.div>
+                    </animated.div>}
                 </div>
             </div>
         </div>
@@ -105,7 +118,7 @@ export const getServerSideProps = async ({
 }) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale, ["common", "menu"])),
+            ...(await serverSideTranslations(locale, ["common", "profile", "experience", "friends", "menu"])),
         },
     };
 };

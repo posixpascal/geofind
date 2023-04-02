@@ -57,10 +57,8 @@ export const SpottedCountriesMap = () => {
   });
 
   return (
-    <div className={"bg-[#d8f2ff] rounded-xl overflow-hidden"}>
-      <Map onMapHandle={setMap} mapStyle={mapStyle}>
+      <Map onMapInstance={map => map.setRenderWorldCopies(false)} onMapHandle={setMap} mapStyle={mapStyle}>
         <></>
       </Map>
-    </div>
   );
 };

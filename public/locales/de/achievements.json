@@ -1,4 +1,6 @@
 {
+  "countriesTitle": "Deine persönliche Weltkarte",
+  "countriesDescription": "Mit jedem gefundenen Land wird deine Karte etwas bunter! Du hast {{found}} von {{total}} Ländern entdeckt.",
   "groups": {
     "CONTINENTS": "Länder der Welt",
     "FANATIC": "Du und Geofind",

@@ -40,6 +40,7 @@
     "cuid": "^3.0.0",
     "date-fns": "^2.29.3",
     "dotenv": "^16.0.3",
+    "echarts": "^5.4.2",
     "i18next": "^22.4.10",
     "jsonwebtoken": "^9.0.0",
     "maplibre-gl": "^2.4.0",

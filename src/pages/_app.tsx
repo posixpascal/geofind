@@ -31,9 +31,7 @@ const GeofindApp: AppType<{ session: Session | null }> = ({
         <RecoilRoot>
             <SessionProvider session={pageProps.session}>
                 <AuthProvider session={pageProps.session}>
-                    <ThemeProvider>
                     {page}
-                    </ThemeProvider>
                 </AuthProvider>
             </SessionProvider>
         </RecoilRoot>

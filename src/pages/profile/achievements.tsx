@@ -6,9 +6,12 @@ import { AchievementGroup } from "@/components/AchievementGroup";
 import React, { useState } from "react";
 import { Map } from "@/components/Map";
 import { SpottedCountriesMap } from "@/components/SpottedCountriesMap";
+import {Container} from "@/components/Container";
+import {PageHeader} from "@/components/PageHeader";
+import {useTranslation} from "next-i18next";
 
 export default function ProfileAchievementsPage() {
-  const [map, setMap] = useState<any>(null);
+    const {t} = useTranslation('achievements');
   const achievements = trpc.achievements.all.useQuery();
 
   if (achievements.isLoading) {
@@ -26,11 +29,12 @@ export default function ProfileAchievementsPage() {
   );
 
   return (
-    <div>
-      <h2 className={"text-3xl font-black dark:text-slate-200 pb-3"}>Gefundene Länder</h2>
+    <Container>
+      <PageHeader title={t('countriesTitle')}
+                  description={t('countriesDescription', {found: 0, total: 241})} />
       <div
         className={
-          "relative min-h-[350px] bg-[#d8f2ff] rounded-xl shadow-lg overflow-hidden"
+          "relative min-h-[550px] bg-[#d8f2ff] rounded-xl shadow-lg overflow-hidden"
         }
       >
         <SpottedCountriesMap />
@@ -44,7 +48,7 @@ export default function ProfileAchievementsPage() {
           />
         ))}
       </div>
-    </div>
+    </Container>
   );
 }
 

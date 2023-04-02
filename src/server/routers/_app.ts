@@ -9,6 +9,7 @@ import {settingsRouter} from "@/server/routers/settings";
 import {friendsRouter} from "@/server/routers/friends";
 import {feedbackRouter} from "@/server/routers/feedback";
 import {multiplayerRouter} from "@/server/routers/multiplayer";
+import {testRouter} from "@/server/routers/test";
 export const appRouter = router({
   session: sessionRouter,
   countries: countriesRouter,
@@ -18,7 +19,7 @@ export const appRouter = router({
   profile: profileRouter,
   settings: settingsRouter,
   friends: friendsRouter,
-  feedback: feedbackRouter
+  feedback: feedbackRouter,
 });
 // export type definition of API
 export type AppRouter = typeof appRouter;

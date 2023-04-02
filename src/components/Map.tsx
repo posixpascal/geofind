@@ -9,12 +9,14 @@ interface MapProps {
     children: ReactNode;
     onMapHandle: (map: maplibregl.Map) => void;
     mapStyle?: StyleSpecification;
+    onMapInstance? : (map: maplibregl.Map) => void;
 }
 
 export const Map: React.FC<MapProps> = ({
                                             onMapHandle,
                                             mapStyle,
                                             children,
+    onMapInstance,
                                         }) => {
     const [loading, setLoading] = useState(true);
     const [map, setMap] = useState<maplibregl.Map | null>(null);
@@ -37,6 +39,10 @@ export const Map: React.FC<MapProps> = ({
         mapCtrl.on("load", () => {
             setLoading(false);
         });
+
+        if (onMapInstance){
+            onMapInstance(mapCtrl);
+        }
 
         setMap(mapCtrl);
     }, [map, setMap, style]);

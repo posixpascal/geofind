@@ -28,7 +28,6 @@ export const RoundPreparedDialog: React.FC<RoundPreparedDialogProps> = ({
           .interpolate((x) => `${x}`),
       }}
     >
-      <Backdrop />
     </animated.div>
   );
 };

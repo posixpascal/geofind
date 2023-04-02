@@ -1,6 +1,9 @@
 import { animated, to, useSpring } from "@react-spring/web";
 import React, { ReactNode, useRef } from "react";
 import { useGesture } from "@use-gesture/react";
+import {useRecoilState} from "recoil";
+import {Settings} from "@prisma/client";
+import {settingsState} from "@/state/settings";
 
 interface TileProps {
   title: ReactNode;
@@ -25,6 +28,8 @@ export const Tile: React.FC<TileProps> = ({
   children = [],
     interactive = true,
 }) => {
+  const [settings, setSettings] = useRecoilState<Partial<Settings>>(settingsState);
+
   const target = useRef();
   const [{ scale, shadow }, api] = useSpring(() => ({
     scale: 1,
@@ -37,8 +42,8 @@ export const Tile: React.FC<TileProps> = ({
   return (
     <animated.div
       ref={target}
-      onMouseEnter={() => interactive && api({ scale: 1.1, shadow: 15 })}
-      onMouseLeave={() => interactive && api({ scale: 1.0, shadow: 0 })}
+      onMouseEnter={() => settings.enableAnimations && interactive && api({ scale: 1.1, shadow: 15 })}
+      onMouseLeave={() => settings.enableAnimations && interactive && api({ scale: 1.0, shadow: 0 })}
       style={{
         boxShadow: to(
           [shadow],
@@ -46,16 +51,15 @@ export const Tile: React.FC<TileProps> = ({
         ),
         scale: to([scale], (s) => s),
       }}
-      className="h-full bg-white text-left relative rounded-xl p-4
-      cursor-pointer hover:shadow-2xl motion-reduce:transition-none
-      dark:bg-slate-900 dark:text-slate-200
+      className="h-full bg-card text-left relative rounded-xl p-4
+      cursor-pointer will-change-transform theme-transition
       focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-3"
     >
       <div className={"flex gap-2"}>
         <div className={"flex flex-col justify-between grow-1 w-full"}>
-          <div className={"text-2xl font-black"}>{title}</div>
+          <div className={"text-2xl text-card-headline font-black"}>{title}</div>
           <div>
-            <span className={'text-lg text-gray-600 dark:text-slate-400'}>{content}</span>
+            <span className={'text-lg text-card-paragraph'}>{content}</span>
 
             {tag && <div className="-mx-0 mt-2">{tag}</div>}
           </div>

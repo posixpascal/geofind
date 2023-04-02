@@ -1,0 +1,15 @@
+{
+  "title": "Freunde",
+  "noFriends": "Du hast noch keine Freunde hinzugefügt",
+  "addFriend": "Hinzufügen",
+  "follow": "Freund hinzufügen",
+  "add": {
+    "title": "Freunde hinzufügen",
+    "description": "Hier kannst Du deinen Freunden folgen.",
+    "hint": "PS: Am einfachsten könnt ihr euch gegenseitig folgen, wenn ihr einmal zusammen gespielt habt!"
+  },
+  "name": "Name",
+  "nameOrEmail": "John Doe",
+  "friendCode": "Freundschafts-Code",
+  "friendCodeSample": "Z.b. 1234"
+}

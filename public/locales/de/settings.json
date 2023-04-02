@@ -1,6 +1,8 @@
 {
   "title": "Einstellungen",
   "description": "Hier hast Du volle Kontrolle über Dein Geofind :)",
+  "colorSchemeTitle": "Farbschema",
+  "colorSchemeDescription": "Wähle aus unseren Farbpaletten dein Lieblingsdesign",
   "animations": {
     "emoji": "✨",
     "title": "Animationen aktivieren",

@@ -5,12 +5,15 @@ import {observable} from "@trpc/server/observable";
 import ee from "@/server/eventEmitter";
 import {SETTINGS_UPDATED} from "@/server/constants/events";
 import {Settings} from "@prisma/client";
+import {DEFAULT_SETTINGS} from "@/server/constants/settings";
+
+const UpdateSettingInput = z.object({
+    key: z.string(),
+    value: z.union([z.string(), z.boolean()])
+});
 
 export const settingsRouter = router({
-    update: protectedProcedure.input(z.object({
-        key: z.string(),
-        value: z.boolean()
-    })).mutation(async ({ctx, input}) => {
+    update: protectedProcedure.input(UpdateSettingInput).mutation(async ({ctx, input}) => {
         const {key, value} = input;
         const userId = ctx.session.user!.id;
 
@@ -19,11 +22,7 @@ export const settingsRouter = router({
                 userId,
             },
             create: {
-                enableAnimations: true,
-                enableExperience: true,
-                enableFriends: true,
-                enableLowPowerMode: false,
-                enablePrivacyMode: true,
+                ...DEFAULT_SETTINGS,
                 userId: userId!,
             },
             update: {
@@ -46,13 +45,7 @@ export const settingsRouter = router({
         if (!settings) {
             settings = await prisma.settings.create({
                 data: {
-                    enableAnimations: true,
-                    enableExperience: true,
-                    enableFriends: true,
-                    enableLowPowerMode: false,
-                    enablePrivacyMode: true,
-                    enableAds: false,
-                    enableDarkMode: false,
+                    ...DEFAULT_SETTINGS,
                     userId: userId!,
                 }
             });
@@ -72,13 +65,7 @@ export const settingsRouter = router({
             if (!settings) {
                 settings = await prisma.settings.create({
                     data: {
-                        enableAnimations: true,
-                        enableExperience: true,
-                        enableFriends: true,
-                        enableLowPowerMode: false,
-                        enablePrivacyMode: true,
-                        enableAds: false,
-                        enableDarkMode: false,
+                        ...DEFAULT_SETTINGS,
                         userId: userId!,
                     }
                 });
