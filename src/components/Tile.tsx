@@ -6,30 +6,24 @@ import {Settings} from "@prisma/client";
 import {settingsState} from "@/state/settings";
 
 interface TileProps {
-  title: ReactNode;
-  content: ReactNode;
-  icon: ReactNode;
+  title: string;
+  content: string;
+  icon: string;
   tag?: ReactNode;
-  loading?: boolean;
   children?: ReactNode;
   interactive?: boolean;
 }
-
-const calcX = (y: number, ly: number) =>
-  -(y - ly - window.innerHeight / 2) / 20;
-const calcY = (x: number, lx: number) => (x - lx - window.innerWidth / 2) / 20;
 
 export const Tile: React.FC<TileProps> = ({
   title,
   tag,
   content,
   icon,
-  loading,
   children = [],
     interactive = true,
 }) => {
-  const [settings, setSettings] = useRecoilState<Partial<Settings>>(settingsState);
-
+  //const [settings, setSettings] = useRecoilState<Partial<Settings>>(settingsState);
+  const settings = {enableAnimations: true}
   const target = useRef();
   const [{ scale, shadow }, api] = useSpring(() => ({
     scale: 1,
@@ -51,7 +45,7 @@ export const Tile: React.FC<TileProps> = ({
         ),
         scale: to([scale], (s) => s),
       }}
-      className="h-full bg-card text-left relative rounded-xl p-4
+      className="max-w-4xl h-full bg-card text-left relative rounded-xl p-4
       cursor-pointer will-change-transform theme-transition
       focus:outline-none focus:ring-2 focus:ring-orange-200 focus:ring-offset-3"
     >

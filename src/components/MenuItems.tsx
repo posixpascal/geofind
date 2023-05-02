@@ -11,7 +11,7 @@ import {usePlausible} from "next-plausible";
 import {usePageLeave} from "react-use";
 
 interface MenuItem {
-    icon: ReactNode;
+    icon: string;
     tag: ReactNode;
     title: string;
     content: string;

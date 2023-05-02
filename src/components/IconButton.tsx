@@ -14,7 +14,7 @@ interface IconButtonProps {
     size?: ButtonSize;
     onClick?: MouseEventHandler;
     loading?: boolean;
-    full?: false
+    full?: boolean
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({

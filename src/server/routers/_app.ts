@@ -9,7 +9,6 @@ import {settingsRouter} from "@/server/routers/settings";
 import {friendsRouter} from "@/server/routers/friends";
 import {feedbackRouter} from "@/server/routers/feedback";
 import {multiplayerRouter} from "@/server/routers/multiplayer";
-import {testRouter} from "@/server/routers/test";
 export const appRouter = router({
   session: sessionRouter,
   countries: countriesRouter,

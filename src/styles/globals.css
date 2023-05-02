@@ -9,7 +9,9 @@
 
       rgb regex: rgb\((.+),(.+),(.+)\)
      */
-    main[class='main'], html[class='main'] {
+
+
+    html, main[class='main'], html[class='main'] {
         --color-card: 254 246 228;
         --color-card-headline: 0 24 88;
         --color-card-paragraph: 23 44 102;
@@ -150,5 +152,20 @@
 
     section [data-page-header]:not(:first-child) {
         margin-top: 4rem;
+    }
+
+    .logo svg  {
+        display: block;
+        margin: 0 auto;
+        position: relative;
+        top: 40px;
+    }
+
+    .logo svg {
+        width: 140px;
+    }
+
+    .sb-show-main{
+        background-color: var(--color-background);
     }
 }
