@@ -10,6 +10,8 @@ import http from "http";
 import next from "next";
 import { parse } from "url";
 import ws from "ws";
+import ee from "@/server/eventEmitter";
+import {USER_CONNECTED, USER_DISCONNECTED} from "@/server/constants/events";
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
@@ -45,4 +47,16 @@ app.prepare().then(() => {
       dev ? "development" : process.env.NODE_ENV
     }`
   );
+
+  wss.on("connection", (ws) => {
+    console.log(`➕➕ Connection (${wss.clients.size})`);
+    ee.emit(USER_CONNECTED, wss.clients.size);
+    (process as any).wssClientsSize = wss.clients.size;
+    ws.once("close", () => {
+      ee.emit(USER_DISCONNECTED, wss.clients.size);
+      (process as any).wssClientsSize = wss.clients.size;
+      console.log(`➖➖ Connection (${wss.clients.size})`);
+    });
+  });
+
 });

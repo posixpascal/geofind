@@ -74,14 +74,14 @@ export const UserExperience = () => {
   }, [trail]);
 
   const springApi = useSpringRef();
-  const { background, opacity, left, top, width, height } = useSpring({
+  const { background, opacity, left, bottom, width, height } = useSpring({
     ref: springApi,
     from: {
       opacity: 1,
       background: "white",
       height: 75,
       left: 20,
-      top: innerHeight - 75 - 25,
+      bottom: 20,
       width: 300,
     },
     to: {
@@ -92,10 +92,8 @@ export const UserExperience = () => {
         : trail.length
         ? 75 + trail.length * TRAIL_HEIGHT
         : 75,
-      left: levelUp ? innerWidth / 2 - 125 : 20,
-      top: levelUp
-        ? innerHeight / 2 - 200
-        : innerHeight - 100 - trail.length * TRAIL_HEIGHT,
+      left: 20,
+      bottom: 20,
       width: levelUp ? 350 : 300,
     },
   });
@@ -143,7 +141,7 @@ export const UserExperience = () => {
           height,
           width,
           left,
-          top,
+          bottom,
         }}
       >
         <animated.div

@@ -6,7 +6,7 @@ import { observable } from "@trpc/server/observable";
 import {MultiPlayerGame, SinglePlayerGame} from "@prisma/client";
 import ee from "@/server/eventEmitter";
 import { LngLat } from "maplibre-gl";
-import { SINGLEPLAYER_UPDATED } from "@/server/constants/events";
+import {MULTIPLAYER_UPDATED, SINGLEPLAYER_UPDATED} from "@/server/constants/events";
 import logger from "@/server/logger";
 import {
   createSinglePlayer,
@@ -34,17 +34,43 @@ export const multiplayerRouter = router({
         await joinMultiPlayer(ctx.session.user.id!, input.id)
         return observable<MultiPlayerGame>((emit) => {
           const onUpdated = async (id: string) => {
+            if (id !== input.id){
+              return;
+            }
             // emit data to client
             logger.info({
               event: "SubscriptionPublishQuery",
               data: { id },
             });
+
             const game = await prisma.multiPlayerGame.findFirst({
               where: {
                 id: id,
-                creatorId: ctx.session.user.id!,
               },
+              include: {
+                creator: {
+                  select: {
+                    image: true,
+                    name: true
+                  }
+                },
+                sessions: {
+                  include: {
+                    user: {
+                      select: {
+                        id: true,
+                        name: true,
+                        pin: true,
+                        friendCode: true,
+                        image: true,
+                        experience: true
+                      }
+                    }
+                  },
+                }
+              }
             });
+
             logger.info({
               event: "SubscriptionPublish",
               data: { game },
@@ -54,10 +80,10 @@ export const multiplayerRouter = router({
 
           onUpdated(input.id);
 
-          ee.on(SINGLEPLAYER_UPDATED, onUpdated);
+          ee.on(MULTIPLAYER_UPDATED, onUpdated);
           return () => {
             leaveMultiPlayer(ctx.session.user.id!, input.id)
-            ee.off(SINGLEPLAYER_UPDATED, onUpdated);
+            ee.off(MULTIPLAYER_UPDATED, onUpdated);
           };
         });
       }),

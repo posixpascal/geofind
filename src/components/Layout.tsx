@@ -39,9 +39,7 @@ export const Layout: React.FC<{ children: ReactNode }> = ({children}) => {
         <main className={settings.colorPalette}>
             <div className={'theme-transition bg-background min-h-screen relative'}>
                 <div className={"flex flex-col min-h-screen w-full mx-auto relative"}>
-                    <div className={'mx-auto w-full max-w-7xl'}>
-                        <Navbar/>
-                    </div>
+                    <Navbar/>
                     <div className={"p-3 md:p-5 lg:p-10 "}>{children}</div>
                     <div className={'mx-auto w-full max-w-7xl'}>
                         <DSGVO />

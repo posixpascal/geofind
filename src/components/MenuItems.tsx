@@ -1,4 +1,4 @@
-import React, {MouseEventHandler, ReactNode, useEffect, useState,} from "react";
+import React, {MouseEventHandler, ReactNode, useEffect, useMemo, useState,} from "react";
 import {Tile} from "@/components/Tile";
 import {useTranslation} from "next-i18next";
 import {Tag} from "./Tag";
@@ -30,13 +30,9 @@ export const MenuItems = () => {
     const {t: menu} = useTranslation("menu");
     const router = useRouter();
     const plausible = usePlausible();
-    const [active, setActive] = useState(false);
     const createSinglePlayer = trpc.singleplayer.create.useMutation();
     const createMultiPlayer = trpc.multiplayer.create.useMutation();
 
-    useEffect(() => {
-        setActive(true);
-    }, []);
 
     const handleSinglePlayerClick = async () => {
         const result = await createSinglePlayer.mutateAsync();
@@ -57,7 +53,6 @@ export const MenuItems = () => {
             tag: <Tag variant={"green"} title={menu("tags.singleplayer")}/>,
             title: menu("singleplayer.title"),
             content: menu("singleplayer.content"),
-            loading: createSinglePlayer.isLoading || createSinglePlayer.isSuccess,
         },
 
         {
@@ -146,13 +141,14 @@ export const MenuItems = () => {
         trail: 500 / menuItems.length,
         from: {opacity: 0, scale: 0},
         enter: {opacity: 1, scale: 1},
+        leave: {opacity: 0, scale: 0},
         config: {
             mass: 1.5
         }
-    }), [menuItems]);
+    }), []);
 
     useEffect(() => {
-        animation.start();
+        api.start();
     }, [menuItems]);
 
     return transition((styles, menuItem) => (

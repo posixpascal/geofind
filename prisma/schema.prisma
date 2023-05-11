@@ -109,13 +109,14 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  pin        String?
-  color      String?
-  experience Int      @default(0)
-  joinedAt   DateTime @default(now())
+  pin            String?
+  color          String?
+  experience     Int      @default(0)
+  joinedAt       DateTime @default(now())
+  lastActivityAt DateTime @default(now())
 
-  friendCode Int @default(0)
-  isGuest Boolean @default(false)
+  friendCode Int     @default(0)
+  isGuest    Boolean @default(false)
 
   games               Game[]
   gameSessions        GameSession[]
@@ -130,20 +131,20 @@ model User {
   followedBy Follows[] @relation("following")
   following  Follows[] @relation("follower")
 
-  feedbacks     Feedback[]
-  feedbackVotes FeedbackVote[]
+  feedbacks        Feedback[]
+  feedbackVotes    FeedbackVote[]
   dailyExperiences DailyExperience[]
 }
 
 model DailyExperience {
-    id String @id @default(cuid())
+  id String @id @default(cuid())
 
-   user    User   @relation(fields: [userId], references: [id])
-   userId  String
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
 
-   experience Int
-   createdAt DateTime @default(now())
-   updatedAt DateTime @updatedAt
+  experience Int
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }
 
 model Follows {

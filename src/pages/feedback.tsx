@@ -11,6 +11,7 @@ import {Feedback} from "@prisma/client";
 import {FeedbackCard} from "@/components/FeedbackCard";
 import {LoadingSpinner} from "@/components/LoadingSpinner";
 import {PageHeader} from "@/components/PageHeader";
+import {Container} from "@/components/Container";
 
 
 export default function FeedbackPage() {
@@ -50,11 +51,10 @@ export default function FeedbackPage() {
     }
 
     return (
-        <div>
+        <Container>
             <PageHeader title={t('title')}
                        description={t('content')}
-                       icon={"📧"}>
-            </PageHeader>
+                       icon={"📧"} />
             <animated.div style={{scale, opacity}}>
                 <div className="flex items-start my-10 space-x-4">
                     <div className="flex-shrink-0">
@@ -74,7 +74,7 @@ export default function FeedbackPage() {
                     </animated.div>
                 })}
             </div>}
-        </div>
+        </Container>
     );
 }
 

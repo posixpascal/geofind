@@ -44,7 +44,7 @@ export const LoggedInUser : Story = {
             trpcMsw.session.user.query((req, res, ctx) => {
                 return res(ctx.status(200), ctx.data({
                     isLoggedIn: true,
-                    name: "Logged In User"
+                    name: "Logged In User 2000000000"
                 }))
             }),
         ],

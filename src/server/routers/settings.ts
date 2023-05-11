@@ -53,6 +53,8 @@ export const settingsRouter = router({
 
         return settings;
     }),
+
+    // TODO: shouldnt be a subscription
     subscribe: protectedProcedure.input(z.object({}))
         .subscription(async ({ctx}) => {
             const userId = ctx.session.user.id!

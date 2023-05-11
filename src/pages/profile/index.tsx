@@ -14,6 +14,7 @@ import {ProfileForm} from "@/components/ProfileForm";
 import {useTranslation} from "next-i18next";
 import {useRecoilState} from "recoil";
 import {settingsState} from "@/state/settings";
+import {Container} from "@/components/Container";
 
 export default function ProfilePage() {
     const [settings, setSettings] = useRecoilState<Partial<Settings>>(settingsState);
@@ -47,7 +48,7 @@ export default function ProfilePage() {
 
 
     return (
-        <div className={'flex flex-col gap-8'}>
+        <Container className={'flex flex-col gap-8'}>
             <div className={'grid w-full grid-cols-1 lg:grid-cols-3 gap-8'}>
                 <animated.div style={{scale, opacity}}
                               className={'bg-card text-card-paragraph flex col-span-2 gap-8 items-center justify-between rounded-xl p-5'}>
@@ -117,7 +118,7 @@ export default function ProfilePage() {
                         </animated.div>}
                 </div>
             </div>
-        </div>
+        </Container>
     );
 }
 

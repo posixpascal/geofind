@@ -119,6 +119,7 @@ export default function ProfileSettingsPage() {
             />
             <div className={'grid grid-cols-1 md:grid-cols-2 mt-5 gap-8'}>
                 {transition((style, setting) => (
+                    // TODO: turn into component -> Checkbox
                     <animated.div style={{...style}} key={setting.key}
                                   className={'bg-card will-change-transform theme-transition flex items-center justify-between rounded-xl p-5'}>
                         <div className={'min-w-[60px] text-card-headline text-5xl'}>

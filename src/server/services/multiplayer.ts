@@ -2,7 +2,7 @@ import {geoPrisma} from "@/server/prismaGeoExtension";
 import {prisma} from "@/server/prisma";
 import {GameSessionState, RoundState} from "@prisma/client";
 import ee from "@/server/eventEmitter";
-import {SINGLEPLAYER_UPDATED} from "@/server/constants/events";
+import {MULTIPLAYER_UPDATED, SINGLEPLAYER_UPDATED} from "@/server/constants/events";
 
 const createRoomCode = async () => {
     let characters = 'ABCDEFGHJKMNPQRSTUVWXYZ123456789'
@@ -51,7 +51,7 @@ export const joinMultiPlayer = async (userId: string, multiPlayerGameId: string)
     });
 
     if (existingSession){
-        return await prisma.multiPlayerSession.update({
+        await prisma.multiPlayerSession.update({
             where: {
                 id: existingSession.id,
             },
@@ -59,16 +59,18 @@ export const joinMultiPlayer = async (userId: string, multiPlayerGameId: string)
                 state: GameSessionState.CONNECTED
             }
         });
+    } else {
+        await prisma.multiPlayerSession.create({
+            data: {
+                userId,
+                multiPlayerGameId,
+                state: GameSessionState.CONNECTED,
+                score: 0,
+            }
+        });
     }
 
-    await prisma.multiPlayerSession.create({
-        data: {
-            userId,
-            multiPlayerGameId,
-            state: GameSessionState.CONNECTED,
-            score: 0,
-        }
-    });
+    ee.emit(MULTIPLAYER_UPDATED, multiPlayerGameId);
 }
 
 export const leaveMultiPlayer =  async (userId: string, multiPlayerGameId: string) => {
@@ -93,4 +95,6 @@ export const leaveMultiPlayer =  async (userId: string, multiPlayerGameId: strin
             state: GameSessionState.DISCONNECTED
         }
     });
+
+    ee.emit(MULTIPLAYER_UPDATED, multiPlayerGameId);
 }

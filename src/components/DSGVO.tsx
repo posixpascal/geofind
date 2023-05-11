@@ -22,6 +22,6 @@ export const DSGVO = () => {
             <IconButton onClick={() => setBanner(false)} size={'sm'} variant={'positive'}>{t('cookies.accept')}</IconButton>
             </div>
         </div>
-        <img width={260} src={'/images/cookies.png'} />
+        <img alt={"Cartoon Cookie Monster"} width={260} src={'/images/cookies.png'} />
     </div>
 }

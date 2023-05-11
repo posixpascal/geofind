@@ -24,7 +24,6 @@ export const Tile: React.FC<TileProps> = ({
 }) => {
   //const [settings, setSettings] = useRecoilState<Partial<Settings>>(settingsState);
   const settings = {enableAnimations: true}
-  const target = useRef();
   const [{ scale, shadow }, api] = useSpring(() => ({
     scale: 1,
     shadow: 0,
@@ -35,7 +34,6 @@ export const Tile: React.FC<TileProps> = ({
 
   return (
     <animated.div
-      ref={target}
       onMouseEnter={() => settings.enableAnimations && interactive && api({ scale: 1.1, shadow: 15 })}
       onMouseLeave={() => settings.enableAnimations && interactive && api({ scale: 1.0, shadow: 0 })}
       style={{

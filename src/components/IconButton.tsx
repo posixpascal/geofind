@@ -1,4 +1,5 @@
-import React, {MouseEventHandler, ReactNode} from "react";
+import React, {MouseEventHandler, ReactNode, useState} from "react";
+import {animated, config, useSpring} from "@react-spring/web";
 
 type ButtonVariant =
     | "primary"
@@ -14,7 +15,8 @@ interface IconButtonProps {
     size?: ButtonSize;
     onClick?: MouseEventHandler;
     loading?: boolean;
-    full?: boolean
+    full?: boolean;
+    disabled?: boolean
 }
 
 export const IconButton: React.FC<IconButtonProps> = ({
@@ -22,9 +24,21 @@ export const IconButton: React.FC<IconButtonProps> = ({
                                                           children,
                                                           variant = "primary",
                                                           size = "md",
+    disabled,
     full = false,
                                                           loading = false,
                                                       }) => {
+    const [hover, setHover] = useState(false);
+    const [focus, setFocus] = useState(false);
+    const {scale} = useSpring({
+        from: { scale: 1 },
+        to: { scale: focus ? 0.95 : (hover ? 1.05 : 1.0) },
+        config: {
+            duration: 300,
+            mass: 0.1
+        }
+    });
+
     const variants: Record<ButtonVariant, string> = {
         negative: "hover:bg-red-300 bg-red-200 dark:bg-red-900 dark:text-red-200",
         positive: "hover:bg-green-300 bg-green-200 dark:bg-green-900 dark:text-green-200",
@@ -42,12 +56,25 @@ export const IconButton: React.FC<IconButtonProps> = ({
     const variantClasses = variants[variant];
     const sizeClasses = sizes[size];
 
+    let extraClasses = [];
+    if (disabled){
+        extraClasses.push('opacity-50 grayscale bg-opacity-30 pointer-events-none');
+    }
+
     return (
-        <button
+        <animated.button
+            style={{scale}}
             onClick={onClick}
-            className={`theme-transition flex items-center text-lg gap-2  rounded-xl font-bold cursor-pointer transition ${variantClasses} ${sizeClasses} ${full ? 'w-full text-center justify-center' : ''}`}
+            onMouseDown={() => setFocus(true)}
+            onMouseUp={() => setFocus(false)}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
+            className={`theme-transition justify-center flex items-center text-lg gap-2 
+            rounded-xl font-bold cursor-pointer ${variantClasses} ${sizeClasses} ${full ? 'w-full text-center justify-center' : ''}
+             ${extraClasses.join(' ')}
+            `}
         >
             {children}
-        </button>
+        </animated.button>
     );
 };
