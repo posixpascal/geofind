@@ -1,9 +1,9 @@
-import { MenuItems } from "@/components/MenuItems";
-import { LocaleName } from "../../../types";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import {LocaleName} from "../../../types";
 import DefaultPin from "@/assets/svgs/pins/default.svg";
-import { useMemo } from "react";
-import { TAILWIND_TEXT_COLORS } from "@/server/constants/colorPalette";
+import {useMemo} from "react";
+import {TAILWIND_TEXT_COLORS} from "@/server/constants/colorPalette";
+import {pick} from "next/dist/lib/pick";
+
 export default function ProfilePinPage() {
   const pinList = useMemo(() => {
     const pins = [
@@ -38,6 +38,7 @@ export default function ProfilePinPage() {
   );
 }
 
+const namespaces = ['common', 'menu'];
 export const getServerSideProps = async ({
   locale,
 }: {
@@ -45,7 +46,10 @@ export const getServerSideProps = async ({
 }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["common", "menu"])),
+      messages: pick(
+          (await import(`../../../public/locales/${locale}.json`)).default,
+          namespaces
+      )
     },
   };
 };

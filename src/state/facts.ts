@@ -1,9 +1,4 @@
-import { atom, RecoilState } from "recoil";
-import { Country, CountryFact, SinglePlayerGame } from "@prisma/client";
+import {CountryFact} from "@prisma/client";
+import {observable} from "@legendapp/state";
 
-export interface FactsState extends Partial<CountryFact> {}
-
-export const factsState: RecoilState<FactsState[]> = atom({
-  key: "factsState",
-  default: [] as FactsState[],
-});
+export const factsState = observable([] as CountryFact[]);

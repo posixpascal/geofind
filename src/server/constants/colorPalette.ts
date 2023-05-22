@@ -18,7 +18,16 @@ export const TAILWIND_TEXT_COLORS = [
   "text-fog-400",
 ];
 
-export type ColorPaletteKey = "main" | "brown"  | "asphalt" | "mint" | "yellow" | "darkorange" | "purple" | "pink" | "pine";
+export type ColorPaletteKey =
+  | "main"
+  | "brown"
+  | "asphalt"
+  | "mint"
+  | "yellow"
+  | "darkorange"
+  | "purple"
+  | "pink"
+  | "pine";
 export interface ColorPalette {
   headline: string;
   paragraph: string;
@@ -30,8 +39,8 @@ export interface ColorPalette {
   secondary: string;
 }
 
-export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
-  'main': {
+export const COLOR_PALETTES: Record<ColorPaletteKey, ColorPalette> = {
+  main: {
     headline: "#001858",
     paragraph: "#172c66",
     background: "#fef6e4",
@@ -39,9 +48,9 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     button: "#f582ae",
     action: "#001858",
     tertiary: "#f582ae",
-    secondary: "#8bd3dd"
+    secondary: "#8bd3dd",
   },
-  'brown': {
+  brown: {
     headline: "#fffffe",
     paragraph: "#fff3ec",
     background: "#55423d",
@@ -51,7 +60,7 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     secondary: "#ffc0ad",
     tertiary: "#9656a1",
   },
-  'mint': {
+  mint: {
     headline: "#33272a",
     paragraph: "#594a4e",
     background: "#faeee7",
@@ -61,7 +70,7 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     tertiary: "#c3f0ca",
     secondary: "#ffc6c7",
   },
-  'yellow': {
+  yellow: {
     headline: "#272343",
     paragraph: "#2d334a",
     background: "#bae8e8",
@@ -71,7 +80,7 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     tertiary: "#fff",
     secondary: "#e3f6f5",
   },
-  'darkorange': {
+  darkorange: {
     headline: "#fffffe",
     paragraph: "#a7a9be",
     background: "#0f0e17",
@@ -81,7 +90,7 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     tertiary: "#e53170",
     secondary: "#f25f4c",
   },
-  'purple': {
+  purple: {
     headline: "#fffffe",
     paragraph: "#b8c1ec",
     background: "#232946",
@@ -91,7 +100,7 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     tertiary: "#eebbc3",
     secondary: "#fffffe",
   },
-  'pine': {
+  pine: {
     headline: "#fffffe",
     paragraph: "#abd1c6",
     background: "#004643",
@@ -101,7 +110,7 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     tertiary: "#e16162",
     secondary: "#abd1c6",
   },
-  'asphalt': {
+  asphalt: {
     headline: "#0d0d0d",
     paragraph: "#2a2a2a",
     background: "#eff0f3",
@@ -111,7 +120,7 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     tertiary: "#d9376e",
     secondary: "#fffffe",
   },
-  'pink': {
+  pink: {
     headline: "#fffffe",
     paragraph: "#94a1b2",
     background: "#242629",
@@ -120,5 +129,5 @@ export const COLOR_PALETTES : Record<ColorPaletteKey, ColorPalette> = {
     action: "#7f5af0",
     tertiary: "#2cb67d",
     secondary: "#72757e",
-  }
-}
+  },
+};

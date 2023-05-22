@@ -1,16 +1,16 @@
-import { prisma } from "@/server/prisma";
-import { RoundState } from "@prisma/client";
+import {prisma} from "@/server/prisma";
+import {RoundState} from "@prisma/client";
 import ee from "@/server/eventEmitter";
-import { SINGLEPLAYER_UPDATED } from "@/server/constants/events";
-import { LngLat } from "maplibre-gl";
-import { geoPrisma } from "@/server/prismaGeoExtension";
+import {SINGLEPLAYER_UPDATED} from "@/server/constants/events";
+import {LngLat} from "maplibre-gl";
+import {geoPrisma} from "@/server/prismaGeoExtension";
 import logger from "@/server/logger";
-import { Experience } from "@/server/constants/exp";
-import { grantExperience, recordSpottedCountry } from "@/server/services/user";
+import {Experience} from "@/server/constants/exp";
+import {grantExperience, recordSpottedCountry} from "@/server/services/user";
 import {
-  SINGLEPLAYER_ERROR_TIME,
-  SINGLEPLAYER_PREPARE_TIME,
-  SINGLEPLAYER_SUCCESS_TIME,
+    SINGLEPLAYER_ERROR_TIME,
+    SINGLEPLAYER_PREPARE_TIME,
+    SINGLEPLAYER_SUCCESS_TIME,
 } from "@/server/constants/timings";
 
 export const createSinglePlayer = async (creatorId: string) => {

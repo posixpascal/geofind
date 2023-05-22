@@ -1,8 +1,13 @@
-export const toRad = (degree) => {
+interface LatLon {
+  latitude: number;
+  longitude: number;
+}
+
+export const toRad = (degree: number ) => {
   return (degree * Math.PI) / 180;
 };
 
-export const calcDistance = (lat1, lat2, lng1, lng2) => {
+export const calcDistance = (lat1: number, lat2: number, lng1: number, lng2: number) => {
   const R = 6371; // km
   const dLat = toRad(lat2 - lat1);
   const dLon = toRad(lng2 - lng1);
@@ -17,7 +22,7 @@ export const calcDistance = (lat1, lat2, lng1, lng2) => {
   return d;
 };
 
-export const humanizeDistance = (pointA, pointB, unitless = false) => {
+export const humanizeDistance = (pointA: LatLon, pointB: LatLon, unitless = false) => {
   const deltaLatitude = toRad(pointA.latitude - pointB.latitude);
   const deltaLongitude = toRad(pointA.longitude - pointB.longitude);
 

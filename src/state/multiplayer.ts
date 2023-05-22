@@ -1,19 +1,15 @@
-import { atom, RecoilState } from "recoil";
-import {Country, MultiPlayerGame, MultiPlayerSession, SinglePlayerGame, User} from "@prisma/client";
+import {Country, MultiPlayerGame, MultiPlayerSession, User,} from "@prisma/client";
+import {observable} from "@legendapp/state";
 
 export interface MultiplayerState extends Partial<MultiPlayerGame> {
-  country?: Country;
-  sessions?: Array<MultiPlayerSession & {user: User}>
+    country?: Country;
+    sessions?: Array<MultiPlayerSession & { user: User }>;
+    creator: User;
 }
 
-export interface MultiplayerSessionState extends Partial<MultiPlayerSession> {}
+export interface MultiplayerSessionState extends Partial<MultiPlayerSession> {
+}
 
-export const multiPlayerState: RecoilState<MultiplayerState> = atom({
-  key: "multiPlayerGame",
-  default: {},
-});
 
-export const multiPlayerSessions: RecoilState<MultiplayerSessionState[]> = atom({
-  key: 'multiPlayerSessions',
-  default: []
-})
+export const multiPlayerState = observable<MultiplayerState>()
+export const multiPlayerSessions = observable<MultiplayerSessionState>()

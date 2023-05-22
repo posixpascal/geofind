@@ -1,13 +1,10 @@
-import { Achievement, AchievementType } from "@prisma/client";
-import { User } from "next-auth";
-import { prisma } from "@/server/prisma";
-import { Continents } from "@/utils/enums";
+import {Achievement, AchievementType} from "@prisma/client";
+import {User} from "next-auth";
+import {prisma} from "@/server/prisma";
+import {Continents} from "@/utils/enums";
 import ee from "@/server/eventEmitter";
-import { ACHIEVEMENT_AWARDED } from "@/server/constants/events";
-import {
-  grantAchievementExperience,
-  grantExperience,
-} from "@/server/services/user";
+import {ACHIEVEMENT_AWARDED} from "@/server/constants/events";
+import {grantAchievementExperience,} from "@/server/services/user";
 
 export const verifyAchievement = async (
   user: Partial<User>,

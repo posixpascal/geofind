@@ -1,16 +1,12 @@
-import { CountryFact, RoundState } from "@prisma/client";
-import { SinglePlayerState } from "@/state/singleplayer";
-import {
-  SINGLEPLAYER_END_TIME,
-  SINGLEPLAYER_PREPARE_TIME,
-} from "@/server/constants/timings";
-import { trpc } from "@/utils/trpc";
-import { LngLat, LngLatBounds, Map, Marker, Popup } from "maplibre-gl";
-import { useEffect } from "react";
+import {CountryFact, RoundState} from "@prisma/client";
+import {SinglePlayerState} from "@/state/singleplayer";
+import {SINGLEPLAYER_PREPARE_TIME,} from "@/server/constants/timings";
+import {trpc} from "@/utils/trpc";
+import {LngLat, LngLatBounds, Map, Marker, Popup} from "maplibre-gl";
+import {useEffect} from "react";
 import cuid from "cuid";
-import { useRecoilState } from "recoil";
-import { factsState } from "@/state/facts";
-import { COUNTRY_LABELS, createMapStyle } from "@/hooks/createMapStyle";
+import {factsState} from "@/state/facts";
+import {COUNTRY_LABELS} from "@/hooks/createMapStyle";
 
 const animateLineOn = (
   map: Map,
@@ -70,7 +66,6 @@ export const useSinglePlayer = (
   game: SinglePlayerState,
   map: Map | null
 ) => {
-  const [facts, setFacts] = useRecoilState(factsState);
   const start = trpc.singleplayer.start.useMutation();
   const prepare = trpc.singleplayer.prepare.useMutation();
   const solve = trpc.singleplayer.solve.useMutation();
@@ -91,7 +86,7 @@ export const useSinglePlayer = (
         newPins = [];
         newLines = [];
 
-        setFacts([]);
+        factsState.set([]);
         map!.zoomTo(2, {
           duration: 800,
         });
@@ -110,7 +105,7 @@ export const useSinglePlayer = (
           },
           {
             onSuccess(data: CountryFact[]) {
-              setFacts(data);
+              factsState.set(data);
             },
           }
         );

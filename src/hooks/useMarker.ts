@@ -1,12 +1,7 @@
-import maplibregl, {
-  LngLat,
-  LngLatLike,
-  MapMouseEvent,
-  Marker,
-} from "maplibre-gl";
-import { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { markerState } from "@/state/marker";
+import maplibregl, {LngLat, LngLatLike, MapMouseEvent, Marker,} from "maplibre-gl";
+import {useEffect, useState} from "react";
+import {markerState} from "@/state/marker";
+import {useSelector} from "@legendapp/state/react";
 
 type UseMarkerFunction = (args: { map?: maplibregl.Map | null }) => {
   marker: Marker | null;
@@ -14,8 +9,8 @@ type UseMarkerFunction = (args: { map?: maplibregl.Map | null }) => {
 };
 export const useMarker: UseMarkerFunction = ({ map }) => {
   const [marker, setMarker] = useState<Marker | null>(null);
-  const [lngLat, setLngLat] = useRecoilState(markerState);
-
+  const lngLat = useSelector(() => markerState.get());
+  const setLngLat = (values: LngLat) => markerState.set(values);
   useEffect(() => {
     if (!map) {
       return;

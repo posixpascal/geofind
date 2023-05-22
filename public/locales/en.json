@@ -1,0 +1,269 @@
+{
+  "achievements": {
+    "countriesTitle": "Deine persönliche Weltkarte",
+    "countriesDescription": "Mit jedem gefundenen Land wird deine Karte etwas bunter! Du hast {{found}} von {{total}} Ländern entdeckt.",
+    "groups": {
+      "CONTINENTS": "Länder der Welt",
+      "FANATIC": "Du und Geofind",
+      "COMPETITIVE": "Herausforderungen",
+      "MISSES": "Fehler passieren",
+      "SOCIAL": "Mit Freunden"
+    },
+    "CONTINENTS": {
+      "all": {
+        "title": "Geograph",
+        "description": "Finde alle Länder mindestens ein Mal, um diesen Erfolg freizuschalten."
+      },
+      "africa": {
+        "title": "Länder in Afrika",
+        "description": "Finde alle Länder in Afrika mindestens 1x um diesen Erfolg freizuschalten"
+      },
+      "europe": {
+        "title": "Länder in Europa",
+        "description": "Finde alle Länder in Europa mindestens 1x um diesen Erfolg freizuschalten"
+      },
+      "asia": {
+        "title": "Länder in Asien",
+        "description": "Finde alle Länder in Asien mindestens 1x um diesen Erfolg freizuschalten"
+      },
+      "oceania": {
+        "title": "Länder in Ozeanien",
+        "description": "Finde alle Länder in Ozeanien mindestens 1x um diesen Erfolg freizuschalten"
+      },
+      "southamerica": {
+        "title": "Länder in Südamerika",
+        "description": "Finde alle Länder in Südamerika mindestens 1x um diesen Erfolg freizuschalten"
+      },
+      "northamerica": {
+        "title": "Länder in Nordamerika",
+        "description": "Finde alle Länder in Nordamerika mindestens 1x um diesen Erfolg freizuschalten"
+      }
+    },
+    "FANATIC": {
+      "days": {
+        "title": "Gern gesehener Gast",
+        "description": "Besuche Geofind an 3 aufeinander folgenden Tagen um diesen Erfolg freizuschalten"
+      },
+      "week": {
+        "title": "Forscher",
+        "description": "Besuche Geofind an 7 aufeinander folgenden Tagen um diesen Erfolg freizuschalten"
+      },
+      "month": {
+        "title": "Fanatisch",
+        "description": "Besuche Geofind an 30 aufeinander folgenden Tagen um diesen Erfolg freizuschalten"
+      }
+    },
+    "COMPETITIVE": {
+      "master": {
+        "title": "Meister",
+        "description": "Spiele 3 Ranglisten Spiele"
+      },
+      "champion": {
+        "title": "Meister",
+        "description": "Spiele 50 Ranglisten Spiele"
+      },
+      "unstoppable": {
+        "title": "Meister",
+        "description": "Spiele 100 Ranglisten Spiele"
+      }
+    },
+    "MISSES": {
+      "off-by-one": {
+        "title": "Nur ein paar Zentimeter",
+        "description": "Verfehle ein Land um weniger als einen Kilometer"
+      },
+      "over-9000": {
+        "title": "Über 9000",
+        "description": "Verfehle ein Land um mehr als 9000 Kilometer"
+      },
+      "five-in-a-row": {
+        "title": "Strike",
+        "description": "Verfehle 5 Länder hintereinander"
+      }
+    },
+    "SOCIAL": {
+      "share-the-pain": {
+        "title": "Geteiltes Leid ist...",
+        "description": "Lade 5 Freunde zu einem Geofind Spiel ein"
+      },
+      "popular": {
+        "title": "Berühmt",
+        "description": "Lade 50 Spieler zu einem Geofind Spiel ein"
+      },
+      "community": {
+        "title": "Community",
+        "description": "Lade 100 Spieler zu einem Geofind Spiel ein"
+      }
+    }
+  },
+  "common": {
+    "cookies": {
+      "title": "Geofind verwendet keine Cookies von Drittanbietern",
+      "description": "Es werden keine Daten an Dritte weitergegeben. Ein anonymer Cookie ohne personenbezogene Daten wird gesetzt, damit du keinen Account anlegen musst um auf Geofind.IO zu spielen.",
+      "accept": "Annehmen",
+      "decline": "Ablehnen"
+    }
+  },
+  "experience": {
+    "experiences": {
+      "COUNTRY_HIT": "{{emoji}} {{name}} gefunden",
+      "FIRST_TRY_HIT": "⭐Nur 1 Versuch!",
+      "FAST_HIT": "🔥Schnell gefunden!",
+      "SECOND_TRY_HIT": "💪Nur 2 Versuche!"
+    },
+    "overview": {
+      "title": "Erfahrungspunkte",
+      "earnedToday": "Du hast heute <strong>{{ exp }} Exp</strong> gesammelt"
+    }
+  },
+  "feedback": {
+    "title": "Feedback",
+    "content": "Wir freuen uns über dein Feedback und nehmen es sehr ernst. Jeder Vorschlag zählt und wir sind bereit, ihn umzusetzen. Du kannst auch für dein favorisiertes Feedback abstimmen oder dein eigenes schreiben.",
+    "feedback": "Euer Feedback",
+    "filter": {
+      "title": "Sortieren",
+      "recent": "Neueste zuerst",
+      "solved": "Gelöstes Feedback",
+      "mostVotes": "Am besten bewertet"
+    }
+  },
+  "friends": {
+    "title": "Freunde",
+    "noFriends": "Du hast noch keine Freunde hinzugefügt",
+    "addFriend": "Hinzufügen",
+    "follow": "Freund hinzufügen",
+    "add": {
+      "title": "Freunde hinzufügen",
+      "description": "Hier kannst Du deinen Freunden folgen.",
+      "hint": "PS: Am einfachsten könnt ihr euch gegenseitig folgen, wenn ihr einmal zusammen gespielt habt!"
+    },
+    "name": "Name",
+    "nameOrEmail": "John Doe",
+    "friendCode": "Freundschafts-Code",
+    "friendCodeSample": "Z.b. 1234"
+  },
+  "menu": {
+    "tags": {
+      "singleplayer": "Einzelspieler",
+      "multiplayer": "Mehrspieler",
+      "competitive": "Wettbewerb",
+      "profile": "Profil",
+      "other": "Sonstiges",
+      "school": "Schule"
+    },
+    "school": {
+      "title": "Geografie an Schulen",
+      "content": "Wir haben ein intuitives und sicheres Lernangebot für Schulklassen entwickelt. Lesen Sie hier mehr."
+    },
+    "multiplayer_create": {
+      "title": "Spiel erstellen",
+      "content": "Du bestimmst die Regeln. Eröffne einen Raum und spiele mit deinen Freunden"
+    },
+    "multiplayer_join": {
+      "title": "Spiel beitreten",
+      "content": "Finde offene Spiele oder spiele gegen deine Freunde. Kein Account notwendig ✌️"
+    },
+    "profile": {
+      "title": "Dein Profil",
+      "content": "Vervollständige dein Profil, füge Freunde hinzu oder bearbeite deine Stecknadeln"
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "content": "Hier kannst du Geofind genau auf dich abstimmen. Farben, Animationen und vieles mehr"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "content": "Schlage eine Verbesserung vor oder hinterlasse ein paar liebe Worte. Jede E-mail wird gelesen"
+    },
+    "singleplayer": {
+      "title": "Lernen",
+      "content": "Spiele eine entspannte Runde in unserem Lernmodus und verbessere deine Kenntnisse"
+    },
+    "competitive_ladder": {
+      "title": "Rangliste",
+      "content": "Messe dich in der Geofind Rangliste und spiele im Wettbewerb gegen andere Spieler"
+    },
+    "competitive_timetrial": {
+      "title": "Gegen die Zeit",
+      "content": "In diesem Modus musst du soviele Länder wie möglich finden für ein ganz neues Spielerlebnis"
+    },
+    "achievements": {
+      "title": "Erfolge",
+      "content": "In Geofind gibt es viele versteckte Belohnungen, hier erhältst du einen Überblick"
+    },
+    "pins": {
+      "title": "Stecknadeln",
+      "content": "Verpasse deiner Stecknadel einen eigenen Stil oder schalte neue Pins frei"
+    }
+  },
+  "profile": {
+    "edit": {
+      "title": "Profil bearbeiten",
+      "description": "Hier kannst Du dein Profil vervollständigen. Diese Daten können von anderen Nutzern gesehen werden wenn dein Profil öffentlich ist. Gebe nicht zu viele Daten preis."
+    },
+    "saveAccount": "Fortschritte speichern",
+    "loggedInAsGuest": "Du bist derzeit noch als Gast angemeldet",
+    "joined": "Geofind Mitglied seit {{at}} ❤️",
+    "username": "Benutzername",
+    "email": "E-mail",
+    "registerNow": "Jetzt registrieren"
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "description": "Hier hast Du volle Kontrolle über Dein Geofind :)",
+    "colorSchemeTitle": "Farbschema",
+    "colorSchemeDescription": "Wähle aus unseren Farbpaletten dein Lieblingsdesign",
+    "animations": {
+      "emoji": "✨",
+      "title": "Animationen aktivieren",
+      "description": "Geofind mit tollen Animationen verwenden"
+    },
+    "lowpower": {
+      "emoji": "🔋",
+      "title": "Low-Power Modus",
+      "description": "Geofind so batterieschonend wie möglich einsetzen"
+    },
+    "friends": {
+      "emoji": "👯‍♀️",
+      "title": "Freunde aktivieren",
+      "description": "Möchtest Du das Freundesystem von Geofind benutzen?"
+    },
+    "experience": {
+      "emoji": "👑",
+      "title": "Erfahrungspunkte aktivieren",
+      "description": "Möchtest Du das Erfahrungspunkte-System von Geofind benutzen?"
+    },
+    "ads": {
+      "emoji": "😱",
+      "title": "Werbung anzeigen",
+      "description": "Damit hilfst Du uns die Serverkosten zu decken."
+    },
+    "darkmode": {
+      "emoji": "🌑",
+      "title": "Dunkelmodus",
+      "description": "Geofind im Dark-Mode spielen"
+    },
+    "games": {
+      "isPublic": {
+        "emoji": "🎪",
+        "title": "Öffentliches Spiel",
+        "description": "Dieses Spiel kann von anderen Spielern gefunden werden"
+      },
+      "onlyDirectSpots": {
+        "emoji": "🔎",
+        "title": "Nur direkte Treffer zählen",
+        "description": "Mit dieser Einstellungen erhalten Spieler nur Punkte, wenn ihr Marker genau auf dem gesuchten Land gesetzt wird"
+      },
+      "firstSpotWins": {
+        "emoji": "⚡️",
+        "title": "Erster Treffer zählt",
+        "description": "Der Spieler der das Land zuerst findet bekommt den Punkt"
+      },
+      "hasIslands": {
+        "emoji": "🏝️",
+        "title": "Mit Inseln spielen",
+        "description": "Fügt eurem Spiel über 45 Insel Staaten hinzu"
+      }
+    }
+  }
+}

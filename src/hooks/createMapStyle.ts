@@ -1,8 +1,4 @@
-import { StyleSpecification } from "maplibre-gl";
-
-interface MapStyleProps {}
-
-type MapStyleHook = (features?: Record<string, boolean>) => StyleSpecification;
+type MapStyleHook = (features?: Record<string, boolean>) => any;
 
 export const COUNTRY_LABELS = {
   id: "countries-label",
@@ -57,9 +53,9 @@ export const COUNTRY_LABELS = {
 export const createMapStyle: MapStyleHook = (
   features: Record<string, boolean> = {}
 ) => {
-  const hasDarkMode = () => typeof localStorage !== "undefined" && localStorage.darkMode === "1";
-  const style: StyleSpecification = {
-    id: "43f36e14-e3f5-43c1-84c0-50a9c80dc5c7",
+  const hasDarkMode = () =>
+    typeof localStorage !== "undefined" && localStorage.darkMode === "1";
+  const style = {
     name: "MapLibre",
     zoom: 0.8619833357855968,
     pitch: 0,
@@ -78,7 +74,7 @@ export const createMapStyle: MapStyleHook = (
           visibility: "visible",
         },
         maxzoom: 24,
-      },
+      } as any,
       {
         id: "coastline",
         type: "line",
@@ -87,10 +83,10 @@ export const createMapStyle: MapStyleHook = (
           "line-color": hasDarkMode() ? "#a28c84" : "#198EC8",
           "line-width": {
             stops: [
-              [0, hasDarkMode() ? 2 / 2: 2],
-              [6, hasDarkMode() ? 6 / 2: 6],
-              [14, hasDarkMode() ? 9 / 2: 9],
-              [22, hasDarkMode() ? 18 / 2: 18],
+              [0, hasDarkMode() ? 2 / 2 : 2],
+              [6, hasDarkMode() ? 6 / 2 : 6],
+              [14, hasDarkMode() ? 9 / 2 : 9],
+              [22, hasDarkMode() ? 18 / 2 : 18],
             ],
           },
         },
@@ -362,21 +358,23 @@ export const createMapStyle: MapStyleHook = (
         id: "countries-boundary",
         type: "line",
         paint: {
-          "line-color": hasDarkMode() ? "rgb(143,143,143)" : "rgba(255, 255, 255, 1)",
+          "line-color": hasDarkMode()
+            ? "rgb(143,143,143)"
+            : "rgba(255, 255, 255, 1)",
           "line-width": {
             stops: [
-              [1, hasDarkMode() ? 1 / 2: 1],
-              [6, hasDarkMode() ? 2 / 2: 2],
-              [14, hasDarkMode() ? 6 / 2: 6],
-              [22, hasDarkMode() ? 12 / 2: 12],
+              [1, hasDarkMode() ? 1 / 2 : 1],
+              [6, hasDarkMode() ? 2 / 2 : 2],
+              [14, hasDarkMode() ? 6 / 2 : 6],
+              [22, hasDarkMode() ? 12 / 2 : 12],
             ],
-          },
+          } as any,
           "line-opacity": {
             stops: [
               [3, 0.5],
               [6, 1],
             ],
-          },
+          } as any,
         },
         layout: {
           "line-cap": "round",

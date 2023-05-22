@@ -1,34 +1,39 @@
 import {LocaleName} from "../../../types";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import React, {useState} from "react";
-import {Map} from "@/components/Map";
-import maplibregl from "maplibre-gl";
-import {LoadingSpinner} from "@/components/LoadingSpinner";
+import type {Map as MapGL} from "maplibre-gl";
+import {LoadingSpinner} from "@/components/utils/LoadingSpinner";
 import {useRouter} from "next/router";
 import {trpc} from "@/utils/trpc";
 import {RoundState, SinglePlayerGame} from "@prisma/client";
-import {useRecoilState} from "recoil";
 import {singlePlayerState} from "@/state/singleplayer";
 import {useMarker} from "@/hooks/useMarker";
-import {SinglePlayerRoundStatus} from "@/components/SinglePlayerRoundStatus";
-import {UserExperience} from "@/components/UserExperience";
+import {SinglePlayerRoundStatus} from "@/components/games/singleplayer/SinglePlayerRoundStatus";
+import {UserExperience} from "@/components/user/UserExperience";
 import {useSinglePlayer} from "@/hooks/useSinglePlayer";
-import {TriesIndicator} from "@/components/TriesIndicator";
-import {FactsIndicator} from "@/components/FactsIndicator";
-import {Overlay} from "@/components/Overlay";
-import {IconButton} from "@/components/IconButton";
+import {TriesIndicator} from "@/components/games/panels/TriesIndicator";
+import {FactsIndicator} from "@/components/games/panels/FactsIndicator";
+import {Overlay} from "@/components/utils/Overlay";
+import {IconButton} from "@/components/controls/IconButton";
+import {useSelector} from "@legendapp/state/react";
+import dynamic from "next/dynamic";
+import {pick} from "next/dist/lib/pick";
+import {GetStaticPaths} from "next";
+
+const Map = dynamic(() => import('@/components/layout/Map'), {
+    loading: () => <LoadingSpinner isLoading={true}/>
+})
 
 export default function Singleplayer() {
     const router = useRouter();
     const {id} = router.query;
-    const [map, setMap] = useState<maplibregl.Map | null>(null);
-    const [singlePlayer, setSinglePlayer] = useRecoilState(singlePlayerState);
+    const [map, setMap] = useState<MapGL | null>(null);
+    const singlePlayer = useSelector(() => singlePlayerState.get());
     const {marker} = useMarker({map});
     useSinglePlayer(marker, singlePlayer, map);
 
     const back = async () => {
-        await router.push('/');
-    }
+        await router.push("/");
+    };
 
     trpc.singleplayer.subscribe.useSubscription(
         {
@@ -36,7 +41,7 @@ export default function Singleplayer() {
         },
         {
             onData(game: SinglePlayerGame) {
-                setSinglePlayer(game);
+                singlePlayerState.set(game);
             },
         }
     );
@@ -44,8 +49,13 @@ export default function Singleplayer() {
     return (
         <Map onMapHandle={setMap}>
             <Overlay visible={singlePlayer.roundState === RoundState.PREPARED}>
-                <div className={'z-20 absolute left-4 top-4'}>
-                    <IconButton variant={'negative'} full={true} size={'sm'} onClick={back}>
+                <div className={"z-20 absolute left-4 top-4"}>
+                    <IconButton
+                        variant={"negative"}
+                        full={true}
+                        size={"sm"}
+                        onClick={back}
+                    >
                         Abbrechen
                     </IconButton>
                 </div>
@@ -59,6 +69,9 @@ export default function Singleplayer() {
     );
 }
 
+const namespaces = ["common",
+    "experience",
+    "menu"];
 export const getServerSideProps = async ({
                                              locale,
                                          }: {
@@ -66,11 +79,10 @@ export const getServerSideProps = async ({
 }) => {
     return {
         props: {
-            ...(await serverSideTranslations(locale, [
-                "common",
-                "experience",
-                "menu",
-            ])),
+            messages: pick(
+                (await import(`../../../public/locales/${locale}.json`)).default,
+                namespaces
+            ),
         },
     };
 };

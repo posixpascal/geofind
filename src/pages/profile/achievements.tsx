@@ -1,17 +1,16 @@
-import { LocaleName } from "../../../types";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { trpc } from "@/utils/trpc";
-import { Achievement } from "@prisma/client";
-import { AchievementGroup } from "@/components/AchievementGroup";
-import React, { useState } from "react";
-import { Map } from "@/components/Map";
-import { SpottedCountriesMap } from "@/components/SpottedCountriesMap";
-import {Container} from "@/components/Container";
-import {PageHeader} from "@/components/PageHeader";
-import {useTranslation} from "next-i18next";
+import {LocaleName} from "../../../types";
+import {trpc} from "@/utils/trpc";
+import {Achievement} from "@prisma/client";
+import {AchievementGroup} from "@/components/achievements/AchievementGroup";
+import React from "react";
+import {SpottedCountriesMap} from "@/components/achievements/SpottedCountriesMap";
+import {Container} from "@/components/layout/Container";
+import {PageHeader} from "@/components/layout/PageHeader";
+import {useTranslations} from "next-intl";
+import {pick} from "next/dist/lib/pick";
 
 export default function ProfileAchievementsPage() {
-    const {t} = useTranslation('achievements');
+  const t = useTranslations("achievements");
   const achievements = trpc.achievements.all.useQuery();
 
   if (achievements.isLoading) {
@@ -30,8 +29,10 @@ export default function ProfileAchievementsPage() {
 
   return (
     <Container>
-      <PageHeader title={t('countriesTitle')}
-                  description={t('countriesDescription', {found: 0, total: 241})} />
+      <PageHeader
+        title={t("countriesTitle")}
+        description={t("countriesDescription", { found: 0, total: 241 })}
+      />
       <div
         className={
           "relative min-h-[550px] bg-[#d8f2ff] rounded-xl shadow-lg overflow-hidden"
@@ -52,6 +53,9 @@ export default function ProfileAchievementsPage() {
   );
 }
 
+const namespaces = [ "common",
+    "menu",
+    "achievements"]
 export const getServerSideProps = async ({
   locale,
 }: {
@@ -59,11 +63,10 @@ export const getServerSideProps = async ({
 }) => {
   return {
     props: {
-      ...(await serverSideTranslations(locale, [
-        "common",
-        "menu",
-        "achievements",
-      ])),
+        messages: pick(
+            (await import(`../../../public/locales/${locale}.json`)).default,
+            namespaces
+        )
     },
   };
 };

@@ -248,6 +248,9 @@ model MultiPlayerGame {
   isPublic        Boolean @default(false)
   firstSpotWins   Boolean @default(false) // First to find the country wins the round
   onlyDirectSpots Boolean @default(false) // Never give points for "closest" guess
+  hasIslands Boolean @default(false) // Hide smaller countries for a more engaging experience
+
+
 
   settings   Json?
   continents Json?
@@ -499,7 +502,6 @@ enum GameMode {
 
 enum GameMap {
   WORLD
-  GLOBE
   EUROPE
   AFRICA
   ASIA

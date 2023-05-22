@@ -1,10 +1,7 @@
-import { prisma } from "@/server/prisma";
+import {prisma} from "@/server/prisma";
 import ee from "@/server/eventEmitter";
-import {
-  ACHIEVEMENT_AWARDED,
-  EXPERIENCE_UPDATED,
-} from "@/server/constants/events";
-import { Experience, ExperienceValue } from "@/server/constants/exp";
+import {ACHIEVEMENT_AWARDED, EXPERIENCE_UPDATED,} from "@/server/constants/events";
+import {Experience, ExperienceValue} from "@/server/constants/exp";
 
 export const recordSpottedCountry = async (
   userId: string,

@@ -1,11 +1,8 @@
-import { atom, RecoilState } from "recoil";
-import { Country, SinglePlayerGame } from "@prisma/client";
+import {Country, SinglePlayerGame} from "@prisma/client";
+import {observable} from "@legendapp/state";
 
 export interface SinglePlayerState extends Partial<SinglePlayerGame> {
-  country?: Country;
+    country?: Country;
 }
 
-export const singlePlayerState: RecoilState<SinglePlayerState> = atom({
-  key: "singlePlayerState",
-  default: {},
-});
+export const singlePlayerState = observable<SinglePlayerState>()

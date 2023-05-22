@@ -1,23 +1,18 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import {Tile} from "@/components/Tile";
-import {Tag} from "@/components/Tag";
-import {Input} from "@/components/Input";
-
-
+import type {Meta, StoryObj} from "@storybook/react";
+import {Input} from "@/components/controls/Input";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof Input> = {
-  title: 'UI/Input',
+  title: "UI/Input",
   component: Input,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
     controls: {
-      exclude: /name/g
+      exclude: /name/g,
     },
-    layout: 'centered'
+    layout: "centered",
   },
-  argTypes: {
-  },
+  argTypes: {},
 };
 
 export default meta;
@@ -29,7 +24,6 @@ export const Default: Story = {
   args: {
     label: "Enter your e-mail address",
     type: "email",
-    name: "email"
+    name: "email",
   },
 };
-

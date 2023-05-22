@@ -33,7 +33,7 @@ const cacheOptions = {};
 
 const chatGpt = new ChatGPTClient(process.env.OPENAI_KEY, clientOptions, cacheOptions);
 
-const question = (countryName: string, language) => {
+const question = (countryName: string, language: string) => {
     if (language === 'English') {
         return `Give me ${amountAnimals} animals that are native to the country "${countryName}" as a JSON array. Each item in the array should contain a name attribute, a description attribute which describes the thing, and a source property which is a URL to the wikipedia source. Put the JSON in tripple backticks.`
     }

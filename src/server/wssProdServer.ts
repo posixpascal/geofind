@@ -1,17 +1,17 @@
 import dotenv from "dotenv";
-dotenv.config({
-  path: "../.env",
-});
-
-import { createContext } from "./context";
-import { appRouter } from "./routers/_app";
-import { applyWSSHandler } from "@trpc/server/adapters/ws";
+import {createContext} from "./context";
+import {appRouter} from "./routers/_app";
+import {applyWSSHandler} from "@trpc/server/adapters/ws";
 import http from "http";
 import next from "next";
-import { parse } from "url";
+import {parse} from "url";
 import ws from "ws";
 import ee from "@/server/eventEmitter";
 import {USER_CONNECTED, USER_DISCONNECTED} from "@/server/constants/events";
+
+dotenv.config({
+  path: "../.env",
+});
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
@@ -58,5 +58,4 @@ app.prepare().then(() => {
       console.log(`➖➖ Connection (${wss.clients.size})`);
     });
   });
-
 });

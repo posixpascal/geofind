@@ -1,29 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import {Tile} from "@/components/Tile";
-import {Map} from "@/components/Map";
-
-
+import type {Meta, StoryObj} from "@storybook/react";
+import {Map} from "@/components/layout/Map";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof Map> = {
-  title: 'UI/Map',
+  title: "UI/Map",
   component: Map,
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   parameters: {
     backgrounds: {
-      default: 'beige',
+      default: "beige",
       values: [
         {
-          name: 'beige',
-          value: "var(--color-background)"
-        }
+          name: "beige",
+          value: "var(--color-background)",
+        },
       ],
     },
-    layout: 'centered'
+    layout: "centered",
   },
-  argTypes: {
-
-  },
+  argTypes: {},
 };
 
 export default meta;
@@ -33,7 +28,7 @@ type Story = StoryObj<typeof Map>;
 export const Default: Story = {
   name: "Default",
   args: {
-    onMapHandle(){},
-    onMapInstance(){}
+    onMapHandle() {},
+    onMapInstance() {},
   },
 };

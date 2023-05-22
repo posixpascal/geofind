@@ -1,14 +1,11 @@
-import { atom, RecoilState } from "recoil";
+import {observable} from "@legendapp/state";
 
 interface MarkerState {
-  lat: number;
-  lng: number;
+    lat: number;
+    lng: number;
 }
 
-export const markerState: RecoilState<MarkerState> = atom({
-  key: "markerState",
-  default: {
+export const markerState = observable<MarkerState>({
     lat: 30,
     lng: 30,
-  },
 });

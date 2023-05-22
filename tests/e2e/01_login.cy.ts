@@ -1,5 +1,5 @@
 
-context('Login Tests', () => {
+export default context('Login Tests', () => {
 
 })
 
