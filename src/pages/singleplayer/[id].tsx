@@ -6,10 +6,10 @@ import {useRouter} from "next/router";
 import {trpc} from "@/utils/trpc";
 import {RoundState, SinglePlayerGame} from "@prisma/client";
 import {singlePlayerState} from "@/state/singleplayer";
-import {useMarker} from "@/hooks/useMarker";
+// import {useMarker} from "@/hooks/useMarker";
 import {SinglePlayerRoundStatus} from "@/components/games/singleplayer/SinglePlayerRoundStatus";
 import {UserExperience} from "@/components/user/UserExperience";
-import {useSinglePlayer} from "@/hooks/useSinglePlayer";
+// import {useSinglePlayer} from "@/hooks/useSinglePlayer";
 import {TriesIndicator} from "@/components/games/panels/TriesIndicator";
 import {FactsIndicator} from "@/components/games/panels/FactsIndicator";
 import {Overlay} from "@/components/utils/Overlay";
@@ -17,7 +17,6 @@ import {IconButton} from "@/components/controls/IconButton";
 import {useSelector} from "@legendapp/state/react";
 import dynamic from "next/dynamic";
 import {pick} from "next/dist/lib/pick";
-import {GetStaticPaths} from "next";
 
 const Map = dynamic(() => import('@/components/layout/Map'), {
     loading: () => <LoadingSpinner isLoading={true}/>
@@ -28,8 +27,8 @@ export default function Singleplayer() {
     const {id} = router.query;
     const [map, setMap] = useState<MapGL | null>(null);
     const singlePlayer = useSelector(() => singlePlayerState.get());
-    const {marker} = useMarker({map});
-    useSinglePlayer(marker, singlePlayer, map);
+    //const {marker} = useMarker({map});
+    //useSinglePlayer(marker, singlePlayer, map);
 
     const back = async () => {
         await router.push("/");
