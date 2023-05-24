@@ -1,8 +1,8 @@
-import type {Meta, StoryObj} from "@storybook/react";
-import {MockedTrpcProvider} from "@/stories/mocks/MockedTrpcProvider";
-import {PageHeader} from "@/components/layout/PageHeader";
-import {PageHeaderIcon} from "@/components/layout/PageHeaderIcon";
-import {IconButton} from "@/components/controls/IconButton";
+import type { Meta, StoryObj } from "@storybook/react";
+import { MockedTrpcProvider } from "@/stories/mocks/MockedTrpcProvider";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { PageHeaderIcon } from "@/components/layout/PageHeaderIcon";
+import { IconButton } from "@/components/controls/IconButton";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof PageHeader> = {

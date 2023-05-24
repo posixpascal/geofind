@@ -1,5 +1,5 @@
-import type {Meta, StoryObj} from "@storybook/react";
-import {FactsIndicator} from "@/components/games/panels/FactsIndicator";
+import type { Meta, StoryObj } from "@storybook/react";
+import { FactsIndicator } from "@/components/games/panels/FactsIndicator";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof FactsIndicator> = {

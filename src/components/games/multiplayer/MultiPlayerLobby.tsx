@@ -1,21 +1,23 @@
-import {multiPlayerState} from "@/state/multiplayer";
-import React, {useState} from "react";
-import {Box} from "@/components/layout/Box";
-import {MultiPlayerPlayerListing} from "@/components/games/multiplayer/MultiPlayerPlayerListing";
-import {GameMapSelection} from "@/components/games/GameMapSelection";
-import {GameSettingsSelection} from "@/components/games/GameSettingsSelection";
-import {PageHeader} from "@/components/layout/PageHeader";
-import {Share} from "@/components/controls/Share";
-import {IconButton} from "@/components/controls/IconButton";
-import {GameModeSelection} from "@/components/games/GameModeSelection";
-import {MultiPlayerGame} from "@prisma/client";
-import {trpc} from "@/utils/trpc";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
-import {useSelector} from "@legendapp/state/react";
+import { multiPlayerState } from "@/state/multiplayer";
+import React, { useState } from "react";
+import { Box } from "@/components/layout/Box";
+import { MultiPlayerPlayerListing } from "@/components/games/multiplayer/MultiPlayerPlayerListing";
+import { GameMapSelection } from "@/components/games/GameMapSelection";
+import { GameSettingsSelection } from "@/components/games/GameSettingsSelection";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { Share } from "@/components/controls/Share";
+import { IconButton } from "@/components/controls/IconButton";
+import { GameModeSelection } from "@/components/games/GameModeSelection";
+import type { MultiPlayerGame } from "@prisma/client";
+import { trpc } from "@/utils/trpc";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useSelector } from "@legendapp/state/react";
+import {PinSelection} from "@/components/forms/PinSelection";
 
 export const MultiPlayerLobby = () => {
   const { user } = useCurrentUser();
   const multiPlayer = useSelector(() => multiPlayerState.get());
+  const startMultiPlayerGame = trpc.multiplayer.startGame.useMutation();
   const [settings, setSettings] = useState({});
   const update = trpc.multiplayer.update.useMutation({});
   const updateAction: (key: keyof MultiPlayerGame) => any =
@@ -28,12 +30,17 @@ export const MultiPlayerLobby = () => {
     };
 
   const isCreator = user.data?.id === multiPlayer.creatorId;
+  const startGame = () => {
+    startMultiPlayerGame.mutateAsync({
+        id: multiPlayer.id
+    });
+  }
 
   return (
     <div>
       <PageHeader
         icon={
-          <IconButton size={"lg"} variant={"positive"} disabled={false}>
+          <IconButton onClick={startGame} size={"lg"} variant={"positive"} disabled={false}>
             Start Game
           </IconButton>
         }
@@ -85,6 +92,15 @@ export const MultiPlayerLobby = () => {
           >
             <Share url={window.location.href} />
           </Box>
+
+            <Box
+                title={"Deine Stecknadel"}
+                description={"Hier kannst Du deine Stecknadel noch einmal anpassen"}
+                mass={1.0}
+                delay={500}
+            >
+                <PinSelection/>
+            </Box>
         </aside>
       </div>
     </div>

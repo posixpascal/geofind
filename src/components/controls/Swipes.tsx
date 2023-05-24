@@ -1,6 +1,6 @@
-import React, {ReactNode, useEffect, useRef, useState} from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 import useResizeObserver from "use-resize-observer";
-import {useDebounceValue} from "@/hooks/useDebounceValue";
+import { useDebounceValue } from "@/hooks/useDebounceValue";
 
 interface SwipesProps {
   children: ReactNode[];
@@ -63,6 +63,10 @@ export const Swipes: React.FC<SwipesProps> = ({
         // TODO: check for low end devices
         const container: HTMLDivElement = innerRef.current!;
         const scrollTarget = container.children[defaultIndex];
+        if (!scrollTarget){
+          return;
+        }
+
         scrollTarget.scrollIntoView({
           behavior: "smooth",
           block: "nearest",

@@ -1,5 +1,5 @@
-import {Swipes} from "@/components/controls/Swipes";
-import {GameMap} from "@prisma/client";
+import { Swipes } from "@/components/controls/Swipes";
+import { GameMap } from "@prisma/client";
 import AfricaMap from "@/assets/svgs/maps/africa.svg";
 import NorthAmericaMap from "@/assets/svgs/maps/northamerica.svg";
 import SouthAmericaMap from "@/assets/svgs/maps/southamerica.svg";
@@ -8,7 +8,7 @@ import EuropeMap from "@/assets/svgs/maps/europe.svg";
 import AsiaMap from "@/assets/svgs/maps/asia.svg";
 import WorldMap from "@/assets/svgs/modes/world.svg";
 
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 
 interface GameMapSelectionProps {
   map: string;

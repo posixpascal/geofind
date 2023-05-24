@@ -1,20 +1,20 @@
-import {protectedProcedure, router} from "../trpc";
-import {z} from "zod";
-import {prisma} from "@/server/prisma";
-import {countryScalarFields} from "@/server/prismaGeoExtension";
-import {observable} from "@trpc/server/observable";
-import {SinglePlayerGame} from "@prisma/client";
+import { protectedProcedure, router } from "../trpc";
+import { z } from "zod";
+import { prisma } from "@/server/prisma";
+import { countryScalarFields } from "@/server/prismaGeoExtension";
+import { observable } from "@trpc/server/observable";
+import { SinglePlayerGame } from "@prisma/client";
 import ee from "@/server/eventEmitter";
-import {LngLat} from "maplibre-gl";
-import {SINGLEPLAYER_UPDATED} from "@/server/constants/events";
+import { LngLat } from "maplibre-gl";
+import { SINGLEPLAYER_UPDATED } from "@/server/constants/events";
 import logger from "@/server/logger";
 import {
-    createSinglePlayer,
-    nextSinglePlayerRound,
-    skipSinglePlayerRound,
-    solveSinglePlayerRound,
-    startSinglePlayer,
-    voteSinglePlayer,
+  createSinglePlayer,
+  nextSinglePlayerRound,
+  skipSinglePlayerRound,
+  solveSinglePlayerRound,
+  startSinglePlayer,
+  voteSinglePlayer,
 } from "@/server/services/singleplayer";
 
 export const singleplayerRouter = router({
@@ -104,7 +104,7 @@ export const singleplayerRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { vote, id } = input;
-      return await solveSinglePlayerRound(id, LngLat.convert(vote));
+      return await solveSinglePlayerRound(id, LngLat.convert(vote as any));
     }),
   vote: protectedProcedure
     .input(
@@ -118,7 +118,7 @@ export const singleplayerRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, lngLat } = input;
-      return await voteSinglePlayer(id, LngLat.convert(lngLat));
+      return await voteSinglePlayer(id, LngLat.convert(lngLat as any)); // TODO: type
     }),
   create: protectedProcedure.mutation(async ({ ctx, input }) => {
     const { id } = ctx.session.user;

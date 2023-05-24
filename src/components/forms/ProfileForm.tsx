@@ -1,6 +1,6 @@
-import {useTranslations} from "next-intl";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
-import {Input} from "../controls/Input";
+import { useTranslations } from "next-intl";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { Input } from "../controls/Input";
 
 export const ProfileForm = () => {
   const { user } = useCurrentUser();

@@ -1,8 +1,8 @@
 import React from "react";
-import {Experience, ExperienceValue} from "@/server/constants/exp";
-import {useTranslations} from "next-intl";
-import {singlePlayerState} from "@/state/singleplayer";
-import {useSelector} from "@legendapp/state/react";
+import { Experience, ExperienceValue } from "@/server/constants/exp";
+import { useTranslations } from "next-intl";
+import { singlePlayerState } from "@/state/singleplayer";
+import { useSelector } from "@legendapp/state/react";
 
 interface ExperienceListItemProps {
   type: Experience;

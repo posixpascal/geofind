@@ -1,4 +1,4 @@
-import {Switch} from "@headlessui/react";
+import { Switch } from "@headlessui/react";
 import React from "react";
 
 interface CheckboxProps {

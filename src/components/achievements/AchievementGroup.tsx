@@ -1,9 +1,9 @@
-import {Achievement, AchievementType} from "@prisma/client";
+import type { Achievement, AchievementType } from "@prisma/client";
 import React from "react";
-import {AchievementListing} from "@/components/achievements/AchievementListing";
-import {useTranslations} from "next-intl";
-import {animated, useTransition} from "@react-spring/web";
-import {PageHeader} from "@/components/layout/PageHeader";
+import { AchievementListing } from "@/components/achievements/AchievementListing";
+import { useTranslations } from "next-intl";
+import { animated, useTransition } from "@react-spring/web";
+import { PageHeader } from "@/components/layout/PageHeader";
 
 interface AchievementGroupProps {
   type: AchievementType;

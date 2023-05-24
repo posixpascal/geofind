@@ -1,7 +1,12 @@
-import maplibregl, {LngLat, LngLatLike, MapMouseEvent, Marker,} from "maplibre-gl";
-import {useEffect, useState} from "react";
-import {markerState} from "@/state/marker";
-import {useSelector} from "@legendapp/state/react";
+import maplibregl, {
+  LngLat,
+  LngLatLike,
+  MapMouseEvent,
+  Marker,
+} from "maplibre-gl";
+import { useEffect, useState } from "react";
+import { markerState } from "@/state/marker";
+import { useSelector } from "@legendapp/state/react";
 
 type UseMarkerFunction = (args: { map?: maplibregl.Map | null }) => {
   marker: Marker | null;

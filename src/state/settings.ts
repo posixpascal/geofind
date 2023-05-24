@@ -1,4 +1,5 @@
-import {observable} from "@legendapp/state";
-import {Settings} from "@prisma/client";
+import { observable } from "@legendapp/state";
+import type { Settings } from "@prisma/client";
 
-export const settingsState = observable<Partial<Settings>>();
+// Partial<Settings> todo: type
+export const settingsState = observable<any>();

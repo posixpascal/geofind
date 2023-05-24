@@ -1,11 +1,11 @@
-import {IconButton} from "@/components/controls/IconButton";
-import {trpc} from "@/utils/trpc";
-import {useState} from "react";
-import {FriendFollow} from "@/components/followers/FriendFollow";
-import {Dialog} from "../layout/Dialog";
-import {useTranslations} from "next-intl";
-import {animated, useTransition} from "@react-spring/web";
-import {UserAvatar} from "@/components/user/UserAvatar";
+import { IconButton } from "@/components/controls/IconButton";
+import { trpc } from "@/utils/trpc";
+import { useState } from "react";
+import { FriendFollow } from "@/components/followers/FriendFollow";
+import { Dialog } from "../layout/Dialog";
+import { useTranslations } from "next-intl";
+import { animated, useTransition } from "@react-spring/web";
+import { UserAvatar } from "@/components/user/UserAvatar";
 
 export const FriendList = () => {
   const t = useTranslations("friends");

@@ -1,6 +1,6 @@
-import {protectedProcedure, publicProcedure, router} from "../trpc";
-import {prisma} from "@/server/prisma";
-import {z} from "zod";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { prisma } from "@/server/prisma";
+import { z } from "zod";
 
 export const profileRouter = router({
   all: publicProcedure.query(async () => {}),

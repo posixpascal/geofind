@@ -1,5 +1,5 @@
-import {ADJECTIVES, ANIMALS} from "@/server/constants/words";
-import {LocaleName} from "../../types";
+import { ADJECTIVES, ANIMALS } from "@/server/constants/words";
+import { LocaleName } from "../../types";
 
 export const randomName = (locale: LocaleName = "en") => {
   console.log(locale);

@@ -1,11 +1,11 @@
-import React, {ReactNode, useEffect, useState} from "react";
-import {Navbar} from "@/components/layout/Navbar";
-import {trpc} from "@/utils/trpc";
-import {Globals} from "@react-spring/web";
-import {settingsState} from "@/state/settings";
-import {Footer} from "@/components/layout/Footer";
-import {DSGVO} from "../utils/DSGVO";
-import {useSelector} from "@legendapp/state/react";
+import React, { ReactNode, useEffect, useState } from "react";
+import { Navbar } from "@/components/layout/Navbar";
+import { trpc } from "@/utils/trpc";
+import { Globals } from "@react-spring/web";
+import { settingsState } from "@/state/settings";
+import { Footer } from "@/components/layout/Footer";
+import { DSGVO } from "../utils/DSGVO";
+import { useSelector } from "@legendapp/state/react";
 
 export const Layout: React.FC<{ children: ReactNode }> = ({ children }) => {
   const settings = useSelector(() => settingsState.get());

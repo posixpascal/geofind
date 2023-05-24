@@ -1,12 +1,16 @@
-import {protectedProcedure, router} from "../trpc";
-import {z} from "zod";
-import {prisma} from "@/server/prisma";
-import {observable} from "@trpc/server/observable";
-import {GameMap, GameMode, MultiPlayerGame,} from "@prisma/client";
+import { protectedProcedure, router } from "../trpc";
+import { z } from "zod";
+import { prisma } from "@/server/prisma";
+import { observable } from "@trpc/server/observable";
+import { GameMap, GameMode, GameState, MultiPlayerGame } from "@prisma/client";
 import ee from "@/server/eventEmitter";
-import {MULTIPLAYER_UPDATED,} from "@/server/constants/events";
+import { MULTIPLAYER_UPDATED } from "@/server/constants/events";
 import logger from "@/server/logger";
-import {createMultiPlayer, joinMultiPlayer, leaveMultiPlayer,} from "@/server/services/multiplayer";
+import {
+  createMultiPlayer,
+  joinMultiPlayer,
+  leaveMultiPlayer,
+} from "@/server/services/multiplayer";
 
 export const multiplayerRouter = router({
   create: protectedProcedure.mutation(async ({ ctx, input }) => {
@@ -84,6 +88,22 @@ export const multiplayerRouter = router({
 
       ee.emit(MULTIPLAYER_UPDATED, id);
     }),
+  startGame: protectedProcedure
+      .input(z.object({
+        id: z.string().cuid()
+      })).mutation(async ({ctx, input}) => {
+        const {id} = input;
+        await prisma.multiPlayerGame.update({
+          where: {
+            id
+          },
+          data: {
+            gameState: GameState.PLAYING
+          }
+        });
+
+        ee.emit(MULTIPLAYER_UPDATED, id);
+      }),
   subscribe: protectedProcedure
     .input(
       z.object({

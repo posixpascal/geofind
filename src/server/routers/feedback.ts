@@ -1,6 +1,6 @@
-import {protectedProcedure, router} from "../trpc";
-import {z} from "zod";
-import {prisma} from "@/server/prisma";
+import { protectedProcedure, router } from "../trpc";
+import { z } from "zod";
+import { prisma } from "@/server/prisma";
 
 export const feedbackRouter = router({
   list: protectedProcedure

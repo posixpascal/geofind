@@ -1,18 +1,15 @@
-import {trpc} from "@/utils/trpc";
-import {LoadingSpinner} from "@/components/utils/LoadingSpinner";
-import React, {useEffect, useRef} from "react";
+import { trpc } from "@/utils/trpc";
+import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
+import React, { useEffect, useRef } from "react";
 // TODO: big bundle, choose treeshakable bundle
-import {lookupThemeColor} from "@/utils/colors";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
-import {init, use} from "echarts/core";
-import {LineChart} from "echarts/charts";
-import {CanvasRenderer} from "echarts/renderers";
-import {useTranslations} from "next-intl";
+import { lookupThemeColor } from "@/utils/colors";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { init, use } from "echarts/core";
+import { LineChart } from "echarts/charts";
+import { CanvasRenderer } from "echarts/renderers";
+import { useTranslations } from "next-intl";
 
-use([
-    LineChart,
-    CanvasRenderer
-])
+use([LineChart, CanvasRenderer]);
 
 export const ExperienceList = () => {
   const t = useTranslations("experience");

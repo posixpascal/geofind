@@ -1,9 +1,9 @@
-import React, {ReactNode, useEffect, useRef, useState} from "react";
-import {createMapStyle} from "@/hooks/createMapStyle";
-import type {StylePropertySpecification} from "maplibre-gl";
-import maplibregl, {StyleSpecification} from "maplibre-gl";
-import {animated, useSpring} from "@react-spring/web";
-import {LoadingSpinner} from "@/components/utils/LoadingSpinner";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
+import { createMapStyle } from "@/hooks/createMapStyle";
+import type { StylePropertySpecification } from "maplibre-gl";
+import maplibregl, { StyleSpecification } from "maplibre-gl";
+import { animated, useSpring } from "@react-spring/web";
+import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
 
 interface MapProps {
   children: ReactNode;

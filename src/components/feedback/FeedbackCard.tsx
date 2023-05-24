@@ -1,7 +1,7 @@
 import React from "react";
-import {Feedback} from "@prisma/client";
-import {User} from "next-auth";
-import {UserAvatar} from "@/components/user/UserAvatar";
+import type { Feedback } from "@prisma/client";
+import { User } from "next-auth";
+import { UserAvatar } from "@/components/user/UserAvatar";
 
 const moods = [
   { name: "Excited", value: "excited", icon: "🔥" },

@@ -1,9 +1,9 @@
 import superjson from "superjson";
-import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
-import {useState} from "react";
-import {httpLink} from "@trpc/client";
-import {trpcReact} from "@/server/trpcMock";
-import {Story} from "@storybook/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useState } from "react";
+import { httpLink } from "@trpc/client";
+import { trpcReact } from "@/server/trpcMock";
+import { Story } from "@storybook/react";
 
 export const MockedTrpcProvider = (Story: Story) => {
   const [queryClient] = useState(new QueryClient());
@@ -19,10 +19,10 @@ export const MockedTrpcProvider = (Story: Story) => {
   );
 
   return (
-      <trpcReact.Provider client={trpcClient} queryClient={queryClient}>
-        <QueryClientProvider client={queryClient}>
-          <Story />
-        </QueryClientProvider>
-      </trpcReact.Provider>
+    <trpcReact.Provider client={trpcClient} queryClient={queryClient}>
+      <QueryClientProvider client={queryClient}>
+        <Story />
+      </QueryClientProvider>
+    </trpcReact.Provider>
   );
 };

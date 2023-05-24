@@ -1,6 +1,6 @@
-import {trpc} from "@/utils/trpc";
-import {useState} from "react";
-import {useTranslations} from "next-intl";
+import { trpc } from "@/utils/trpc";
+import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export const UsersOnlineCounter = () => {
   const t = useTranslations("common");

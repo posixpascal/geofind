@@ -1,5 +1,5 @@
-import {animated, useSpring} from "@react-spring/web";
-import {ReactNode} from "react";
+import { animated, useSpring } from "@react-spring/web";
+import { ReactNode } from "react";
 
 interface OverlayProps {
   visible?: boolean;

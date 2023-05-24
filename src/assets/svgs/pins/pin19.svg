@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>pin19</title>
+    <defs>
+        <path d="M312.500924,0 C485.209891,0 625,139.769804 625,312.50924 C625,485.211715 485.233916,625 312.500924,625 C139.791957,625 0,485.230196 0,312.50924 C0,139.788285 139.766084,0 312.500924,0 Z M384,663 L312.001845,1000 L240,663 C263.439114,667.76756 287.527675,670.225256 312.001845,670.225256 C336.472325,670.225256 360.560886,667.76756 384,663 Z" id="path-1"></path>
+    </defs>
+    <g id="pin19" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(188.000000, 0.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Combined-Shape"></g>
+            <polygon id="fill" fill="currentColor" mask="url(#mask-2)" points="-458.479705 1593.65367 10980.7085 1593.65367 10980.7085 -3950.02128 -458.479705 -3950.02128"></polygon>
+        </g>
+    </g>
+</svg>

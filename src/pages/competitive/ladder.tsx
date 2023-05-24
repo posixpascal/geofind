@@ -1,5 +1,5 @@
-import {LocaleName} from "../../../types";
-import {pick} from "next/dist/lib/pick";
+import { LocaleName } from "../../../types";
+import { pick } from "next/dist/lib/pick";
 
 export default function CompetitiveLadderPage() {
   return (
@@ -11,7 +11,7 @@ export default function CompetitiveLadderPage() {
   );
 }
 
-const namespaces = ['common', 'menu'];
+const namespaces = ["common", "menu"];
 export const getServerSideProps = async ({
   locale,
 }: {
@@ -20,9 +20,10 @@ export const getServerSideProps = async ({
   return {
     props: {
       messages: pick(
-          (await import(`../../../public/locales/${locale}.json`)).default,
-          namespaces
-      )
+        (await import(`../../../public/locales/${locale ?? "en"}.json`))
+          .default,
+        namespaces
+      ),
     },
   };
 };

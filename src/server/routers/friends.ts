@@ -1,7 +1,7 @@
-import {protectedProcedure, router} from "../trpc";
-import {z} from "zod";
-import {prisma} from "@/server/prisma";
-import {Prisma, User} from "@prisma/client";
+import { protectedProcedure, router } from "../trpc";
+import { z } from "zod";
+import { prisma } from "@/server/prisma";
+import { Prisma, User } from "@prisma/client";
 
 export const friendsRouter = router({
   list: protectedProcedure.query(

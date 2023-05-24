@@ -1,8 +1,8 @@
 // Prisma and Geo was a bad idea.
 
-import {prisma} from "@/server/prisma";
-import {Country, Prisma} from "@prisma/client";
-import {LngLat} from "maplibre-gl";
+import { prisma } from "@/server/prisma";
+import { Country, Prisma } from "@prisma/client";
+import { LngLat } from "maplibre-gl";
 import logger from "@/server/logger";
 
 const countryFields = Prisma.dmmf.datamodel.models.find(

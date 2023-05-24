@@ -1,7 +1,7 @@
-import {Container} from "@/components/layout/Container";
-import {MenuItems} from "@/components/layout/MenuItems";
-import {LocaleName} from "../../types";
-import {pick} from "next/dist/lib/pick";
+import { Container } from "@/components/layout/Container";
+import { MenuItems } from "@/components/layout/MenuItems";
+import { LocaleName } from "../../types";
+import { pick } from "next/dist/lib/pick";
 
 export default function IndexPage() {
   return (
@@ -15,7 +15,7 @@ export default function IndexPage() {
   );
 }
 
-const namespaces = ['common', 'menu'];
+const namespaces = ["common", "menu"];
 export const getServerSideProps = async ({
   locale,
 }: {
@@ -24,9 +24,9 @@ export const getServerSideProps = async ({
   return {
     props: {
       messages: pick(
-          (await import(`../../public/locales/${locale}.json`)).default,
-          namespaces
-      )
+        (await import(`../../public/locales/${locale ?? "en"}.json`)).default,
+        namespaces
+      ),
     },
   };
 };

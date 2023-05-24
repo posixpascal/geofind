@@ -1,4 +1,4 @@
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 import React from "react";
 import Logo from "@/assets/svgs/logo/logo.svg";
 

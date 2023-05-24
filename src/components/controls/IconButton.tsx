@@ -1,5 +1,5 @@
-import React, {MouseEventHandler, ReactNode, useState} from "react";
-import {animated, useSpring} from "@react-spring/web";
+import React, { MouseEventHandler, ReactNode, useState } from "react";
+import { animated, useSpring } from "@react-spring/web";
 
 type ButtonVariant =
   | "primary"

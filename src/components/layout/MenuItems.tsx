@@ -1,13 +1,13 @@
-import React, {MouseEventHandler, ReactNode, useEffect,} from "react";
-import {Tile} from "@/components/layout/Tile";
-import {Tag} from "../utils/Tag";
-import {useRouter} from "next/router";
-import {trpc} from "@/utils/trpc";
-import {Clickable} from "../utils/Clickable";
-import {animated, useSpringRef, useTransition} from "@react-spring/web";
+import React, { MouseEventHandler, ReactNode, useEffect } from "react";
+import { Tile } from "@/components/layout/Tile";
+import { Tag } from "../utils/Tag";
+import { useRouter } from "next/router";
+import { trpc } from "@/utils/trpc";
+import { Clickable } from "../utils/Clickable";
+import { animated, useSpringRef, useTransition } from "@react-spring/web";
 import Link from "next/link";
-import {usePlausible} from "next-plausible";
-import {useTranslations} from "next-intl";
+import { usePlausible } from "next-plausible";
+import { useTranslations } from "next-intl";
 
 interface MenuItem {
   icon: string;

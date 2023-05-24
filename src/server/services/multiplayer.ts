@@ -1,7 +1,7 @@
-import {prisma} from "@/server/prisma";
-import {GameSessionState} from "@prisma/client";
+import { prisma } from "@/server/prisma";
+import { GameSessionState } from "@prisma/client";
 import ee from "@/server/eventEmitter";
-import {MULTIPLAYER_UPDATED,} from "@/server/constants/events";
+import { MULTIPLAYER_UPDATED } from "@/server/constants/events";
 
 const createRoomCode = async () => {
   let characters = "ABCDEFGHJKMNPQRSTUVWXYZ123456789";

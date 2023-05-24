@@ -1,11 +1,11 @@
-import {observable} from "@legendapp/state";
+import { observable } from "@legendapp/state";
 
 interface MarkerState {
-    lat: number;
-    lng: number;
+  lat: number;
+  lng: number;
 }
 
 export const markerState = observable<MarkerState>({
-    lat: 30,
-    lng: 30,
+  lat: 30,
+  lng: 30,
 });

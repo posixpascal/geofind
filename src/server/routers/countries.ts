@@ -1,9 +1,9 @@
-import {protectedProcedure, publicProcedure, router} from "../trpc";
-import {z} from "zod";
-import {Continents} from "@/utils/enums";
-import {prisma} from "@/server/prisma";
-import {Prisma} from "@prisma/client";
-import {geoPrisma} from "@/server/prismaGeoExtension";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { z } from "zod";
+import { Continents } from "@/utils/enums";
+import { prisma } from "@/server/prisma";
+import { Prisma } from "@prisma/client";
+import { geoPrisma } from "@/server/prismaGeoExtension";
 
 export const countriesRouter = router({
   capital: protectedProcedure
@@ -82,7 +82,7 @@ export const countriesRouter = router({
       }
 
       const country = await geoPrisma.country.findOne({
-          id: countryIds[0]
+        id: countryIds[0],
       });
 
       console.log(country);

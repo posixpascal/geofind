@@ -1,16 +1,16 @@
-import {LocaleName} from "../../types";
-import {useTranslations} from "next-intl";
-import React, {useState} from "react";
-import {UserAvatar} from "@/components/user/UserAvatar";
-import {FeedbackForm} from "@/components/feedback/FeedbackForm";
-import {animated, useSpring, useTransition} from "@react-spring/web";
-import {trpc} from "@/utils/trpc";
-import {FeedbackCard} from "@/components/feedback/FeedbackCard";
-import {LoadingSpinner} from "@/components/utils/LoadingSpinner";
-import {PageHeader} from "@/components/layout/PageHeader";
-import {PageHeaderIcon} from "@/components/layout/PageHeaderIcon";
-import {Container} from "@/components/layout/Container";
-import {pick} from "next/dist/lib/pick";
+import { LocaleName } from "../../types";
+import { useTranslations } from "next-intl";
+import React, { useState } from "react";
+import { UserAvatar } from "@/components/user/UserAvatar";
+import { FeedbackForm } from "@/components/feedback/FeedbackForm";
+import { animated, useSpring, useTransition } from "@react-spring/web";
+import { trpc } from "@/utils/trpc";
+import { FeedbackCard } from "@/components/feedback/FeedbackCard";
+import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { PageHeaderIcon } from "@/components/layout/PageHeaderIcon";
+import { Container } from "@/components/layout/Container";
+import { pick } from "next/dist/lib/pick";
 
 export default function FeedbackPage() {
   const [skip, setSkip] = useState(0);
@@ -29,7 +29,11 @@ export default function FeedbackPage() {
     config: { mass: 2 },
   });
 
-  const onSubmit = (message: string, mood: { icon: string }, isPublic: boolean) => {
+  const onSubmit = (
+    message: string,
+    mood: { icon: string },
+    isPublic: boolean
+  ) => {
     return feedback
       .mutateAsync({
         message,
@@ -100,10 +104,10 @@ export const getServerSideProps = async ({
 }) => {
   return {
     props: {
-        messages: pick(
-            (await import(`../../public/locales/${locale}.json`)).default,
-            namespaces
-        )
+      messages: pick(
+        (await import(`../../public/locales/${locale ?? "en"}.json`)).default,
+        namespaces
+      ),
     },
   };
 };

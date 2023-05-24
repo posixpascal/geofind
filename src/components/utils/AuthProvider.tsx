@@ -1,8 +1,8 @@
-import {ReactNode, useEffect} from "react";
-import {LoadingSpinner} from "@/components/utils/LoadingSpinner";
-import {signIn} from "next-auth/react";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
-import {usePlausible} from "next-plausible";
+import { ReactNode, useEffect } from "react";
+import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
+import { signIn } from "next-auth/react";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { usePlausible } from "next-plausible";
 
 interface AuthProviderProps {
   children: ReactNode;

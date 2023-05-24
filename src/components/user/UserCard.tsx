@@ -1,9 +1,9 @@
 import React from "react";
-import {User} from "@prisma/client";
-import {UserAvatar} from "@/components/user/UserAvatar";
-import {trpc} from "@/utils/trpc";
-import {LoadingSpinner} from "@/components/utils/LoadingSpinner";
-import {IconButton} from "@/components/controls/IconButton";
+import type { User } from "@prisma/client";
+import { UserAvatar } from "@/components/user/UserAvatar";
+import { trpc } from "@/utils/trpc";
+import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
+import { IconButton } from "@/components/controls/IconButton";
 
 interface UserCardProps {
   user: User;

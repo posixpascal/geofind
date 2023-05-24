@@ -1,13 +1,14 @@
-import {LocaleName} from "../../../types";
-import {useRouter} from "next/router";
-import {trpc} from "@/utils/trpc";
-import {GameState} from "@prisma/client";
-import {multiPlayerState} from "@/state/multiplayer";
-import {useMemo, useState} from "react";
-import {LoadingSpinner} from "@/components/utils/LoadingSpinner";
-import {MultiPlayerLobby} from "@/components/games/multiplayer/MultiPlayerLobby";
-import {useSelector} from "@legendapp/state/react";
-import {pick} from "next/dist/lib/pick";
+import { LocaleName } from "../../../types";
+import { useRouter } from "next/router";
+import { trpc } from "@/utils/trpc";
+import { multiPlayerState } from "@/state/multiplayer";
+import { useMemo, useState } from "react";
+import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
+import { MultiPlayerLobby } from "@/components/games/multiplayer/MultiPlayerLobby";
+import { useSelector } from "@legendapp/state/react";
+import { pick } from "next/dist/lib/pick";
+import { MultiPlayerGame } from "@/components/games/multiplayer/MultiPlayerGame";
+import {Layout} from "@/components/layout/Layout";
 
 export default function MultiplayerPage() {
   const multiPlayer = useSelector(() => multiPlayerState.get());
@@ -23,7 +24,8 @@ export default function MultiplayerPage() {
       onStarted() {
         setLoading(false);
       },
-      onData(game: any) { // TODO: type
+      onData(game: any) {
+        // TODO: type
         multiPlayerState.set(game);
       },
     }
@@ -34,13 +36,13 @@ export default function MultiplayerPage() {
       return <></>;
     }
 
-    if (multiPlayer.gameState === GameState.LOBBY) {
-      return <MultiPlayerLobby />;
+    if (multiPlayer.gameState === "LOBBY") {
+      return <Layout><MultiPlayerLobby /></Layout>;
     }
 
-    // if (multiPlayer.gameState === GameState.PLAYING) {
-    //   return <MultiPlayerGame />;
-    // }
+    if (multiPlayer.gameState === "PLAYING") {
+      return <MultiPlayerGame />;
+    }
 
     return <>Unsupported State: {multiPlayer.gameState}</>;
   }, [multiPlayer?.gameState]);
@@ -53,10 +55,9 @@ export default function MultiplayerPage() {
   );
 }
 
-const namespaces = [  "common",
-  "settings",
-  "multiplayer",
-  "menu"];
+MultiplayerPage.getLayout = ({children}) => <>{children}</>
+
+const namespaces = ["common", "settings", "menu"];
 
 export const getServerSideProps = async ({
   locale,
@@ -66,9 +67,10 @@ export const getServerSideProps = async ({
   return {
     props: {
       messages: pick(
-          (await import(`../../../public/locales/${locale}.json`)).default,
-          namespaces
-      )
+        (await import(`../../../public/locales/${locale ?? "en"}.json`))
+          .default,
+        namespaces
+      ),
     },
   };
 };

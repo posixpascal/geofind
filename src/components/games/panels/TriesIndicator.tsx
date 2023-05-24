@@ -1,6 +1,6 @@
-import {useMemo} from "react";
-import {singlePlayerState} from "@/state/singleplayer";
-import {useSelector} from "@legendapp/state/react";
+import { useMemo } from "react";
+import { singlePlayerState } from "@/state/singleplayer";
+import { useSelector } from "@legendapp/state/react";
 
 export const TriesIndicator = () => {
   const singlePlayer = useSelector(() => singlePlayerState.get());

@@ -1,24 +1,27 @@
-import {LocaleName} from "../../../types";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
-import {LoadingSpinner} from "@/components/utils/LoadingSpinner";
-import {format} from "date-fns";
-import {IconButton} from "@/components/controls/IconButton";
+import { LocaleName } from "../../../types";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
+import { format } from "date-fns";
+import { IconButton } from "@/components/controls/IconButton";
 import React from "react";
-import {trpc} from "@/utils/trpc";
-import {AchievementMedal} from "@prisma/client";
-import {animated, useSpring} from "@react-spring/web";
-import {FriendList} from "@/components/followers/FriendList";
-import {ProfileForm} from "@/components/forms/ProfileForm";
-import {useTranslations} from "next-intl";
-import {settingsState} from "@/state/settings";
-import {Container} from "@/components/layout/Container";
-import {useSelector} from "@legendapp/state/react";
+import { trpc } from "@/utils/trpc";
+import type { AchievementMedal } from "@prisma/client";
+import { animated, useSpring } from "@react-spring/web";
+import { FriendList } from "@/components/followers/FriendList";
+import { ProfileForm } from "@/components/forms/ProfileForm";
+import { useTranslations } from "next-intl";
+import { settingsState } from "@/state/settings";
+import { Container } from "@/components/layout/Container";
+import { useSelector } from "@legendapp/state/react";
 import dynamic from "next/dynamic";
-import {pick} from "next/dist/lib/pick";
+import { pick } from "next/dist/lib/pick";
 
-const ExperienceList = dynamic(() => import('@/components/achievements/ExperienceList'), {
-  loading: () => <LoadingSpinner isLoading={true} />
-});
+const ExperienceList = dynamic(
+  () => import("@/components/achievements/ExperienceList"),
+  {
+    loading: () => <LoadingSpinner isLoading={true} />,
+  }
+);
 
 export default function ProfilePage() {
   const settings = useSelector(() => settingsState.get());
@@ -47,7 +50,7 @@ export default function ProfilePage() {
   });
 
   if (!user.data || user.isLoading || achievements.isLoading) {
-    return <LoadingSpinner isLoading={true}/>;
+    return <LoadingSpinner isLoading={true} />;
   }
 
   return (
@@ -75,9 +78,9 @@ export default function ProfilePage() {
                 )}
               </h2>
               <p className={"text-2xl flex gap-8"}>
-                <span>{achievements.data![AchievementMedal.RIBBON]} 🎀</span>
-                <span>{achievements.data![AchievementMedal.CROWN]} 👑</span>
-                <span>{achievements.data![AchievementMedal.GEM]} 💎</span>
+                <span>{achievements.data!["RIBBON"]} 🎀</span>
+                <span>{achievements.data!["CROWN"]} 👑</span>
+                <span>{achievements.data!["GEM"]} 💎</span>
               </p>
               <p className={"text-xl"}>
                 {t("joined", { at: format(user.data.joinedAt!, "dd.MM.yyyy") })}
@@ -135,7 +138,7 @@ export default function ProfilePage() {
           {settings.enableExperience && (
             <animated.div style={{ opacity: opacitySmall, scale: scaleSmall }}>
               <div className={"bg-card rounded-xl p-5"}>
-                  <ExperienceList />
+                <ExperienceList />
               </div>
             </animated.div>
           )}
@@ -145,11 +148,7 @@ export default function ProfilePage() {
   );
 }
 
-const namespaces = [ "common",
-  "profile",
-  "experience",
-  "friends",
-  "menu"];
+const namespaces = ["common", "profile", "experience", "friends", "menu"];
 
 export const getServerSideProps = async ({
   locale,
@@ -159,9 +158,10 @@ export const getServerSideProps = async ({
   return {
     props: {
       messages: pick(
-          (await import(`../../../public/locales/${locale}.json`)).default,
-          namespaces
-      )
+        (await import(`../../../public/locales/${locale ?? "en"}.json`))
+          .default,
+        namespaces
+      ),
     },
   };
 };

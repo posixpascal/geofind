@@ -1,6 +1,6 @@
 import React from "react";
-import {useTranslations} from "next-intl";
-import {Input} from "@/components/controls/Input";
+import { useTranslations } from "next-intl";
+import { Input } from "@/components/controls/Input";
 
 import TelegramIcon from "@/assets/svgs/social/telegram.svg";
 import TwitterIcon from "@/assets/svgs/social/twitter.svg";

@@ -1,12 +1,12 @@
 import NextAuth from "next-auth";
 import DiscordProvider from "next-auth/providers/discord";
 import CredentialsProvider from "next-auth/providers/credentials";
-import {PrismaAdapter} from "@next-auth/prisma-adapter";
-import {prisma} from "@/server/prisma";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { prisma } from "@/server/prisma";
 import jwt from "jsonwebtoken";
 import cuid from "cuid";
-import {randomName} from "@/utils/generators";
-import {JWT} from "next-auth/jwt";
+import { randomName } from "@/utils/generators";
+import { JWT } from "next-auth/jwt";
 
 const adapter = {
   ...PrismaAdapter(prisma),
@@ -14,6 +14,8 @@ const adapter = {
     return prisma.user.create({
       data: {
         ...data,
+        pin: 0,
+        color: 0,
         friendCode: 1000 + Math.round(Math.random() * 8999),
       },
     });

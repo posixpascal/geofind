@@ -1,8 +1,8 @@
 import React from "react";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 import Image from "next/image";
 import Avatar from "boring-avatars";
-import {User} from "next-auth";
+import { User } from "next-auth";
 
 interface UserAvatarProps {
   width: number;

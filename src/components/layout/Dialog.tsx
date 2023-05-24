@@ -1,5 +1,5 @@
-import {Dialog as DialogUI, Transition} from "@headlessui/react";
-import React, {Fragment, ReactNode} from "react";
+import { Dialog as DialogUI, Transition } from "@headlessui/react";
+import React, { Fragment, ReactNode } from "react";
 
 // TODO: add react-spring as animation driver here.
 

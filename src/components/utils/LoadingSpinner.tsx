@@ -1,22 +1,20 @@
-import {animated, useSpring} from "@react-spring/web";
+import { animated, useSpring } from "@react-spring/web";
 
 export const LoadingSpinner: React.FC<{ isLoading: boolean }> = ({
   isLoading,
 }) => {
-  const { opacity, scale } = useSpring({
+  const { opacity } = useSpring({
     from: {
       opacity: 0,
-      scale: 0,
     },
     to: {
       opacity: 1,
-      scale: 1,
     },
     reverse: !isLoading,
   });
   return (
     <animated.div
-      style={{ opacity, scale }}
+      style={{ opacity }}
       className={
         "absolute top-4 left-4 flex items-center justify-center pointer-events-none z-20"
       }

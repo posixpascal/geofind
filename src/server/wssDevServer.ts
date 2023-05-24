@@ -1,10 +1,10 @@
-import {createContext} from "./context";
-import {appRouter} from "./routers/_app";
-import {applyWSSHandler} from "@trpc/server/adapters/ws";
+import { createContext } from "./context";
+import { appRouter } from "./routers/_app";
+import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import fetch from "node-fetch";
 import ws from "ws";
 import ee from "@/server/eventEmitter";
-import {USER_CONNECTED, USER_DISCONNECTED} from "@/server/constants/events";
+import { USER_CONNECTED, USER_DISCONNECTED } from "@/server/constants/events";
 
 if (!global.fetch) {
   (global as any).fetch = fetch;

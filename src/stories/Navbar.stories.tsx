@@ -1,7 +1,7 @@
-import type {Meta, StoryObj} from "@storybook/react";
-import {Navbar} from "@/components/layout/Navbar";
-import {MockedTrpcProvider} from "@/stories/mocks/MockedTrpcProvider";
-import {trpcMsw} from "@/server/trpcMock";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Navbar } from "@/components/layout/Navbar";
+import { MockedTrpcProvider } from "@/stories/mocks/MockedTrpcProvider";
+import { trpcMsw } from "@/server/trpcMock";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof Navbar> = {

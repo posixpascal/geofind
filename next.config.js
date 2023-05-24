@@ -1,41 +1,55 @@
 /** @type {import('next').NextConfig} */
 require("./src/server/env.ts");
 const {i18n} = require("./next-i18next.config.js");
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
 
-const nextConfig = {
-  i18n,
-  experimental: {
-  },
 
-  images: {
-    formats: ['image/avif', 'image/webp'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'cdn.discordapp.com',
-        port: '',
-        pathname: '/avatars/**',
-      },
-    ],
-  },
+let nextConfig = {
+    compiler: {
+        reactRemoveProperties: true,
+        removeConsole: true,
+    },
+    i18n: {
+        defaultLocale: 'de',
+        localeDetection: true,
+        locales: ['en', 'de'],
+    },
+    experimental: {},
 
-  publicRuntimeConfig: {
-    APP_URL: process.env.APP_URL,
-    WS_URL: process.env.WS_URL,
-  },
+    images: {
+        formats: ['image/avif', 'image/webp'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'cdn.discordapp.com',
+                port: '',
+                pathname: '/avatars/**',
+            },
+        ],
+    },
 
-  webpack(config){
-    config.module.rules.push({
-      test: /\.svg$/i,
-      issuer: /\.[jt]sx?$/,
-      use: ['@svgr/webpack']
-    });
+    publicRuntimeConfig: {
+        APP_URL: process.env.APP_URL,
+        WS_URL: process.env.WS_URL,
+    },
 
-    return config;
-  }
+    webpack(config) {
+        config.module.rules.push({
+            test: /\.svg$/i,
+            issuer: /\.[jt]sx?$/,
+            use: ['@svgr/webpack'],
+        });
+
+        return config;
+    },
+
+    modularizeImports: {},
 }
 
-module.exports = withBundleAnalyzer(nextConfig)
+const shouldAnalyzeBundles = false;
+if (shouldAnalyzeBundles) {
+    const withNextBundleAnalyzer =
+              require('next-bundle-analyzer')(/* options come there */);
+    nextConfig                   = withNextBundleAnalyzer(nextConfig);
+}
+
+module.exports = nextConfig

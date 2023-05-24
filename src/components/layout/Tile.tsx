@@ -1,5 +1,5 @@
-import {animated, to, useSpring} from "@react-spring/web";
-import React, {ReactNode} from "react";
+import { animated, to, useSpring } from "@react-spring/web";
+import React, { ReactNode } from "react";
 
 interface TileProps {
   title: string;

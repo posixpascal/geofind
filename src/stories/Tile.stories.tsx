@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from "@storybook/react";
-import {Tile} from "@/components/layout/Tile";
-import {Tag} from "@/components/utils/Tag";
+import type { Meta, StoryObj } from "@storybook/react";
+import { Tile } from "@/components/layout/Tile";
+import { Tag } from "@/components/utils/Tag";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof Tile> = {

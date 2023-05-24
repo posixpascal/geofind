@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg  viewBox="0 0 1000 1000" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>pin1</title>
+    <defs>
+        <path d="M313.005552,0 C485.870332,0 626,140.052085 626,312.805185 C626,485.558285 313.005552,1000 313.005552,1000 C313.005552,1000 0,485.558285 0,312.805185 C0,140.052085 140.142624,0 313.005552,0 Z M313.005552,95.3064425 C192.807156,95.3064425 95.3680551,192.684443 95.3680551,312.805185 C95.3680551,432.91113 192.807156,530.28913 313.005552,530.28913 C433.189142,530.28913 530.630094,432.91113 530.630094,312.805185 C530.630094,192.684443 433.189142,95.3064425 313.005552,95.3064425 Z" id="path-1"></path>
+    </defs>
+    <g id="pin1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(186.000000, 0.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Clip-5"></g>
+            <polygon id="fill" fill="currentColor" mask="url(#mask-2)" points="-450 5180 11018 5180 11018 -369 -450 -369"></polygon>
+        </g>
+    </g>
+</svg>

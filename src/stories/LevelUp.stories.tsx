@@ -1,6 +1,6 @@
-import type {Meta, StoryObj} from "@storybook/react";
-import {LevelUp} from "@/components/achievements/LevelUp";
-import {MockedTrpcProvider} from "@/stories/mocks/MockedTrpcProvider";
+import type { Meta, StoryObj } from "@storybook/react";
+import { LevelUp } from "@/components/achievements/LevelUp";
+import { MockedTrpcProvider } from "@/stories/mocks/MockedTrpcProvider";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 const meta: Meta<typeof LevelUp> = {

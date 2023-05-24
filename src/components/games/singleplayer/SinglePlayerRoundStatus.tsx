@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from "react";
-import {animated, useSpring} from "@react-spring/web";
-import {SinglePlayerState} from "@/state/singleplayer";
-import {useTranslations} from "next-intl";
-import {IconButton} from "@/components/controls/IconButton";
-import {useRouter} from "next/router";
-import {markerState} from "@/state/marker";
-import {trpc} from "@/utils/trpc";
-import {distanceBetween} from "@/utils/geo";
-import {SINGLEPLAYER_ERROR_TIME} from "@/server/constants/timings";
-import {RoundState} from "@prisma/client";
-import {DistanceAnimation} from "../panels/DistanceAnimation";
-import {useSelector} from "@legendapp/state/react";
+import React, { useEffect, useState } from "react";
+import { animated, useSpring } from "@react-spring/web";
+import { SinglePlayerState } from "@/state/singleplayer";
+import { useTranslations } from "next-intl";
+import { IconButton } from "@/components/controls/IconButton";
+import { useRouter } from "next/router";
+import { markerState } from "@/state/marker";
+import { trpc } from "@/utils/trpc";
+import { distanceBetween } from "@/utils/geo";
+import { SINGLEPLAYER_ERROR_TIME } from "@/server/constants/timings";
+import type { RoundState } from "@prisma/client";
+import { DistanceAnimation } from "../panels/DistanceAnimation";
+import { useSelector } from "@legendapp/state/react";
 
 interface RoundPreparedDialogProps {
   singlePlayer: SinglePlayerState;
@@ -108,7 +108,7 @@ export const SinglePlayerRoundStatus: React.FC<RoundPreparedDialogProps> = ({
           </div>
         </div>
         {distance > 0 && <DistanceAnimation distance={distance} />}
-        {distance === 0 && singlePlayer.roundState === RoundState.SUCCESS && (
+        {distance === 0 && singlePlayer.roundState === "SUCCESS" && (
           <div>
             <div className={"text-center"}>
               <p>✅Gefunden nach {singlePlayer.trialsForRound} Runde!</p>
@@ -126,7 +126,7 @@ export const SinglePlayerRoundStatus: React.FC<RoundPreparedDialogProps> = ({
             </div>
           </div>
         )}
-        {distance === 0 && singlePlayer.roundState === RoundState.STARTED && (
+        {distance === 0 && singlePlayer.roundState === "STARTED" && (
           <div className={"grid px-3 grid-cols-2 gap-8 mt-4"}>
             <div>
               <IconButton
@@ -151,7 +151,7 @@ export const SinglePlayerRoundStatus: React.FC<RoundPreparedDialogProps> = ({
           </div>
         )}
 
-        {!distance && singlePlayer.roundState === RoundState.ENDED && (
+        {!distance && singlePlayer.roundState === "ENDED" && (
           <div>
             <div>
               <IconButton

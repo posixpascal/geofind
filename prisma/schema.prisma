@@ -109,8 +109,8 @@ model User {
   accounts      Account[]
   sessions      Session[]
 
-  pin            String?
-  color          String?
+  pin            Int @default(0)
+  color          Int @default(0)
   experience     Int      @default(0)
   joinedAt       DateTime @default(now())
   lastActivityAt DateTime @default(now())

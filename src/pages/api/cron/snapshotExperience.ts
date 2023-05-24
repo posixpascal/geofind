@@ -1,5 +1,5 @@
-import {prisma} from "@/server/prisma";
-import {NextApiRequest, NextApiResponse} from "next";
+import { prisma } from "@/server/prisma";
+import { NextApiRequest, NextApiResponse } from "next";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const userCount = await prisma.user.count();

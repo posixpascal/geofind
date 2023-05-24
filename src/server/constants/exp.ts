@@ -1,4 +1,4 @@
-import {ACHIEVEMENT_AWARDED} from "@/server/constants/events";
+import { ACHIEVEMENT_AWARDED } from "@/server/constants/events";
 
 export enum Experience {
   COUNTRY_HIT = "COUNTRY_HIT",

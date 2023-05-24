@@ -1,13 +1,13 @@
-import {LocaleName} from "../../../types";
-import {trpc} from "@/utils/trpc";
-import {Achievement} from "@prisma/client";
-import {AchievementGroup} from "@/components/achievements/AchievementGroup";
+import { LocaleName } from "../../../types";
+import { trpc } from "@/utils/trpc";
+import type { Achievement } from "@prisma/client";
+import { AchievementGroup } from "@/components/achievements/AchievementGroup";
 import React from "react";
-import {SpottedCountriesMap} from "@/components/achievements/SpottedCountriesMap";
-import {Container} from "@/components/layout/Container";
-import {PageHeader} from "@/components/layout/PageHeader";
-import {useTranslations} from "next-intl";
-import {pick} from "next/dist/lib/pick";
+import { SpottedCountriesMap } from "@/components/achievements/SpottedCountriesMap";
+import { Container } from "@/components/layout/Container";
+import { PageHeader } from "@/components/layout/PageHeader";
+import { useTranslations } from "next-intl";
+import { pick } from "next/dist/lib/pick";
 
 export default function ProfileAchievementsPage() {
   const t = useTranslations("achievements");
@@ -53,9 +53,7 @@ export default function ProfileAchievementsPage() {
   );
 }
 
-const namespaces = [ "common",
-    "menu",
-    "achievements"]
+const namespaces = ["common", "menu", "achievements"];
 export const getServerSideProps = async ({
   locale,
 }: {
@@ -63,10 +61,11 @@ export const getServerSideProps = async ({
 }) => {
   return {
     props: {
-        messages: pick(
-            (await import(`../../../public/locales/${locale}.json`)).default,
-            namespaces
-        )
+      messages: pick(
+        (await import(`../../../public/locales/${locale ?? "en"}.json`))
+          .default,
+        namespaces
+      ),
     },
   };
 };

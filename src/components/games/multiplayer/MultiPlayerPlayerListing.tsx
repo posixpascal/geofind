@@ -1,12 +1,12 @@
-import {multiPlayerState} from "@/state/multiplayer";
-import {GameSessionState, User} from "@prisma/client";
-import {UserAvatar} from "@/components/user/UserAvatar";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
-import {Tag} from "@/components/utils/Tag";
-import {useState} from "react";
-import {Dialog} from "@/components/layout/Dialog";
-import {UserCard} from "../../user/UserCard";
-import {useSelector} from "@legendapp/state/react";
+import { multiPlayerState } from "@/state/multiplayer";
+import type { User } from "@prisma/client";
+import { UserAvatar } from "@/components/user/UserAvatar";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { Tag } from "@/components/utils/Tag";
+import { useState } from "react";
+import { Dialog } from "@/components/layout/Dialog";
+import { UserCard } from "../../user/UserCard";
+import { useSelector } from "@legendapp/state/react";
 
 export const MultiPlayerPlayerListing = () => {
   const { user } = useCurrentUser();
@@ -14,7 +14,7 @@ export const MultiPlayerPlayerListing = () => {
   const multiPlayer = useSelector(() => multiPlayerState.get());
 
   const players = multiPlayer
-    .sessions!.filter((session) => session.state === GameSessionState.CONNECTED)
+    .sessions!.filter((session) => session.state === "CONNECTED")
     .map((session) => session.user);
 
   return (

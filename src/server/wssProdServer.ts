@@ -1,13 +1,13 @@
 import dotenv from "dotenv";
-import {createContext} from "./context";
-import {appRouter} from "./routers/_app";
-import {applyWSSHandler} from "@trpc/server/adapters/ws";
+import { createContext } from "./context";
+import { appRouter } from "./routers/_app";
+import { applyWSSHandler } from "@trpc/server/adapters/ws";
 import http from "http";
 import next from "next";
-import {parse} from "url";
+import { parse } from "url";
 import ws from "ws";
 import ee from "@/server/eventEmitter";
-import {USER_CONNECTED, USER_DISCONNECTED} from "@/server/constants/events";
+import { USER_CONNECTED, USER_DISCONNECTED } from "@/server/constants/events";
 
 dotenv.config({
   path: "../.env",

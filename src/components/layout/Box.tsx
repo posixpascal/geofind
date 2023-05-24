@@ -1,5 +1,5 @@
-import {animated, useSpring} from "@react-spring/web";
-import React, {ReactNode} from "react";
+import { animated, useSpring } from "@react-spring/web";
+import React, { ReactNode } from "react";
 
 interface BoxProps {
   mass?: number;

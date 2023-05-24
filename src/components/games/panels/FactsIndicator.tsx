@@ -1,14 +1,14 @@
-import {factsState} from "@/state/facts";
-import {useRouter} from "next/router";
+import { factsState } from "@/state/facts";
+import { useRouter } from "next/router";
 import Bulb from "@/assets/svgs/icons/bulb.svg";
-import {animated, useSpring} from "@react-spring/web";
-import {IconButton} from "@/components/controls/IconButton";
-import {useEffect, useState} from "react";
-import {useSelector} from "@legendapp/state/react";
+import { animated, useSpring } from "@react-spring/web";
+import { IconButton } from "@/components/controls/IconButton";
+import { useEffect, useState } from "react";
+import { useSelector } from "@legendapp/state/react";
 
 export const FactsIndicator = () => {
   const router = useRouter();
-  const facts = useSelector(() => factsState.get())
+  const facts = useSelector(() => factsState.get());
   const [index, setIndex] = useState(0);
 
   const localizedFacts = facts.filter(

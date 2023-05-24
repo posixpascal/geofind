@@ -1,8 +1,8 @@
-import {IconButton} from "@/components/controls/IconButton";
+import { IconButton } from "@/components/controls/IconButton";
 import BackIcon from "@/assets/svgs/icons/back.svg";
-import {animated, useSpring} from "@react-spring/web";
+import { animated, useSpring } from "@react-spring/web";
 import React from "react";
-import {useRouter} from "next/router";
+import { useRouter } from "next/router";
 
 export const AnimatedBackButton = () => {
   const { route, back, push } = useRouter();
@@ -26,7 +26,7 @@ export const AnimatedBackButton = () => {
         opacity: x.interpolate({ range: [0, 1], output: [0, 1] }),
         transform: x
           .interpolate({ range: [0, 1], output: [0, 70] })
-          .interpolate((x) => `translateX(-${x}%)`),
+          .interpolate((x: any) => `translateX(-${x}%)`),
       }}
     >
       <IconButton size={"sm"} onClick={back}>

@@ -1,6 +1,6 @@
-import {useTranslations} from "next-intl";
-import {IconButton} from "@/components/controls/IconButton";
-import {useLocalStorage} from "react-use";
+import { useTranslations } from "next-intl";
+import { IconButton } from "@/components/controls/IconButton";
+import { useLocalStorage } from "react-use";
 
 export const DSGVO = () => {
   const [banner, setBanner] = useLocalStorage("dsgvo", true);

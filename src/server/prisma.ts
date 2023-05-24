@@ -1,7 +1,7 @@
 // @ts-ignore
-import {env} from "./env";
+import { env } from "./env";
 // @ts-ignore
-import {PrismaClient} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prismaGlobal = global as typeof global & {
   prisma?: PrismaClient;

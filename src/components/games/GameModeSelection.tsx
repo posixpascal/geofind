@@ -1,11 +1,11 @@
-import {Swipes} from "@/components/controls/Swipes";
-import {GameMode} from "@prisma/client";
+import { Swipes } from "@/components/controls/Swipes";
+import { GameMode } from "@prisma/client";
 import WorldIcon from "@/assets/svgs/modes/world.svg";
 import CapitalsIcon from "@/assets/svgs/modes/capitals.svg";
 import FlagsIcon from "@/assets/svgs/modes/flags.svg";
 import AnimalsIcon from "@/assets/svgs/modes/animals.svg";
 
-import {ReactNode} from "react";
+import { ReactNode } from "react";
 
 interface GameModeSelectionProps {
   mode: string;

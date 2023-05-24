@@ -1,4 +1,4 @@
-import {Settings} from "@prisma/client";
+import { Settings } from "@prisma/client";
 
 export type SettingsKey = keyof Omit<Settings, "id" | "userId">;
 

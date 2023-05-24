@@ -1,12 +1,12 @@
-import {CountryFact, RoundState} from "@prisma/client";
-import {SinglePlayerState} from "@/state/singleplayer";
-import {SINGLEPLAYER_PREPARE_TIME,} from "@/server/constants/timings";
-import {trpc} from "@/utils/trpc";
-import {LngLat, LngLatBounds, Map, Marker, Popup} from "maplibre-gl";
-import {useEffect} from "react";
+import type { CountryFact, RoundState } from "@prisma/client";
+import { SinglePlayerState } from "@/state/singleplayer";
+import { SINGLEPLAYER_PREPARE_TIME } from "@/server/constants/timings";
+import { trpc } from "@/utils/trpc";
+import { LngLat, LngLatBounds, Map, Marker, Popup } from "maplibre-gl";
+import { useEffect } from "react";
 import cuid from "cuid";
-import {factsState} from "@/state/facts";
-import {COUNTRY_LABELS} from "@/hooks/createMapStyle";
+import { factsState } from "@/state/facts";
+import { COUNTRY_LABELS } from "@/hooks/createMapStyle";
 
 const animateLineOn = (
   map: Map,
@@ -77,7 +77,7 @@ export const useSinglePlayer = (
     }
 
     const handleRoundState = async () => {
-      if (game.roundState === RoundState.PREPARED) {
+      if (game.roundState === "PREPARED") {
         if (map?.isStyleLoaded()) {
           map!.removeLayer(COUNTRY_LABELS.id);
         }
@@ -98,7 +98,7 @@ export const useSinglePlayer = (
         }, SINGLEPLAYER_PREPARE_TIME);
       }
 
-      if (game.roundState === RoundState.ENDED) {
+      if (game.roundState === "ENDED") {
         fetchFacts.mutate(
           {
             id: game.countryId!,

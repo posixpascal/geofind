@@ -1,0 +1,8 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ONLINE_THRESHOLD_IN_MILLIS = exports.SINGLEPLAYER_END_TIME = exports.SINGLEPLAYER_ERROR_TIME = exports.SINGLEPLAYER_SUCCESS_TIME = exports.SINGLEPLAYER_PREPARE_TIME = void 0;
+exports.SINGLEPLAYER_PREPARE_TIME = 2 * 1000;
+exports.SINGLEPLAYER_SUCCESS_TIME = 5 * 1000;
+exports.SINGLEPLAYER_ERROR_TIME = 4 * 1000;
+exports.SINGLEPLAYER_END_TIME = 6 * 1000;
+exports.ONLINE_THRESHOLD_IN_MILLIS = 5 * 60 * 1000;

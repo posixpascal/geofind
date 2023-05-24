@@ -101,6 +101,7 @@
     }
   },
   "common": {
+    "playersOnline": "Spieler Online",
     "cookies": {
       "title": "Geofind verwendet keine Cookies von Drittanbietern",
       "description": "Es werden keine Daten an Dritte weitergegeben. Ein anonymer Cookie ohne personenbezogene Daten wird gesetzt, damit du keinen Account anlegen musst um auf Geofind.IO zu spielen.",
@@ -217,6 +218,10 @@
     "description": "Hier hast Du volle Kontrolle über Dein Geofind :)",
     "colorSchemeTitle": "Farbschema",
     "colorSchemeDescription": "Wähle aus unseren Farbpaletten dein Lieblingsdesign",
+    "generalTitle": "Allgemeine Einstellungen",
+    "generalDescription": "Hier kannst Du Funktionen innerhalb Geofind aktivieren oder entfernen",
+    "pinsTitle": "Stecknadel",
+    "pinsDescription": "Wähle deine Stecknadel aus mit der du spielen magst",
     "animations": {
       "emoji": "✨",
       "title": "Animationen aktivieren",

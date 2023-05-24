@@ -1,10 +1,10 @@
-import React, {useState} from "react";
-import {useTranslations} from "next-intl";
-import {IconButton} from "@/components/controls/IconButton";
-import {Input} from "../controls/Input";
-import {trpc} from "@/utils/trpc";
-import {animated, useTransition} from "@react-spring/web";
-import {UserAvatar} from "@/components/user/UserAvatar";
+import React, { useState } from "react";
+import { useTranslations } from "next-intl";
+import { IconButton } from "@/components/controls/IconButton";
+import { Input } from "../controls/Input";
+import { trpc } from "@/utils/trpc";
+import { animated, useTransition } from "@react-spring/web";
+import { UserAvatar } from "@/components/user/UserAvatar";
 
 export interface FriendFollowProps {
   onFollow: () => {};

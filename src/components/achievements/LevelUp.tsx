@@ -1,9 +1,9 @@
 import Confetti from "react-confetti";
-import React, {useEffect, useState} from "react";
-import {useCurrentUser} from "@/hooks/useCurrentUser";
-import {expLevel} from "@/utils/experience";
-import {animated, useSpring} from "@react-spring/web";
-import {IconButton} from "@/components/controls/IconButton";
+import React, { useEffect, useState } from "react";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { expLevel } from "@/utils/experience";
+import { animated, useSpring } from "@react-spring/web";
+import { IconButton } from "@/components/controls/IconButton";
 
 interface LevelUpProps {
   width: number;

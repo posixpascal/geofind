@@ -1,16 +1,22 @@
-import {useCurrentUser} from "@/hooks/useCurrentUser";
-import {expForCurrentLevel, expLevel, nextExpLevel} from "@/utils/experience";
-import React, {useEffect, useMemo, useState} from "react";
-import {ProgressBar} from "../controls/ProgressBar";
-import {trpc} from "@/utils/trpc";
-import {animated, useChain, useSpring, useSpringRef, useTransition,} from "@react-spring/web";
-import {Experience} from "@/server/constants/exp";
-import {ExperienceListItem} from "../achievements/ExperienceListItem";
-import {LevelUp} from "../achievements/LevelUp";
-import {singlePlayerState} from "@/state/singleplayer";
-import {RoundState} from "@prisma/client";
-import {UserAvatar} from "@/components/user/UserAvatar";
-import {useSelector} from "@legendapp/state/react";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { expForCurrentLevel, expLevel, nextExpLevel } from "@/utils/experience";
+import React, { useEffect, useMemo, useState } from "react";
+import { ProgressBar } from "../controls/ProgressBar";
+import { trpc } from "@/utils/trpc";
+import {
+  animated,
+  useChain,
+  useSpring,
+  useSpringRef,
+  useTransition,
+} from "@react-spring/web";
+import { Experience } from "@/server/constants/exp";
+import { ExperienceListItem } from "../achievements/ExperienceListItem";
+import { LevelUp } from "../achievements/LevelUp";
+import { singlePlayerState } from "@/state/singleplayer";
+import type { RoundState } from "@prisma/client";
+import { UserAvatar } from "@/components/user/UserAvatar";
+import { useSelector } from "@legendapp/state/react";
 
 const LEVEL_UP_ANIMATION_DURATION = 4000;
 const TRAIL_HEIGHT = 45;
@@ -25,7 +31,7 @@ export const UserExperience = () => {
   const innerHeight = typeof window !== "undefined" ? window.innerHeight : 300;
 
   useEffect(() => {
-    if (singlePlayer.roundState === RoundState.PREPARED) {
+    if (singlePlayer.roundState === "PREPARED") {
       setLevelUp(false);
       setTrail([]);
     }

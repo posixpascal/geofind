@@ -1,8 +1,8 @@
-import {Checkbox} from "@/components/controls/Checkbox";
-import {MultiPlayerGame} from "@prisma/client";
-import {multiPlayerState} from "@/state/multiplayer";
-import {useTranslations} from "next-intl";
-import {useSelector} from "@legendapp/state/react";
+import type { MultiPlayerGame } from "@prisma/client";
+import { multiPlayerState } from "@/state/multiplayer";
+import { useTranslations } from "next-intl";
+import { useSelector } from "@legendapp/state/react";
+import { SettingsToggle } from "../forms/SettingsToggle";
 
 interface GameSettingsSelectionProps {
   updateAction: (key: keyof MultiPlayerGame) => (newValue: boolean) => void;
@@ -39,26 +39,15 @@ export const GameSettingsSelection: React.FC<GameSettingsSelectionProps> = ({
   return (
     <div className={"flex flex-col py-4 gap-4"}>
       {settings.map((setting) => (
-        <div
+        <SettingsToggle
           key={setting.key}
-          className={`flex justify-between bg-background/50 rounded-xl p-4 transition-opacity ${
-            readOnly && !multiPlayer[setting.key] ? "opacity-50" : ""
-          }`}
-        >
-          <div className={"text-5xl pr-4"}>
-            {t(`games.${setting.key}.emoji`)}
-          </div>
-          <div className={"flex-grow"}>
-            <strong className={"block"}>
-              {t(`games.${setting.key}.title`)}
-            </strong>
-            <p>{t(`games.${setting.key}.description`)}</p>
-          </div>
-          <Checkbox
-            onChange={updateAction(setting.key)}
-            checked={!!multiPlayer[setting.key]}
-          />
-        </div>
+          readOnly={readOnly}
+          icon={t(`games.${setting.key}.emoji`)}
+          title={t(`games.${setting.key}.title`)}
+          description={t(`games.${setting.key}.description`)}
+          checked={!!multiPlayer[setting.key]}
+          onChange={updateAction(setting.key)}
+        />
       ))}
 
       {/*<div className={'flex justify-between'}>*/}

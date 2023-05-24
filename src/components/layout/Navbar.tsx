@@ -1,10 +1,10 @@
-import {animated, useSpring} from "@react-spring/web";
+import { animated, useSpring } from "@react-spring/web";
 import React from "react";
-import {AnimatedBackButton} from "@/components/controls/AnimatedBackButton";
-import {Container} from "@/components/layout/Container";
-import {UserProfileStatus} from "@/components/user/UserProfileStatus";
-import {UsersOnlineCounter} from "@/components/user/UsersOnlineCounter";
-import {useRouter} from "next/router";
+import { AnimatedBackButton } from "@/components/controls/AnimatedBackButton";
+import { Container } from "@/components/layout/Container";
+import { UserProfileStatus } from "@/components/user/UserProfileStatus";
+import { UsersOnlineCounter } from "@/components/user/UsersOnlineCounter";
+import { useRouter } from "next/router";
 
 interface NavbarProps {}
 

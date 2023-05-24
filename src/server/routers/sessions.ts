@@ -1,12 +1,16 @@
-import {protectedProcedure, publicProcedure, router} from "../trpc";
-import {TRPCError} from "@trpc/server";
-import {z} from "zod";
-import {observable} from "@trpc/server/observable";
-import {prisma} from "@/server/prisma";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { observable } from "@trpc/server/observable";
+import { prisma } from "@/server/prisma";
 import ee from "@/server/eventEmitter";
-import {EXPERIENCE_UPDATED, USER_CONNECTED, USER_DISCONNECTED,} from "@/server/constants/events";
-import {Experience} from "@/server/constants/exp";
-import {User} from "@prisma/client";
+import {
+  EXPERIENCE_UPDATED,
+  USER_CONNECTED,
+  USER_DISCONNECTED,
+} from "@/server/constants/events";
+import { Experience } from "@/server/constants/exp";
+import { User } from "@prisma/client";
 
 export const sessionRouter = router({
   experience: protectedProcedure.subscription(({ ctx }) => {

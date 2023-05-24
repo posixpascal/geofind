@@ -1,8 +1,8 @@
-import {Achievement, AchievementMedal} from "@prisma/client";
-import {ProgressBar} from "@/components/controls/ProgressBar";
-import {useTranslations} from "next-intl";
-import {trpc} from "@/utils/trpc";
-import {Tile} from "@/components/layout/Tile";
+import type { Achievement, AchievementMedal } from "@prisma/client";
+import { ProgressBar } from "@/components/controls/ProgressBar";
+import { useTranslations } from "next-intl";
+import { trpc } from "@/utils/trpc";
+import { Tile } from "@/components/layout/Tile";
 import React from "react";
 
 interface AchievementGroupProps {
@@ -20,10 +20,10 @@ export const AchievementListing: React.FC<AchievementGroupProps> = ({
     {}
   );
 
-  const iconForType = {
-    [AchievementMedal.CROWN]: "👑",
-    [AchievementMedal.GEM]: "💎",
-    [AchievementMedal.RIBBON]: "🎀",
+  const iconForType: Record<AchievementMedal, string> = {
+    CROWN: "👑",
+    GEM: "💎",
+    RIBBON: "🎀",
   };
 
   const icon = iconForType[achievement.medal];

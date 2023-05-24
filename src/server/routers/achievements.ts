@@ -1,9 +1,9 @@
-import {protectedProcedure, publicProcedure, router} from "../trpc";
-import {TRPCError} from "@trpc/server";
-import {z} from "zod";
-import {prisma} from "@/server/prisma";
-import {verifyAchievement} from "@/server/services/achievements";
-import {AchievementMedal} from "@prisma/client";
+import { protectedProcedure, publicProcedure, router } from "../trpc";
+import { TRPCError } from "@trpc/server";
+import { z } from "zod";
+import { prisma } from "@/server/prisma";
+import { verifyAchievement } from "@/server/services/achievements";
+import { AchievementMedal } from "@prisma/client";
 
 export const achievementsRouter = router({
   all: publicProcedure.query(async () => {
