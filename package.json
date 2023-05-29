@@ -17,16 +17,14 @@
     "start:next": "next start",
     "start:wss": "cross-env NODE_ENV=production node dist/server/wssProdServer.js",
     "lint": "next lint",
-    "e2e": "start-test dev 3000 cypress:open",
+    "e2e": "start-test dev 3000 cypress:e2e",
     "cypress": "cypress ci",
     "cypress:open": "cypress open",
     "coverage": "cypress run && nyc report --reporter=text-summary && nyc report --reporter=html",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "cypress:e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
-    "cypress:e2e:headless": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
-    "cypress:component": "env COMPONENTS=1 cypress open --component",
-    "cypress:component:headless": "env COMPONENTS=1 cypress run --component"
+    "cypress:e2e": "cypress run --e2e",
+    "cypress:component": "env COMPONENTS=1 cypress open --component"
   },
   "prisma": {
     "seed": "ts-node prisma/seeds/seed.js"

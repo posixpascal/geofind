@@ -5,6 +5,7 @@ const webpack = require('@cypress/webpack-preprocessor')
 export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
+      require('@cypress/code-coverage/task')(on, config)
       // @src alias
       const options = {
         webpackOptions: {
@@ -25,15 +26,17 @@ export default defineConfig({
       if (process.env.COMPONENTS) {
         on('file:preprocessor', webpack(options))
       }
+
+      return config;
     },
     baseUrl: "http://localhost:3000",
-  },
-
-  env: {
-    codeCoverage: {
-      url: "/api/__coverage__",
+    env: {
+      codeCoverage: {
+        url: "/api/__coverage__",
+      },
     },
   },
+
 
   component: {
     devServer: {
