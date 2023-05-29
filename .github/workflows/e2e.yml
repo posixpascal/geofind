@@ -31,13 +31,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '19.9.0'
+
       - uses: pnpm/action-setup@v2
         with:
           version: 6.0.2
       - run: |
-          pnpm install 'prisma@latest'
-          pnpm install 'next@13.2.1'
-          pnpm install
+          pnpm install --shamefully-hoist
           prisma migrate dev
           prisma generate
           pnpm install '@prisma/client'
