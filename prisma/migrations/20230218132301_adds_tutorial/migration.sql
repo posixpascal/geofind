@@ -1,5 +1,0 @@
--- AlterTable
-ALTER TABLE "Game" ADD COLUMN     "isTutorial" BOOLEAN NOT NULL DEFAULT false;
-
--- AlterTable
-ALTER TABLE "User" ALTER COLUMN "pin" SET DEFAULT 'DEFAULT';

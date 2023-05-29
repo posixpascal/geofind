@@ -1,2 +1,0 @@
--- AlterEnum
-ALTER TYPE "RoundState" ADD VALUE 'SCOREBOARD';
