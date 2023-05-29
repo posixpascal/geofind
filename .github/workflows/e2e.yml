@@ -12,7 +12,7 @@ jobs:
       # Label used to access the service container
 
       postgres:
-        image: postgres
+        image: postgis/postgis:10-2.5
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
