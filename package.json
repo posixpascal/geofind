@@ -57,6 +57,7 @@
     "next-i18next": "^13.1.5",
     "next-intl": "^2.14.4",
     "next-plausible": "^3.7.2",
+    "path-browserify": "^1.0.1",
     "pino": "^8.11.0",
     "postcss": "^8.4.21",
     "prettier": "^2.8.4",

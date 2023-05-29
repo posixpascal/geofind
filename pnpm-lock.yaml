@@ -61,6 +61,7 @@ specifiers:
   next-plausible: ^3.7.2
   node-fetch: ^3.3.0
   npm-run-all: ^4.1.5
+  path-browserify: ^1.0.1
   pino: ^8.11.0
   postcss: ^8.4.21
   prettier: ^2.8.4
@@ -111,6 +112,7 @@ dependencies:
   next-i18next: 13.1.5_4k63d56mv77tw5qlzazo623eiu
   next-intl: 2.14.4_next@13.2.1+react@18.2.0
   next-plausible: 3.7.2_qgtcjgzkkjtbiyvnx7d32fl5vu
+  path-browserify: 1.0.1
   pino: 8.11.0
   postcss: 8.4.21
   prettier: 2.8.4
@@ -11631,7 +11633,6 @@ packages:
 
   /path-browserify/1.0.1:
     resolution: {integrity: sha512-b7uo2UCUOYZcnF/3ID0lulOJi/bafxa1xPe7ZPsammBSpjSWQkjNxlt635YGS2MiR9GjvuXCtz2emr3jbsz98g==}
-    dev: true
 
   /path-exists/3.0.0:
     resolution: {integrity: sha512-bpC7GYwiDYQ4wYLe+FA8lhRjhQCMcQGuSgGGqDkg/QerRWw9CmGRT0iSOVRSZJ29NMLZgIzqaljJ63oaL4NIJQ==}
