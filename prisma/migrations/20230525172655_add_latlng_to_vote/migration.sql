@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "MultiPlayerSession" ADD COLUMN     "isCorrect" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN     "lat" DOUBLE PRECISION,
+ADD COLUMN     "lng" DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "MultiPlayerVote" ALTER COLUMN "lat" DROP NOT NULL,
+ALTER COLUMN "lng" DROP NOT NULL;

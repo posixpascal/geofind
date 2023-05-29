@@ -2,6 +2,8 @@ import { Container } from "@/components/layout/Container";
 import { MenuItems } from "@/components/layout/MenuItems";
 import { LocaleName } from "../../types";
 import { pick } from "next/dist/lib/pick";
+import {Swipes} from "@/components/ui/Swipes";
+import React from "react";
 
 export default function IndexPage() {
   return (
@@ -11,6 +13,16 @@ export default function IndexPage() {
       }
     >
       <MenuItems />
+      <Swipes
+          title={"Cypress Swiper"}
+          readOnly={false}
+          onChange={() => {}}
+          defaultSlide={0}
+      >
+        <div>Hello</div>
+        <div>Hello</div>
+        <div>World</div>
+      </Swipes>
     </Container>
   );
 }

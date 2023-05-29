@@ -1,18 +1,21 @@
 import { animated, useSpring } from "@react-spring/web";
 import React from "react";
-import { AnimatedBackButton } from "@/components/controls/AnimatedBackButton";
+import { BackButton } from "@/components/ui/BackButton";
 import { Container } from "@/components/layout/Container";
 import { UserProfileStatus } from "@/components/user/UserProfileStatus";
 import { UsersOnlineCounter } from "@/components/user/UsersOnlineCounter";
 import { useRouter } from "next/router";
+import { useSelector } from "@legendapp/state/react";
+import { singlePlayerState } from "@/state/singleplayer";
+import { multiPlayerState } from "@/state/multiplayer";
 
 interface NavbarProps {}
 
 export const Navbar: React.FC<NavbarProps> = ({}) => {
-  const route = useRouter();
+  const singlePlayer = useSelector(() => singlePlayerState.get());
+  const multiPlayer = useSelector(() => multiPlayerState.get());
   const hideNavbar =
-    route.pathname.includes("/singleplayer") ||
-    route.pathname.includes("/multiplayer");
+    singlePlayer || (multiPlayer && multiPlayer.gameState !== "LOBBY");
 
   const style = useSpring({
     from: {
@@ -36,7 +39,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
         }
       >
         <div className={"flex items-center justify-between w-full gap-3"}>
-          <AnimatedBackButton />
+          <BackButton />
           <UserProfileStatus />
           <UsersOnlineCounter />
         </div>

@@ -4,10 +4,10 @@ const {i18n} = require("./next-i18next.config.js");
 
 
 let nextConfig = {
-    compiler: {
-        reactRemoveProperties: true,
-        removeConsole: true,
-    },
+    // compiler: {
+    //     reactRemoveProperties: true,
+    //     removeConsole: true,
+    // },
     i18n: {
         defaultLocale: 'de',
         localeDetection: true,

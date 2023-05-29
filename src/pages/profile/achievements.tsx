@@ -1,9 +1,9 @@
 import { LocaleName } from "../../../types";
 import { trpc } from "@/utils/trpc";
 import type { Achievement } from "@prisma/client";
-import { AchievementGroup } from "@/components/achievements/AchievementGroup";
+import { AchievementGroup } from "@/components/user-achievements/AchievementGroup";
 import React from "react";
-import { SpottedCountriesMap } from "@/components/achievements/SpottedCountriesMap";
+import { SpottedCountriesMap } from "@/components/user-achievements/SpottedCountriesMap";
 import { Container } from "@/components/layout/Container";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { useTranslations } from "next-intl";

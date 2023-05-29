@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { FactsIndicator } from "@/components/games/panels/FactsIndicator";
+import { FactsPanel } from "@/components/maps/FactsPanel";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
-const meta: Meta<typeof FactsIndicator> = {
+const meta: Meta<typeof FactsPanel> = {
   title: "UI/FactsIndicator",
-  component: FactsIndicator,
+  component: FactsPanel,
   tags: ["autodocs"],
   parameters: {
     backgrounds: {
@@ -22,7 +22,7 @@ const meta: Meta<typeof FactsIndicator> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof FactsIndicator>;
+type Story = StoryObj<typeof FactsPanel>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Default: Story = {

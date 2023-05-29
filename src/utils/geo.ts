@@ -54,10 +54,9 @@ export const humanizeDistance = (
   if (unitless) {
     return result.distance;
   }
-  console.log(result);
 
   if (result.distance >= result.smallBorder) {
-    return `${result.distance} ${result.unit}`;
+    return `${result.distance.toFixed(2)} ${result.unit}`;
   }
 
   let distance = result.distance * result.factor;

@@ -1,5 +1,5 @@
 import { LocaleName } from "../../../types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import type { Map as MapGL } from "maplibre-gl";
 import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
 import { useRouter } from "next/router";
@@ -7,18 +7,18 @@ import { trpc } from "@/utils/trpc";
 import type { RoundState, SinglePlayerGame } from "@prisma/client";
 import { singlePlayerState } from "@/state/singleplayer";
 // import {useMarker} from "@/hooks/useMarker";
-import { SinglePlayerRoundStatus } from "@/components/games/singleplayer/SinglePlayerRoundStatus";
+import { SinglePlayerControlBar } from "@/components/games/SinglePlayerControlBar";
 import { UserExperience } from "@/components/user/UserExperience";
 // import {useSinglePlayer} from "@/hooks/useSinglePlayer";
-import { TriesIndicator } from "@/components/games/panels/TriesIndicator";
-import { FactsIndicator } from "@/components/games/panels/FactsIndicator";
+import { TriesPanel } from "@/components/maps/TriesPanel";
+import { FactsPanel } from "@/components/maps/FactsPanel";
 import { Overlay } from "@/components/utils/Overlay";
-import { IconButton } from "@/components/controls/IconButton";
+import { IconButton } from "@/components/ui/IconButton";
 import { useSelector } from "@legendapp/state/react";
 import dynamic from "next/dynamic";
 import { pick } from "next/dist/lib/pick";
 
-const Map = dynamic(() => import("@/components/layout/Map"), {
+const Map = dynamic(() => import("@/components/maps/Map"), {
   loading: () => <LoadingSpinner isLoading={true} />,
 });
 
@@ -59,10 +59,10 @@ export default function Singleplayer() {
           </IconButton>
         </div>
         <LoadingSpinner isLoading={!singlePlayer.id} />
-        <SinglePlayerRoundStatus singlePlayer={singlePlayer} />
+        <SinglePlayerControlBar singlePlayer={singlePlayer} />
         <UserExperience />
-        <TriesIndicator />
-        <FactsIndicator />
+        <TriesPanel />
+        <FactsPanel />
       </Overlay>
     </Map>
   );

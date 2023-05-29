@@ -2,7 +2,13 @@ import { protectedProcedure, router } from "../trpc";
 import { z } from "zod";
 import { prisma } from "@/server/prisma";
 import { observable } from "@trpc/server/observable";
-import { GameMap, GameMode, GameState, MultiPlayerGame } from "@prisma/client";
+import {
+  GameMap,
+  GameMode,
+  GameSessionState,
+  GameState,
+  MultiPlayerGame,
+} from "@prisma/client";
 import ee from "@/server/eventEmitter";
 import { MULTIPLAYER_UPDATED } from "@/server/constants/events";
 import logger from "@/server/logger";
@@ -10,7 +16,11 @@ import {
   createMultiPlayer,
   joinMultiPlayer,
   leaveMultiPlayer,
+  startMultiPlayerGame,
+  synchronizeSession,
+  voteMultiPlayer,
 } from "@/server/services/multiplayer";
+import { LngLat } from "maplibre-gl";
 
 export const multiplayerRouter = router({
   create: protectedProcedure.mutation(async ({ ctx, input }) => {
@@ -30,6 +40,7 @@ export const multiplayerRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
+      // TODO: outsource
       const {
         id,
         gameMode,
@@ -89,21 +100,73 @@ export const multiplayerRouter = router({
       ee.emit(MULTIPLAYER_UPDATED, id);
     }),
   startGame: protectedProcedure
-      .input(z.object({
-        id: z.string().cuid()
-      })).mutation(async ({ctx, input}) => {
-        const {id} = input;
-        await prisma.multiPlayerGame.update({
-          where: {
-            id
-          },
-          data: {
-            gameState: GameState.PLAYING
-          }
-        });
+    .input(
+      z.object({
+        id: z.string().cuid(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      return await startMultiPlayerGame(id);
+    }),
+  synchronizeSession: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().cuid(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      const user = ctx.session.user;
 
-        ee.emit(MULTIPLAYER_UPDATED, id);
-      }),
+      return await synchronizeSession(user.id, id);
+    }),
+  vote: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().cuid(),
+        vote: z.object({
+          lng: z.number(),
+          lat: z.number(),
+        }),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id, vote } = input;
+      const user = ctx.session.user;
+
+      return await voteMultiPlayer(user.id, id, vote);
+    }),
+  findOpenGames: protectedProcedure.query(
+    async ({ ctx }): Promise<MultiPlayerGame[]> => {
+      const games = await prisma.multiPlayerGame.findMany({
+        take: 10,
+        skip: 0,
+        where: {
+          gameState: GameState.LOBBY,
+          isPublic: true,
+        },
+        include: {
+          creator: {
+            select: {
+              name: true,
+              image: true,
+            },
+          },
+          sessions: {
+            where: {
+              state: GameSessionState.CONNECTED,
+            },
+            select: {
+              _count: true,
+            },
+          },
+        },
+      });
+
+      return games;
+    }
+  ),
   subscribe: protectedProcedure
     .input(
       z.object({
@@ -118,16 +181,17 @@ export const multiplayerRouter = router({
             return;
           }
           // emit data to client
-          logger.info({
-            event: "SubscriptionPublishQuery",
-            data: { id },
-          });
+          // logger.info({
+          //     event: "SubscriptionPublishQuery",
+          //     data: {id},
+          // });
 
           const game = await prisma.multiPlayerGame.findFirst({
             where: {
               id: id,
             },
             include: {
+              country: true,
               creator: {
                 select: {
                   image: true,
@@ -144,6 +208,7 @@ export const multiplayerRouter = router({
                       friendCode: true,
                       image: true,
                       experience: true,
+                      color: true,
                     },
                   },
                 },
@@ -151,10 +216,10 @@ export const multiplayerRouter = router({
             },
           });
 
-          logger.info({
-            event: "SubscriptionPublish",
-            data: { game },
-          });
+          // logger.info({
+          //     event: "SubscriptionPublish",
+          //     data: {game},
+          // });
           emit.next(game!);
         };
 

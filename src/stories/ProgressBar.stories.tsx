@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { ProgressBar } from "@/components/controls/ProgressBar";
+import { ProgressBar } from "@/components/ui/ProgressBar";
 import { MockedTrpcProvider } from "@/stories/mocks/MockedTrpcProvider";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction

@@ -3,7 +3,7 @@ import type { User } from "@prisma/client";
 import { UserAvatar } from "@/components/user/UserAvatar";
 import { trpc } from "@/utils/trpc";
 import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
-import { IconButton } from "@/components/controls/IconButton";
+import { IconButton } from "@/components/ui/IconButton";
 
 interface UserCardProps {
   user: User;

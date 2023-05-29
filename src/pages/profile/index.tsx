@@ -2,13 +2,13 @@ import { LocaleName } from "../../../types";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { LoadingSpinner } from "@/components/utils/LoadingSpinner";
 import { format } from "date-fns";
-import { IconButton } from "@/components/controls/IconButton";
+import { IconButton } from "@/components/ui/IconButton";
 import React from "react";
 import { trpc } from "@/utils/trpc";
 import type { AchievementMedal } from "@prisma/client";
 import { animated, useSpring } from "@react-spring/web";
-import { FriendList } from "@/components/followers/FriendList";
-import { ProfileForm } from "@/components/forms/ProfileForm";
+import { FriendList } from "@/components/user-followers/FriendList";
+import { UserProfileForm } from "@/components/user/UserProfileForm";
 import { useTranslations } from "next-intl";
 import { settingsState } from "@/state/settings";
 import { Container } from "@/components/layout/Container";
@@ -17,7 +17,7 @@ import dynamic from "next/dynamic";
 import { pick } from "next/dist/lib/pick";
 
 const ExperienceList = dynamic(
-  () => import("@/components/achievements/ExperienceList"),
+  () => import("@/components/user-achievements/ExperienceList"),
   {
     loading: () => <LoadingSpinner isLoading={true} />,
   }
@@ -27,7 +27,7 @@ export default function ProfilePage() {
   const settings = useSelector(() => settingsState.get());
 
   const { user } = useCurrentUser();
-  const t = useTranslations("profile");
+  const t = useTranslations();
   const achievements = trpc.achievements.medals.useQuery();
   const { scale, opacity } = useSpring({
     from: { scale: 0, opacity: 0 },
@@ -125,7 +125,7 @@ export default function ProfilePage() {
           style={{ opacity: opacityBig, scale: scaleBig }}
           className={"grid-cols-1 xl:col-span-2 bg-card rounded-xl p-5"}
         >
-          <ProfileForm />
+          <UserProfileForm />
         </animated.div>
         <div className={"flex flex-col gap-4"}>
           {settings.enableFriends && (
@@ -148,7 +148,7 @@ export default function ProfilePage() {
   );
 }
 
-const namespaces = ["common", "profile", "experience", "friends", "menu"];
+const namespaces = ["common", "profile", "menu"];
 
 export const getServerSideProps = async ({
   locale,

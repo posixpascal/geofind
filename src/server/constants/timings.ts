@@ -4,3 +4,8 @@ export const SINGLEPLAYER_ERROR_TIME = 4 * 1000;
 export const SINGLEPLAYER_END_TIME = 6 * 1000;
 
 export const ONLINE_THRESHOLD_IN_MILLIS = 5 * 60 * 1000;
+
+export const MULTIPLAYER_PREPARE_TIME = 3 * 1000;
+export const MULTIPLAYER_SUCCESS_TIME = 5 * 1000;
+export const MULTIPLAYER_ERROR_TIME = 4 * 1000;
+export const MULTIPLAYER_END_TIME = 6 * 1000;

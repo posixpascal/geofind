@@ -1,6 +1,6 @@
 import { Listbox, Switch, Transition } from "@headlessui/react";
 import React, { FormEvent, Fragment, useState } from "react";
-import { IconButton } from "@/components/controls/IconButton";
+import { IconButton } from "@/components/ui/IconButton";
 
 const moods = [
   { name: "Excited", value: "excited", icon: "🔥" },

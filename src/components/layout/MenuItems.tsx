@@ -1,5 +1,5 @@
 import React, { MouseEventHandler, ReactNode, useEffect } from "react";
-import { Tile } from "@/components/layout/Tile";
+import { Tile } from "@/components/ui/Tile";
 import { Tag } from "../utils/Tag";
 import { useRouter } from "next/router";
 import { trpc } from "@/utils/trpc";
@@ -69,21 +69,21 @@ export const MenuItems = () => {
       content: t("multiplayer_join.content"),
     },
 
-    {
-      to: "/competitive/ladder",
-      icon: "⚔️",
-      tag: <Tag variant={"red"} title={t("tags.competitive")} />,
-      title: t("competitive_ladder.title"),
-      content: t("competitive_ladder.content"),
-    },
-
-    {
-      to: "/competitive/timetrial",
-      icon: "⏱️",
-      tag: <Tag variant={"red"} title={t("tags.competitive")} />,
-      title: t("competitive_timetrial.title"),
-      content: t("competitive_timetrial.content"),
-    },
+    // {
+    //   to: "/competitive/ladder",
+    //   icon: "⚔️",
+    //   tag: <Tag variant={"red"} title={t("tags.competitive")} />,
+    //   title: t("competitive_ladder.title"),
+    //   content: t("competitive_ladder.content"),
+    // },
+    //
+    // {
+    //   to: "/competitive/timetrial",
+    //   icon: "⏱️",
+    //   tag: <Tag variant={"red"} title={t("tags.competitive")} />,
+    //   title: t("competitive_timetrial.title"),
+    //   content: t("competitive_timetrial.content"),
+    // },
 
     {
       to: "/profile/achievements",
@@ -117,13 +117,13 @@ export const MenuItems = () => {
       content: t("settings.content"),
     },
 
-    {
-      to: "/feedback",
-      icon: "✉️",
-      tag: <Tag variant={"gray"} title={t("tags.other")} />,
-      title: t("feedback.title"),
-      content: t("feedback.content"),
-    },
+    // {
+    //   to: "/feedback",
+    //   icon: "✉️",
+    //   tag: <Tag variant={"gray"} title={t("tags.other")} />,
+    //   title: t("feedback.title"),
+    //   content: t("feedback.content"),
+    // },
     // {
     //   to: "/school",
     //   icon: "👩‍🏫️",

@@ -1,8 +1,9 @@
 import { animated, useSpring } from "@react-spring/web";
 
-export const LoadingSpinner: React.FC<{ isLoading: boolean }> = ({
-  isLoading,
-}) => {
+export const LoadingSpinner: React.FC<{
+  isLoading: boolean;
+  inline?: boolean;
+}> = ({ isLoading, inline = false }) => {
   const { opacity } = useSpring({
     from: {
       opacity: 0,
@@ -12,15 +13,18 @@ export const LoadingSpinner: React.FC<{ isLoading: boolean }> = ({
     },
     reverse: !isLoading,
   });
+
   return (
     <animated.div
       style={{ opacity }}
-      className={
-        "absolute top-4 left-4 flex items-center justify-center pointer-events-none z-20"
-      }
+      className={`${
+        inline ? "relative" : "absolute top-4 left-4"
+      } flex items-center justify-center pointer-events-none z-20`}
     >
       <svg
-        className="animate-spin -ml-1 mr-3 h-12 w-12 text-black dark:text-slate-200"
+        className={`animate-spin ${
+          inline ? "h-8 w-8" : "-ml-1 mr-3 h-12 w-12"
+        } text-black dark:text-slate-200`}
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

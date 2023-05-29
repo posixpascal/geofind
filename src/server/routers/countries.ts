@@ -19,6 +19,16 @@ export const countriesRouter = router({
         capital: "Test",
       };
     }),
+
+  lookup: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().cuid(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      return await geoPrisma.country.withLngLat(input.id);
+    }),
   timesFound: protectedProcedure
     .input(
       z.object({

@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { IconButton } from "@/components/controls/IconButton";
+import { IconButton } from "@/components/ui/IconButton";
 import { useLocalStorage } from "react-use";
 
 export const DSGVO = () => {

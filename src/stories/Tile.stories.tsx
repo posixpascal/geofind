@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Tile } from "@/components/layout/Tile";
+import { Tile } from "@/components/ui/Tile";
 import { Tag } from "@/components/utils/Tag";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction

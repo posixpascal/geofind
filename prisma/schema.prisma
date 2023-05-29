@@ -237,7 +237,9 @@ model MultiPlayerGame {
   countryId String?
 
   roundNumber Int @default(1)
-  roundTime   Int @default(30)
+  roundTime   Int @default(12)
+  scoreNeeded Int @default(10)
+  roundStartedAt DateTime?
 
   gameState GameState @default(LOBBY)
   gameMode  GameMode  @default(WORLD)
@@ -250,7 +252,7 @@ model MultiPlayerGame {
   onlyDirectSpots Boolean @default(false) // Never give points for "closest" guess
   hasIslands Boolean @default(false) // Hide smaller countries for a more engaging experience
 
-
+  synchronized Boolean @default(false) // Let people synchronize map and round before starting the game
 
   settings   Json?
   continents Json?
@@ -271,8 +273,12 @@ model MultiPlayerSession {
   score Int
   votes MultiPlayerVote[]
 
-  isReady Boolean @default(false)
+  lat Float?
+  lng Float?
 
+  isCorrect Boolean @default(false)
+  isReady Boolean @default(false)
+  isSynchronized Boolean @default(false)
   state GameSessionState
 
   @@unique([multiPlayerGameId, userId])
@@ -290,8 +296,8 @@ model MultiPlayerVote {
   country   Country? @relation(fields: [countryId], references: [id])
   countryId String?
 
-  lat Float
-  lng Float
+  lat Float?
+  lng Float?
 
   isCorrect Boolean
 }
@@ -452,7 +458,8 @@ enum RoundState {
   PREPARED
   STARTED
   ENDED
-
+  SCOREBOARD
+    // For Singleplayer
   SUCCESS
   FAILURE
 }

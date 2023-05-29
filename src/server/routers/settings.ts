@@ -6,7 +6,7 @@ import ee from "@/server/eventEmitter";
 import { SETTINGS_UPDATED } from "@/server/constants/events";
 import { Settings } from "@prisma/client";
 import { DEFAULT_SETTINGS } from "@/server/constants/settings";
-import {PIN_COLORS, PINS} from "@/server/constants/pins";
+import { PIN_COLORS, PINS } from "@/server/constants/pins";
 
 const UpdateSettingInput = z.object({
   key: z.string(),
@@ -37,34 +37,38 @@ export const settingsRouter = router({
 
       return settings;
     }),
-    updatePinAndColor: protectedProcedure.input(z.object({
+  updatePinAndColor: protectedProcedure
+    .input(
+      z.object({
         pin: z.number().min(0).max(PINS.length),
-        color: z.number().min(0).max(PIN_COLORS.length)
-    })).mutation(async ({ctx,input}) => {
-        const id = ctx.session.user!.id;
-        const {color, pin} = input;
-        await prisma.user.update({
-            where: {
-                id
-            },
-            data: {
-                pin,
-                color
-            }
-        });
+        color: z.number().min(0).max(PIN_COLORS.length),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const id = ctx.session.user!.id;
+      const { color, pin } = input;
+      await prisma.user.update({
+        where: {
+          id,
+        },
+        data: {
+          pin,
+          color,
+        },
+      });
     }),
-    pinAndColor: protectedProcedure.query(async ({ctx,input}) => {
-        const id = ctx.session.user!.id;
-        return await prisma.user.findFirst({
-            where: {
-                id
-            },
-            select: {
-                pin: true,
-                color: true
-            }
-        });
-    }),
+  pinAndColor: protectedProcedure.query(async ({ ctx, input }) => {
+    const id = ctx.session.user!.id;
+    return await prisma.user.findFirst({
+      where: {
+        id,
+      },
+      select: {
+        pin: true,
+        color: true,
+      },
+    });
+  }),
   list: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.session.user!.id;
     let settings = await prisma.settings.findFirst({

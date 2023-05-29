@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { LevelUp } from "@/components/achievements/LevelUp";
+import { LevelUpAnimation } from "@/components/utils/LevelUpAnimation";
 import { MockedTrpcProvider } from "@/stories/mocks/MockedTrpcProvider";
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
-const meta: Meta<typeof LevelUp> = {
+const meta: Meta<typeof LevelUpAnimation> = {
   title: "UI/LevelUp",
-  component: LevelUp,
+  component: LevelUpAnimation,
   decorators: [MockedTrpcProvider],
   tags: ["autodocs"],
   parameters: {
@@ -16,7 +16,7 @@ const meta: Meta<typeof LevelUp> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof LevelUp>;
+type Story = StoryObj<typeof LevelUpAnimation>;
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Default: Story = {

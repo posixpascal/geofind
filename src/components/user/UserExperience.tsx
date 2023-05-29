@@ -1,7 +1,7 @@
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { expForCurrentLevel, expLevel, nextExpLevel } from "@/utils/experience";
 import React, { useEffect, useMemo, useState } from "react";
-import { ProgressBar } from "../controls/ProgressBar";
+import { ProgressBar } from "../ui/ProgressBar";
 import { trpc } from "@/utils/trpc";
 import {
   animated,
@@ -11,8 +11,8 @@ import {
   useTransition,
 } from "@react-spring/web";
 import { Experience } from "@/server/constants/exp";
-import { ExperienceListItem } from "../achievements/ExperienceListItem";
-import { LevelUp } from "../achievements/LevelUp";
+import { ExperienceListItem } from "../user-achievements/ExperienceListItem";
+import { LevelUpAnimation } from "../utils/LevelUpAnimation";
 import { singlePlayerState } from "@/state/singleplayer";
 import type { RoundState } from "@prisma/client";
 import { UserAvatar } from "@/components/user/UserAvatar";
@@ -31,7 +31,7 @@ export const UserExperience = () => {
   const innerHeight = typeof window !== "undefined" ? window.innerHeight : 300;
 
   useEffect(() => {
-    if (singlePlayer.roundState === "PREPARED") {
+    if (singlePlayer && singlePlayer.roundState === "PREPARED") {
       setLevelUp(false);
       setTrail([]);
     }
@@ -173,7 +173,7 @@ export const UserExperience = () => {
             height: levelUpScale.interpolate((x) => `${100 * x}%`),
           }}
         >
-          <LevelUp
+          <LevelUpAnimation
             visible={levelUp}
             experience={experience}
             width={350}
