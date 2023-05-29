@@ -41,7 +41,7 @@ jobs:
           run_install: |
             - recursive: true
               args: [--frozen-lockfile, --strict-peer-dependencies]
-            - args: [--global, gulp, prettier, typescript, prisma, next]
+            - args: [--global, gulp, prettier, typescript, prisma, ts-node, next]
           dest: ~/.pnpm
       - run: |
           prisma migrate dev
