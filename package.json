@@ -81,6 +81,7 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.10.0",
+    "@cypress/webpack-preprocessor": "^5.17.1",
     "@prisma/client": "^4.14.1",
     "@storybook/addon-essentials": "^7.0.7",
     "@storybook/addon-interactions": "^7.0.7",

@@ -2,6 +2,7 @@ lockfileVersion: 5.4
 
 specifiers:
   '@cypress/code-coverage': ^3.10.0
+  '@cypress/webpack-preprocessor': ^5.17.1
   '@headlessui/react': ^1.7.13
   '@legendapp/state': ^1.0.0
   '@next-auth/prisma-adapter': ^1.0.5
@@ -129,6 +130,7 @@ dependencies:
 
 devDependencies:
   '@cypress/code-coverage': 3.10.0_cypress@12.13.0
+  '@cypress/webpack-preprocessor': 5.17.1
   '@prisma/client': 4.14.1_prisma@4.14.1
   '@storybook/addon-essentials': 7.0.7_biqbaboplfbrettd7655fr4n2y
   '@storybook/addon-interactions': 7.0.7_biqbaboplfbrettd7655fr4n2y
@@ -2714,7 +2716,7 @@ packages:
     peerDependencies:
       cypress: '*'
     dependencies:
-      '@cypress/webpack-preprocessor': 5.17.0
+      '@cypress/webpack-preprocessor': 5.17.1
       chalk: 4.1.2
       cypress: 12.13.0
       dayjs: 1.10.7
@@ -2756,8 +2758,8 @@ packages:
       uuid: 8.3.2
     dev: true
 
-  /@cypress/webpack-preprocessor/5.17.0:
-    resolution: {integrity: sha512-HyFqHkrOrIIYOt4G+r3VK0kVYTcev1tEcqBI/0DJ4AzEuEgW/TB+cX56txy4Cgn60XXdJoul2utclZwUqOsPZA==}
+  /@cypress/webpack-preprocessor/5.17.1:
+    resolution: {integrity: sha512-FE/e8ikPc8z4EVopJCaior3RGy0jd2q9Xcp5NtiwNG4XnLfEnUFTZlAGwXe75sEh4fNMPrBJW1KIz77PX5vGAw==}
     peerDependencies:
       '@babel/core': ^7.0.1
       '@babel/preset-env': ^7.0.0
