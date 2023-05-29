@@ -8,14 +8,40 @@ jobs:
   cypress-run:
     name: E2E
     runs-on: ubuntu-22.04
+    services:
+      # Label used to access the service container
+
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+        ports:
+          # Maps TCP port 5432 on service container to the host
+          - 5432:5432
+    env:
+      DATABASE_URL: postgresql://postgres:postgres@localhost:5432/geofind
+
     steps:
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
           version: 6.0.2
+      - run: |
+          pnpm install
+          prisma migrate dev
+          prisma generate
+          pnpm install '@prisma/client'
       - uses: cypress-io/github-action@v5
         with:
           start: npm run dev
-          wait-on: 'http://localhost:3000'
+          wait-on: "http://localhost:3000"
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v3
