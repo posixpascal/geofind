@@ -29,7 +29,7 @@ export const AchievementList: React.FC<AchievementGroupProps> = ({
   const icon = iconForType[achievement.medal];
 
   if (progress.isLoading || !progress.data) {
-    return <div></div>;
+    return <div>Loading</div>;
   }
 
   const awarded = progress.data!.awarded;
@@ -49,11 +49,11 @@ export const AchievementList: React.FC<AchievementGroupProps> = ({
 
         {!awarded && (
           <div className={"pt-4"}>
-            {/*<ProgressBar*/}
-            {/*    current={progress.data!.progress}*/}
-            {/*    total={progress.data!.total}*/}
-            {/*    start={0}*/}
-            {/*/>*/}
+            <ProgressBar
+                current={progress.data!.progress}
+                total={progress.data!.total}
+                start={0}
+            />
           </div>
         )}
       </Tile>

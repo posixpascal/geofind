@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 require("./src/server/env.ts");
-const {i18n} = require("./next-i18next.config.js");
 
 
 let nextConfig = {
@@ -10,7 +9,6 @@ let nextConfig = {
     // },
     i18n: {
         defaultLocale: 'de',
-        localeDetection: true,
         locales: ['en', 'de'],
     },
     experimental: {},

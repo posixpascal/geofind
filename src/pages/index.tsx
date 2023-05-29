@@ -13,16 +13,6 @@ export default function IndexPage() {
       }
     >
       <MenuItems />
-      <Swipes
-          title={"Cypress Swiper"}
-          readOnly={false}
-          onChange={() => {}}
-          defaultSlide={0}
-      >
-        <div>Hello</div>
-        <div>Hello</div>
-        <div>World</div>
-      </Swipes>
     </Container>
   );
 }

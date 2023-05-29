@@ -38,7 +38,7 @@ export const Navbar: React.FC<NavbarProps> = ({}) => {
           "flex py-2 mt-4 bg-background/70 backdrop-blur px-5 rounded-xl text-card-headline w-full justify-between"
         }
       >
-        <div className={"flex items-center justify-between w-full gap-3"}>
+        <div className={"flex items-center justify-between w-full gap-3"} data-cy='navigation'>
           <BackButton />
           <UserProfileStatus />
           <UsersOnlineCounter />

@@ -61,6 +61,7 @@ specifiers:
   next-plausible: ^3.7.2
   node-fetch: ^3.3.0
   npm-run-all: ^4.1.5
+  nyc: ^15.1.0
   path-browserify: ^1.0.1
   pino: ^8.11.0
   postcss: ^8.4.21
@@ -164,6 +165,7 @@ devDependencies:
   next-bundle-analyzer: 0.6.7_next@13.2.1
   node-fetch: 3.3.0
   npm-run-all: 4.1.5
+  nyc: 15.1.0
   prisma: 4.14.1
   start-server-and-test: 2.0.0
   storybook: 7.0.7
@@ -11250,7 +11252,7 @@ packages:
       foreground-child: 2.0.0
       get-package-type: 0.1.0
       glob: 7.2.3
-      istanbul-lib-coverage: 3.0.0
+      istanbul-lib-coverage: 3.2.0
       istanbul-lib-hook: 3.0.0
       istanbul-lib-instrument: 4.0.3
       istanbul-lib-processinfo: 2.0.3

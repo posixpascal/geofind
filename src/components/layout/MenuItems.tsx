@@ -15,6 +15,7 @@ interface MenuItem {
   title: string;
   content: string;
   loading?: boolean;
+  cypressTestId?: string;
 }
 
 interface ClickableMenuItem extends MenuItem {
@@ -51,6 +52,7 @@ export const MenuItems = () => {
       tag: <Tag variant={"green"} title={t("tags.singleplayer")} />,
       title: t("singleplayer.title"),
       content: t("singleplayer.content"),
+      cypressTestId: "singleplayer"
     },
 
     {
@@ -59,6 +61,7 @@ export const MenuItems = () => {
       tag: <Tag variant={"blue"} title={t("tags.multiplayer")} />,
       title: t("multiplayer_create.title"),
       content: t("multiplayer_create.content"),
+      cypressTestId: "multiplayer"
     },
 
     {
@@ -67,6 +70,7 @@ export const MenuItems = () => {
       tag: <Tag variant={"blue"} title={t("tags.multiplayer")} />,
       title: t("multiplayer_join.title"),
       content: t("multiplayer_join.content"),
+      cypressTestId: "multiplayer-join"
     },
 
     // {
@@ -91,6 +95,7 @@ export const MenuItems = () => {
       tag: <Tag variant={"orange"} title={t("tags.profile")} />,
       title: t("achievements.title"),
       content: t("achievements.content"),
+      cypressTestId: "achievements"
     },
 
     // {
@@ -107,6 +112,7 @@ export const MenuItems = () => {
       tag: <Tag variant={"orange"} title={t("tags.profile")} />,
       title: t("profile.title"),
       content: t("profile.content"),
+      cypressTestId: "profile"
     },
 
     {
@@ -115,6 +121,7 @@ export const MenuItems = () => {
       tag: <Tag variant={"orange"} title={t("tags.profile")} />,
       title: t("settings.title"),
       content: t("settings.content"),
+      cypressTestId: "settings"
     },
 
     // {
@@ -123,6 +130,7 @@ export const MenuItems = () => {
     //   tag: <Tag variant={"gray"} title={t("tags.other")} />,
     //   title: t("feedback.title"),
     //   content: t("feedback.content"),
+    //   cypressTestId: "feedback"
     // },
     // {
     //   to: "/school",
@@ -130,6 +138,7 @@ export const MenuItems = () => {
     //   tag: <Tag variant={"purple"} title={t("tags.school")} />,
     //   title: t("school.title"),
     //   content: t("school.content"),
+    //   cypressTestId: "school"
     // },
   ];
 
@@ -154,7 +163,7 @@ export const MenuItems = () => {
   }, [menuItems]);
 
   return transition((styles, menuItem) => (
-    <animated.div style={styles} key={menuItem.title}>
+    <animated.div style={styles} data-cy={menuItem.cypressTestId} key={menuItem.title}>
       {"onClick" in menuItem && (
         <Clickable key={menuItem.title} onClick={menuItem.onClick}>
           <Tile {...menuItem} />

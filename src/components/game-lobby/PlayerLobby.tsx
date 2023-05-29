@@ -57,6 +57,7 @@ export const PlayerLobby = () => {
               size={"lg"}
               variant={"positive"}
               disabled={false}
+              data-cy={"start-multiplayer"}
             >
               Start Game
             </IconButton>

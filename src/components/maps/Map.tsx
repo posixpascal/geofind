@@ -39,6 +39,7 @@ export const Map: React.FC<MapProps> = ({
                                             withMarker,
                                             mapStyle,
                                             children,
+    ...props
                                         }) => {
     const {user} = useCurrentUser();
     const map = useRef(null);
@@ -100,16 +101,17 @@ export const Map: React.FC<MapProps> = ({
                         output: [0, 1],
                     }),
                 }}
-                className={"fixed inset-0 w-min-screen h-min-screen"}
+                className={"absolute inset-0 w-min-screen h-min-screen"}
             >
                 <div
                     style={{
-                        position: "fixed",
+                        position: "absolute",
                         top: 0,
                         bottom: 0,
                         width: "100%",
                     }}
                     ref={mapContainer}
+                    {...props}
                 ></div>
                 {children}
             </animated.div>

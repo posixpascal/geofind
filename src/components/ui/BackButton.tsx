@@ -22,6 +22,7 @@ export const BackButton = () => {
   return (
     <animated.div
       className={"absolute z-0"}
+      data-cy={"backbutton"}
       style={{
         opacity: x.interpolate({ range: [0, 1], output: [0, 1] }),
         transform: x

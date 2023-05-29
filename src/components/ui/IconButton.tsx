@@ -27,6 +27,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
   disabled,
   full = false,
   loading = false,
+    ...props
 }) => {
   const [hover, setHover] = useState(false);
   const [focus, setFocus] = useState(false);
@@ -76,6 +77,7 @@ export const IconButton: React.FC<IconButtonProps> = ({
       }
              ${extraClasses.join(" ")}
             `}
+      {...props}
     >
       {children}
     </animated.button>
