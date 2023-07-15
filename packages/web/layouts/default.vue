@@ -2,9 +2,7 @@
   <div>
     <Navigation />
     <main>
-      <MapBackground>
         <div class="z-10"><Nuxt /></div>
-      </MapBackground>
     </main>
     <Footer />
   </div>
