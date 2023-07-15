@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navigation />
-    <main class="main">
+    <main class="bg-gray-200 dark:bg-gray-800">
         <div class="z-10"><Nuxt /></div>
     </main>
     <Footer />
@@ -28,9 +28,6 @@ export default class DefaultLayout extends Vue {
 </script>
 <style lang="postcss">
 @import url('https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap');
-.main {
-  @apply bg-gray-200 dark:bg-gray-800;
-}
 .font-lucky {
   position: relative;
   top: 3px;
