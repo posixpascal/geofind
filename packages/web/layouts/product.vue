@@ -22,8 +22,6 @@ export default class DefaultLayout extends Vue {
 
   @Watch('$route.name')
   trackAnalytics() {
-
-    console.log(fathom)
   }
 }
 </script>
