@@ -8,6 +8,7 @@ export const de = {
   },
   t: {
     searchingPlayers: 'Suche nach Spielern...',
+    searchingForPlayers: 'Suche offenen Spielen...',
     wePlay: 'Wir spielen',
     copyLinkAndGo:
       'Einfach den Link hier kopieren und an deine Freunde schicken.',
@@ -88,7 +89,7 @@ export const de = {
       europe: 'Europa',
       oceania: 'Ozeanien',
     },
-    directMatchesOnly: 'Nur direkte Treffer',
+    directMatchesOnly: 'Nur direkte Treffer zählen',
     suddenDeath: 'Episches Finale',
     borders: 'Ländergrenzen',
     noIslands: 'Keine Inseln',

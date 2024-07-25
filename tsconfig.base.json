@@ -12,6 +12,12 @@
     "suppressImplicitAnyIndexErrors": true,
     "lib": ["es2016", "dom"],
     "target": "es6",
+    "exclude": [
+      "packages/api/node_modules",
+      "packages/api/node_modules",
+      "packages/api/node_modules/*",
+      "packages/api/node_modules/@types/node/index.d.ts",
+    ],
     "typeRoots": ["./node_modules/@types"],
     "moduleResolution": "node",
     "strictPropertyInitialization": false,

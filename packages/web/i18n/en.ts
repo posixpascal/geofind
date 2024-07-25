@@ -78,7 +78,7 @@ export const en = {
       europe: 'Europe',
       oceania: 'Oceania',
     },
-    directMatchesOnly: 'Direct matches only',
+    directMatchesOnly: 'Only direct matches count',
     suddenDeath: 'Epic Finale',
     borders: 'Country borders',
     roundTime: 'Time per Round',
@@ -129,7 +129,7 @@ export const en = {
     cta: 'create game',
   },
   matchmaking: {
-    searchingPlayers: 'Looking for players...',
+    searchingForPlayers: 'Looking for open games...',
     button: 'Quick Match',
     cta: 'Quick match',
     title: 'Search for game',
