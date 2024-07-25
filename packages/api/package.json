@@ -3,7 +3,7 @@
   "name": "@geofind/api",
   "version": "1.0.0",
   "engines": {
-    "node": "16.x"
+    "node": "18.x"
   },
   "description": "npm init template for bootstrapping an empty Colyseus project",
   "main": "lib/index.js",
@@ -40,7 +40,7 @@
     "rimraf": "^2.7.1",
     "ts-node": "^8.1.0",
     "ts-node-dev": "^1.0.0-pre.63",
-    "typescript": "^3.4.5",
+    "typescript": "3.4.5",
     "wikijs": "^6.3.3"
   },
   "dependencies": {
