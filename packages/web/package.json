@@ -9,7 +9,7 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "NODE_OPTIONS=--openssl-legacy-provider nuxt generate",
+    "generate": "nuxt generate",
     "fmt": "prettier --write ."
   },
   "dependencies": {
