@@ -6,7 +6,7 @@
     "node": "15.x"
   },
   "scripts": {
-    "start:dev": "nuxt",
+    "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",

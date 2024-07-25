@@ -1,6 +1,11 @@
 <template>
   <div class="main-menu pt-10">
-    <Button v-if='!user' variant="orange" :to="localePath('/profile/login')" small>
+    <Button
+      v-if="!user"
+      variant="orange"
+      :to="localePath('/profile/login')"
+      small
+    >
       {{ $t('profile.register') }}
     </Button>
     <Panel back="/">
@@ -9,7 +14,7 @@
       </template>
       <template #content>
         <h3 class="mt-10">{{ $t('t.name') }}</h3>
-        <p class="mb-3 text-center"> {{ $t('profile.nameDescription') }}</p>
+        <p class="mb-3 text-center">{{ $t('profile.nameDescription') }}</p>
         <Box class="flex items-center justify-between">
           <Input
             class="w-full bg-white"
@@ -63,8 +68,8 @@ export default class SettingsPage extends Vue {
     this.pin = parseInt(localStorage.getItem('pin'))
   }
 
-  get user(){
-    return this.$store.state.auth.user;
+  get user() {
+    return this.$store.state.auth.user
   }
 
   setName($event) {

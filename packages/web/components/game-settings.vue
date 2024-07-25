@@ -149,7 +149,7 @@ export default class GameSettings extends Vue {
   @Prop({ default: () => [] }) excludedGames!: string[]
 
   get availableGames() {
-    const games = this.games;
+    const games = this.games
     return games
   }
 
@@ -159,22 +159,25 @@ export default class GameSettings extends Vue {
       image: require('~/assets/gamemodes/countries.svg?raw'),
     },
     {
+      name: 'party',
+      image: require('~/assets/gamemodes/party.svg?raw'),
+    },
+    {
       name: 'flags',
       image: require('~/assets/gamemodes/flags.svg?raw'),
     },
-    {
-      name: 'speedrun',
-      image: require('~/assets/gamemodes/speedrun.svg?raw'),
-    },
+    // {
+    //   name: 'speedrun',
+    //   image: require('~/assets/gamemodes/speedrun.svg?raw'),
+    // },
     {
       name: 'capitals',
       image: require('~/assets/gamemodes/capitals.svg?raw'),
     },
-   /* {
+    /* {
       name: 'quiz',
       image: require('~/assets/gamemodes/quiz.svg?raw'),
     },*/
-
   ]
 
   maps = [
@@ -384,6 +387,6 @@ h3 {
 }
 
 .settings-panel h3 button:hover svg {
-  @apply text-gray-700;
+  @apply text-gray-700 dark:text-gray-100;
 }
 </style>

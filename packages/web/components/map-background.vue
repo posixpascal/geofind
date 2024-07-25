@@ -1,5 +1,8 @@
 <template>
-  <div class="bg-gray-50 dark:bg-gray-900 relative" style="min-height: calc(100vh - 300px)">
+  <div
+    class="bg-gray-50 dark:bg-gray-900 relative"
+    style="min-height: calc(100vh - 300px)"
+  >
     <l-map
       :center="[32, -5]"
       :zoom="3"

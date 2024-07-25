@@ -2,10 +2,13 @@
   "private": true,
   "name": "@geofind/api",
   "version": "1.0.0",
+  "engines": {
+    "node": ">= 15"
+  },
   "description": "npm init template for bootstrapping an empty Colyseus project",
   "main": "lib/index.js",
   "scripts": {
-    "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start:prod": "node lib/index.js",
     "loadtest": "colyseus-loadtest loadtest/example.ts --room my_room --numClients 2",
     "build": "npm run clean && tsc && cp package.json ./lib && cp arena.env ./lib",
@@ -57,7 +60,6 @@
     "pg-hstore": "^2.3.4",
     "prettier": "^2.5.1",
     "reflect-metadata": "^0.1.13",
-    "sequelize": "^6.13.0",
     "sequelize-typescript": "^2.1.2"
   }
 }

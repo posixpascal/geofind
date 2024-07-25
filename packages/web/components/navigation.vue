@@ -9,37 +9,59 @@
         ></nuxt-link>
         <nuxt-link :to="localePath('/')">
           <h1>geofind.io</h1>
-          <p class="hidden sm:inline-block dark:text-gray-200">{{ $t('t.catchPhrase') }}</p>
+          <p class="hidden sm:inline-block dark:text-gray-200">
+            {{ $t('t.catchPhrase') }}
+          </p>
         </nuxt-link>
       </div>
       <ul class="nav-links">
         <li class="hidden sm:flex" v-if="false">
-          <nuxt-link class="green" active-class="active" :to="localePath('/tutor')">
-            <Icon name="school"/>
+          <nuxt-link
+            class="green"
+            active-class="active"
+            :to="localePath('/tutor')"
+          >
+            <Icon name="school" />
             {{ $t('singleplayer.button') }}
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
-          <nuxt-link class="blue" active-class="active" :to="localePath('/multiplayer')">
-            <Icon name="controller"/>
+          <nuxt-link
+            class="blue"
+            active-class="active"
+            :to="localePath('/multiplayer')"
+          >
+            <Icon name="controller" />
             {{ $t('multiplayer.button') }}
           </nuxt-link>
         </li>
         <li class="hidden lg:flex">
-          <nuxt-link class="red" active-class="active" :to="localePath('/matchmaking')">
-            <Icon name="cube"/>
+          <nuxt-link
+            class="red"
+            active-class="active"
+            :to="localePath('/matchmaking')"
+          >
+            <Icon name="cube" />
             {{ $t('matchmaking.button') }}
           </nuxt-link>
         </li>
         <li class="hidden sm:flex">
-          <nuxt-link class="purple" active-class="active" :to="localePath('/lobbies')">
-            <Icon name="public"/>
+          <nuxt-link
+            class="purple"
+            active-class="active"
+            :to="localePath('/lobbies')"
+          >
+            <Icon name="public" />
             {{ $t('lobbies.button') }}
           </nuxt-link>
         </li>
         <li class="hidden md:flex">
-          <nuxt-link class="yellow" active-class="active" :to="localePath('/profile')">
-            <Icon name="profile"/>
+          <nuxt-link
+            class="yellow"
+            active-class="active"
+            :to="localePath('/profile')"
+          >
+            <Icon name="profile" />
             {{ $t('profile.button') }}
           </nuxt-link>
         </li>
@@ -55,8 +77,11 @@
         </button>
       </div>
     </nav>
-    <div :class="`rainbow-border ${birdColor}`"/>
-    <div v-if="menu" class="menu-area relative z-20 bg-white-50 dark:bg-gray-800 pb-4">
+    <div :class="`rainbow-border ${birdColor}`" />
+    <div
+      v-if="menu"
+      class="menu-area relative z-20 bg-white-50 dark:bg-gray-800 pb-4"
+    >
       <div class="p-4">
         <Button
           @click="menu = false"
@@ -76,7 +101,7 @@
           :animated="true"
         >
           <template #icon>
-            <Icon class="text-white" :height="48" name="create"/>
+            <Icon class="text-white" :height="48" name="create" />
           </template>
           {{ $t('multiplayer.button') }}
         </Button>
@@ -89,7 +114,7 @@
           :animated="true"
         >
           <template #icon>
-            <Icon class="text-white" :height="48" name="public"/>
+            <Icon class="text-white" :height="48" name="public" />
           </template>
           {{ $t('lobbies.button') }}
         </Button>
@@ -101,7 +126,7 @@
           :animated="true"
         >
           <template #icon>
-            <Icon class="text-white" :height="48" name="cube"/>
+            <Icon class="text-white" :height="48" name="cube" />
           </template>
           {{ $t('matchmaking.button') }}
         </Button>
@@ -117,7 +142,7 @@
           :animated="true"
         >
           <template #icon>
-            <Icon class="text-white" :height="48" name="profile"/>
+            <Icon class="text-white" :height="48" name="profile" />
           </template>
           {{ $t('profile.button') }}
         </Button>
@@ -129,7 +154,7 @@
           :animated="true"
         >
           <template #icon>
-            <Icon class="text-white" :height="48" name="school"/>
+            <Icon class="text-white" :height="48" name="school" />
           </template>
           {{ $t('achievements.button') }}
         </Button>
@@ -139,20 +164,20 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import {Component, Watch} from 'vue-property-decorator'
+import { Component, Watch } from 'vue-property-decorator'
 
 @Component
 export default class Navigation extends Vue {
   menu = false
-  birdColor = "bird-yellow border-yellow";
+  birdColor = 'bird-yellow border-yellow'
 
-  @Watch('$route', {immediate: true})
+  @Watch('$route', { immediate: true })
   setBirdColor() {
     if (!this.$router.currentRoute.name) {
-      return 'bird-yellow border-yellow';
+      return 'bird-yellow border-yellow'
     }
     const routeName = this.$router.currentRoute.name.split('___')[0]
-    let color;
+    let color
 
     switch (routeName) {
       case 'index':
@@ -173,7 +198,7 @@ export default class Navigation extends Vue {
         color = 'bird-red border-red'
         break
       default:
-        color = 'bird-yellow border-yellow';
+        color = 'bird-yellow border-yellow'
     }
 
     if (routeName.includes('lobby-id')) {
@@ -204,7 +229,6 @@ nav {
 .menu-area {
   height: calc(100vh - 80px);
 }
-
 
 .rainbow-border {
   background: linear-gradient(
@@ -250,7 +274,7 @@ nav p {
 }
 
 nav h1 {
-  @apply relative text-2xl flex sm:hidden md:flex  md:text-4xl dark:text-gray-200;;
+  @apply relative text-2xl flex sm:hidden md:flex  md:text-4xl dark:text-gray-200;
   position: relative;
   top: -8px;
   line-height: 0px;

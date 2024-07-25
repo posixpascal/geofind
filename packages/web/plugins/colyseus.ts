@@ -1,8 +1,12 @@
 import { Context, Plugin } from '@nuxt/types'
 import * as Colyseus from 'colyseus.js'
+import {PINS} from "~/constants/pins";
 
 const plugin: Plugin = async (context: Context, inject) => {
   const client = new Colyseus.Client(context.$config.colyseusUrl)
+  if (!window.localStorage.getItem('pin')){
+    window.localStorage.setItem('pin', `${Math.floor(Object.keys(PINS).length * Math.random()) + 1}`)
+  }
   inject('colyseus', client)
 }
 

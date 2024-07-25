@@ -1,5 +1,5 @@
 <template>
-  <Dialog  classes="bg-white dark:bg-gray-800" class="scoreboard-dialog">
+  <div classes="bg-white dark:bg-gray-800 absolute"  class="scoreboard-dialog">
     <div class="flex mb-10 justify-between items-center">
       <h2 class="flex items-center pin-title mb-0">
         <Pin :id="$auth.user.pin" width="32" height="32" />
@@ -39,7 +39,9 @@
                 :hasBorderRadius="true"
                 size="l"
                 gradient="real-linear"
-                :code="userVote.alpha2code === 'GB' ? 'UK' : userVote.alpha2code"
+                :code="
+                  userVote.alpha2code === 'GB' ? 'UK' : userVote.alpha2code
+                "
               />
             </div>
           </transition>
@@ -115,7 +117,7 @@
         </transition>
       </div>
     </template>
-  </Dialog>
+  </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
@@ -189,6 +191,7 @@ h2 {
   left: 0;
   width: 0%;
   border-top: 4px dashed #888;
+  @apply dark:border-white;
   margin: 0 10px 0;
   transition: width ease-in-out 2s;
   display: flex;

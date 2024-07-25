@@ -24,7 +24,7 @@
           </Button>
         </div>
         <div v-else-if="player.sessionId === room.creatorId">
-          <h2>{{ $t('lobby.roomLeader')}}</h2>
+          <h2>{{ $t('lobby.roomLeader') }}</h2>
         </div>
       </li>
     </ul>

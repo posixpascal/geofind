@@ -12,21 +12,52 @@
           :room="room"
           v-if="room.country && room.state === states.ROUND_PREPARE"
         />
+
+        <template v-if="inPartyRoundEnd">
+          <Overlay position="topleft" class="pt-15">
+            <div>
+              <CountryFlagWithName
+                :room="room"
+                :country="room.country"
+                :distance-point="marker.position"
+                :hint-level="2"
+              >
+              </CountryFlagWithName>
+            </div>
+          </Overlay>
+        </template>
+
+        <template v-if="inPartyRoundEnd">
+          <Overlay :interactive="true" position="bottomright" class="w-full">
+            <div>
+              <Button variant="green" small  @click="sendContinue">
+                <span class="px-3 text-xl">
+                  {{ $t('p.continue') }} ({{ room.playersReady }} / {{ room.playersNeeded }})
+                </span>
+              </Button>
+            </div>
+          </Overlay>
+        </template>
+
         <MultiplayerScoreBoardDialog
           :room="room"
           v-if="room.country && room.state === states.SCOREBOARD"
         />
         <GameEndDialog :room="room" v-if="room.state === states.GAME_END" />
 
-        <Overlay :room="room"
+        <Overlay
+          :room="room"
           position="bottomcenter"
           v-if="room.state === states.ROUND_START"
-          class="pt-15"
+          class="relative bottom-20"
         >
-          <h1 v-if="room.room === 'speedrun'">{{ room.roundSecondsElapsed.toFixed(1) }}</h1>
+          <h1 v-if="room.room === 'speedrun'">
+            {{ room.roundSecondsElapsed.toFixed(1) }}
+          </h1>
           <Countdown :room="room" v-else :initial="room.timer" />
         </Overlay>
-        <Overlay :room="room"
+        <Overlay
+          :room="room"
           position="topleft"
           v-if="room.country && room.state === states.ROUND_START"
         >
@@ -42,7 +73,7 @@
           <ScoreBoardOverlay :room="room" />
         </Overlay>
 
-        <Overlay :room="room" :interactive="true" position="topright">
+        <Overlay :room="room" v-if="!inPartyRoundEnd" :interactive="true" position="topright">
           <Button variant="red" xx-small @click="leave" class="ml-10">
             <span class="px-3 text-xl">X</span>
           </Button>
@@ -68,6 +99,7 @@ import Loading from '~/components/loading.vue'
 import MultiplayerScoreBoardDialog from '~/components/dialogs/multiplayer-score-board-dialog.vue'
 import { states } from '~/constants/states'
 import GameMap from '~/components/game/GameMap.vue'
+import {CONTINUE_ROUND_MESSAGE, VOTE_MESSAGE} from "~/constants/messages";
 
 @Component({
   layout: 'play',
@@ -102,6 +134,10 @@ export default class Index extends Vue {
     return Room.query().where('roomId', this.roomId).first()
   }
 
+  get inPartyRoundEnd(){
+    return this.room && this.room.state == this.states.PARTY_ROUND_END;
+  }
+
   async mounted() {
     if (!this.room) {
       await this.$store.dispatch('room/join', this.roomId)
@@ -123,9 +159,9 @@ export default class Index extends Vue {
     return this.room && this.room.state === this.states.ROUND_END
   }
 
-  voteColor(pin) {
-    return PIN_COLORS[pin]
-  }
+  // voteColor(pin) {
+  //   return PIN_COLORS[pin]
+  // }
 
   get states() {
     return states
@@ -135,6 +171,12 @@ export default class Index extends Vue {
     this.$router.push(this.localePath('/'))
   }
 
+  sendContinue(){
+    this.$store.dispatch('room/message', {
+      room: this.room,
+      type: CONTINUE_ROUND_MESSAGE,
+    })
+  }
 
   beforeDestroy() {
     return clearInterval(this.timer)

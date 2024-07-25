@@ -2,7 +2,7 @@
   <div>
     <Navigation />
     <main class="bg-gray-200 dark:bg-gray-800">
-        <div class="z-10"><Nuxt /></div>
+      <div class="z-10"><Nuxt /></div>
     </main>
     <Footer />
   </div>

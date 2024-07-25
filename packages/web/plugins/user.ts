@@ -1,6 +1,7 @@
 import { Context, Plugin } from '@nuxt/types'
 import { Auth } from '~/models'
 import { randomAnimalName } from '~/utils/animals'
+import {PINS} from "~/constants/pins";
 
 const plugin: Plugin = async (context: Context, inject) => {
   const $auth = Auth
@@ -11,7 +12,7 @@ const plugin: Plugin = async (context: Context, inject) => {
   }
 
   if (!localStorage.pin) {
-    localStorage.pin = 1
+    localStorage.pin = Math.floor((Object.keys(PINS).length - 1) * Math.random()) + 1
   }
 }
 

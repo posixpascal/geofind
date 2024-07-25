@@ -6,6 +6,7 @@ export type GameRoom =
   | 'flags'
   | 'quiz'
   | 'speedrun'
+  | 'party'
   | 'shapes'
 
 export type MapType =

@@ -1,6 +1,6 @@
 <template>
-  <Dialog  classes="bg-white dark:bg-gray-800">
-    <h2>Waiting for Players...</h2>
+  <Dialog classes="bg-white dark:bg-gray-800">
+    <h2>Warte...</h2>
     <div v-for="player in game.sessions">
       <span v-if="player.isReady">✅</span>
       <span v-else>🕐</span>

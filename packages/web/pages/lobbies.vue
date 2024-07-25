@@ -25,7 +25,11 @@
       <template #content>
         <div class="flex justify-between"></div>
         <OpenRoomSettingsView :game="game.metadata" />
-        <Button variant="purple" small :to="localePath(`/lobby/${game.roomId}`)">
+        <Button
+          variant="purple"
+          small
+          :to="localePath(`/lobby/${game.roomId}`)"
+        >
           {{ $t('lobbies.join') }}
         </Button>
       </template>

@@ -9,23 +9,29 @@
           :hasBorderRadius="true"
           size="l"
           gradient="real-linear"
-          :code="room.country.alpha2code === 'GB' ? 'UK' : room.country.alpha2code"
+          :code="
+            room.country.alpha2code === 'GB' ? 'UK' : room.country.alpha2code
+          "
         />
         <div style="">
           <span class="text-2xl flex-col sm:flex-row dark:text-gray-100">
-              <span class="" v-if="room.country.translations[$i18n.locale]">{{
-                  room.country.translations[$i18n.locale].country
-                }}</span>
-              <span class="" v-else>{{ room.country.name }}</span>
+            <span class="" v-if="room.country.translations[$i18n.locale]">{{
+                room.country.translations[$i18n.locale].country
+              }}</span>
+            <span class="" v-else>{{ room.country.name }}</span>
             <span class="text-gray-500 dark:text-gray-300">
-            <span class="hidden sm:inline">&mdash; </span> 🏢 {{
-                room.country.translatedcapitals[$i18n.locale] ? room.country.translatedcapitals[$i18n.locale] : room.country.capital
+              <span class="hidden sm:inline">&mdash; </span> 🏢
+              {{
+                room.country.translatedcapitals[$i18n.locale]
+                  ? room.country.translatedcapitals[$i18n.locale]
+                  : room.country.capital
               }}
             </span>
           </span>
           <div class="text-gray-500 dark:text-gray-300">
-            👥 {{ formatNumber(room.country.population, 1) }} {{ $t('t.citizen') }} &mdash;
-            📍 {{ $t(`subregion.${room.country.subregion}`) }}
+            👥 {{ formatNumber(room.country.population, 1) }}
+            {{ $t('t.citizen') }} &mdash; 📍
+            {{ $t(`subregion.${room.country.subregion}`) }}
           </div>
         </div>
       </div>
@@ -46,69 +52,66 @@
           v-for="player in sortedPlayers"
         >
           <div class="flex items-center">
+            <Pin :id="player.pin" width="32" style="min-width: 32px"/>
+            <h4 :class="`pr-3 dark:text-gray-300`">{{ player.username }}</h4>
+          </div>
+          <h4 class="dark:text-gray-300 flex">
             <h4
               v-if="room.scoreboard[player.sessionId].points >= maxPoints"
               class="pr-2"
             >
               {{
-                room.scoreboard[player.sessionId].points >= maxPoints ? '👑' : ''
+                room.scoreboard[player.sessionId].points >= maxPoints
+                  ? '👑'
+                  : ''
               }}
             </h4>
-            <h4 :class="`pr-3 dark:text-gray-300`">{{ player.username }}</h4>
-          </div>
-          <h4 class="dark:text-gray-300">{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
+            {{ room.scoreboard[player.sessionId].points || 0 }}
+          </h4>
         </div>
       </div>
       <div v-else v-for="vote in votes">
         <div
           class="
-          flex
-          justify-between
-          relative
-          items-center
-          border-dashed border-b-2 border-gray-300
-          py-3
-          px-1
-        "
+            flex
+            justify-between
+            relative
+            items-center
+            border-dashed border-b-2 border-gray-300
+            py-3
+            px-1
+          "
         >
           <div class="flex items-center">
-            <Pin :id="vote.player.pin" width="48" style="min-width: 48px"/>
+            <Pin :id="vote.player.pin" width="32" style="min-width: 32px"/>
             <h4 class="dark:text-gray-300">{{ vote.player.username }}</h4>
           </div>
-          <div
-            :class="[
-            'hidden sm:flex',
-            'line',
-            animateLine ? 'line-expand' : '',
-            vote.isCorrect ? 'line-success' : '',
-          ]"
-          >
-            <div class="flex">
-              <ICountUp
-                v-if="
-                (!vote.country || vote.country.id !== room.country.id) &&
-                vote.distance > 0 &&
-                animateLine
-              "
-                :endVal="vote.distance"
-                :options="countupOptions"
-              />
-              <span
-                class="text-green-400"
-                v-if="
-                vote.isCorrect &&
-                vote.country &&
-                vote.country.id === room.country.id &&
-                animateLine
-              "
-              >
-              ✓ {{ $t('t.match') }}
-            </span>
+          <div class="w-full">
+            <div
+              :class="[
+              'sm:flex',
+              'h-[2px] md:h-[4px] relative top-5 md:top-4 text-sm md:text-xl',
+              'line ',
+              animateLine ? 'line-expand' : '',
+              vote.isCorrect ? 'line-success' : '',
+            ]"
+            >
+              <div class="flex dark:text-gray-300">
+                <ICountUp
+                  v-if="
+                  (!vote.country || vote.country.id !== room.country.id) &&
+                  vote.distance > 0 &&
+                  animateLine
+                "
+                  :endVal="vote.distance"
+                  :options="countupOptions"
+                />
+              </div>
             </div>
           </div>
 
           <div
-            v-if="vote.hasCountry"
+            v-if="vote.hasCountry && vote.country"
             class="flex items-center justify-center text-center flex-col"
           >
             <Flag
@@ -118,16 +121,21 @@
               :hasBorderRadius="true"
               size="l"
               gradient="real-linear"
-              :code="vote.country.alpha2code === 'GB' ? 'UK' : vote.country.alpha2code"
+              :code="
+                vote.country.alpha2code === 'GB'
+                  ? 'UK'
+                  : vote.country.alpha2code
+              "
             />
-            <span class="" v-if="vote.country.translations[$i18n.locale]">{{
+            <span :class="vote.isCorrect ? 'text-green-400' : 'dark:text-gray-200'"
+                  v-if="vote.country.translations[$i18n.locale]">{{
                 vote.country.translations[$i18n.locale].country
               }}</span>
-            <span class="" v-else>{{ vote.country.name }}</span>
+            <span :class="vote.isCorrect ? 'text-green-400' : 'dark:text-gray-200'" v-else>{{
+                vote.country.name
+              }}</span>
           </div>
-          <div v-else class="text-center block w-auto">
-            🌊
-          </div>
+          <div v-else class="text-center block w-auto">-</div>
         </div>
       </div>
     </template>
@@ -141,7 +149,7 @@ import Pin from '~/components/pin.vue'
 import ICountUp from 'vue-countup-v2'
 import Button from '~/components/button.vue'
 import {Room} from '~/models'
-import {addDoc, collection, getDocs} from "firebase/firestore";
+import {addDoc, collection, getDocs} from 'firebase/firestore'
 
 @Component({components: {Button, Dialog, Pin, ICountUp}})
 export default class MultiplayerScoreBoardDialog extends Vue {
@@ -156,13 +164,13 @@ export default class MultiplayerScoreBoardDialog extends Vue {
   get winner() {
     const votes = Object.values(this.room.votes)
     const vote = votes.find((vote: any) => {
-      return vote.isCorrect;
-    });
+      return vote.isCorrect
+    })
     if (!vote) {
-      return false;
+      return false
     }
-    vote.player = this.room.players[vote.sessionId];
-    return vote;
+    vote.player = this.room.players[vote.sessionId]
+    return vote
   }
 
   created() {
@@ -172,13 +180,15 @@ export default class MultiplayerScoreBoardDialog extends Vue {
 
     setTimeout(() => {
       this.showScore = true
-    }, 4000)
+    }, 6000)
   }
 
   @Watch('vote.country.id', {immediate: true})
   async addVote() {
-    const vote = this.room.votes[this.room.sessionId];
-    if (!vote){ return; }
+    const vote = this.room.votes[this.room.sessionId]
+    if (!vote) {
+      return
+    }
     if (!vote.isCorrect || !this.$store.state.auth.user || !vote.country) {
       return
     }
@@ -189,9 +199,9 @@ export default class MultiplayerScoreBoardDialog extends Vue {
     const querySnapshot = await getDocs(collection($firestore, path))
     let hasSeenCountry = false
     querySnapshot.forEach((doc) => {
-      const {code} = doc.data();
+      const {code} = doc.data()
       if (code && code === vote.country.alpha2code) {
-        hasSeenCountry = true;
+        hasSeenCountry = true
       }
     })
 
@@ -254,19 +264,24 @@ export default class MultiplayerScoreBoardDialog extends Vue {
 
   formatNumber(num, digits) {
     const lookup = [
-      {value: 1, symbol: ""},
-      {value: 1e3, symbol: "k"},
-      {value: 1e6, symbol: "M"},
-      {value: 1e9, symbol: "G"},
-      {value: 1e12, symbol: "T"},
-      {value: 1e15, symbol: "P"},
-      {value: 1e18, symbol: "E"}
-    ];
-    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/;
-    var item = lookup.slice().reverse().find(function (item) {
-      return num >= item.value;
-    });
-    return item ? (num / item.value).toFixed(digits).replace(rx, "$1") + item.symbol : "0";
+      {value: 1, symbol: ''},
+      {value: 1e3, symbol: 'k'},
+      {value: 1e6, symbol: 'M'},
+      {value: 1e9, symbol: 'G'},
+      {value: 1e12, symbol: 'T'},
+      {value: 1e15, symbol: 'P'},
+      {value: 1e18, symbol: 'E'},
+    ]
+    const rx = /\.0+$|(\.[0-9]*[1-9])0+$/
+    var item = lookup
+      .slice()
+      .reverse()
+      .find(function (item) {
+        return num >= item.value
+      })
+    return item
+      ? (num / item.value).toFixed(digits).replace(rx, '$1') + item.symbol
+      : '0'
   }
 }
 </script>
@@ -282,7 +297,6 @@ h2 {
 }
 
 .line {
-  height: 4px;
   left: 0;
   width: 0%;
   border-top: 4px dashed #888;
@@ -294,7 +308,6 @@ h2 {
 .line span {
   position: relative;
   top: -32px;
-  font-size: 24px;
   min-width: 200px;
   text-align: center;
   display: block;
@@ -330,6 +343,5 @@ h2 {
   height: 23px !important;
   min-width: 64px !important;
   min-height: 46px !important;
-
 }
 </style>

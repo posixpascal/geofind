@@ -1,112 +1,14 @@
-version: "3.7"
+---
+
 
 services:
-  proxy:
-    container_name: 'geo-proxy'
-    image: traefik:v2.4
-    command: --log.level=DEBUG --api.insecure=true --providers.docker --providers.docker.exposedByDefault=true
-    ports:
-      - "8080:8080"
-
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.geofind.test`)"
-      - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.routers.traefik.service=api@internal"
-      - "traefik.http.routers.traefikloadbalancer.server.port=8080"
-
-  tilemill:
-    container_name: geo-tiles
-    build: ./packages/tileserver/
-    ports:
-      - "20009:20009"
-    volumes:
-    - './config/tilemill/data/:/root/Documents/MapBox/'
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.tilemill.rule=Host(`tilemill.geofind.test`)"
-      - "traefik.http.routers.tilemill.entrypoints=http"
-      - "traefik.http.routers.tilemill.service=tilemill"
-      - "traefik.http.services.tilemill.loadbalancer.server.port=20009"
-
-      - "traefik.http.routers.tiles.rule=Host(`tiles.geofind.test`)"
-      - "traefik.http.routers.tiles.entrypoints=http"
-      - "traefik.http.routers.tiles.service=tiles"
-      - "traefik.http.services.tiles.loadbalancer.server.port=20008"
-    environment:
-      - "TILEMILL_HOST=tilemill.geofind.test"
-      - "TILES_HOST=tiles.geofind.test"
-
-
-  #api:
-  #  container_name: 'geo-api'
-  #  build: ./packages/api/
-  #  volumes:
-  #    - './packages/api/:/app/'
-  #  labels:
-  #    - "traefik.enable=true"
-  #    - "traefik.http.routers.api.rule=Host(`api.geofind.test`)"
-  #    - "traefik.http.routers.api.entrypoints=http"
-  #    - "traefik.http.routers.api.service=api"
-  #    - "traefik.http.services.api.loadbalancer.server.port=3001"
-  #  env_file:
-  #    ./.env
-  #  depends_on:
-  #    - api_db
-
-  #web:
-  #  container_name: 'geo-web'
-  #  build: ./packages/web/
-  #  volumes:
-  #    - './packages/web/:/app/'
-  #  labels:
-  #    - "traefik.enable=true"
-  #    - "traefik.http.routers.api.rule=Host(`geofind.test`)"
-  #    - "traefik.http.routers.api.entrypoints=http"
-  #    - "traefik.http.routers.api.service=api"
-  #    - "traefik.http.services.api.loadbalancer.server.port=3000"
-  #  env_file:
-  #    ./.env
-
-  analytics:
-    container_name: 'geo-analytics'
-    image: usefathom/fathom:latest
-    env_file:
-      - .env
-    depends_on:
-      - analytics_db
-      - proxy
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.analytics.rule=Host(`analytics.geofind.test`)"
-      - "traefik.http.routers.analytics.entrypoints=http"
-      - "traefik.http.services.analytics.loadbalancer.server.port=8080"
-    healthcheck:
-     disable: true
-
-  analytics_db:
-    container_name: 'geo-analytics-db'
-    image: 'postgres:13.3-alpine'
-    restart: unless-stopped
-    tty: true
-    volumes:
-      - './config/postgres/analytics/:/var/lib/pgsql/data'
-    environment:
-      - "POSTGRES_USER=${ANALYTICS_DB_USER}"
-      - "POSTGRES_PASSWORD=${ANALYTICS_DB_PASSWORD}"
-      - "POSTGRES_DB=${ANALYTICS_DB_DATABASE}"
-      - "POSTGRES_PORT=${ANALYTICS_DB_PORT}"
-
   api_db:
     container_name: 'geo-api-db'
-    image: 'postgres:13.3-alpine'
+    image: 'postgres:16'
     restart: unless-stopped
     tty: true
     ports:
-      - '5433:5432'
+      - '5432:5432'
     environment:
       - "POSTGRES_USER=${API_DB_USER}"
       - "POSTGRES_PASSWORD=${API_DB_PASSWORD}"
@@ -114,16 +16,3 @@ services:
       - "POSTGRES_PORT=${API_DB_PORT}"
     volumes:
       - './config/postgres/api/:/var/lib/pgsql/data'
-
-  redis:
-    container_name: 'geo-redis'
-    image: 'redis'
-    restart: unless-stopped
-    env_file:
-      - ./.env
-    expose:
-      - 6379
-    volumes:
-      - './config/redis/conf:/usr/local/etc/redis'
-    depends_on:
-      - proxy

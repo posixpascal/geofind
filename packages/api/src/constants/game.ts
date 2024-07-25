@@ -5,3 +5,4 @@ export const GAME_END_STATE = 'game_end'
 export const SCOREBOARD_STATE = 'scoreboard'
 export const LOBBY_PHASE = 'lobby'
 export const PLAY_PHASE = 'play'
+export const ROUND_PARTY_END_STATE = "round_party_end"

@@ -10,6 +10,7 @@ import basicAuth from 'express-basic-auth'
 import { client } from './db/client'
 import { QuizRoom } from './rooms/QuizRoom'
 import { SpeedrunRoom } from './rooms/SpeedrunRoom'
+import { PartyRoom } from './rooms/PartyRoom'
 
 const basicAuthMiddleware = basicAuth({
   // list of users and passwords
@@ -36,6 +37,7 @@ export default Arena({
     gameServer.define('flags', CountryRoom)
     gameServer.define('quizroom', QuizRoom)
     gameServer.define('speedrun', SpeedrunRoom)
+    gameServer.define('party', PartyRoom)
   },
 
   initializeExpress: (app) => {

@@ -12,13 +12,20 @@
         :url="tileserver"
         :attribution="`&copy; <a href='https://mapbox.com'>MapBox</a>. Geofind.io`"
       />
-      <l-marker v-for="country in countries" :lat-lng="[country.latlng[1], country.latlng[0]]"  :key='country.code'>
+      <l-marker
+        v-for="country in countries"
+        :lat-lng="[country.latlng[1], country.latlng[0]]"
+        :key="country.code"
+      >
         <l-tooltip :options="{ permanent: false, interactive: false }">
-            <Flag   :hasDropShadow="true"
-                    :hasBorder="true"
-                    :hasBorderRadius="true"
-                    size="l"
-                    gradient="real-linear" :code="country.code"  />
+          <Flag
+            :hasDropShadow="true"
+            :hasBorder="true"
+            :hasBorderRadius="true"
+            size="l"
+            gradient="real-linear"
+            :code="country.code"
+          />
         </l-tooltip>
       </l-marker>
     </l-map>
@@ -26,7 +33,9 @@
     <Overlay :interactive="true" position="topleft">
       <div class="flex flex-col text-left justify-start">
         <h1 class="text-left m-0 p-0">{{ $t('achievements.title') }}</h1>
-        <h1 class="text-lg sm:text-xl text-left m-0 p-0">{{ $t('achievements.description') }}</h1>
+        <h1 class="text-lg sm:text-xl text-left m-0 p-0">
+          {{ $t('achievements.description') }}
+        </h1>
       </div>
     </Overlay>
     <Overlay :interactive="true" position="topright">
@@ -45,40 +54,50 @@ import PinSelection from '~/components/pin-selection.vue'
 import Panel from '~/components/panel.vue'
 import Button from '~/components/button.vue'
 import Input from '~/components/input.vue'
-import {LGeoJson, LMap, LTileLayer, LTooltip} from "vue2-leaflet";
-import Overlay from "~/components/overlay.vue";
-import {collection, getDocs} from "firebase/firestore";
-import {Watch} from "vue-property-decorator";
+import { LGeoJson, LMap, LTileLayer, LTooltip } from 'vue2-leaflet'
+import Overlay from '~/components/overlay.vue'
+import { collection, getDocs } from 'firebase/firestore'
+import { Watch } from 'vue-property-decorator'
 
 @Component({
   layout: 'play',
-  components: { Overlay, LMap, LGeoJson,LTooltip, LTileLayer, Box, PinSelection, Input, Panel, Button},
+  components: {
+    Overlay,
+    LMap,
+    LGeoJson,
+    LTooltip,
+    LTileLayer,
+    Box,
+    PinSelection,
+    Input,
+    Panel,
+    Button,
+  },
 })
 export default class SettingsPage extends Vue {
-
   get tileserver() {
-    return this.$config.borderedTileServer;
+    return this.$config.borderedTileServer
   }
 
   countries = []
 
-  @Watch('$store.state.auth.user.uid', {immediate: true})
+  @Watch('$store.state.auth.user.uid', { immediate: true })
   async fetchShapes() {
     if (!this.$store.state.auth.user.uid) {
-      return;
+      return
     }
 
     const $firestore = (window.$nuxt as any).$firestore
     const path = `users/${(this.$store.state.auth.user as any).uid}/countries`
     const querySnapshot = await getDocs(collection($firestore, path))
     querySnapshot.forEach((doc) => {
-      const country = doc.data();
+      const country = doc.data()
       this.countries.push(country)
-    });
+    })
   }
 
   get user() {
-    return this.$store.state.auth.user;
+    return this.$store.state.auth.user
   }
 
   get mapOptions() {

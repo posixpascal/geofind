@@ -3,15 +3,18 @@
     <Panel>
       <template #title>
         <div
-          class="flex justify-between px-5 items-center justify-between w-full"
+          class="flex justify-end px-3 items-center w-full"
         >
-          <span class="text-3xl">Profil ändern</span>
-          <Button @click="$emit('close')" xx-small variant="green">
-            Speichern
-          </Button>
+          <button class="relative -top-3" @click="$emit('close')">
+            <svg class="size-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+
+          </button>
         </div>
       </template>
       <template #content>
+        Name: 
         <Input
           ref="name"
           autofocus="true"
@@ -30,7 +33,11 @@
             items-stretch
           "
         >
-          <div class="flex justify-center py-3" style="max-height: 380px; overflow: auto;">
+        Pin: 
+          <div
+            class="flex justify-center py-3"
+            style="max-height: 380px; overflow: auto"
+          >
             <PinSelection :initial="player.pin" @change="setPin" />
           </div>
         </Box>

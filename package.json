@@ -17,7 +17,11 @@
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {},
+  "scripts": {
+    "dev": "concurrently 'yarn dev:api' 'yarn dev:web'",
+    "dev:api": "cd packages/api && yarn run dev",
+    "dev:web": "cd packages/web && yarn run dev"
+  },
   "dependencies": {
     "concurrently": "^4.1.1",
     "firebase": "^9.6.4",

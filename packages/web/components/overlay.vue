@@ -16,7 +16,7 @@ import { Component, Prop } from 'vue-property-decorator'
 @Component
 export default class Overlay extends Vue {
   @Prop() position
-  @Prop() room;
+  @Prop() room
   @Prop() interactive
   @Prop({ type: String }) animation
 }

@@ -3,6 +3,9 @@ export const de = {
     notfound: 'Seite nicht gefunden',
     generic: 'Da ist uns ein Fehler unterlaufen :(',
   },
+  p: {
+    continue: "Weiter",
+  },
   t: {
     searchingPlayers: 'Suche nach Spielern...',
     wePlay: 'Wir spielen',
@@ -67,6 +70,7 @@ export const de = {
     gameMode: 'Spielmodi',
     hint: 'Tipps aktivieren',
     gameModes: {
+      party: "Party",
       countries: 'Länder',
       capitals: 'Hauptstädte',
       domainhunt: 'Domainsuche',

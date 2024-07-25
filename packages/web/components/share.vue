@@ -8,11 +8,15 @@
           type="text"
           :value="msg"
           disabled
-          :class="`font-lucky text-center input w-full bg-gray-100 dark:text-white dark:bg-gray-800 rounded px-6 py-4 text-xl`"
+          :class="`font-lucky text-center input w-full bg-gray-100 dark:text-white dark:bg-gray-800 rounded-t-lg px-6 py-4 text-xl`"
         />
       </div>
 
-      <div class="pt-6 pb-3 flex justify-evenly share-box">
+      <div class="bg-white dark:bg-gray-800 flex w-full items-center p-8 justify-center">
+        <div ref="canvas" class="aspect-ratio-square w-full h-full flex items-center justify-center"></div>
+      </div>
+
+      <div class="pt-3 pb-3 flex justify-evenly share-box bg-gray-300 rounded-b-lg">
         <a target="_blank" :href="`https://api.whatsapp.com/send?text=${text}`">
           <img
             width="32"
@@ -32,13 +36,13 @@
           target="_blank"
           :href="`https://twitter.com/share?text=${text}&via=${referrer}&hashtags=${shareTags}`"
         >
-          <img width="32" :src="require(`~/assets/images/share/twitter.svg`)"/>
+          <img width="32" :src="require(`~/assets/images/share/twitter.svg`)" />
         </a>
         <button v-if="canShare" @click="share">
-          <img width="32" :src="require(`~/assets/images/share/share.svg`)"/>
+          <img width="32" :src="require(`~/assets/images/share/share.svg`)" />
         </button>
         <button @click="copy">
-          <img width="32" :src="require(`~/assets/images/share/link.svg`)"/>
+          <img width="32" :src="require(`~/assets/images/share/link.svg`)" />
         </button>
       </div>
     </template>
@@ -47,24 +51,34 @@
 <script lang="ts">
 import Vue from 'vue'
 import Component from 'vue-class-component'
-import {Prop} from 'vue-property-decorator'
+import { Prop } from 'vue-property-decorator'
 import Panel from '~/components/panel.vue'
 
 @Component({
-  components: {Panel},
+  components: { Panel },
 })
 export default class Share extends Vue {
-  @Prop({type: String, required: true}) link
+  @Prop({ type: String, required: true }) link
 
   public msg = ''
 
   mounted() {
-    this.msg = this.link
-  }
+    this.msg = this.link;
+var canvas = this.$refs.canvas;
+
+new QRCode(canvas, {
+  text: this.link,
+  width: 256,
+  height: 256,
+  colorDark : "#000000",
+	colorLight : "#ffffff",
+	correctLevel : QRCode.CorrectLevel.H
+});
+}
 
   get text() {
     return encodeURIComponent(
-      this.$i18n.t('t.shareText', {link: this.link}).toString()
+      this.$i18n.t('t.shareText', { link: this.link }).toString()
     )
   }
 

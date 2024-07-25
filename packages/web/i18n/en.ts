@@ -4,6 +4,9 @@ export const en = {
     generic:
       "Oh no. Something went terribly wrong. We're sorry for your inconvenience. :(",
   },
+  p: {
+    continue: "Continue",
+  },
   t: {
     wePlay: "We're playing",
     copyLinkAndGo: 'Copy the link below and share it with your friends.',
@@ -57,6 +60,7 @@ export const en = {
     mapSet: 'map set',
     gameMode: 'game modes',
     gameModes: {
+      party: "Party",
       countries: 'countries',
       capitals: 'capitals',
       domainhunt: 'domain search',

@@ -1,5 +1,5 @@
 <template>
-  <Dialog  classes="bg-white dark:bg-gray-800">
+  <Dialog classes="bg-white dark:bg-gray-800">
     <canvas id="confetti" ref="canvas"></canvas>
     <h4 class="text-2xl sm:text-3xl pb-3">
       {{ $t('t.gameFinished') }}

@@ -15,7 +15,7 @@ export default {
     },
     meta: [
       { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      { name: 'viewport', content: 'width=device-width, user-scalable=no, initial-scale=1' },
       {
         hid: 'description',
         name: 'description',
@@ -33,6 +33,12 @@ export default {
         property: 'og:image',
         content: 'https://geofind.io/social.jpg',
       },
+    ],
+    script: [
+      {
+        src: "/qrcode.js",
+        type: "application/javascript"
+      }
     ],
     link: [
       {

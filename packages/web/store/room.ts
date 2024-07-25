@@ -1,7 +1,7 @@
-import { ActionTree, MutationTree } from 'vuex'
-import { RootState } from '~/store/index'
-import { Room } from '~/models'
-import { GameSettings } from '~/constants/games'
+import {ActionTree, MutationTree} from 'vuex'
+import {RootState} from '~/store/index'
+import {Room} from '~/models'
+import {GameSettings} from '~/constants/games'
 
 const reFetchAfter = 60000 // ms
 
@@ -16,7 +16,7 @@ const rooms: any = {}
 export const actions: ActionTree<RoomState, RootState> = {
   async message(
     context: any,
-    { room, type, data }: { room: Room; type: string; data: any }
+    {room, type, data}: { room: Room; type: string; data: any }
   ) {
     if (!room) {
       return
@@ -37,9 +37,10 @@ export const actions: ActionTree<RoomState, RootState> = {
     await this.$router.push(window.$nuxt.localePath('/lobby/' + room.id))
   },
   async subscribe(context: any, room) {
-    const { id, sessionId } = room
+    const {id, sessionId} = room
     rooms[id] = room
     room.onStateChange(async (state) => {
+      (window as any).state = state;
       const model = await Room.query().where('roomId', id).first()
       await Room.insertOrUpdate({
         data: {

@@ -7,10 +7,9 @@
         }`"
         v-for="player in sortedPlayers"
       >
-        <h4>{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
-        <h4 class="px-2">|</h4>
-        <h4 :class="`pr-3`">{{ player.username }}</h4>
+        <h4 class="md:min-w-[50px]" style="text-align: left;">{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
         <Pin :id="player.pin" :width="pinSize" />
+        <h4 :class="`${isEnd ? 'flex' : 'hidden'}`">{{ player.username }}</h4>
       </div>
     </div>
   </div>
@@ -20,6 +19,7 @@ import { Prop } from 'vue-property-decorator'
 import Component from 'vue-class-component'
 import Vue from 'vue'
 import Pin from '~/components/pin.vue'
+import { states } from '~/constants/states'
 
 @Component({
   components: { Pin },
@@ -27,6 +27,10 @@ import Pin from '~/components/pin.vue'
 export default class ScoreBoardOverlay extends Vue {
   @Prop() room
 
+
+  get isEnd(){
+    return this.room && (this.room.state === states.ROUND_END || this.room.state === states.PARTY_ROUND_END);
+  }
   get pinSize() {
     return window.innerWidth > 768 ? 32 : 24
   }
@@ -37,12 +41,13 @@ export default class ScoreBoardOverlay extends Vue {
     }
 
     const players = Object.values(this.room.players)
+
     return players.sort((playerA: any, playerB: any) => {
       if (!playerA?.sessionId || !playerB?.sessionId) {
         return 0
       }
-      const playerAPts = this.room.scoreboard[playerA.sessionId] || 0
-      const playerBPts = this.room.scoreboard[playerB.sessionId] || 0
+      const playerAPts = this.room.scoreboard[playerA.sessionId]?.points || 0
+      const playerBPts = this.room.scoreboard[playerB.sessionId]?.points || 0
       if (playerAPts > playerBPts) {
         return -1
       }
@@ -60,7 +65,6 @@ export default class ScoreBoardOverlay extends Vue {
 .pin h4 {
   position: relative;
   top: -2px;
-  left: 8px;
   margin: 0;
 }
 

@@ -21,8 +21,7 @@ import SellContact from '~/components/sell/sell-contact.vue'
   components: { SellContact, SellFaq, SellPricing, SellHeaders, SellFeatures },
   layout: 'product',
 })
-export default class TeachersPage extends Vue {
-}
+export default class TeachersPage extends Vue {}
 </script>
 <style lang="postcss" scoped>
 .container {

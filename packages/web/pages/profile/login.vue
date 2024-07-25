@@ -11,35 +11,35 @@
   </div>
 </template>
 <script lang="ts">
-import {Component, Vue} from "vue-property-decorator";
-import Panel from "~/components/panel.vue";
+import { Component, Vue } from 'vue-property-decorator'
+import Panel from '~/components/panel.vue'
 
 @Component({
-  components: {Panel},
+  components: { Panel },
   head: {
     script: [
       {
-        src: 'https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.js'
-      }
+        src: 'https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.js',
+      },
     ],
     link: [
       {
         rel: 'stylesheet',
-        href: 'https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.css'
-      }
-    ]
-  }
+        href: 'https://www.gstatic.com/firebasejs/ui/6.0.0/firebase-ui-auth.css',
+      },
+    ],
+  },
 })
 export default class LoginPage extends Vue {
-  ui;
+  ui
 
   get firebaseui() {
-    return (window as any).firebaseui;
+    return (window as any).firebaseui
   }
 
   async mounted() {
     if (!(window as any).firebaseui) {
-      await this.scriptAvailable();
+      await this.scriptAvailable()
     }
 
     this.renderFirebase()
@@ -47,10 +47,12 @@ export default class LoginPage extends Vue {
 
   renderFirebase() {
     if (this.ui) {
-      this.ui.delete();
+      this.ui.delete()
     }
 
-    this.ui = this.firebaseui.auth.AuthUI.getInstance() || new this.firebaseui.auth.AuthUI(this.firebase.auth());
+    this.ui =
+      this.firebaseui.auth.AuthUI.getInstance() ||
+      new this.firebaseui.auth.AuthUI(this.firebase.auth())
     this.ui.start('#login', this.uiConfig)
   }
 
@@ -69,23 +71,23 @@ export default class LoginPage extends Vue {
       tosUrl: '/tos',
       // Privacy policy url/callback.
       privacyPolicyUrl: function () {
-        window.location.assign('/privacypolicy');
-      }
+        window.location.assign('/privacypolicy')
+      },
     }
   }
 
   get firebase() {
-    return (window as any).firebase;
+    return (window as any).firebase
   }
 
   async scriptAvailable() {
     return new Promise((resolve, reject) => {
       let interval = setInterval(() => {
         if ((window as any).firebaseui) {
-          clearInterval(interval);
-          this.$nextTick(() => resolve(true));
+          clearInterval(interval)
+          this.$nextTick(() => resolve(true))
         }
-      }, 10);
+      }, 10)
     })
   }
 }

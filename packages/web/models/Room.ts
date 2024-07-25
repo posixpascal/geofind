@@ -40,6 +40,8 @@ export class Room extends Model {
   public isPublic!: boolean
   public hasIslands!: boolean
   public maxPoints!: number
+  public playersReady!: number
+  public playersNeeded!: number
   public roundTime!: number
   public hasBorders!: boolean
   public country!: any
@@ -57,6 +59,8 @@ export class Room extends Model {
       room: this.string('countries'),
       phase: this.string('lobby'),
       state: this.string('round_start'),
+      playersReady: this.number(0),
+      playersNeeded: this.number(1),
       votes: this.attr(null),
       creatorId: this.string(''),
       sessionId: this.string(''),

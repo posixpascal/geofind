@@ -16,7 +16,7 @@ import Vue from 'vue'
 @Component
 export default class Dialog extends Vue {
   @Prop({ default: true }) show
-  @Prop({ default: true }) classes;
+  @Prop({ default: true }) classes
 }
 </script>
 <style lang="postcss">
