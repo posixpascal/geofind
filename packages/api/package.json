@@ -39,9 +39,7 @@
     "nyc": "^15.1.0",
     "rimraf": "^2.7.1",
     "ts-node": "^8.1.0",
-    "ts-node-dev": "^1.0.0-pre.63",
-    "typescript": "3.4.5",
-    "wikijs": "^6.3.3"
+    "ts-node-dev": "^1.0.0-pre.63"
   },
   "dependencies": {
     "@colyseus/arena": "^0.14.22",
@@ -60,7 +58,6 @@
     "pg-hstore": "^2.3.4",
     "prettier": "^2.5.1",
     "reflect-metadata": "^0.1.13",
-    "sequelize-typescript": "^2.1.2",
     "typescript": "^4"
   }
 }
