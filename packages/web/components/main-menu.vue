@@ -66,7 +66,8 @@
     <Button
       :icon="true"
       :to="localePath('achievements')"
-      variant="orange"
+      disabled
+      style="pointer-events: none"
       :animated="true"
     >
       <template #icon>
