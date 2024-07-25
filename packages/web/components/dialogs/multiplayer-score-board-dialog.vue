@@ -149,7 +149,6 @@ import Pin from '~/components/pin.vue'
 import ICountUp from 'vue-countup-v2'
 import Button from '~/components/button.vue'
 import {Room} from '~/models'
-import {addDoc, collection, getDocs} from 'firebase/firestore'
 
 @Component({components: {Button, Dialog, Pin, ICountUp}})
 export default class MultiplayerScoreBoardDialog extends Vue {
@@ -193,27 +192,6 @@ export default class MultiplayerScoreBoardDialog extends Vue {
       return
     }
 
-    const $firestore = (window.$nuxt as any).$firestore
-    const path = `users/${(this.$store.state.auth.user as any).uid}/countries`
-
-    const querySnapshot = await getDocs(collection($firestore, path))
-    let hasSeenCountry = false
-    querySnapshot.forEach((doc) => {
-      const {code} = doc.data()
-      if (code && code === vote.country.alpha2code) {
-        hasSeenCountry = true
-      }
-    })
-
-    if (hasSeenCountry) {
-      return
-    }
-
-    const docRef = await addDoc(collection($firestore, path), {
-      latlng: [vote.country.lat, vote.country.lng],
-      code: vote.country.alpha2code,
-      createdAt: +new Date(),
-    })
   }
 
   get maxPoints() {

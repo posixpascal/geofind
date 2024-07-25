@@ -13,6 +13,7 @@
     "fmt": "prettier --write ."
   },
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@heroicons/vue": "^1.0.5",
     "@nuxtjs/auth-next": "^5.0.0-1624817847.21691f1",
     "@nuxtjs/axios": "^5.13.6",
@@ -25,13 +26,11 @@
     "consola": "*",
     "core-js": "^3.9.1",
     "countup.js": "latest",
-    "firebase": "^9.6.4",
     "global": "^4.4.0",
     "leaflet": "^1.7.1",
     "lodash": "^4.17.21",
-    "mapbox-gl": "^2.6.1",
     "numeral": "^2.0.6",
-    "nuxt": "^2.15.3",
+    "nuxt": "2.15.8",
     "nuxt-i18n": "^6.22.3",
     "swiper": "^5.3.7",
     "ts-loader": "^8.1.0",

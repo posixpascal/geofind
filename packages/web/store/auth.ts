@@ -2,7 +2,6 @@ import {ActionTree, MutationTree} from 'vuex'
 import {RootState} from '~/store/index'
 import {Auth} from '~/models'
 import {Cookie} from '~/utils/cookies'
-import {addDoc, collection, getDocs} from 'firebase/firestore'
 
 const reFetchAfter = 60000 // ms
 
