@@ -3,7 +3,7 @@
   "name": "@geofind/api",
   "version": "1.0.0",
   "engines": {
-    "node": ">= 15"
+    "node": "16.x"
   },
   "description": "npm init template for bootstrapping an empty Colyseus project",
   "main": "lib/index.js",

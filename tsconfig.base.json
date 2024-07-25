@@ -4,6 +4,8 @@
     "declaration": true,
     "noImplicitAny": false,
     "removeComments": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,

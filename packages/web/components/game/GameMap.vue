@@ -174,13 +174,6 @@ export default class GameMap extends Vue {
     return [midLng, midLat];
   }
 
-  shouldFlipLabel(coords) {
-    // Calculate if the label should be flipped based on its position relative to the map center
-    const mapCenter = this.$refs.map.mapObject.getCenter();
-    const midLatLng = this.getMidpointLatLng(coords);
-    return midLatLng[1] < mapCenter.lng;
-  }
-
   createDistanceIcon(coords, distance, color) {
     return divIcon({
       className: 'distance-label',
