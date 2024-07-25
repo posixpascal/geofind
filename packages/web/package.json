@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "16.x"
   },
   "scripts": {
-    "dev": "NODE_OPTIONS=--openssl-legacy-provider nuxt",
-    "build": "NODE_OPTIONS=--openssl-legacy-provider nuxt build",
-    "start": "NODE_OPTIONS=--openssl-legacy-provider nuxt start",
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
     "generate": "NODE_OPTIONS=--openssl-legacy-provider nuxt generate",
     "fmt": "prettier --write ."
   },
