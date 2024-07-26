@@ -63,10 +63,10 @@
         :lat-lngs="getPolyline(marker.position)"
         :color="pinColor"
       ></l-polyline>
-<!--      <l-marker-->
-<!--        :lat-lng="getMidpointLatLng(marker.position)"-->
-<!--        :icon="createDistanceIcon(marker.position, humanizeDistance({lat: marker.position[1], lng: marker.position[0]}, room.country, true), pinColor)"-->
-<!--      ></l-marker>-->
+      <l-marker
+        :lat-lng="getMidpointLatLng(marker.position)"
+        :icon="createDistanceIcon(marker.position, humanizeDistance({lat: marker.position[1], lng: marker.position[0]}, room.country, true), pinColor)"
+      ></l-marker>
     </template>
 
     <l-geo-json
@@ -179,7 +179,7 @@ export default class GameMap extends Vue {
       className: 'distance-label',
       html: `<div style="
   white-space: nowrap;
-  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 10px; font-weight: bold;  border-radius: 3px; color: black;">${distance} km</div>`,
+  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 13px; padding: 2px 0; font-weight: bold;  border-radius: 3px; color: black;">${distance} km</div>`,
     });
   }
 

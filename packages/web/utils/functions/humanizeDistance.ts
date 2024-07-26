@@ -22,7 +22,7 @@ export const humanizeDistance = (pointA, pointB, unitless = false) => {
   }
 
   if (unitless) {
-    return result.distance
+    return result.distance.toFixed(0)
   }
 
   if (result.distance >= result.smallBorder) {
