@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="flex text-lg sm:text-xl" v-if="country">
+    <div class="flex text-lg sm:text-xl text-left" v-if="country">
       <div
-        :class="`flag-${flagSize} mr-5 flex items-center ${
+        :class="`flag-${flagSize} mr-5 flex items-center top-0 !top-0 ${
           room.room === 'flags' ? 'flag-xxl' : ''
         }`"
       >
@@ -13,6 +13,7 @@
             room.room === 'party' ||
             room.room === 'speedrun'
           "
+          style="top: 0 !important;"
           :hasDropShadow="true"
           :hasBorder="true"
           :hasBorderRadius="true"

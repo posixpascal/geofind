@@ -32,9 +32,7 @@ export class OnScoreboardCommand extends Command<CountryRoom, {}> {
               this.state,
               this.state.blacklist.toArray()
           )
-        this.clock.setTimeout(() => {
             this.room.dispatcher.dispatch(new OnPrepareRoundCommand())
-        }, 500);
       },
       this.state.room === 'speedrun' ? 4000 : 8000
     )

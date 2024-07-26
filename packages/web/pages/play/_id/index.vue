@@ -14,7 +14,7 @@
         />
 
         <template v-if="inPartyRoundEnd">
-          <Overlay position="topleft" class="pt-15">
+          <Overlay position="topleft" class="pt-15 !text-left">
             <div>
               <CountryFlagWithName
                 :room="room"

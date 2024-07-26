@@ -41,10 +41,11 @@
           :lat-lngs="getPolyline([vote.lng, vote.lat])"
           :color="vote.color"
         ></l-polyline>
-<!--        <l-marker-->
-<!--          :lat-lng="getMidpointLatLng([vote.lng, vote.lat])"-->
-<!--          :icon="createDistanceIcon(humanizeDistance(vote, room.country, true), vote.color)"-->
-<!--        ></l-marker>-->
+        <l-marker
+          :lat-lng="getMidpointLatLng([vote.lng, vote.lat])"
+          v-if="!vote.isCorrect && humanizeDistance(vote, room.country, true) > 200"
+          :icon="createDistanceIcon(humanizeDistance(vote, room.country, true), vote.color)"
+        ></l-marker>
       </template>
     </template>
 
@@ -64,6 +65,7 @@
         :color="pinColor"
       ></l-polyline>
       <l-marker
+        v-if="humanizeDistance({lat: marker.position[1], lng: marker.position[0]}, room.country, true) > 200"
         :lat-lng="getMidpointLatLng(marker.position)"
         :icon="createDistanceIcon(marker.position, humanizeDistance({lat: marker.position[1], lng: marker.position[0]}, room.country, true), pinColor)"
       ></l-marker>
@@ -179,7 +181,7 @@ export default class GameMap extends Vue {
       className: 'distance-label',
       html: `<div style="
   white-space: nowrap;
-  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 13px; padding: 2px 0; font-weight: bold;  border-radius: 3px; color: black;">${distance} km</div>`,
+  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 13px; padding: 2px 2px !important; font-weight: bold;  border-radius: 3px; color: black;">${distance} km</div>`,
     });
   }
 
