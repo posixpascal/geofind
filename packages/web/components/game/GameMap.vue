@@ -183,14 +183,14 @@ export default class GameMap extends Vue {
         className: 'distance-label',
         html: `<div style="
   white-space: nowrap;
-  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 13px; padding: 2px 2px !important; font-weight: bold;  border-radius: 3px; color: black;">${player.username}: ${distance} km</div>`,
+  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 13px; padding: 2px 2px !important; font-weight: bold;  border-radius: 3px; color: #ffffff;">${player.username}: ${distance} km</div>`,
       });
     }
     return divIcon({
       className: 'distance-label',
       html: `<div style="
   white-space: nowrap;
-  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 13px; padding: 2px 2px !important; font-weight: bold;  border-radius: 3px; color: black;">${distance} km</div>`,
+  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 13px; padding: 2px 2px !important; font-weight: bold;  border-radius: 3px; color: #ffffff;">${distance} km</div>`,
     });
   }
 
