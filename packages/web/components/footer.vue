@@ -1,5 +1,5 @@
 <template>
-  <footer>
+  <footer class="px-3 pt-7 pb-10 text-center text-gray-600 relative  dark:text-gray-200">
     <div
       class="logo-stroked"
       v-html="require('~/assets/images/logo-outlined.svg?raw')"
@@ -12,7 +12,7 @@
       </a>
       {{ $t('t.adfree') }}
     </small>
-    <div class="block">
+    <div class="block text-center">
       <nuxt-link class="footer-link" :to="localePath('imprint')">{{
         $t('t.imprint')
       }}</nuxt-link>
@@ -52,12 +52,8 @@ import Vue from 'vue'
 export default class Footer extends Vue {}
 </script>
 <style lang="postcss" scoped>
-footer {
-  @apply px-3 pt-7 pb-10 bg-white text-center text-gray-600 relative dark:bg-gray-700 dark:text-gray-200;
-}
-
 footer::after {
-  @apply absolute top-0 left-0 right-0;
+  @apply absolute bottom-0 left-0 right-0;
   content: '';
   background: linear-gradient(
     90deg,
@@ -72,14 +68,14 @@ footer::after {
     rgba(69, 64, 182, 1) 80%,
     rgba(69, 64, 182, 1) 100%
   );
-  height: 4px;
+  height: 8px;
   width: 100%;
   opacity: 1;
 }
 
 .footer-link {
   border-bottom-width: 1px;
-  @apply flex p-3 text-sm border-dashed sm:border-0 sm:text-xl sm:inline sm:p-0 hover:text-green-500;
+  @apply p-3 text-sm border-dashed block md:inline sm:border-0 text-center sm:text-xl sm:p-0 hover:text-green-500;
 }
 
 .block {

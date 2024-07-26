@@ -8,6 +8,9 @@ export const en = {
     continue: "Continue",
   },
   t: {
+    players: "Players",
+    online: "online",
+    
     wePlay: "We're playing",
     copyLinkAndGo: 'Copy the link below and share it with your friends.',
     gohome: 'Home',
@@ -57,6 +60,7 @@ export const en = {
     contrast: 'Extra Contrast',
   },
   settings: {
+    copyLink: "Copy Link",
     mapSet: 'map set',
     gameMode: 'game modes',
     hasIslands: "With Islands (difficult)",

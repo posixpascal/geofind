@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="bg-gray-200 dark:bg-gray-800">
     <Navigation />
-    <main class="bg-gray-200 dark:bg-gray-800">
+    <main class="">
       <div class="z-10"><Nuxt /></div>
     </main>
     <Footer />
@@ -49,11 +49,6 @@ html {
 *::after {
   box-sizing: border-box;
   margin: 0;
-}
-
-.container {
-  max-width: 640px;
-  margin: 0 auto;
 }
 
 .lucky {

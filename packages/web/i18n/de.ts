@@ -7,8 +7,13 @@ export const de = {
     continue: "Weiter",
   },
   t: {
+    players: "Spieler",
+    online: "online",
+  
+    
+    copyLink: "Link kopieren",
     searchingPlayers: 'Suche nach Spielern...',
-    searchingForPlayers: 'Suche offenen Spielen...',
+    searchingForPlayers: 'Suche nach offenen Spielen...',
     wePlay: 'Wir spielen',
     copyLinkAndGo:
       'Einfach den Link hier kopieren und an deine Freunde schicken.',

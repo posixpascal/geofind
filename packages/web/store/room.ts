@@ -26,22 +26,41 @@ export const actions: ActionTree<RoomState, RootState> = {
     await rooms[room.roomId].send(type, data)
   },
   async create(context: any, settings: GameSettings) {
+    console.info("creating room", settings.room);
     const room = await this.$colyseus.create(settings.room, {
       ...settings,
       username: localStorage.getItem('username'),
       pin: localStorage.getItem('pin'),
     })
 
+    console.info("room created", room);
     localStorage.setItem('roomSession' + room.id, room.sessionId)
     await Room.insertFromColyseus(room)
     await context.dispatch('subscribe', room)
     await this.$router.push(window.$nuxt.localePath('/lobby/' + room.id))
   },
   async subscribe(context: any, room) {
-    const {id, sessionId} = room
+    if (typeof (window as any).subscriptions === "undefined"){
+      (window as any).subscriptions = {}
+    }
+
+    if ((window as any).subscription){
+      try {
+        (window as any).subscription[0]();
+        console.info("Cleared subscription");
+      } catch (e){
+        
+      }
+      (window as any).subscription = null;
+    }
+
+    console.log("Subscribing", room, (window as any).subscriptions);
+    const {id, sessionId} = room;
+    (window as any).subscriptions[room.id] = room;
     rooms[id] = room;
-    //setTimeout(() => {
-      room.onStateChange(async (state) => {
+    console.info("Subscribed to room: ", room,  (window as any).subscriptions);
+    (window as any).subscription = room.onStateChange(async (state) => {
+        console.log("<--", {state});
         (window as any).state = state;
         const model = await Room.query().where('roomId', id).first()
         await Room.insertOrUpdate({
@@ -66,12 +85,12 @@ export const actions: ActionTree<RoomState, RootState> = {
           )
           console.log('reconnected', room);
         } catch (e) {
-          console.log(e);
-          // reconnect may not be successful, try to join with new session.
-          room = await this.$colyseus.joinById(roomId, {
-            username: localStorage.getItem('username'),
-            pin: localStorage.getItem('pin'),
-          })
+          console.log(e, room);
+            // reconnect may not be successful, try to join with new session.
+            room = await this.$colyseus.joinById(roomId, {
+              username: localStorage.getItem('username'),
+              pin: localStorage.getItem('pin'),
+            })
         }
       } else {
         room = await this.$colyseus.joinById(roomId, {

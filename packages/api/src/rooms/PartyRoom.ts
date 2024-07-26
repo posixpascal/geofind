@@ -29,7 +29,8 @@ export class PartyRoom extends Room<PartyRoomState> {
   autoDispose = false
   roundTimer = false
   async onCreate(options: any) {
-    this.clock.start()
+    this.clock.start();
+    this.maxClients = 128;
 
     this.setState(
       new PartyRoomState({

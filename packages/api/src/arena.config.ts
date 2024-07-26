@@ -5,12 +5,12 @@ import { monitor } from '@colyseus/monitor'
  * Import your Room files
  */
 import { CountryRoom } from './rooms/CountryRoom'
-import { RedisPresence } from 'colyseus'
 import basicAuth from 'express-basic-auth'
 import { client } from './db/client'
 import { QuizRoom } from './rooms/QuizRoom'
 import { SpeedrunRoom } from './rooms/SpeedrunRoom'
 import { PartyRoom } from './rooms/PartyRoom'
+import { LobbyRoom } from './rooms/LobbyRoom'
 
 const basicAuthMiddleware = basicAuth({
   // list of users and passwords
@@ -32,12 +32,15 @@ export default Arena({
     /**
      * Define your room handlers:
      */
-    gameServer.define('countries', CountryRoom)
-    gameServer.define('capitals', CountryRoom)
-    gameServer.define('flags', CountryRoom)
-    gameServer.define('quizroom', QuizRoom)
-    gameServer.define('speedrun', SpeedrunRoom)
-    gameServer.define('party', PartyRoom)
+    gameServer.define("lobby", LobbyRoom, {
+      name: "lobby"
+    });
+    gameServer.define('countries', CountryRoom);
+    gameServer.define('capitals', CountryRoom);
+    gameServer.define('flags', CountryRoom);
+    gameServer.define('quizroom', QuizRoom);
+    gameServer.define('speedrun', SpeedrunRoom);
+    gameServer.define('party', PartyRoom);
   },
 
   initializeExpress: (app) => {

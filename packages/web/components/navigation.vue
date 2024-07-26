@@ -1,165 +1,23 @@
 <template>
-  <div class="sticky top-0 z-20 nav-bar">
-    <nav class="bg-white dark:bg-gray-800">
-      <div class="main-typo flex items-center">
-        <nuxt-link
+  <div class="nav-bar">
+    <div :class="`rainbow-border ${birdColor}`" />
+    <nav class="flex flex-col md:flex-row px-5 justify-between text-center items-center pt-10">
+        <div>
+          <nuxt-link
           to="/"
           v-html="require('~/assets/images/logo.svg?raw')"
-          :class="`logo-image relative ${birdColor}`"
+          :class="`logo-image w-8 h-8 relative ${birdColor}`"
         ></nuxt-link>
-        <nuxt-link :to="localePath('/')">
-          <h1>geofind.io</h1>
-          <p class="hidden sm:inline-block dark:text-gray-200">
-            {{ $t('t.catchPhrase') }}
-          </p>
+        </div>
+        <div class="w-full flex items-center text-center justify-center flex-col">
+          <nuxt-link :to="localePath('/')">
+          <h1 class="relative text-5xl flex md:flex md:text-7xl dark:text-gray-200">geofind.io</h1>
+         
         </nuxt-link>
-      </div>
-      <ul class="nav-links">
-        <li class="hidden sm:flex" v-if="false">
-          <nuxt-link
-            class="green"
-            active-class="active"
-            :to="localePath('/tutor')"
-          >
-            <Icon name="school" />
-            {{ $t('singleplayer.button') }}
-          </nuxt-link>
-        </li>
-        <li class="hidden sm:flex">
-          <nuxt-link
-            class="blue"
-            active-class="active"
-            :to="localePath('/multiplayer')"
-          >
-            <Icon name="controller" />
-            {{ $t('multiplayer.button') }}
-          </nuxt-link>
-        </li>
-        <li class="hidden lg:flex">
-          <nuxt-link
-            class="red"
-            active-class="active"
-            :to="localePath('/matchmaking')"
-          >
-            <Icon name="cube" />
-            {{ $t('matchmaking.button') }}
-          </nuxt-link>
-        </li>
-        <li class="hidden sm:flex">
-          <nuxt-link
-            class="purple"
-            active-class="active"
-            :to="localePath('/lobbies')"
-          >
-            <Icon name="public" />
-            {{ $t('lobbies.button') }}
-          </nuxt-link>
-        </li>
-        <li class="hidden md:flex">
-          <nuxt-link
-            class="yellow"
-            active-class="active"
-            :to="localePath('/profile')"
-          >
-            <Icon name="profile" />
-            {{ $t('profile.button') }}
-          </nuxt-link>
-        </li>
-      </ul>
-      <div class="flex sm:hidden flex-col justify-center items-center">
-        <button @click="toggleMenu" class="menu">
-          <div
-            v-if="menu"
-            v-html="require('~/assets/images/close.svg?raw')"
-          ></div>
-          <div v-else v-html="require('~/assets/images/menu.svg?raw')"></div>
-          {{ $t('t.menu') }}
-        </button>
-      </div>
-    </nav>
-    <div :class="`rainbow-border ${birdColor}`" />
-    <div
-      v-if="menu"
-      class="menu-area relative z-20 bg-white-50 dark:bg-gray-800 pb-4"
-    >
-      <div class="p-4">
-        <Button
-          @click="menu = false"
-          :icon="true"
-          :to="localePath('/tutor')"
-          v-if="false"
-          variant="green"
-          :animated="true"
-        >
-          {{ $t('singleplayer.button') }}
-        </Button>
-        <Button
-          @click="menu = false"
-          :icon="true"
-          :to="localePath('/multiplayer')"
-          variant="blue"
-          :animated="true"
-        >
-          <template #icon>
-            <Icon class="text-white" :height="48" name="create" />
-          </template>
-          {{ $t('multiplayer.button') }}
-        </Button>
+        </div>      
+        <div v-if="players" class="justify-center text-center font-lucky text-2xl flex">{{ players }} {{ $t('t.players') }} online</div>
 
-        <Button
-          @click="menu = false"
-          :icon="true"
-          :to="localePath('lobbies')"
-          variant="purple"
-          :animated="true"
-        >
-          <template #icon>
-            <Icon class="text-white" :height="48" name="public" />
-          </template>
-          {{ $t('lobbies.button') }}
-        </Button>
-        <Button
-          @click="menu = false"
-          :icon="true"
-          :to="localePath('/matchmaking')"
-          variant="red"
-          :animated="true"
-        >
-          <template #icon>
-            <Icon class="text-white" :height="48" name="cube" />
-          </template>
-          {{ $t('matchmaking.button') }}
-        </Button>
-        <!--<Button to="teachers" variant="blue" :animated="true">
-          <template #icon>👩‍🏫</template>
-          Teacher Zone
-        </Button>-->
-        <Button
-          @click="menu = false"
-          :icon="true"
-          :to="localePath('profile')"
-          variant="yellow"
-          :animated="true"
-        >
-          <template #icon>
-            <Icon class="text-white" :height="48" name="profile" />
-          </template>
-          {{ $t('profile.button') }}
-        </Button>
-        <Button
-          @click="menu = false"
-          :icon="true"
-          :to="localePath('achievements')"
-          variant="orange"
-          :animated="true"
-        >
-          <template #icon>
-            <Icon class="text-white" :height="48" name="school" />
-          </template>
-          {{ $t('achievements.button') }}
-        </Button>
-      </div>
-    </div>
+    </nav>
   </div>
 </template>
 <script lang="ts">
@@ -170,6 +28,18 @@ import { Component, Watch } from 'vue-property-decorator'
 export default class Navigation extends Vue {
   menu = false
   birdColor = 'bird-yellow border-yellow'
+  players = 0;
+  timer = null;
+  mounted(){
+    this.timer = setInterval(() => {
+      this.players = (window as any).playersOnline;
+    }, 200)
+  }
+
+  beforeDestroy(){
+    this.timer = null;
+  }
+
 
   @Watch('$route', { immediate: true })
   setBirdColor() {
@@ -215,21 +85,6 @@ export default class Navigation extends Vue {
 }
 </script>
 <style lang="postcss" scoped>
-nav {
-  @apply py-3 flex sm:py-4 px-2 sm:px-4;
-  @apply justify-between w-full items-center relative top-0 z-50 shadow;
-  backdrop-filter: blur(15px);
-}
-
-.menu {
-  @apply flex justify-center flex-col items-center mt-2 pr-4 focus:outline-none dark:text-gray-200;
-  font-size: 14px;
-}
-
-.menu-area {
-  height: calc(100vh - 80px);
-}
-
 .rainbow-border {
   background: linear-gradient(
     90deg,
@@ -274,7 +129,6 @@ nav p {
 }
 
 nav h1 {
-  @apply relative text-2xl flex sm:hidden md:flex  md:text-4xl dark:text-gray-200;
   position: relative;
   top: -8px;
   line-height: 0px;
@@ -350,8 +204,6 @@ nav img {
 
 .logo-image svg {
   @apply mr-5;
-  width: 64px;
-  height: 64px;
 }
 
 .logo-image svg .bird-stroke {
