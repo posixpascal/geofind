@@ -71,8 +71,9 @@ export default class LobbiesPage extends Vue {
   }
 
   async fetchGames() {
+    const partyRooms = await this.$colyseus.getAvailableRooms('party')
     const rooms = await this.$colyseus.getAvailableRooms('countries')
-    for (const room of rooms) {
+    for (const room of [...rooms, ...partyRooms]) {
       const previousGame = this.games.findIndex(
         (game) => game.roomId === room.roomId
       )
