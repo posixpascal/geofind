@@ -7,9 +7,9 @@
         }`"
         v-for="player in sortedPlayers"
       >
-        <h4 class="md:min-w-[50px]" style="text-align: left;">{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
+        <h4 class="min-w-[50px]" style="min-width: 30px; position: relative; top: -3px; text-align: left;">{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
         <Pin :id="player.pin" :width="pinSize" />
-        <h4>{{ player.username }}</h4>
+        <h4 >{{ player.username }}</h4>
       </div>
     </div>
   </div>

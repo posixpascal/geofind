@@ -44,7 +44,7 @@
         <l-marker
           :lat-lng="getMidpointLatLng([vote.lng, vote.lat])"
           v-if="!vote.isCorrect && humanizeDistance(vote, room.country, true) > 200"
-          :icon="createDistanceIcon(humanizeDistance(vote, room.country, true), vote.color)"
+          :icon="createDistanceIcon([vote.lng, vote.lat], humanizeDistance(vote, room.country, true), vote.color, vote.player)"
         ></l-marker>
       </template>
     </template>
@@ -67,7 +67,7 @@
       <l-marker
         v-if="humanizeDistance({lat: marker.position[1], lng: marker.position[0]}, room.country, true) > 200"
         :lat-lng="getMidpointLatLng(marker.position)"
-        :icon="createDistanceIcon(marker.position, humanizeDistance({lat: marker.position[1], lng: marker.position[0]}, room.country, true), pinColor)"
+        :icon="createDistanceIcon(marker.position, humanizeDistance({lat: marker.position[1], lng: marker.position[0]}, room.country, true, room.player), pinColor)"
       ></l-marker>
     </template>
 
@@ -118,7 +118,8 @@ import distanceBetween from "~/utils/functions/distanceBetween";
 export default class GameMap extends Vue {
   @Prop() room: Room
 
-  pinSet = false
+  pinSet = false;
+  showNames = false;
 
   get countryIcon() {
     const iconUrl = imageUrl(isoToCountryCode(this.room.country.alpha2code).toUpperCase(), "l");
@@ -176,7 +177,15 @@ export default class GameMap extends Vue {
     return [midLng, midLat];
   }
 
-  createDistanceIcon(coords, distance, color) {
+  createDistanceIcon(coords, distance, color, player) {
+    if (player) {
+      return divIcon({
+        className: 'distance-label',
+        html: `<div style="
+  white-space: nowrap;
+  display: inline-block !important;background-color: ${color}; width: unset !important; !important; font-size: 13px; padding: 2px 2px !important; font-weight: bold;  border-radius: 3px; color: black;">${player.username}: ${distance} km</div>`,
+      });
+    }
     return divIcon({
       className: 'distance-label',
       html: `<div style="
