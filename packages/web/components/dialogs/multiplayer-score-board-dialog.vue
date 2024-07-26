@@ -90,7 +90,7 @@
             <div
               :class="[
               'sm:flex',
-              'h-[2px] md:h-[4px] relative top-5 md:top-2 text-sm md:text-xl',
+              'h-[2px] md:h-[4px] relative top-5 max-w-[50vw] md:top-2 text-sm md:text-xl',
               'line ',
               animateLine ? 'line-expand' : '',
               vote.isCorrect ? 'line-success' : '',
