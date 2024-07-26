@@ -7,7 +7,8 @@ body {
   touch-action: pan-x pan-y;
 }
 
-.map-wrapper {
+.map-wrapper, .game-map {
+  cursor: crosshair;
   touch-action: auto !important;
 }
 

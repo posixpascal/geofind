@@ -9,7 +9,7 @@
       >
         <h4 class="md:min-w-[50px]" style="text-align: left;">{{ room.scoreboard[player.sessionId].points || 0 }}</h4>
         <Pin :id="player.pin" :width="pinSize" />
-        <h4 :class="`${isEnd ? 'flex' : 'hidden'}`">{{ player.username }}</h4>
+        <h4>{{ player.username }}</h4>
       </div>
     </div>
   </div>

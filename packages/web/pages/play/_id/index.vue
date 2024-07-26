@@ -70,7 +70,7 @@
           </CountryFlagWithName>
         </Overlay>
         <Overlay :room="room" position="bottomleft">
-          <ScoreBoardOverlay :room="room" />
+          <ScoreBoardOverlay v-if="inPartyRoundEnd || room.state === states.ROUND_END" :room="room" />
         </Overlay>
 
         <Overlay :room="room" v-if="!inPartyRoundEnd" :interactive="true" position="topright">
