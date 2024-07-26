@@ -159,7 +159,6 @@ export default class GameMap extends Vue {
   }
 
   getMidpointLatLng(coords) {
-    console.log(coords, this.room)
     if (!this.room) {
       return []
     }

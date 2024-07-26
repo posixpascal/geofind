@@ -20,10 +20,27 @@ export class OnLeaveCommand extends Command<
     this.state.players.get(client.sessionId).connected = false
 
     try {
+      if (consented){
+        throw new Error("consented");
+      }
+
       await this.room.allowReconnection(client, ALLOW_RECONNECTION_FOR_SECONDS)
+      console.log(client.sessionId, ' has returned');
       this.state.players.get(client.sessionId).connected = true
     } catch (e) {
+      console.log(client.sessionId, ' has left');
+
       this.state.players.delete(client.sessionId)
+      if (
+          this.state.creatorId && client.sessionId
+      ) {
+        console.log("Was room owner, changing room owner to next user");
+        this.state.players.forEach((p) => {
+          if (this.state.creatorId == client.sessionId){
+            this.state.creatorId = p.sessionId;
+          }
+        })
+      }
     }
   }
 }

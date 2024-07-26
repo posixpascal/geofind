@@ -42,7 +42,7 @@ export default class Dialog extends Vue {
 }
 
 .dialog {
-  @apply absolute left-1/2 w-20 z-10 p-5 rounded shadow-2xl lg:mt-20;
+  @apply absolute left-1/2 w-20 z-10 p-2 md:p-5 rounded shadow-2xl lg:mt-20;
   @apply flex content-center justify-center text-gray-700 flex-col;
   font-family: 'Luckiest Guy';
   top: 20px;

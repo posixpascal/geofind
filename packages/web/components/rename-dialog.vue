@@ -1,5 +1,5 @@
 <template>
-  <Dialog :show="show" classes="bg-transparent">
+  <Dialog :show="show" classes="bg-transparent mt-10">
     <Panel>
       <template #title>
         <div
@@ -14,7 +14,7 @@
         </div>
       </template>
       <template #content>
-        Name: 
+        Name:
         <Input
           ref="name"
           autofocus="true"
@@ -22,6 +22,7 @@
           @change="setName()"
           v-model="name"
         />
+        Pin:
         <Box
           v-if="player"
           class="
@@ -33,7 +34,6 @@
             items-stretch
           "
         >
-        Pin: 
           <div
             class="flex justify-center py-3"
             style="max-height: 380px; overflow: auto"

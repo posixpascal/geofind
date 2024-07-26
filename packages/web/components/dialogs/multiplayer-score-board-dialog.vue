@@ -1,5 +1,5 @@
 <template>
-  <Dialog classes="bg-white dark:bg-gray-800" class="scoreboard-dialog">
+  <Dialog classes="bg-white dark:bg-gray-800 " class="scoreboard-dialog">
     <div class="flex mb-10 justify-between items-center">
       <div class="flex items-center pin-title mb-0">
         <Flag
@@ -14,7 +14,7 @@
           "
         />
         <div style="">
-          <span class="text-2xl flex-col sm:flex-row dark:text-gray-100">
+          <span class="text-xl md:text-2xl flex-col sm:flex-row dark:text-gray-100">
             <span class="" v-if="room.country.translations[$i18n.locale]">{{
                 room.country.translations[$i18n.locale].country
               }}</span>
@@ -28,7 +28,7 @@
               }}
             </span>
           </span>
-          <div class="text-gray-500 dark:text-gray-300">
+          <div class="text-sm md:text-base text-gray-500 dark:text-gray-300">
             👥 {{ formatNumber(room.country.population, 1) }}
             {{ $t('t.citizen') }} &mdash; 📍
             {{ $t(`subregion.${room.country.subregion}`) }}
@@ -48,12 +48,13 @@
     <template v-else>
       <div v-if="showScore">
         <div
-          :class="`flex items-center justify-between pin mp-pin align-middle mb-1 border-dashed border-b-2 border-gray-300 py-3 px-1`"
+          :class="`flex items-center justify-between pin mp-pin align-middle mb-1 border-dashed border-b-2 border-gray-300 py-1 md:py-3 px-1`"
           v-for="player in sortedPlayers"
         >
           <div class="flex items-center">
-            <Pin :id="player.pin" width="32" style="min-width: 32px"/>
+            <Pin :id="player.pin" width="32" style="min-width: 32px; position: relative; left: -8px"/>
             <h4 :class="`pr-3 dark:text-gray-300`">{{ player.username }}</h4>
+
           </div>
           <h4 class="dark:text-gray-300 flex">
             <h4
@@ -83,10 +84,22 @@
           "
         >
           <div class="flex items-center">
-            <Pin :id="vote.player.pin" width="32" style="min-width: 32px"/>
+
+            <Pin :id="vote.player.pin" width="32" style="min-width: 32px; position: relative; left: -8px" />
             <h4 class="dark:text-gray-300">{{ vote.player.username }}</h4>
+            <span class="pl-3 flex md:hidden text-gray-600 dark:text-gray-300">(<ICountUp
+              class="flex md:hidden"
+              v-if="
+                  (!vote.country || vote.country.id !== room.country.id) &&
+                  vote.distance > 0 &&
+                  animateLine
+                "
+              :endVal="vote.distance"
+              :options="countupOptions"
+            />)
+            </span>
           </div>
-          <div class="w-full max-w-[40vw] md:max-w-full">
+          <div class="w-full hidden md:flex md:max-w-full">
             <div
               :class="[
               'sm:flex',
@@ -321,5 +334,14 @@ h2 {
   height: 23px !important;
   min-width: 64px !important;
   min-height: 46px !important;
+}
+
+@media (max-width: 768px){
+  .scoreboard-dialog .flag img {
+    width: 42px !important;
+    min-width: 42px !important;
+    height: 32px !important;
+    min-height: 32px !important;
+  }
 }
 </style>

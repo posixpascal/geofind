@@ -1,7 +1,7 @@
 <template>
   <div class="main-menu">
     <template v-if="room">
-      <h1 class="text-sm mb-5 sm:text-xl sm:mb-3 text-left">
+      <h1 class="text-xl mb-5 sm:text-xl sm:mb-3 text-left">
         <span class="text-gray-600 dark:text-gray-300"
           >{{ $t('t.room') }}: {{ room.roomId }}</span
         >
@@ -123,18 +123,30 @@ export default class LobbyPage extends Vue {
   }
 
   async created() {}
-
   @Watch('settings', { deep: true, immediate: true })
-  updateSettings() {
+  updateSettings(old, next) {
+    const settingsKeys = ['hasBorders', 'hasIslands', 'hasStrictMatches', 'isPublic', 'maxPoints', 'map', 'room', 'roundTime']
+    let changed : any = false;
+
+    if (next) {
+      settingsKeys.forEach((key) => {
+        if (old[key] !== next[key]) {
+          changed = key;
+        }
+      });
+      if (!changed) {
+        return;
+      }
+    }
     //if (!this.game) {
     //  return;
     //}
-    this.$store.dispatch('room/message', {
-      room: this.room,
-      type: 'room/settings',
-      data: this.settings,
-    })
-    //this.$socket.emit('game/update', {gameId: this.game.id, update: this.settings})
+      this.$store.dispatch('room/message', {
+        room: this.room,
+        type: 'room/settings',
+        data: this.settings,
+      });
+    //this.$socket.emit('game;/update', {gameId: this.game.id, update: this.settings})
   }
 
   get user() {

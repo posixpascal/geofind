@@ -34,7 +34,7 @@ export class OnScoreboardCommand extends Command<CountryRoom, {}> {
           )
             this.room.dispatcher.dispatch(new OnPrepareRoundCommand())
       },
-      this.state.room === 'speedrun' ? 4000 : 12000
+      this.state.room === 'speedrun' ? 4000 : 10000
     )
   }
 }

@@ -56,6 +56,10 @@ export default class OpengameSettingsView extends Vue {
       image: require('~/assets/gamemodes/countries.svg?raw'),
     },
     {
+      name: 'party',
+      image: require('~/assets/gamemodes/party.svg?raw'),
+    },
+    {
       name: 'capitals',
       image: require('~/assets/gamemodes/capitals.svg?raw'),
     },

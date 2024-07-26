@@ -4,6 +4,7 @@
       <li
         class="flex items-center justify-between"
         v-for="player in room.players"
+        :key="player.key"
       >
         <div class="flex items-center">
           <Pin :id="player.pin" width="48" style="min-width: 48px" />

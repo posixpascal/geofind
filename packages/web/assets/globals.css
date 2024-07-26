@@ -3,7 +3,12 @@
   --animate-delay: 0.3s;
 }
 
+* {
+  overscroll-behavior: none;
+}
+
 body {
+
   touch-action: pan-x pan-y;
 }
 

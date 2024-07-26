@@ -1,13 +1,5 @@
 <template>
   <div class="main-menu pt-10">
-    <Button
-      v-if="!user"
-      variant="orange"
-      :to="localePath('/profile/login')"
-      small
-    >
-      {{ $t('profile.register') }}
-    </Button>
     <Panel back="/">
       <template #title>
         {{ $t('profile.title') }}

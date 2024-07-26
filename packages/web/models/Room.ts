@@ -12,6 +12,7 @@ interface Vote {
 interface Player {
   sessionId: string
   username: string
+  key: string;
   pin: number
 }
 
