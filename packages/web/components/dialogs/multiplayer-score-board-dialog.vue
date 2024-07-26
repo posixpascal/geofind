@@ -87,8 +87,8 @@
 
             <Pin :id="vote.player.pin" width="32" style="min-width: 32px; position: relative; left: -8px" />
             <h4 class="dark:text-gray-300">{{ vote.player.username }}</h4>
-            <span class="pl-3 flex md:hidden text-gray-600 dark:text-gray-300">(<ICountUp
-              class="flex md:hidden"
+            <span class="pl-3 flex text-gray-600 dark:text-gray-300">(<ICountUp
+              class="flex "
               v-if="
                   (!vote.country || vote.country.id !== room.country.id) &&
                   vote.distance > 0 &&
@@ -99,7 +99,7 @@
             />)
             </span>
           </div>
-          <div class="w-full hidden md:flex md:max-w-full">
+          <!-- <div class="w-full hidden md:max-w-full">
             <div
               :class="[
               'sm:flex',
@@ -121,7 +121,7 @@
                 />
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div
             v-if="vote.hasCountry && vote.country"
