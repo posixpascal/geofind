@@ -15,8 +15,6 @@
 
     <l-marker
       v-if="room && room.player && showOwnMarker && marker.position"
-      :draggable="canMoveMarker"
-      @dragend="dragMarker"
       :lat-lng="marker.position"
       :icon="playerPin"
     >

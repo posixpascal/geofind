@@ -86,11 +86,11 @@
             <Pin :id="vote.player.pin" width="32" style="min-width: 32px"/>
             <h4 class="dark:text-gray-300">{{ vote.player.username }}</h4>
           </div>
-          <div class="w-full">
+          <div class="w-full max-w-[40vw] md:max-w-full">
             <div
               :class="[
               'sm:flex',
-              'h-[2px] md:h-[4px] relative top-5 max-w-[50vw] md:top-2 text-sm md:text-xl',
+              'h-[2px] md:h-[4px] relative top-5 md:top-2 text-sm md:text-xl',
               'line ',
               animateLine ? 'line-expand' : '',
               vote.isCorrect ? 'line-success' : '',
