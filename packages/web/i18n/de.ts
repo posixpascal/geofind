@@ -9,8 +9,8 @@ export const de = {
   t: {
     players: "Spieler",
     online: "online",
-  
-    
+
+
     copyLink: "Link kopieren",
     searchingPlayers: 'Suche nach Spielern...',
     searchingForPlayers: 'Suche nach offenen Spielen...',
@@ -38,7 +38,6 @@ export const de = {
     other: 'Sonstiges',
     loading: 'Lade...',
     madewithlove: 'Gemacht mit ',
-    players: 'Spieler',
     opensource: 'Open Source.',
     imprint: 'Impressum',
     privacy: 'Datenschutz',

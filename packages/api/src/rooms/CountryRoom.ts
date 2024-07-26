@@ -35,7 +35,7 @@ export class CountryRoom extends Room<CountryRoomState> {
         map: options.map,
         hasBorders: options.hasBorders,
         maxPoints: parseInt(options.maxPoints, 10) || 10,
-        roundTime: parseInt(options.roundTime, 10) || 15,
+        roundTime: parseInt(options.roundTime, 10) || 20,
         hasIslands: options.hasIslands,
         isPublic: options.isPublic,
         hasStrictMatches: options.hasStrictMatches,

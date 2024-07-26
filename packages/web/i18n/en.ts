@@ -10,7 +10,7 @@ export const en = {
   t: {
     players: "Players",
     online: "online",
-    
+
     wePlay: "We're playing",
     copyLinkAndGo: 'Copy the link below and share it with your friends.',
     gohome: 'Home',
@@ -27,7 +27,6 @@ export const en = {
     other: 'Other',
     loading: 'Loading...',
     madewithlove: 'Made with ',
-    players: 'Players',
     opensource: 'Open source.',
     adfree: 'Forever.',
     sponsor: 'Donate',
