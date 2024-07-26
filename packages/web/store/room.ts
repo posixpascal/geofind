@@ -46,10 +46,11 @@ export const actions: ActionTree<RoomState, RootState> = {
 
     if ((window as any).subscription){
       try {
-        (window as any).subscription[0]();
+        (window as any).subscription.removeAllListeners();
+        (window as any).subscription = null;
         console.info("Cleared subscription");
       } catch (e){
-        
+
       }
       (window as any).subscription = null;
     }
@@ -59,7 +60,7 @@ export const actions: ActionTree<RoomState, RootState> = {
     (window as any).subscriptions[room.id] = room;
     rooms[id] = room;
     console.info("Subscribed to room: ", room,  (window as any).subscriptions);
-    (window as any).subscription = room.onStateChange(async (state) => {
+    room.onStateChange(async (state) => {
         console.log("<--", {state});
         (window as any).state = state;
         const model = await Room.query().where('roomId', id).first()
@@ -71,7 +72,9 @@ export const actions: ActionTree<RoomState, RootState> = {
             ...state.toJSON(),
           },
         })
-      })
+      });
+    (window as any).subscription = room;
+
     //}, 300);
   },
   async join(context: any, roomId) {
