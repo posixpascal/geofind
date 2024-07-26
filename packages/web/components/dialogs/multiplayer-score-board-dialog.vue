@@ -87,7 +87,9 @@
 
             <Pin :id="vote.player.pin" width="32" style="min-width: 32px; position: relative; left: -8px" />
             <h4 class="dark:text-gray-300">{{ vote.player.username }}</h4>
-            <span class="pl-3 flex text-gray-600 dark:text-gray-300">(<ICountUp
+            <span class="pl-3 flex text-gray-600 dark:text-gray-300" v-if=" (!vote.country || vote.country.id !== room.country.id) &&
+                  vote.distance > 0 &&
+                  animateLine">(<ICountUp
               class="flex "
               v-if="
                   (!vote.country || vote.country.id !== room.country.id) &&
