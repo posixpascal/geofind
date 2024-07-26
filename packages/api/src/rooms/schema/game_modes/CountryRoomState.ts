@@ -22,7 +22,7 @@ export class CountryRoomState extends Schema {
   @type('number') roundTime: number
   @type('number') maxPoints: number
   @type('boolean') hasBorders: boolean
-  @type('boolean') hasIslands: boolean
+  @type('boolean') hasIslands: boolean = true;
   @type('boolean') isPublic: boolean
   @type('float32') roundSecondsElapsed: number
 }

@@ -91,7 +91,7 @@
             :label="$t('settings.directMatchesOnly')"
           />
           <Checkbox
-            v-if="false && !isExcluded('hasIslands')"
+            v-if="!isExcluded('hasIslands')"
             :extra-classes="shade"
             v-model="settings.hasIslands"
             :label="$t('settings.islands')"
@@ -102,6 +102,7 @@
             v-model="settings.hasBorders"
             :label="$t('settings.borders')"
           />
+
           <Checkbox
             v-if="!isExcluded('isPublic')"
             :extra-classes="shade"

@@ -70,6 +70,7 @@ export const de = {
     mapSet: 'Kartenset',
     gameMode: 'Spielmodi',
     hint: 'Tipps aktivieren',
+    hasIslands: "Mit Inselstaaten (schwer)",
     gameModes: {
       party: "Party",
       countries: 'Länder',

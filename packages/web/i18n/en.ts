@@ -59,6 +59,7 @@ export const en = {
   settings: {
     mapSet: 'map set',
     gameMode: 'game modes',
+    hasIslands: "With Islands (difficult)",
     gameModes: {
       party: "Party",
       countries: 'countries',

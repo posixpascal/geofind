@@ -324,7 +324,7 @@ export default class GameMap extends Vue {
   }
 
   get canMoveMarker() {
-    return true;//this.room && this.room.state === this.states.ROUND_START
+    return this.room && this.room.state === this.states.ROUND_START
   }
 
   get mapOptions() {

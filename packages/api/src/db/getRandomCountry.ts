@@ -13,11 +13,14 @@ export const getRandomCountry = async (
   excluded = []
 ) => {
   const { map, hasIslands } = state
+  console.log(state.hasIslands, SUBREGIONS, SUBREGIONS_EXCLUDING_ISLANDS)
   const { rows } = await client.query(FIND_COUNTRY_QUERY, [
     excluded,
     REGIONS[map || 'earth'],
     state.hasIslands ? SUBREGIONS : SUBREGIONS_EXCLUDING_ISLANDS,
   ])
+
+  console.log(rows)
 
   // Restarts the country selection but omit excluded countries to avoid 0 results.
   if (rows.length === 0) {

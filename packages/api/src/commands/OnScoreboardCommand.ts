@@ -3,12 +3,13 @@ import { CountryRoom } from '../rooms/CountryRoom'
 import { OnGameEndCommand } from './OnGameEndCommand'
 import { OnPrepareRoundCommand } from './OnPrepareRoundCommand'
 import { SCOREBOARD_STATE } from '../constants/game'
+import {getRandomCountry} from "../db/getRandomCountry";
 
 export class OnScoreboardCommand extends Command<CountryRoom, {}> {
   async execute(payload: this['payload']) {
     this.state.state = SCOREBOARD_STATE
     this.clock.setTimeout(
-      () => {
+      async () => {
         // check gameover.
         let gameOver = false
         let hasSuddenDeath = false
@@ -27,7 +28,13 @@ export class OnScoreboardCommand extends Command<CountryRoom, {}> {
           return
         }
 
-        this.room.dispatcher.dispatch(new OnPrepareRoundCommand())
+          this.state.country = await getRandomCountry(
+              this.state,
+              this.state.blacklist.toArray()
+          )
+        this.clock.setTimeout(() => {
+            this.room.dispatcher.dispatch(new OnPrepareRoundCommand())
+        }, 500);
       },
       this.state.room === 'speedrun' ? 4000 : 8000
     )
