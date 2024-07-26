@@ -172,7 +172,7 @@ export default class GameMap extends Vue {
 
     const midLat = (lat1 + lat2) / 2;
     const midLng = (lng1 + lng2) / 2;
-
+    return coords;
     return [midLng, midLat];
   }
 
