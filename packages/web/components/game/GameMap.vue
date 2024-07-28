@@ -21,7 +21,7 @@
     </l-marker>
 
 
-    <template v-if="(room && room.room === 'party') && (inRoundEnd || inPartyRoundEnd)">
+    <template v-if="(room) && (inRoundEnd || inPartyRoundEnd)">
       <template v-for="vote in gameVotes">
         <l-marker
           v-if="vote.lat"
@@ -191,6 +191,28 @@ export default class GameMap extends Vue {
     });
   }
 
+  voteInterval;
+  mounted(){
+    this.voteInterval = setInterval(() => {
+      if (!this.marker || !this.marker.position){
+        return;
+      }
+      const [lat, lng] = this.marker.position
+      const position = [lng, lat]
+
+      this.$store.dispatch('room/message', {
+        room: this.room,
+        type: VOTE_MESSAGE,
+        data: {
+          position,
+        },
+      });
+    }, 300);
+  }
+
+  beforeDestroy(){
+    clearInterval(this.voteInterval);
+  }
 
   convertLatLng(coordinates) {
     if (!this.$refs.map) {
@@ -303,25 +325,16 @@ export default class GameMap extends Vue {
     })
   }
 
-  @Watch('marker')
-  async setMarker(newPosition, oldPosition) {
-    if (!this.canMoveMarker) {
-      return
-    }
+  // @Watch('marker')
+  // async setMarker(newPosition, oldPosition) {
+  //   if (!this.canMoveMarker) {
+  //     return
+  //   }
 
-    // Use different geographical encoding by switching lng and lat.
-    const [lat, lng] = this.marker.position
-    const position = [lng, lat]
-
-    await this.$store.dispatch('room/message', {
-      room: this.room,
-      type: VOTE_MESSAGE,
-      data: {
-        position,
-      },
-    })
-    //await this.$socket.emit('game/vote', {gameId: this.gameId, position});
-  }
+  //   // Use different geographical encoding by switching lng and lat.
+    
+  //   //await this.$socket.emit('game/vote', {gameId: this.gameId, position});
+  // }
 
   moveMarker(ev: any) {
     if (!this.canMoveMarker) {

@@ -50,10 +50,6 @@ export class PartyRoom extends Room<PartyRoomState> {
       })
     )
 
-    this.clock.setInterval(() => {
-        this.state.roundSecondsElapsed += 0.1
-      }, 100)
-
     this.registerMessageHandlers()
     this.dispatcher.dispatch(new OnUpdateMetadataCommand())
     await this.setPrivate(!this.state.isPublic)

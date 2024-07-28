@@ -25,14 +25,16 @@ export class OnStartRoundCommand extends Command<CountryRoom | PartyRoom, {}> {
 
     let countdown = this.clock.setInterval(() => {
       if (this.state.timer > 0) this.state.timer -= 1
-      if (this.state.timer < 0){
-        countdown.clear();
+      if (this.state.timer <= 0){
+       // countdown.clear();
+       this.state.timer = 15;
       }
     }, 1000)
 
     this.room.roundTimer = this.clock.setTimeout(() => {
-      countdown.clear()
-      this.room.dispatcher.dispatch(new OnEndRoundCommand())
+      //countdown.clear()
+      this.state.timer = 15;
+      //this.room.dispatcher.dispatch(new OnEndRoundCommand())
     }, this.state.roundTime * 1000) as any
   }
 }

@@ -18,10 +18,7 @@ import Vue from 'vue'
   components: { Navigation, MapBackground },
 })
 export default class DefaultLayout extends Vue {
-  @Watch('$route.name')
-  trackAnalytics() {
-    const fathom = (window as any).fathom
-
+  async mounted(){
   }
 }
 </script>

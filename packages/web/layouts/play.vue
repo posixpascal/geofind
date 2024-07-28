@@ -11,7 +11,8 @@ import Component, { mixins } from 'vue-class-component'
 
 @Component({})
 export default class PlayLayout extends Vue {
-  mounted() {}
+  mounted() {
+  }
 }
 </script>
 <style lang="postcss">

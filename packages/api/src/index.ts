@@ -10,6 +10,10 @@ import { listen } from '@colyseus/arena'
 
 // Import arena config
 import arenaConfig from './arena.config'
+import { logger } from './logger';
 
 // Create and listen on 2567 (or PORT environment variable.)
-listen(arenaConfig)
+listen(arenaConfig).then(() => {
+    console.clear();
+    logger.info("Listening on ws://localhost:2567")
+})

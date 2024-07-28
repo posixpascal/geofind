@@ -1,19 +1,11 @@
 <template>
   <div class="count">
-    <h1
-      :class="[
-        'fixed bottom-20 left-50 -translate-x-[50%]',
-        room && room.timer <= 1
-          ? 'text-3xl text-black'
-          : room && room.timer <= 2
-          ? 'text-2xl text-gray-900'
-          : room && room.timer <= 3
-          ? 'text-xl text-gray'
-          : 'd',
-      ]"
+    {{ width }} ini
+    <div
+      :class="`fixed top-0 h-3 bg-blue-400 px-5 text-sm ${initial <= 0 || initial >= room.roundTime ? '' : 'transition-all linear duration-1000'}`"
+      :style="{width: width}"
     >
-      {{ initial && initial > 0 ? initial : '' }}
-    </h1>
+  </div>
   </div>
 </template>
 <script lang="ts">
@@ -25,33 +17,16 @@ import { Room } from '~/models'
 @Component
 export default class Countdown extends Vue {
   @Prop() initial
-  @Prop() room: Room
-
+  @Prop() room;
+  
   count = null
   timer = null
+
+  get width(){
+    return `${100 * ((this.room.timer) / this.room.roundTime)}%`;
+  }
 }
 </script>
 <style scoped lang="postcss">
-.count h1.d {
-  font-size: 48px;
-}
 
-h1 {
-  opacity: 0.5;
-  margin: 0;
-  padding: 0;
-}
-
-.count h1.text-xl {
-  font-size: 122px !important;
-  opacity: 0.3 !important;
-}
-.count h1.text-2xl {
-  font-size: 144px !important;
-  opacity: 0.4 !important;
-}
-.count h1.text-3xl {
-  font-size: 164px !important;
-  opacity: 0.6 !important;
-}
 </style>

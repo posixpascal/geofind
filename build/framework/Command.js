@@ -1,0 +1,6 @@
+export class Command {
+    constructor(expectedAggregateVersion) {
+        this.expectedAggregateVersion = expectedAggregateVersion;
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiQ29tbWFuZC5qcyIsInNvdXJjZVJvb3QiOiJzcmMvIiwic291cmNlcyI6WyJmcmFtZXdvcmsvQ29tbWFuZC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFFQSxNQUFNLE9BQU8sT0FBTztJQUNsQixZQUE0Qix3QkFBZ0M7UUFBaEMsNkJBQXdCLEdBQXhCLHdCQUF3QixDQUFRO0lBQUcsQ0FBQztDQUNqRSJ9

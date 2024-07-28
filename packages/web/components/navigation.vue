@@ -15,7 +15,7 @@
          
         </nuxt-link>
         </div>      
-        <div v-if="players" class="justify-center text-center font-lucky text-2xl flex">{{ players }} {{ $t('t.players') }} online</div>
+        <div v-if="players" class="justify-center text-center font-lucky text-2xl dark:text-gray-200 flex">{{ players }} {{ $t('t.players') }} online</div>
 
     </nav>
   </div>

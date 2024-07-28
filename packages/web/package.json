@@ -28,6 +28,7 @@
     "countup.js": "latest",
     "global": "^4.4.0",
     "leaflet": "^1.7.1",
+    "lil-gui": "^0.19.2",
     "lodash": "^4.17.21",
     "numeral": "^2.0.6",
     "nuxt": "2.15.8",

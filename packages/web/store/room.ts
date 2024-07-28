@@ -2,7 +2,7 @@ import {ActionTree, MutationTree} from 'vuex'
 import {RootState} from '~/store/index'
 import {Room} from '~/models'
 import {GameSettings} from '~/constants/games'
-
+import * as Colyseus from 'colyseus.js'
 const reFetchAfter = 60000 // ms
 
 export const state = () => ({})
@@ -33,35 +33,15 @@ export const actions: ActionTree<RoomState, RootState> = {
       pin: localStorage.getItem('pin'),
     })
 
-    console.info("room created", room);
     localStorage.setItem('roomSession' + room.id, room.sessionId)
     await Room.insertFromColyseus(room)
     await context.dispatch('subscribe', room)
     await this.$router.push(window.$nuxt.localePath('/lobby/' + room.id))
   },
   async subscribe(context: any, room) {
-    if (typeof (window as any).subscriptions === "undefined"){
-      (window as any).subscriptions = {}
-    }
-
-    if ((window as any).subscription){
-      try {
-        (window as any).subscription.removeAllListeners();
-        (window as any).subscription = null;
-        console.info("Cleared subscription");
-      } catch (e){
-
-      }
-      (window as any).subscription = null;
-    }
-
-    console.log("Subscribing", room, (window as any).subscriptions);
     const {id, sessionId} = room;
-    (window as any).subscriptions[room.id] = room;
     rooms[id] = room;
-    console.info("Subscribed to room: ", room,  (window as any).subscriptions);
     room.onStateChange(async (state) => {
-        console.log("<--", {state});
         (window as any).state = state;
         const model = await Room.query().where('roomId', id).first()
         await Room.insertOrUpdate({
@@ -73,9 +53,6 @@ export const actions: ActionTree<RoomState, RootState> = {
           },
         })
       });
-    (window as any).subscription = room;
-
-    //}, 300);
   },
   async join(context: any, roomId) {
     try {
@@ -86,9 +63,7 @@ export const actions: ActionTree<RoomState, RootState> = {
             roomId,
             localStorage.getItem('roomSession' + roomId)
           )
-          console.log('reconnected', room);
         } catch (e) {
-          console.log(e, room);
             // reconnect may not be successful, try to join with new session.
             room = await this.$colyseus.joinById(roomId, {
               username: localStorage.getItem('username'),
@@ -102,6 +77,7 @@ export const actions: ActionTree<RoomState, RootState> = {
         })
       }
 
+      rooms[roomId] = room;
       localStorage.setItem('roomSession' + roomId, room.sessionId)
       await Room.insertFromColyseus(room)
       await context.dispatch('subscribe', room)
@@ -112,7 +88,7 @@ export const actions: ActionTree<RoomState, RootState> = {
   },
   async leave(context: any, roomName) {
     if (rooms[roomName]) {
-      return rooms[roomName].leave()
+      return (rooms[roomName] as Colyseus.Room).leave();
     }
   },
 }

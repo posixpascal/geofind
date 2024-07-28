@@ -1,5 +1,5 @@
 <template>
-  <div class="main-menu">
+  <div class="container">
     <template v-if="room">
       <h1 class="text-xl mb-5 sm:text-2xl sm:mb-3 text-center">
         <span class="text-gray-600 dark:text-gray-300"
@@ -30,14 +30,12 @@
         shade="blue"
         :room="room"
         v-if="!isLeader"
-        :excluded="excludedSettings"
       />
       <GameSettings
         shade="blue"
         v-model="settings"
         v-if="isLeader"
-        :excluded="excludedSettings"
-      />
+      /> 
     </template>
   </div>
 </template>
@@ -80,9 +78,14 @@ export default class LobbyPage extends Vue {
   }
 
   async mounted() {
-    if (!this.room) {
+    // Nuxt renders this thing TWICE ffs
+    if (this.$nuxt.layoutName !== "default"){
       await this.$store.dispatch('room/join', this.roomId)
     }
+  }
+
+  beforeDestroy() {
+    return clearInterval(this.timer)
   }
 
   @Watch('room', { immediate: true })
@@ -103,10 +106,6 @@ export default class LobbyPage extends Vue {
     if (this.room.phase === 'play') {
       this.$router.push(this.localePath('/play/' + this.room.roomId))
     }
-  }
-
-  beforeDestroy() {
-    return clearInterval(this.timer)
   }
 
   get shareLink() {
@@ -137,15 +136,12 @@ export default class LobbyPage extends Vue {
         return;
       }
     }
-    //if (!this.game) {
-    //  return;
-    //}
+   
       this.$store.dispatch('room/message', {
         room: this.room,
         type: 'room/settings',
         data: this.settings,
       });
-    //this.$socket.emit('game;/update', {gameId: this.game.id, update: this.settings})
   }
 
   get user() {
@@ -162,10 +158,6 @@ export default class LobbyPage extends Vue {
       this.room.player &&
       this.room.creatorId === this.room.player.sessionId
     )
-  }
-
-  get excludedSettings() {
-    return ['hasHints']
   }
 }
 </script>

@@ -1,0 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+export function guid() {
+    return uuidv4();
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiR3VpZC5qcyIsInNvdXJjZVJvb3QiOiJzcmMvIiwic291cmNlcyI6WyJmcmFtZXdvcmsvR3VpZC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUMsRUFBRSxJQUFJLE1BQU0sRUFBQyxNQUFNLE1BQU0sQ0FBQTtBQUVqQyxNQUFNLFVBQVUsSUFBSTtJQUNsQixPQUFPLE1BQU0sRUFBRSxDQUFBO0FBQ2pCLENBQUMifQ==

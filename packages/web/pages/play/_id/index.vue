@@ -45,17 +45,9 @@
         />
         <GameEndDialog :room="room" v-if="room.state === states.GAME_END" />
 
-        <Overlay
-          :room="room"
-          position="bottomcenter"
-          v-if="room.state === states.ROUND_START"
-          class="relative bottom-20"
-        >
-          <h1 v-if="room.room === 'speedrun'">
-            {{ room.roundSecondsElapsed.toFixed(1) }}
-          </h1>
-          <Countdown :room="room" v-else :initial="room.timer" />
-        </Overlay>
+        <Countdown v-if="room.state === states.ROUND_START" :room="room" :initial="room.timer" />
+         
+        
         <Overlay
           :room="room"
           position="topleft"
@@ -168,6 +160,7 @@ export default class Index extends Vue {
   }
 
   leave() {
+    this.$store.dispatch('room/leave', this.roomId);
     this.$router.push(this.localePath('/'))
   }
 

@@ -15,8 +15,6 @@
     <GameSettings
       shade="blue"
       v-model="settings"
-      :excluded="excludedSettings"
-      :excluded-games="excludedGames"
     />
 
     <Button :icon="true" :loading="loading" @click="create" variant="blue">
@@ -42,14 +40,6 @@ export default class Multiplayer extends Vue {
   room: Room = null
   loading = false
   settings = DEFAULT_GAME_SETTINGS
-
-  get excludedGames(): GameRoom[] {
-    return []
-  }
-
-  get excludedSettings() {
-    return ['hasHints']
-  }
 
   async create() {
     try {

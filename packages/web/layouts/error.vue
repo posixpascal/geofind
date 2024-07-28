@@ -38,16 +38,12 @@ import Button from '~/components/button.vue'
   props: ['error'],
   layout: 'error',
 })
-export default class DefaultLayout extends Vue {
-  @Watch('$route.name')
-  trackAnalytics() {
-
+export default class ErrorLayout extends Vue {
+  mounted(){
   }
 }
 </script>
 <style lang="postcss">
-@import url('https://fonts.googleapis.com/css?family=Luckiest+Guy&display=swap');
-
 .font-lucky {
   position: relative;
   top: 3px;

@@ -85,44 +85,33 @@
           "
         >
           <Checkbox
-            v-if="!isExcluded('hasStrictMatches')"
             :extra-classes="shade"
             v-model="settings.hasStrictMatches"
             :label="$t('settings.directMatchesOnly')"
           />
           <Checkbox
-            v-if="!isExcluded('hasIslands')"
             :extra-classes="shade"
             v-model="settings.hasIslands"
             :label="$t('settings.islands')"
           />
           <Checkbox
-            v-if="!isExcluded('hasBorders')"
             :extra-classes="shade"
             v-model="settings.hasBorders"
             :label="$t('settings.borders')"
           />
 
           <Checkbox
-            v-if="!isExcluded('isPublic')"
             :extra-classes="shade"
             v-model="settings.isPublic"
             :label="$t('settings.public')"
           />
-          <Checkbox
-            v-if="!isExcluded('hasHints')"
-            :extra-classes="shade"
-            v-model="settings.hasHints"
-            :label="$t('settings.hint')"
-          />
+  
 
           <GameSettingsInput
-            v-if="!isExcluded('roundTime')"
             v-model="settings.roundTime"
             :label="$t('settings.roundTime')"
           />
           <GameSettingsInput
-            v-if="!isExcluded('maxPoints')"
             v-model="settings.maxPoints"
             :label="$t('settings.pointsNeeded')"
           />
@@ -145,9 +134,7 @@ import { GameRoom } from '~/constants/games'
 })
 export default class GameSettings extends Vue {
   @VModel() settings!: any
-  @Prop({ default: [] }) excluded!: string[]
   @Prop({ default: 'green' }) shade!: string
-  @Prop({ default: () => [] }) excludedGames!: string[]
 
   get availableGames() {
     const games = this.games
@@ -258,14 +245,7 @@ export default class GameSettings extends Vue {
     },
   }
 
-  isExcluded(prop) {
-    if (this.excluded.length === 0) {
-      return false
-    }
-
-    return this.excluded.includes(prop)
-  }
-
+ 
   next(swiper) {
     swiper.swiperInstance.slideNext(300)
   }

@@ -45,6 +45,7 @@
     "@colyseus/arena": "^0.14.22",
     "@colyseus/command": "^0.2.1",
     "@colyseus/monitor": "^0.14.20",
+    "@types/winston": "^2.4.4",
     "axios": "^0.25.0",
     "class-transformer": "^0.5.1",
     "colyseus": "^0.14.20",
@@ -58,6 +59,7 @@
     "pg-hstore": "^2.3.4",
     "prettier": "^2.5.1",
     "reflect-metadata": "^0.1.13",
-    "typescript": "^4"
+    "typescript": "^4",
+    "winston": "^3.13.1"
   }
 }

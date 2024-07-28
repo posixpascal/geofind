@@ -12,9 +12,9 @@ import Vue from 'vue'
 import Component, { mixins } from 'vue-class-component'
 
 @Component({})
-export default class DefaultLayout extends Vue {
+export default class MapLayout extends Vue {
   mounted() {
-    const token = localStorage.getItem('auth')
+    //const token = localStorage.getItem('auth')
   }
 }
 </script>
