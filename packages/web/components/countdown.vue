@@ -1,6 +1,5 @@
 <template>
   <div class="count">
-    {{ width }} ini
     <div
       :class="`fixed top-0 h-3 bg-blue-400 px-5 text-sm ${initial <= 0 || initial >= room.roundTime ? '' : 'transition-all linear duration-1000'}`"
       :style="{width: width}"
@@ -23,7 +22,7 @@ export default class Countdown extends Vue {
   timer = null
 
   get width(){
-    return `${100 * ((this.room.timer) / this.room.roundTime)}%`;
+    return `${100 * ((this.room.timer - 1) / this.room.roundTime)}%`;
   }
 }
 </script>
