@@ -93,7 +93,7 @@ import MultiplayerScoreBoardDialog from '~/components/dialogs/multiplayer-score-
 import { states } from '~/constants/states'
 import GameMap from '~/components/game/GameMap.vue'
 import {CONTINUE_ROUND_MESSAGE, VOTE_MESSAGE} from "~/constants/messages";
-import MapView from '~/components/game/MapView.vue'
+// import MapView from '~/components/game/MapView.vue'
 
 @Component({
   layout: 'play',
@@ -110,7 +110,7 @@ import MapView from '~/components/game/MapView.vue'
     MultiplayerScoreBoardDialog,
     Countdown,
     ScoreBoardOverlay,
-    MapView,
+    // MapView,
   },
 })
 export default class Index extends Vue {
