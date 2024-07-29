@@ -5,6 +5,7 @@
         room && room.state === states.ROUND_END ? 'gray-map' : ''
       }`"
     >
+<!--      <MapView v-if="room && room.player" :room="room" />-->
       <GameMap :room="room" />
       <template v-if="room">
         <RoundPrepareDialog
@@ -46,8 +47,8 @@
         <GameEndDialog :room="room" v-if="room.state === states.GAME_END" />
 
         <Countdown v-if="room.state === states.ROUND_START" :room="room" :initial="room.timer" />
-         
-        
+
+
         <Overlay
           :room="room"
           position="topleft"
@@ -92,6 +93,7 @@ import MultiplayerScoreBoardDialog from '~/components/dialogs/multiplayer-score-
 import { states } from '~/constants/states'
 import GameMap from '~/components/game/GameMap.vue'
 import {CONTINUE_ROUND_MESSAGE, VOTE_MESSAGE} from "~/constants/messages";
+import MapView from '~/components/game/MapView.vue'
 
 @Component({
   layout: 'play',
@@ -108,6 +110,7 @@ import {CONTINUE_ROUND_MESSAGE, VOTE_MESSAGE} from "~/constants/messages";
     MultiplayerScoreBoardDialog,
     Countdown,
     ScoreBoardOverlay,
+    MapView,
   },
 })
 export default class Index extends Vue {

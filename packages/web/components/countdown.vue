@@ -1,7 +1,7 @@
 <template>
   <div class="count">
     <div
-      :class="`fixed top-0 h-3 bg-blue-400 px-5 text-sm ${initial <= 0 || initial >= room.roundTime ? '' : 'transition-all linear duration-1000'}`"
+      :class="`fixed top-0 h-3 bg-blue-400 text-sm ${initial <= 0 || initial >= room.roundTime ? '' : 'transition-all linear duration-1000'}`"
       :style="{width: width}"
     >
   </div>
@@ -17,11 +17,14 @@ import { Room } from '~/models'
 export default class Countdown extends Vue {
   @Prop() initial
   @Prop() room;
-  
+
   count = null
   timer = null
 
   get width(){
+    if (this.room.timer == 0){
+      return '0%';
+    }
     return `${100 * ((this.room.timer - 1) / this.room.roundTime)}%`;
   }
 }
