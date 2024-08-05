@@ -31,7 +31,7 @@
       :animated="true"
     >
       <template #icon>
-        <Icon class="text-white" :height="48" name="public" />
+        <Icon class="text-white" :height="48" name="controller" />
       </template>
       {{ $t('lobbies.button') }}
     </Button>
@@ -47,10 +47,6 @@
       {{ $t('matchmaking.button') }}
     </Button>
 
-    <!--<Button to="teachers" variant="blue" :animated="true">
-      <template #icon>👩‍🏫</template>
-      Teacher Zone
-    </Button>-->
     <Button
       :icon="true"
       :to="localePath('profile')"
@@ -63,18 +59,29 @@
       {{ $t('profile.button') }}
     </Button>
 
-    <Button
-      :icon="true"
-      :to="localePath('achievements')"
-      disabled
-      style="pointer-events: none"
-      :animated="true"
-    >
-      <template #icon>
-        <Icon class="text-white" :height="48" name="award" />
-      </template>
-      {{ $t('achievements.button') }}
-    </Button>
+<!--    <Button-->
+<!--      :icon="true"-->
+<!--      :to="localePath('achievements')"-->
+<!--      disabled-->
+<!--      style="pointer-events: none"-->
+<!--      :animated="true"-->
+<!--    >-->
+<!--      <template #icon>-->
+<!--        <Icon class="text-white" :height="48" name="award" />-->
+<!--      </template>-->
+<!--      {{ $t('achievements.button') }}-->
+<!--    </Button>    <Button-->
+<!--      :icon="true"-->
+<!--      :to="localePath('achievements')"-->
+<!--      disabled-->
+<!--      style="pointer-events: none"-->
+<!--      :animated="true"-->
+<!--    >-->
+<!--      <template #icon>-->
+<!--        <Icon class="text-white" :height="48" name="award" />-->
+<!--      </template>-->
+<!--      {{ $t('achievements.button') }}-->
+<!--    </Button>-->
 
     <!--
     <Button variant="orange" :animated="true">
@@ -104,11 +111,7 @@ export default class MainMenu extends Vue {}
   padding-bottom: 80px;
 }
 
-.main-menu svg {
-  width: 48px;
-  position: relative;
-  top: 5px;
-}
+
 
 @media (max-width: 768px) {
   .main-menu {

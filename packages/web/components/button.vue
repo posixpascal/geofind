@@ -308,6 +308,17 @@ export default class Button extends Vue {
   text-shadow: 0 2px 3px rgba(0, 0, 0, 0.2), 0 0 50px rgba(216, 216, 216, 0.1) !important;
 }
 
+
+.fancy-button svg {
+  width: 170px !important;
+  position: relative;
+  top: -50px;
+  transform: rotate(-12.5deg);
+  left: -25px;
+  mix-blend-mode: plus-lighter;
+  opacity: 0.1;
+}
+
 @media (max-width: 768px) {
   .fancy-button {
     padding: 10px 15px 10px;
@@ -321,8 +332,10 @@ export default class Button extends Vue {
   }
 
   .fancy-button svg {
+    width: 100px !important;
+    top: -25px !important;
     position: relative;
-    top: -5px !important;
+
   }
 }
 </style>

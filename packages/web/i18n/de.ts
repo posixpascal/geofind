@@ -173,7 +173,7 @@ export const de = {
   },
   lobbies: {
     title: ' Offene Spiele ',
-    button: 'Offene Spiele',
+    button: 'Mitspielen',
     cta: 'Offene Spiele',
     join: 'Beitreten',
     noRoomsFound2:

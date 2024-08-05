@@ -67,9 +67,7 @@ export default {
     '~/plugins/user',
     '~/plugins/swiper',
     '~/plugins/numeral',
-    '~/plugins/analytics',
     '~/plugins/colyseus',
-    '~/plugins/firebase.ts',
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
