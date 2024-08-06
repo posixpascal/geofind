@@ -332,10 +332,8 @@ export default class Button extends Vue {
   }
 
   .fancy-button svg {
-    width: 100px !important;
-    top: -25px !important;
     position: relative;
-
+    top: -5px !important;
   }
 }
 </style>
